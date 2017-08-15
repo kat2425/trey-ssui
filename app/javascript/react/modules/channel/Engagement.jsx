@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { render }           from 'react-dom'
 
-import ModuleHeader         from 'ui/components/shell/ModuleHeader'
-import VJSContainer         from 'ui/components/vjs/VJSContainer'
-import VJSChart             from 'ui/components/vjs/VJSChart'
+import ModuleHeader         from 'ui/shell/ModuleHeader'
+import VJSContainer         from 'ui/vjs/VJSContainer'
+import VJSChart             from 'ui/vjs/VJSChart'
 
 export default class Engagement extends Component {
   render() {
