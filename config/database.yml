@@ -1,0 +1,28 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: postgresql
+  database: schoolstatus
+  user: schoolstatus
+  password: wh04d4wg!%P
+  host: 25.122.222.38
+  port: 21170
+
+development:
+  <<: *default
+  # database: schoolstatus_staging
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: schoolstatus_staging
+
+production:
+  <<: *default
+  database: schoolstatus

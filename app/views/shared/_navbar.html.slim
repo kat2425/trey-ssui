@@ -1,0 +1,32 @@
+nav.navbar.navbar-toggleable-sm.fixed-top.navbar-inverse.bg-navbar.app-navbar
+  button.navbar-toggler.navbar-toggler-right.hidden-md-up aria-controls="navbarResponsive" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarResponsive" data-toggle="collapse" type="button"
+    span.navbar-toggler-icon
+  a.navbar-brand href="index.html" style='padding-top:0'
+    img src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' style='height:35px'
+  #navbarResponsive.collapse.navbar-collapse data-turbolinks='false'
+    ul.navbar-nav.mr-auto
+      li.nav-item.active
+        a.nav-link href='/home'
+          | Logic
+          span.sr-only (current)
+      li.nav-item
+        a.nav-link href='/channel'  Channel
+      li.nav-item
+        a.nav-link data-toggle="modal" href="#msgModal"  Feedbak
+      li.nav-item.hidden-md-up
+        a.nav-link href="login/index.html"  Logout
+    form.form-inline.float-right.hidden-sm-down.mr-3
+      input.form-control data-action="grow" placeholder="Search" type="text"
+    ul.nav.navbar-nav.float-right.mr-0.hidden-sm-down id="#js-popoverContent"
+      li.nav-item
+        a.nav-link href="docs/index.html"  Settings
+      li.nav-item
+        a.nav-link href="docs/index.html"  Help
+      li.nav-item.ml-2
+        button.btn.btn-default.navbar-btn.navbar-btn-avatar data-toggle="popover"
+          /img.rounded-circle src="assets/img/avatar-dhg.png" /
+    ul#js-popoverContent.nav.navbar-nav.hidden-xs-up
+      li.nav-item
+        a.nav-link data-action="growl" href="#"  Growl
+      li.nav-item
+        a.nav-link href="login/index.html"  Logout

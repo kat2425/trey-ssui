@@ -1,0 +1,21 @@
+doctype html
+
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title SchoolStatus
+
+    = csrf_meta_tags
+
+    link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"
+    link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet"
+
+    = stylesheet_link_tag    'application', :'data-turbolinks-track' => 'reload', :media => 'all'
+    = javascript_include_tag 'application', :'data-turbolinks-track' => 'reload'
+
+    = stylesheet_pack_tag 'theme/toolkit'
+    = javascript_pack_tag 'application'
+    = javascript_pack_tag 'toolkit'
+
+  body
+    = yield

@@ -1,0 +1,125 @@
+/* TEMP PLACEHOLDER FOR CSS
+ * ----------------------------------------------------
+ * FIXME: Don't keep things in here -- once working,
+ * move it out and into the theme builder
+ * ----------------------------------------------------
+ */
+
+html, body {
+  text-rendering:optimizeLegibility !important;
+  font-weight: 400;
+}
+
+.app-navbar {
+  height: 57px;
+}
+
+.vjs-link {
+  cursor: pointer;
+}
+
+.vjs-link:hover {
+  text-decoration: underline
+}
+
+.student-search-container ul.dropdown-menu {
+  width: 298px;
+  box-shadow: 0 1px 13px 0 rgba(0,0,0,0.275);
+}
+
+.student-search-container button.rbt-close {
+  margin-top: -19px
+}
+
+.student-search-container .typeahead-highlight {
+  color: #282828
+}
+
+.student-search-container .active .typeahead-highlight {
+  color: white
+}
+
+.text-clear {
+  color: white;
+  opacity: 0.0;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0,0,0,0.025)
+}
+
+.vjs-container span[style*="font-family: 'Pictonic_-en_US'"] {
+  font-family: 'Pictonic_-en_US' !important;
+  opacity: 0.5 !important;
+  font-size: 8px !important;
+}
+
+div.jive_dialog.open[style] {
+  position: fixed !important;
+  box-shadow: 0 0 0 3000px rgba(0,0,0,0.5), 0 3px 40px 1px rgba(0,0,0,0.5) !important;
+  z-index: 1030 !important;
+}
+
+div.jive_marker.ui-draggable[style] {
+  display: none !important;
+}
+
+.jive_dialog {
+  font-family: 'Roboto' !important;
+  font-size: 13px !important;
+}
+
+.jive_dialog .dialogHeader {
+  background: none !important;
+}
+
+.jive_dialog button {
+  border-radius: 3px !important;
+}
+
+.jive_dialog h2 {
+  font-weight: bold !important;
+}
+
+button.jive_button.over {
+  background: rgba(29, 56, 80, 0.8) !important;
+}
+
+.jive_overlay {
+  box-shadow: 0 3px 30px 1px rgba(0,0,0,0.2) !important;
+  border-color: #ccc !important;
+  border-right: 1px solid #ccc;
+}
+
+.jive_overlay > div {
+  background: #ffffff !important;
+  opacity: 0.3;
+}
+
+.jive_button_bar {
+  background: #ffffff !important;
+}
+
+.jive_button_bar.jr_table {
+  width: 76px !important;
+}
+
+.jive_button_bar > div > button:nth-child(1) {
+  display: none;
+}
+
+.jive_marker_icon {
+  display: none !important;
+}
+
+.jive_marker {
+  border-left: dashed 1px #ccc !important;
+}
+
+.jive_dialog {
+  box-shadow: 0 3px 30px 1px rgba(0,0,0,0.2) !important;
+}
+
+.jive_form input {
+  margin-right: 5px !important;
+}
