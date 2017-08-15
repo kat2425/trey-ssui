@@ -64,6 +64,7 @@ pry
 │   │       │   │   │
 │   │       │   │   ├── UserMenu
 │   │       │   │   └── stories                    # Storybook hooks
+│   │       │   │
 │   │       │   └── vjs                            # Jaspersoft VisualizeJS components
 │   │       │
 │   │       ├── helpers                            # Useful helpers
