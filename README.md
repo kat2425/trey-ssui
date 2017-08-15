@@ -8,8 +8,10 @@ The following tools will make your local development environment much easier.
 * **Homebrew**  *(OS level package management)*
   * Postgresql
   * Redis
+
 * **Rbenv** *(Ruby version management / v2.4.1)*
   * Foreman
+
 * **NVM** *(Node version management)*
   * Yarn
 
