@@ -19,6 +19,7 @@ export default class VJSContainer extends React.Component {
 
   setVJSClient() {
     window.visualize.config({
+      server: 'https://jasper.schoolstatus.com/jasperserver-pro',
       auth: {
         name:         window.SSUser.id,
         password:     window.SSUser.jasper.token,
