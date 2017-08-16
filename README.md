@@ -29,8 +29,8 @@ yarn install
 # Fire off local dev-server processes
 # ---------------------------------------------------------------------------------
 # http://localhost:3200               # Ruby webserver
-# http://localhost:3201               # Webpack with HMR (no need to hit directly)
-# http://localhost:3202               # React Storybook
+# http://localhost:3210               # Webpack with HMR (no need to hit directly)
+# http://localhost:3220               # React Storybook
 # ---------------------------------------------------------------------------------
 foreman s
 ```

@@ -70,8 +70,8 @@ stories.add('Inbox', () => (
   </DumbContainer>
 ))
 
-stories.add('Controller', () => (
-  <DumbContainer title='Controller'>
-    <SMSController store={SMSConversationStore}/>
-  </DumbContainer>
-))
+// stories.add('Controller', () => (
+//   <DumbContainer title='Controller'>
+//     <SMSController store={SMSConversationStore}/>
+//   </DumbContainer>
+// ))
