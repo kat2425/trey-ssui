@@ -86,7 +86,6 @@ pry
 │   ├── environments
 │   ├── initializers
 │   ├── locales                                    # i18n string templates
-│   │
 │   └── webpack                                    # Webpack configs/loaders
 │       └── loaders
 │
