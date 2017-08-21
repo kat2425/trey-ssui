@@ -50,7 +50,7 @@ class StudentCardStore {
 
   @action.bound
   fetchStudentContactsOK(res) {
-    this.contacts = res.data
+    this.contacts  = res.data
     this.isLoading = false
     this.visible   = true
   }
