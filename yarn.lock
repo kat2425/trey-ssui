@@ -5345,6 +5345,10 @@ react-router-dom@^4.1.2:
     prop-types "^15.5.4"
     react-router "^4.1.1"
 
+react-router-last-location@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-router-last-location/-/react-router-last-location-1.0.2.tgz#a147200a4697a8274dc3fafa628f150815744315"
+
 react-router-modal@^1.1.12:
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/react-router-modal/-/react-router-modal-1.1.12.tgz#503ae273ac01a9eef100e9d9fdd4a8d12e731eda"

@@ -1,6 +1,7 @@
-import React             from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import UserMain          from '../app/UserMain'
+import React                    from 'react'
+import { BrowserRouter }        from 'react-router-dom'
+import { LastLocationProvider } from 'react-router-last-location'
+import UserMain                 from '../app/UserMain'
 
 const UserRouter = (props) => {
   // we inject ui related user props serverside and set to window var
@@ -8,7 +9,9 @@ const UserRouter = (props) => {
 
   return (
     <BrowserRouter>
-      <UserMain/>
+      <LastLocationProvider>
+        <UserMain/>
+      </LastLocationProvider>
     </BrowserRouter>
   )
 }

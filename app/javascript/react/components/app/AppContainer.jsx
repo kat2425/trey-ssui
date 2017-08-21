@@ -34,6 +34,7 @@ const AppContainer = () => {
           <Route path='/r/channel/inbox'    component={SMSController}/>
           <Route path='/r/channel/history'    component={ChannelHistory}/>
           <Route path='/r/channel/engagement' component={ChannelEngagement}/>
+          <Route path='/r/students/:studentId' component={StudentCardController} />
 
           {/* Misc */}
           <Route path='/r/dumb' component={DumbContainer}/>
