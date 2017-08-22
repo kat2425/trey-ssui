@@ -19,6 +19,7 @@
 
 /node_modules
 /yarn-error.log
+/public/assets
 
 /resources/bs-4-theme/node_modules
 

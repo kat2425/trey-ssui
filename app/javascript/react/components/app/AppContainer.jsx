@@ -22,7 +22,7 @@ const AppContainer = () => {
     return (
       <div className='col-md-10 offset-md-2 mb-5'>
         <Switch>
-          <Route exact path='/r/' component={TVAASController}/>
+          <Route exact path='/r/' component={Financials}/>
 
           {/* Logic */}
           <Route path='/r/attendance'       component={Attendance}/>
