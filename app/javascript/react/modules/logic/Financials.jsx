@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
-import VJSContainer         from 'ui/vjs/VJSContainer'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
@@ -32,7 +31,7 @@ export default class Financials extends Component {
 
   render() {
     return (
-      <VJSContainer>
+      <div>
         <ModuleHeader title='Financials'>
           <VJSICSelect
             id            = 'student_filter'
@@ -76,7 +75,7 @@ export default class Financials extends Component {
             }}
           />
         </div>
-      </VJSContainer>
+      </div>
     )
   }
 }

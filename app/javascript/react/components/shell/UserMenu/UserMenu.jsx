@@ -11,11 +11,11 @@ const UserMenu = () => {
   return (
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar'>
       <UserMenuSection title='Core Data'>
+        <UserMenuItem title='My Students' iconClass='icon-users' link='/r/students' active/>
         {/* <UserMenuItem title='Attendance' iconClass='icon-calendar' link='/r/attendance' /> */}
-        <UserMenuItem title='Discipline' iconClass='icon-thermometer' link='/r/infractions' active/>
+        {/* <UserMenuItem title='Discipline' iconClass='icon-thermometer' link='/r/infractions' active/> */}
         {/* <UserMenuItem title='Assessment' iconClass='icon-bar-graph' link='/r/assessment/tvaas' /> */}
         <UserMenuItem title='Financials' iconClass='icon-credit' link='/r/financials' />
-        <UserMenuItem title='My Students' iconClass='icon-users' link='/r/students' active/>
       </UserMenuSection>
 
       {/* <UserMenuSection title='Accountability'> */}

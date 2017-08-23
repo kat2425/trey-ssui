@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import { render }           from 'react-dom'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
-import VJSContainer         from 'ui/vjs/VJSContainer'
 import VJSChart             from 'ui/vjs/VJSChart'
 
 export default class Engagement extends Component {
   render() {
     return (
-      <VJSContainer>
+      <div>
         <ModuleHeader title='Engagement'/>
 
         <div className='row'>
@@ -46,7 +45,7 @@ export default class Engagement extends Component {
             isTable    = {true}
           />
         </div>
-      </VJSContainer>
+      </div>
     )
   }
 }

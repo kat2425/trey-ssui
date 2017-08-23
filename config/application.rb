@@ -25,34 +25,36 @@ module SchoolStatus
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.sequel.after_connect = proc do
-      Doorkeeper.configure do
-        orm :sequel
+    unless ENV['NO_DB']
+      config.sequel.after_connect = proc do
+        Doorkeeper.configure do
+          orm :sequel
 
-        resource_owner_authenticator do
-          User[session[:'warden.user.default.key']] || redirect_to('/login')
+          resource_owner_authenticator do
+            User[session[:'warden.user.default.key']] || redirect_to('/login')
+          end
+
+          access_token_generator        '::Doorkeeper::JWT'
+          authorization_code_expires_in 60.minutes
+          access_token_expires_in       4.hours
         end
 
-        access_token_generator        '::Doorkeeper::JWT'
-        authorization_code_expires_in 60.minutes
-        access_token_expires_in       4.hours
-      end
+        Doorkeeper::JWT.configure do
+          token_payload do |opts|
+            user = User[opts[:resource_owner_id]]
 
-      Doorkeeper::JWT.configure do
-        token_payload do |opts|
-          user = User[opts[:resource_owner_id]]
-
-          {
-            :user => {
-              :id         => user.id,
-              :username   => user.username,
-              :first_name => user.first_name,
-              :last_name  => user.last_name
+            {
+              :user => {
+                :id         => user.id,
+                :username   => user.username,
+                :first_name => user.first_name,
+                :last_name  => user.last_name
+              }
             }
-          }
-        end
+          end
 
-        secret_key "foobar"
+          secret_key "foobar"
+        end
       end
     end
   end

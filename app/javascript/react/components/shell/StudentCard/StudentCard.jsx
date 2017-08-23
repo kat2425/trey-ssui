@@ -15,7 +15,6 @@ import UserMenuItem    from 'ui/shell/UserMenu/UserMenuItem'
 
 import StudentAvatar   from 'ui/shell/StudentAvatar'
 
-import VJSContainer    from 'ui/vjs/VJSContainer'
 import VJSChart        from 'ui/vjs/VJSChart'
 
 import fireEvent       from 'helpers/FireEvent'
@@ -135,7 +134,7 @@ export default class StudentCard extends Component {
               </CardBlock>
             </Card>
 
-            <VJSContainer>
+            <div>
               <VJSChart
                 id               = 'sc-financial-aid-types'
                 reportPath       = '/public/VJS/ss_ui/financials/student_card'
@@ -147,7 +146,7 @@ export default class StudentCard extends Component {
                   student_id: [ student.id ]
                 }}
               />
-            </VJSContainer>
+            </div>
 
             <Card>
               {/* <h5 className='p-2 pb-0 mb-0'>Details</h5> */}
@@ -168,7 +167,7 @@ export default class StudentCard extends Component {
               </div>
             </h4>
 
-            <VJSContainer>
+            <div>
               <VJSChart
                 id         = 'sc-student-courses'
                 reportPath = '/public/VJS/ss_ui/courses/student_card'
@@ -198,7 +197,7 @@ export default class StudentCard extends Component {
                     </tbody>
                   </Table>
               </Card>
-            </VJSContainer>
+            </div>
           </Col>
         </Row>
     )
@@ -206,29 +205,45 @@ export default class StudentCard extends Component {
 
   renderContacts(contact) {
     return (
-      <tr key={ contact.id }>
+      <tr key={ `${contact.name}_${contact.relationship}` }>
         <td>{ contact.name }</td>
         <td>{ contact.relationship }</td>
 
         <td>
-          <ButtonGroup className='mr-2'>
-            <Button size='sm' color='success'>
-              <span className='icon icon-phone'/>
-            </Button>
+          {/* TODO: extract to function */}
+          { contact.refs.map(ref => {
+            return (
+              <div key={ref.id} className='mb-1'>
+                <ButtonGroup className='mr-2'>
+                  <Button size='sm' color='success' disabled>
+                    <span className='icon icon-phone'/>
+                  </Button>
 
-            <Button size='sm' color='primary'>
-              <span className='icon icon-chat'/>
-            </Button>
-          </ButtonGroup>
+                  <Button size='sm' color='primary' disabled={ref.number_type !== 'mobile'}>
+                    <span className='icon icon-chat'/>
+                  </Button>
+                </ButtonGroup>
 
-          { contact.phone }
+                { ref.phone }
+                <br/>
+              </div>
+            )
+          }) }
         </td>
 
         <td>
-          <Button size='sm' color='info' className='mr-2'>
-            <span className='icon icon-mail'/>
-          </Button>
-          { contact.email }
+          {/* TODO: extract to function */}
+          {/* NOTE: should we uniq the email addy's in the store? */}
+          { _.uniqBy(contact.refs.map((ref, i) => {
+            return (
+              <div key={ref.id} className='mb-1'>
+                <Button size='sm' color='info' className='mr-2' disabled>
+                  <span className='icon icon-mail'/>
+                </Button>
+                { ref.email }
+              </div>
+            )
+          }), 'email') }
         </td>
       </tr>
     )

@@ -15,9 +15,10 @@ export default class VJSChart extends Component {
   constructor(props) {
     super(props)
 
-    this.report   = null
-    this.reportID = `vjs-${this.props.id}`
-    this.state    = {
+    this._isMounted = false
+    this.report     = null
+    this.reportID   = `vjs-${this.props.id}`
+    this.state      = {
       resourceLoaded: false,
       collapse:       false,
       retries:        0,
@@ -32,8 +33,13 @@ export default class VJSChart extends Component {
   // loading indicator
   componentDidMount() {
     const { reportPath, params } = this.props
+    this._isMounted = true
 
     this.renderChart(this.props.reportPath, this.props.params)
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   // only call renderChart() when receiving new report params
@@ -60,10 +66,10 @@ export default class VJSChart extends Component {
     })
   }
 
-  // Call our VJSClient (shared via our parent context) and fire a report render that will
+  // Call our VJSClient (shared via window variable) and fire a report render that will
   // render to our newly created DOM element when finished on VJS server
   renderChart(reportPath, reportParams) {
-    this.report = this.context.vjsClient.report({
+    this.report = window.vjsClient.report({
       // Fixed VJS properties
       container:      `#${this.reportID}`,
       resource:       reportPath,
@@ -78,23 +84,25 @@ export default class VJSChart extends Component {
       // TODO: fixme with a spread ... operator
       events:           Object.assign((this.props.events || this.correctVJSTable()), {
         changeTotalPages: (total) => {
-          this.setState({ totalPages: total })
+          if (this._isMounted) this.setState({ totalPages: total })
         }
       }),
 
       // Hide our loading indicator on a successful render
       success: () => {
-        this.setState({ resourceLoaded: true })
+        if (this._isMounted) this.setState({ resourceLoaded: true })
       },
 
-      // error: ::this.handleError
+      error: ::this.handleError
     })
   }
 
   handleError(err) {
-    if (this.state.retries <= 2) {
-      this.renderChart(this.props.reportPath, this.props.params)
-      this.setState({ retries: (this.state.retries + 1) })
+    if (err.errorCode === 'resource.not.found') {
+      if (this.state.retries <= 2) {
+        this.renderChart(this.props.reportPath, this.props.params)
+        this.setState({ retries: (this.state.retries + 1) })
+      }
     }
   }
 
@@ -288,8 +296,4 @@ export default class VJSChart extends Component {
       </div>
     )
   }
-}
-
-VJSChart.contextTypes = {
-  vjsClient: PropTypes.func
 }

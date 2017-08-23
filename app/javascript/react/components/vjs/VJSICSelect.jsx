@@ -18,24 +18,32 @@ export default class VJSICSelect extends Component {
   constructor(props) {
     super(props)
 
-    this.control = null
-    this.state   = {
+    this._isMounted = false
+    this.control    = null
+    this.state      = {
       options: null
     }
   }
 
   componentDidMount() {
+    this._isMounted = true
     this.renderOptions()
   }
 
+  componentWillUnmount() {
+    this._isMounted = false
+  }
+
   renderOptions() {
-    this.control = this.context.vjsClient.inputControls({
+    this.control = window.vjsClient.inputControls({
       resource: this.props.inputPath,
       success:  (ic) => {
-        const filter = _.find(ic, { id: this.props.id })
+        if (this._isMounted) {
+          const filter = _.find(ic, { id: this.props.id })
 
-        if (filter) {
-          this.setState({ options: filter.state.options })
+          if (filter) {
+            this.setState({ options: filter.state.options })
+          }
         }
       }
     })
@@ -54,8 +62,4 @@ export default class VJSICSelect extends Component {
       </div>
     )
   }
-}
-
-VJSICSelect.contextTypes = {
-  vjsClient: PropTypes.func
 }

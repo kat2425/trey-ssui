@@ -15,6 +15,8 @@ import StudentCardStore      from 'stores/StudentCard'
 import SMSInboxStore         from 'stores/SMSInbox'
 import WebSocketStore        from 'stores/WebSocket'
 
+import VJSContainer          from 'ui/vjs/VJSContainer'
+
 @withRouter
 @withLastLocation
 class UserMain extends Component {
@@ -62,17 +64,18 @@ class UserMain extends Component {
 
   render() {
     return (
-      <div className='container-fluid pt-4'>
-        <div className='row'>
-          <CallingController/>
-          <NavBar/>
-          <UserMenu/>
-          <AppContainer/>
-          <ActionBar store={SMSInboxStore}/>
-          <Sidebar hidden={this.state.hideSidebar}/>
+      <VJSContainer>
+        <div className='container-fluid pt-4'>
+          <div className='row'>
+            <CallingController/>
+            <NavBar/>
+            <UserMenu/>
+            <AppContainer/>
+            <ActionBar store={SMSInboxStore}/>
+            <Sidebar hidden={this.state.hideSidebar}/>
+          </div>
         </div>
-
-      </div>
+      </VJSContainer>
     )
   }
 }
