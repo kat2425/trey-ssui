@@ -16,12 +16,13 @@ export default class VJSChart extends Component {
     super(props)
 
     this._isMounted = false
+    this._retries   = 0
+
     this.report     = null
     this.reportID   = `vjs-${this.props.id}`
     this.state      = {
       resourceLoaded: false,
       collapse:       false,
-      retries:        0,
       totalPages:     0,
       currentPage:    1,
     }
@@ -99,9 +100,9 @@ export default class VJSChart extends Component {
 
   handleError(err) {
     if (err.errorCode === 'resource.not.found') {
-      if (this.state.retries <= 2) {
+      if (this._retries <= 2) {
         this.renderChart(this.props.reportPath, this.props.params)
-        this.setState({ retries: (this.state.retries + 1) })
+        this._retries++
       }
     }
   }
