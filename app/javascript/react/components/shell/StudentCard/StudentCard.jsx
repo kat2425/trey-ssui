@@ -17,6 +17,8 @@ import StudentAvatar   from 'ui/shell/StudentAvatar'
 
 import VJSChart        from 'ui/vjs/VJSChart'
 
+import fireEvent       from 'helpers/FireEvent'
+
 const cardStyle = {
   overlay: {
     zIndex: 3000,
@@ -52,7 +54,10 @@ export default class StudentCard extends Component {
   }
 
   closeCard = () => {
-    this.props.store.hideCard()
+    const {store} = this.props
+
+    store.hideCard()
+    fireEvent('onCloseStudentCard', {student: store.student.id})    
   }
 
   render() {
