@@ -5,16 +5,11 @@ export default class VJSContainer extends React.Component {
   constructor(props) {
     super(props)
 
-    this.vjsClient = null
-    this.state     = { clientLoaded: false }
+    this.state = { clientLoaded: false }
   }
 
   componentDidMount() {
     this.setVJSClient()
-  }
-
-  getChildContext() {
-    return { vjsClient: this.vjsClient }
   }
 
   setVJSClient() {
@@ -28,7 +23,10 @@ export default class VJSContainer extends React.Component {
     })
 
     window.visualize((vjs) => {
-      this.vjsClient = vjs
+      if (!window.vjsClient) {
+        window.vjsClient = vjs
+      }
+
       this.setClientState(true)
     })
   }
@@ -60,9 +58,4 @@ export default class VJSContainer extends React.Component {
       return null
     }
   }
-}
-
-// Share container client with children via context
-VJSContainer.childContextTypes = {
-  vjsClient: PropTypes.func
 }

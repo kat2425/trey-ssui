@@ -13,7 +13,7 @@ const UserMenu = () => {
       <UserMenuSection title='Core Data'>
         <UserMenuItem title='My Students' iconClass='icon-users' link='/r/students' active/>
         {/* <UserMenuItem title='Attendance' iconClass='icon-calendar' link='/r/attendance' /> */}
-        <UserMenuItem title='Discipline' iconClass='icon-thermometer' link='/r/infractions' active/>
+        {/* <UserMenuItem title='Discipline' iconClass='icon-thermometer' link='/r/infractions' active/> */}
         {/* <UserMenuItem title='Assessment' iconClass='icon-bar-graph' link='/r/assessment/tvaas' /> */}
         <UserMenuItem title='Financials' iconClass='icon-credit' link='/r/financials' />
       </UserMenuSection>

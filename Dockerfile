@@ -78,6 +78,7 @@ RUN apt-get install -y nodejs
 # ---------------------------------------------------------------------------------
 WORKDIR /ss-ui
 ADD . /ss-ui
+RUN ln -s /ss-ui/public/packs/toolkit-entypo-df045999ec854232354efba32186c117.woff2 /ss-ui/public/packs/toolkit-entypo.woff2
 RUN rm -rf /ss-ui/vendor
 RUN ln -s /tmp/bundler/vendor .
 CMD scripts/start_web.sh

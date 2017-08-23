@@ -41,6 +41,21 @@ class StudentCardStore {
     }).then(this.fetchStudentContactsOK)
   }
 
+  // XXX: i feel like this is smelly -jd
+  @action.bound
+  fetchNumberCapability(contact) {
+    xhr.post(`/commo/validate_number`, {
+      number: contact.phone
+    }).then(res => {
+      const cidx = this.contacts.findIndex(c => c.id == contact.id)
+
+      return this.contacts = this.contacts.map(c => {
+        if (c.id === contact.id) { c.number_type = res.data.type }
+        return c
+      })
+    })
+  }
+
   @action.bound
   fetchStudentOK(res) {
     this.fetchStudentContacts(res.data.id)
@@ -51,6 +66,8 @@ class StudentCardStore {
   @action.bound
   fetchStudentContactsOK(res) {
     this.contacts  = res.data
+    this.contacts.map(d => this.fetchNumberCapability(d))
+
     this.isLoading = false
     this.visible   = true
   }
@@ -62,7 +79,13 @@ class StudentCardStore {
 
   @computed
   get groupedContacts() {
-    return this.contacts
+    return _.map(_.groupBy(this.contacts, c => [ c.name, c.relationship ]), group =>
+      ({
+        name:         group[0].name,
+        relationship: group[0].relationship,
+        refs:         _.map(group, (g, i) => _.merge(g, {index: i}))
+      })
+    )
   }
 }
 

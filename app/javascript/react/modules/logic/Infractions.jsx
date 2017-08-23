@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
-import VJSContainer         from 'ui/vjs/VJSContainer'
 import VJSChart             from 'ui/vjs/VJSChart'
 
 export default class Infractions extends Component {
   render() {
     return (
-      <VJSContainer>
+      <div>
         <ModuleHeader title='Infractions'/>
 
         <div className='row'>
@@ -32,13 +31,14 @@ export default class Infractions extends Component {
         <div className='row'>
           <VJSChart
             id         = 'bama-map'
-            reportPath = '/public/VJS/playground/highmap'
+            reportPath = '/public/VJS/ss_ui/students/my_students_detail'
             scale      = 'container'
             title      = 'Highmap'
             className  = 'col-md-12'
+            isTable    = {true}
           />
         </div>
-      </VJSContainer>
+      </div>
     )
   }
 }
