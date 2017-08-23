@@ -9,7 +9,7 @@
             });
         }
 
-var currentThemePath = "_themes/493E6898/theme.css".split("/").slice(0, -1);
+var currentThemePath = "themes/default/theme.css".split("/").slice(0, -1);
 
 visualize.config({
     server : "https://jasper.schoolstatus.com/jasperserver-pro",

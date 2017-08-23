@@ -4,7 +4,8 @@ import { ModalRoute }       from 'react-router-modal'
 
 import Attendance           from 'modules/logic/Attendance'
 import Infractions          from 'modules/logic/Infractions'
-import Financials          from 'modules/logic/Financials'
+import Financials           from 'modules/logic/Financials'
+import MyStudents           from 'modules/logic/MyStudents'
 
 import ChannelHistory       from 'modules/channel/History'
 import ChannelEngagement    from 'modules/channel/Engagement'
@@ -22,13 +23,14 @@ const AppContainer = () => {
     return (
       <div className='col-md-10 offset-md-2 mb-5'>
         <Switch>
-          <Route exact path='/r/' component={Financials}/>
+          <Route exact path='/r/' component={MyStudents}/>
 
           {/* Logic */}
+          <Route path='/r/my_students'      component={MyStudents}/>
           <Route path='/r/attendance'       component={Attendance}/>
           <Route path='/r/infractions'      component={Infractions}/>
           <Route path='/r/assessment/tvaas' component={TVAASController}/>
-          <Route path='/r/financials' component={Financials}/>
+          <Route path='/r/financials'       component={Financials}/>
 
           {/* Channel */}
           <Route path='/r/channel/inbox'    component={SMSController}/>

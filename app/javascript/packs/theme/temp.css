@@ -22,6 +22,24 @@ html, body {
   text-decoration: underline
 }
 
+.vjs-avatar[style] {
+  height: inherit !important;
+}
+
+.vjs-avatar > div {
+  width: inherit !important;
+  height: inherit !important;
+}
+
+.vjs-avatar > div > div[style] {
+  background-size: 42px !important;
+  background-position: 50% 50% !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 500px !important;
+  margin: auto;
+}
+
 .student-search-container ul.dropdown-menu {
   width: 298px;
   box-shadow: 0 1px 13px 0 rgba(0,0,0,0.275);

@@ -65,7 +65,6 @@ export default class Financials extends Component {
               events: {
                 click: (ev, link) => {
                   const studentID = link.parameters._student_id
-                  console.log(studentID)
 
                   if (studentID) {
                     fireEvent('showStudentCard', { student: studentID })
