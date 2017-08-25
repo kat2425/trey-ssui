@@ -21,19 +21,19 @@ export default class NavBar extends Component {
           <img src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' style={brandLogo}/>
         </NavbarBrand>
 
-        <Nav className='navbar-nav mr-auto'>
-          <NavItem>
-            <NavLink active>Logic</NavLink>
-          </NavItem>
-
-          <NavItem>
-            <NavLink>Channel</NavLink>
-          </NavItem>
-
-          <NavItem>
-            <NavLink>Feedbak</NavLink>
-          </NavItem>
-        </Nav>
+        {/* <Nav className='navbar-nav mr-auto'> */}
+        {/*   <NavItem> */}
+        {/*     <NavLink active>Logic</NavLink> */}
+        {/*   </NavItem> */}
+        {/*  */}
+        {/*   <NavItem> */}
+        {/*     <NavLink>Channel</NavLink> */}
+        {/*   </NavItem> */}
+        {/*  */}
+        {/*   <NavItem> */}
+        {/*     <NavLink>Feedbak</NavLink> */}
+        {/*   </NavItem> */}
+        {/* </Nav> */}
 
         <Nav className='navbar-nav ml-auto'>
           <NavItem className='mr-3'>

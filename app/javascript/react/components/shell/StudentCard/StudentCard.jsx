@@ -1,7 +1,10 @@
 import React, { Component }  from 'react'
 import { observer }          from 'mobx-react'
 import Modal                 from 'react-modal'
-import { withRouter, Route } from 'react-router-dom'
+
+import {
+  Switch, withRouter, Route, Redirect, Link as RRNavLink
+} from 'react-router-dom'
 
 import {
   Container,  Row,            Col,       Collapse,
@@ -14,13 +17,16 @@ import {
 import UserMenuSection from 'ui/shell/UserMenu/UserMenuSection'
 import UserMenuItem    from 'ui/shell/UserMenu/UserMenuItem'
 import VJSChart        from 'ui/vjs/VJSChart'
+import LoadingSpinner  from 'ui/shell/LoadingSpinner'
 
 import Info            from './Info'
+import Overview        from './Overview'
 import Demographics    from './Demographics'
 import FinancialAid    from './FinancialAid'
-import Courses         from './Courses'
+import Contacts        from './Contacts'
 
 import fireEvent       from 'helpers/FireEvent'
+import _               from 'lodash'
 
 const cardStyle = {
   overlay: {
@@ -43,7 +49,7 @@ const cardStyle = {
 @withRouter
 @observer
 export default class StudentCard extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.student = this.props.store.student
@@ -57,7 +63,7 @@ export default class StudentCard extends Component {
     fireEvent('onCloseStudentCard', { student: store.student.id })
   }
 
-  render () {
+  render() {
     const { store } = this.props
     const { isLoading, student } = store
 
@@ -73,13 +79,17 @@ export default class StudentCard extends Component {
     )
   }
 
-  renderLoader = () =>
+  renderLoader = () => {
     <Row className='justify-content-sm-center align-items-sm-center h-100'>
-      {/* TODO: use a better loading indicator */}
-      <h3>Loading student ...</h3>
+      <LoadingSpinner/>
     </Row>
+  }
 
-  renderCard () {
+  componentWillReceiveProps(nextProps) {
+    console.log('-- will receive')
+  }
+
+  renderCard(){
     const { store, match } = this.props
     const { student, groupedContacts: contacts } = store
 
@@ -90,156 +100,72 @@ export default class StudentCard extends Component {
           <Demographics student={student} />
           <FinancialAid student={student} />
 
-          <Card>
+          {/* <Card> */}
+          {/*   <RRNavLink to={`${match.url}/overview`}>Overview</RRNavLink> */}
+          {/*   <RRNavLink to={`${match.url}/contacts`}>Contacts</RRNavLink> */}
+          {/*   {this.props.children} */}
             {/* <h5 className='p-2 pb-0 mb-0'>Details</h5> */}
-            <UserMenuSection title='Details'>
-              <UserMenuItem
-                title='Overview'
-                iconClass='icon-list'
-                link={`${match.url}/overview`}
-              />
-              <UserMenuItem
-                title='Attendance'
-                iconClass='icon-calendar'
-                link={`${match.url}/attendance`}
-              />
-              <UserMenuItem
-                title='Discipline'
-                iconClass='icon-thermometer'
-                link={`${match.url}/discipline`}
-              />
-              <UserMenuItem
-                title='Assessment'
-                iconClass='icon-bar-graph'
-                link={`${match.url}/assessment`}
-              />
-            </UserMenuSection>
-          </Card>
+            {/* <UserMenuSection title='Details'> */}
+            {/*   <UserMenuItem */}
+            {/*     title='Overview' */}
+            {/*     iconClass='icon-list' */}
+            {/*     link={`${match.url}/overview`} */}
+            {/*   /> */}
+            {/*   <UserMenuItem */}
+            {/*     title='Contacts' */}
+            {/*     iconClass='icon-calendar' */}
+            {/*     link={`${match.url}/contacts`} */}
+            {/*   /> */}
+            {/*   <UserMenuItem */}
+            {/*     title='Discipline' */}
+            {/*     iconClass='icon-thermometer' */}
+            {/*     link={`${match.url}/discipline`} */}
+            {/*   /> */}
+            {/*   <UserMenuItem */}
+            {/*     title='Assessment' */}
+            {/*     iconClass='icon-bar-graph' */}
+            {/*     link={`${match.url}/assessment`} */}
+            {/*   /> */}
+            {/* </UserMenuSection> */}
+          {/* </Card> */}
         </Col>
 
+        {/* Root Container */}
         <Col sm='9'>
-          <h4 className='m-1 mb-3'>
-            Overview
-            <div className='float-right'>
-              <span className='icon icon-cross' onClick={this.closeCard} />
-            </div>
-          </h4>
+          <Switch>
+            <Redirect exact from={`${match.url}`} to={`${match.url}/overview`}/>
 
-          <div>
-            <Courses student={student} />
-            <Card>
-              <Table>
-                <thead>
-                  <tr>
-                    <td>
-                      <strong>Name</strong>
-                    </td>
-                    <td>
-                      <strong>Relationship</strong>
-                    </td>
-                    <td>
-                      <strong>Phone</strong>
-                    </td>
-                    <td>
-                      <strong>Email</strong>
-                    </td>
-                  </tr>
-                </thead>
+            <Route
+              path   = {`${match.url}/overview`}
+              render = {() => <Overview student={student} handleClick={this.closeCard}/> }
+            />
 
-                <tbody>
-                  {contacts.map(c => this.renderContacts(c))}
-                </tbody>
-              </Table>
-            </Card>
-          </div>
+            <Route
+              path   = {`${match.url}/contacts`}
+              render = {() => <Contacts student={student} contacts={contacts}/> }
+            />
+          </Switch>
 
-          <Row>
-            <Col sm='4' className='m-1 mt-3'>
-              <Route
-                path={`${match.url}/overview`}
-                render={({ match }) => this.renderSubComponents('Overview')}
-              />
-              <Route
-                path={`${match.url}/attendance`}
-                render={({ match }) => this.renderSubComponents('Attendance')}
-              />
-              <Route
-                path={`${match.url}/discipline`}
-                render={({ match }) => this.renderSubComponents('Discipline')}
-              />
-              <Route
-                path={`${match.url}/assessment`}
-                render={({ match }) => this.renderSubComponents('Assessment')}
-              />
-            </Col>
-          </Row>
+          <Card>
+            <CardBlock>
+              <h5>Contacts</h5>
+
+              <Contacts contacts={contacts}/>
+            </CardBlock>
+          </Card>
         </Col>
       </Row>
     )
   }
 
-  renderSubComponents = page =>
-    <Card>
-      <CardImg src={`http://via.placeholder.com/318x180?text=${page}`} />
-      <CardBlock>
-        <CardSubtitle className='text-center'>sub component</CardSubtitle>
-      </CardBlock>
-    </Card>
-
-  renderContacts (contact) {
+  renderSubComponents = page => {
     return (
-      <tr key={`${contact.name}_${contact.relationship}`}>
-        <td>
-          {contact.name}
-        </td>
-        <td>
-          {contact.relationship}
-        </td>
-
-        <td>
-          {/* TODO: extract to function */}
-          {contact.refs.map(ref => {
-            return (
-              <div key={ref.id} className='mb-1'>
-                <ButtonGroup className='mr-2'>
-                  <Button size='sm' color='success' disabled>
-                    <span className='icon icon-phone' />
-                  </Button>
-
-                  <Button
-                    size='sm'
-                    color='primary'
-                    disabled={ref.number_type !== 'mobile'}
-                  >
-                    <span className='icon icon-chat' />
-                  </Button>
-                </ButtonGroup>
-
-                {ref.phone}
-                <br />
-              </div>
-            )
-          })}
-        </td>
-
-        <td>
-          {/* TODO: extract to function */}
-          {/* NOTE: should we uniq the email addy's in the store? */}
-          {_.uniqBy(
-            contact.refs.map((ref, i) => {
-              return (
-                <div key={ref.id} className='mb-1'>
-                  <Button size='sm' color='info' className='mr-2' disabled>
-                    <span className='icon icon-mail' />
-                  </Button>
-                  {ref.email}
-                </div>
-              )
-            }),
-            'email'
-          )}
-        </td>
-      </tr>
+      <Card>
+        <CardImg src={`http://via.placeholder.com/318x180?text=${page}`} />
+        <CardBlock>
+          <CardSubtitle className='text-center'>sub component</CardSubtitle>
+        </CardBlock>
+      </Card>
     )
   }
 }

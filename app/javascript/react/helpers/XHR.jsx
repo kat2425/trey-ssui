@@ -9,5 +9,4 @@ const XHR = axios.create({
   }
 })
 
-
 export default XHR

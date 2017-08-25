@@ -44,10 +44,10 @@ export default class MyStudents extends Component {
           />
 
           <VJSChart
-            id         = 'infraction-top-list'
-            reportPath = '/public/VJS/ss_ui/infractions/infractions_top_list'
+            id         = 'recent-activity'
+            reportPath = '/public/VJS/ss_ui/channel/recent_activity'
             scale      = 'container'
-            title      = 'Stuff'
+            title      = 'Recent Activity'
             className  = 'col-md-5'
             isTable    = {true}
           />

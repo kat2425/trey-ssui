@@ -33,3 +33,4 @@ config/secrets.yml.key
 
 # Ignore Environment Secrets
 .env*
+.env

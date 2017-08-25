@@ -30,8 +30,8 @@ const UserMenu = () => {
       </UserMenuSection>
 
       <UserMenuSection title='Insights'>
-        <UserMenuItem title='Risk Analysis' iconClass='icon-traffic-cone' />
-        <UserMenuItem title='Reporting' iconClass='icon-funnel' link='/r/dumb' />
+        <UserMenuItem title='Risk Analysis' iconClass='icon-traffic-cone' link='/r/risk_analysis' />
+        {/* <UserMenuItem title='Reporting' iconClass='icon-funnel' link='/r/dumb' /> */}
       </UserMenuSection>
     </div>
   )

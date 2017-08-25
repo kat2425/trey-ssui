@@ -1,6 +1,5 @@
 import React, { Component }  from 'react'
-import { withRouter } from 'react-router-dom'
-import { withLastLocation }  from 'react-router-last-location'
+import { withRouter }        from 'react-router-dom'
 
 import UserMenu              from 'ui/shell/UserMenu/UserMenu'
 import ActionBar             from 'ui/shell/ActionBar'
@@ -17,53 +16,55 @@ import WebSocketStore        from 'stores/WebSocket'
 import VJSContainer          from 'ui/vjs/VJSContainer'
 
 @withRouter
-@withLastLocation
 class UserMain extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {
+    this.currentPath = null
+    this.state       = {
       hideSidebar: true
     }
   }
 
-  showStudentCard (e) {
+  showStudentCard(e) {
     const {history} = this.props
+
+    this.currentPath = this.props.location.pathname
 
     if (e.detail.student) {
       history.push(`${history.location.pathname}/students/${e.detail.student}`)
     }
   }
 
-  onCloseStudentCard (e) {
-    const { history, lastLocation } = this.props
+  onCloseStudentCard() {
+    const { history } = this.props
 
-    if (lastLocation) {
-      history.goBack()
+    if (this.currentPath) {
+      history.push(this.currentPath)
     } else {
       history.push('/r/my_students')
     }
   }
 
-  toggleSidebar (e) {
+  toggleSidebar(e) {
     this.setState({ hideSidebar: !this.state.hideSidebar })
   }
 
-  componentDidMount () {
-    WebSocketStore.subscribeUser(SSUser.id)
+  componentDidMount() {
+    WebSocketStore.subscribeUser(window.SSUser.id)
 
     window.addEventListener('showStudentCard', ::this.showStudentCard)
     window.addEventListener('onCloseStudentCard', ::this.onCloseStudentCard)
     window.addEventListener('toggleSidebar', ::this.toggleSidebar)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('showStudentCard', ::this.showStudentCard)
     window.removeEventListener('onCloseStudentCard', ::this.onCloseStudentCard)
     window.removeEventListener('toggleSidebar', ::this.toggleSidebar)
   }
 
-  render () {
+  render() {
     return (
       <VJSContainer>
         <div className='container-fluid pt-4'>

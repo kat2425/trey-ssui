@@ -1,4 +1,4 @@
-import { observable, action, computed, runInAction, autorun } from 'mobx'
+import { observable, action, computed, runInAction, autorun, toJS } from 'mobx'
 
 import _   from 'lodash'
 import xhr from 'helpers/XHR'
@@ -79,6 +79,8 @@ class StudentCardStore {
 
   @computed
   get groupedContacts() {
+    // const _contacts = toJS(this.contacts)
+
     return _.map(_.groupBy(this.contacts, c => [ c.name, c.relationship ]), group =>
       ({
         name:         group[0].name,
