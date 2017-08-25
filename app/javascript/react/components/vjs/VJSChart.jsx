@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import PropTypes            from 'prop-types'
 
 import {
-  Container,  Row,            Col,       Collapse,
-  Button,     Card,           CardBlock, UncontrolledTooltip,
-  Pagination, PaginationItem, PaginationLink
+  Collapse,            Button,     Card,           CardBlock,
+  UncontrolledTooltip, Pagination, PaginationItem, PaginationLink
 } from 'reactstrap'
 
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
@@ -34,9 +32,9 @@ export default class VJSChart extends Component {
   // loading indicator
   componentDidMount() {
     const { reportPath, params } = this.props
-    this._isMounted = true
 
-    this.renderChart(this.props.reportPath, this.props.params)
+    this._isMounted = true
+    this.renderChart(reportPath, params)
   }
 
   componentWillUnmount() {
@@ -84,7 +82,7 @@ export default class VJSChart extends Component {
       params:           (reportParams || {}),
 
       // TODO: fixme with a spread ... operator
-      events:           Object.assign((this.props.events || this.correctVJSTable()), {
+      events: Object.assign((this.props.events || this.correctVJSTable()), {
         changeTotalPages: (total) => {
           if (this._isMounted) this.setState({ totalPages: total })
         }
@@ -95,7 +93,7 @@ export default class VJSChart extends Component {
         if (this._isMounted) this.setState({ resourceLoaded: true })
       },
 
-      error: ::this.handleError
+      error: this.handleError
     })
   }
 
@@ -115,7 +113,7 @@ export default class VJSChart extends Component {
     // method and replace it with a CSS defined animation
     if (!this.state.resourceLoaded) {
       return (
-        <LoadingSpinner/>
+        <LoadingSpinner />
       )
     }
   }
@@ -175,7 +173,7 @@ export default class VJSChart extends Component {
           key      = {page}
           active   = {page === this.state.currentPage}
         >
-          <PaginationLink onClick={(e) => this.changeReportPage(page)}>
+          <PaginationLink onClick={() => this.changeReportPage(page)}>
             {page}
           </PaginationLink>
         </PaginationItem>
@@ -201,7 +199,7 @@ export default class VJSChart extends Component {
   }
 
   mergeLinkOptions(opts) {
-     return {
+    return {
       ...opts,
       beforeRender: (pairs) => {
         pairs.forEach(pair => $(pair.element).addClass('vjs-link'))
@@ -250,7 +248,7 @@ export default class VJSChart extends Component {
     // FIXME: several things here in render() can be extracted into wrapper components
     return (
       <div className={this.props.className}>
-        <Card className={`mb-4`}>
+        <Card className='mb-4'>
           <CardBlock>
             <h5>
               <span
@@ -262,7 +260,7 @@ export default class VJSChart extends Component {
 
               <div className='float-right'>
                 <Button
-                  style    = {{padding:0, width:28, height: 28}}
+                  style    = {{padding: 0, width: 28, height: 28}}
                   size     = 'sm'
                   id       = {`${this.reportID}-export-pdf`}
                   onClick  = {() => this.exportPDF()}
