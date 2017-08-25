@@ -35,6 +35,11 @@ yarn install
 foreman s
 ```
 
+You'll also need to set up your `.env` file by simply `cp env.sample .env` and then filling
+out the values in your `.env` file to match the environment to which you'd like to connect.
+Note that you can define environment-specific file such as `.env.staging` or `.env.test`
+if you'd like, but it's not required.
+
 ## Ruby interactive console
 ```
 # DB access, interactive tests, scratch REPL
