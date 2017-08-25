@@ -1,11 +1,11 @@
 import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 
-import ModuleHeader         from 'ui/shell/ModuleHeader'
-import VJSChart             from 'ui/vjs/VJSChart'
-import VJSICSelect          from 'ui/vjs/VJSICSelect'
+import ModuleHeader        from 'ui/shell/ModuleHeader'
+import VJSChart            from 'ui/vjs/VJSChart'
+import VJSICSelect         from 'ui/vjs/VJSICSelect'
 
-import fireEvent            from 'helpers/FireEvent'
+import fireEvent           from 'helpers/FireEvent'
 
 export default class MyStudents extends Component {
   static propTypes = {

@@ -8732,6 +8732,414 @@ img.zoom-img {
   .sidebar a:hover {
     color: #3f9fcf; }
 
+.vjs-rank-cell {
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.125), 0 -1px 0 rgba(255, 255, 255, 0.125), 1px 0 0 rgba(255, 255, 255, 0.125), -1px 0 0 rgba(255, 255, 255, 0.125); }
+
+.vjs-rank-cell-100 {
+  background-color: #f16760;
+  border-top: 1px solid #ef4c44 !important; }
+
+.vjs-rank-cell-99 {
+  background-color: #f16c59;
+  border-top: 1px solid #ef533d !important; }
+
+.vjs-rank-cell-98 {
+  background-color: #f27153;
+  border-top: 1px solid #f05a37 !important; }
+
+.vjs-rank-cell-97 {
+  background-color: #f3764c;
+  border-top: 1px solid #f1602f !important; }
+
+.vjs-rank-cell-96 {
+  background-color: #f47b46;
+  border-top: 1px solid #f26629 !important; }
+
+.vjs-rank-cell-95 {
+  background-color: #f58040;
+  border-top: 1px solid #f36d23 !important; }
+
+.vjs-rank-cell-94 {
+  background-color: #f68539;
+  border-top: 1px solid #f5731c !important; }
+
+.vjs-rank-cell-93 {
+  background-color: #f78a33;
+  border-top: 1px solid #f67916 !important; }
+
+.vjs-rank-cell-92 {
+  background-color: #f88f2c;
+  border-top: 1px solid #f77f0e !important; }
+
+.vjs-rank-cell-91 {
+  background-color: #f99426;
+  border-top: 1px solid #f88508 !important; }
+
+.vjs-rank-cell-90 {
+  background-color: #fa9920;
+  border-top: 1px solid #f68b06 !important; }
+
+.vjs-rank-cell-89 {
+  background-color: #fb9e19;
+  border-top: 1px solid #f19004 !important; }
+
+.vjs-rank-cell-88 {
+  background-color: #fca313;
+  border-top: 1px solid #ed9403 !important; }
+
+.vjs-rank-cell-87 {
+  background-color: #fda80c;
+  border-top: 1px solid #e89702 !important; }
+
+.vjs-rank-cell-86 {
+  background-color: #fead06;
+  border-top: 1px solid #e49a01 !important; }
+
+.vjs-rank-cell-85 {
+  background-color: #ffb200;
+  border-top: 1px solid #e09d00 !important; }
+
+.vjs-rank-cell-84 {
+  background-color: #ffb400;
+  border-top: 1px solid #e09e00 !important; }
+
+.vjs-rank-cell-83 {
+  background-color: #ffb600;
+  border-top: 1px solid #e0a000 !important; }
+
+.vjs-rank-cell-82 {
+  background-color: #ffb800;
+  border-top: 1px solid #e0a200 !important; }
+
+.vjs-rank-cell-81 {
+  background-color: #ffba00;
+  border-top: 1px solid #e0a400 !important; }
+
+.vjs-rank-cell-80 {
+  background-color: #ffbc00;
+  border-top: 1px solid #e0a500 !important; }
+
+.vjs-rank-cell-79 {
+  background-color: #ffbe00;
+  border-top: 1px solid #e0a700 !important; }
+
+.vjs-rank-cell-78 {
+  background-color: #ffc000;
+  border-top: 1px solid #e0a900 !important; }
+
+.vjs-rank-cell-77 {
+  background-color: #ffc200;
+  border-top: 1px solid #e0ab00 !important; }
+
+.vjs-rank-cell-76 {
+  background-color: #ffc400;
+  border-top: 1px solid #e0ac00 !important; }
+
+.vjs-rank-cell-75 {
+  background-color: #ffc600;
+  border-top: 1px solid #e0ae00 !important; }
+
+.vjs-rank-cell-74 {
+  background-color: #ffc800;
+  border-top: 1px solid #e0b000 !important; }
+
+.vjs-rank-cell-73 {
+  background-color: #ffca00;
+  border-top: 1px solid #e0b200 !important; }
+
+.vjs-rank-cell-72 {
+  background-color: #ffcc00;
+  border-top: 1px solid #e0b400 !important; }
+
+.vjs-rank-cell-71 {
+  background-color: #ffce00;
+  border-top: 1px solid #e0b500 !important; }
+
+.vjs-rank-cell-70 {
+  background-color: #ffd000;
+  border-top: 1px solid #e0b700 !important; }
+
+.vjs-rank-cell-69 {
+  background-color: #ffd200;
+  border-top: 1px solid #e0b900 !important; }
+
+.vjs-rank-cell-68 {
+  background-color: #ffd400;
+  border-top: 1px solid #e0bb00 !important; }
+
+.vjs-rank-cell-67 {
+  background-color: #ffd600;
+  border-top: 1px solid #e0bc00 !important; }
+
+.vjs-rank-cell-66 {
+  background-color: #ffd800;
+  border-top: 1px solid #e0be00 !important; }
+
+.vjs-rank-cell-65 {
+  background-color: #ffda00;
+  border-top: 1px solid #e0c000 !important; }
+
+.vjs-rank-cell-64 {
+  background-color: #ffdc00;
+  border-top: 1px solid #e0c200 !important; }
+
+.vjs-rank-cell-63 {
+  background-color: #ffde00;
+  border-top: 1px solid #e0c300 !important; }
+
+.vjs-rank-cell-62 {
+  background-color: #ffe000;
+  border-top: 1px solid #e0c500 !important; }
+
+.vjs-rank-cell-61 {
+  background-color: #fee200;
+  border-top: 1px solid #dfc700 !important; }
+
+.vjs-rank-cell-60 {
+  background-color: #ffe500;
+  border-top: 1px solid #e0ca00 !important; }
+
+.vjs-rank-cell-59 {
+  background-color: #fee60e;
+  border-top: 1px solid #ecd501 !important; }
+
+.vjs-rank-cell-58 {
+  background-color: #fde81d;
+  border-top: 1px solid #f9e202 !important; }
+
+.vjs-rank-cell-57 {
+  background-color: #fde92c;
+  border-top: 1px solid #fde60e !important; }
+
+.vjs-rank-cell-56 {
+  background-color: #fceb3b;
+  border-top: 1px solid #fce81d !important; }
+
+.vjs-rank-cell-55 {
+  background-color: #fced4a;
+  border-top: 1px solid #fcea2c !important; }
+
+.vjs-rank-cell-54 {
+  background-color: #fbee59;
+  border-top: 1px solid #faeb3b !important; }
+
+.vjs-rank-cell-53 {
+  background-color: #faf068;
+  border-top: 1px solid #f9ed4a !important; }
+
+.vjs-rank-cell-52 {
+  background-color: #faf177;
+  border-top: 1px solid #f9ee59 !important; }
+
+.vjs-rank-cell-51 {
+  background-color: #f9f386;
+  border-top: 1px solid #f8f069 !important; }
+
+.vjs-rank-cell-50 {
+  background-color: #f9f595;
+  border-top: 1px solid #f7f278 !important; }
+
+.vjs-rank-cell-49 {
+  background-color: #f7f592;
+  border-top: 1px solid #f5f275 !important; }
+
+.vjs-rank-cell-48 {
+  background-color: #f6f58f;
+  border-top: 1px solid #f4f273 !important; }
+
+.vjs-rank-cell-47 {
+  background-color: #f4f58c;
+  border-top: 1px solid #f1f370 !important; }
+
+.vjs-rank-cell-46 {
+  background-color: #f3f68a;
+  border-top: 1px solid #f0f46e !important; }
+
+.vjs-rank-cell-45 {
+  background-color: #f2f687;
+  border-top: 1px solid #eff46b !important; }
+
+.vjs-rank-cell-44 {
+  background-color: #f0f684;
+  border-top: 1px solid #edf467 !important; }
+
+.vjs-rank-cell-43 {
+  background-color: #eff681;
+  border-top: 1px solid #ebf464 !important; }
+
+.vjs-rank-cell-42 {
+  background-color: #edf77f;
+  border-top: 1px solid #e9f562 !important; }
+
+.vjs-rank-cell-41 {
+  background-color: #ecf77c;
+  border-top: 1px solid #e8f55f !important; }
+
+.vjs-rank-cell-40 {
+  background-color: #ebf779;
+  border-top: 1px solid #e7f55c !important; }
+
+.vjs-rank-cell-39 {
+  background-color: #e9f877;
+  border-top: 1px solid #e4f75a !important; }
+
+.vjs-rank-cell-38 {
+  background-color: #e8f874;
+  border-top: 1px solid #e3f757 !important; }
+
+.vjs-rank-cell-37 {
+  background-color: #e6f871;
+  border-top: 1px solid #e1f754 !important; }
+
+.vjs-rank-cell-36 {
+  background-color: #e5f86e;
+  border-top: 1px solid #e0f751 !important; }
+
+.vjs-rank-cell-35 {
+  background-color: #e4f96c;
+  border-top: 1px solid #dff84f !important; }
+
+.vjs-rank-cell-34 {
+  background-color: #e2f969;
+  border-top: 1px solid #dcf84c !important; }
+
+.vjs-rank-cell-33 {
+  background-color: #e1f966;
+  border-top: 1px solid #dbf849 !important; }
+
+.vjs-rank-cell-32 {
+  background-color: #dffa64;
+  border-top: 1px solid #d9f946 !important; }
+
+.vjs-rank-cell-31 {
+  background-color: #defa61;
+  border-top: 1px solid #d8f943 !important; }
+
+.vjs-rank-cell-30 {
+  background-color: #ddfa5e;
+  border-top: 1px solid #d7f940 !important; }
+
+.vjs-rank-cell-29 {
+  background-color: #dbfa5b;
+  border-top: 1px solid #d4f93d !important; }
+
+.vjs-rank-cell-28 {
+  background-color: #dafb59;
+  border-top: 1px solid #d3fa3b !important; }
+
+.vjs-rank-cell-27 {
+  background-color: #d8fb56;
+  border-top: 1px solid #d1fa38 !important; }
+
+.vjs-rank-cell-26 {
+  background-color: #d7fb53;
+  border-top: 1px solid #d0fa35 !important; }
+
+.vjs-rank-cell-25 {
+  background-color: #d6fc51;
+  border-top: 1px solid #cffb33 !important; }
+
+.vjs-rank-cell-24 {
+  background-color: #d3fb52;
+  border-top: 1px solid #cbfa34 !important; }
+
+.vjs-rank-cell-23 {
+  background-color: #d1fb53;
+  border-top: 1px solid #c9fa35 !important; }
+
+.vjs-rank-cell-22 {
+  background-color: #cffb54;
+  border-top: 1px solid #c7fa36 !important; }
+
+.vjs-rank-cell-21 {
+  background-color: #ccfb55;
+  border-top: 1px solid #c3fa37 !important; }
+
+.vjs-rank-cell-20 {
+  background-color: #cafb57;
+  border-top: 1px solid #c1fa39 !important; }
+
+.vjs-rank-cell-19 {
+  background-color: #c8fa58;
+  border-top: 1px solid #bef93a !important; }
+
+.vjs-rank-cell-18 {
+  background-color: #c5fa59;
+  border-top: 1px solid #bbf93b !important; }
+
+.vjs-rank-cell-17 {
+  background-color: #c3fa5a;
+  border-top: 1px solid #b8f93c !important; }
+
+.vjs-rank-cell-16 {
+  background-color: #c1fa5b;
+  border-top: 1px solid #b6f93d !important; }
+
+.vjs-rank-cell-15 {
+  background-color: #befa5d;
+  border-top: 1px solid #b2f93f !important; }
+
+.vjs-rank-cell-14 {
+  background-color: #bcf95e;
+  border-top: 1px solid #b0f840 !important; }
+
+.vjs-rank-cell-13 {
+  background-color: #baf95f;
+  border-top: 1px solid #adf842 !important; }
+
+.vjs-rank-cell-12 {
+  background-color: #b7f960;
+  border-top: 1px solid #aaf843 !important; }
+
+.vjs-rank-cell-11 {
+  background-color: #b5f961;
+  border-top: 1px solid #a7f844 !important; }
+
+.vjs-rank-cell-10 {
+  background-color: #b3f963;
+  border-top: 1px solid #a5f846 !important; }
+
+.vjs-rank-cell-9 {
+  background-color: #b0f864;
+  border-top: 1px solid #a1f747 !important; }
+
+.vjs-rank-cell-8 {
+  background-color: #aef865;
+  border-top: 1px solid #9ff748 !important; }
+
+.vjs-rank-cell-7 {
+  background-color: #acf866;
+  border-top: 1px solid #9cf749 !important; }
+
+.vjs-rank-cell-6 {
+  background-color: #a9f867;
+  border-top: 1px solid #98f74a !important; }
+
+.vjs-rank-cell-5 {
+  background-color: #a7f869;
+  border-top: 1px solid #96f74c !important; }
+
+.vjs-rank-cell-4 {
+  background-color: #a5f76a;
+  border-top: 1px solid #93f54d !important; }
+
+.vjs-rank-cell-3 {
+  background-color: #a2f76b;
+  border-top: 1px solid #90f54e !important; }
+
+.vjs-rank-cell-2 {
+  background-color: #a0f76c;
+  border-top: 1px solid #8df54f !important; }
+
+.vjs-rank-cell-1 {
+  background-color: #9ef76d;
+  border-top: 1px solid #8bf550 !important; }
+
+.vjs-rank-cell-0 {
+  background-color: #9cf76f;
+  border-top: 1px solid #88f552 !important; }
+
 html {
   font-size: 14px; }
 

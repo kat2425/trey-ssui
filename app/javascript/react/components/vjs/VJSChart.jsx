@@ -82,6 +82,7 @@ export default class VJSChart extends Component {
       linkOptions:      this.mergeLinkOptions((this.props.linkOptions || {})),
       ignorePagination: (this.props.ignorePagination || false),
       params:           (reportParams || {}),
+
       // TODO: fixme with a spread ... operator
       events:           Object.assign((this.props.events || this.correctVJSTable()), {
         changeTotalPages: (total) => {
