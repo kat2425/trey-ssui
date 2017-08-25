@@ -1,7 +1,6 @@
 import React, { Component }  from 'react'
-import { withRouter, Route } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { withLastLocation }  from 'react-router-last-location'
-import { ModalContainer }    from 'react-router-modal'
 
 import UserMenu              from 'ui/shell/UserMenu/UserMenu'
 import ActionBar             from 'ui/shell/ActionBar'
@@ -20,7 +19,7 @@ import VJSContainer          from 'ui/vjs/VJSContainer'
 @withRouter
 @withLastLocation
 class UserMain extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -28,27 +27,29 @@ class UserMain extends Component {
     }
   }
 
-  showStudentCard(e) {
+  showStudentCard (e) {
+    const {history} = this.props
+
     if (e.detail.student) {
-      this.props.history.push(`/r/students/${e.detail.student}`)
+      history.push(`${history.location.pathname}/students/${e.detail.student}`)
     }
   }
 
-  onCloseStudentCard(e) {
-    const {history, lastLocation} = this.props
+  onCloseStudentCard (e) {
+    const { history, lastLocation } = this.props
 
     if (lastLocation) {
-      history.goBack();
+      history.goBack()
     } else {
-      history.push("/r/");
+      history.push('/r/my_students')
     }
   }
 
-  toggleSidebar(e) {
+  toggleSidebar (e) {
     this.setState({ hideSidebar: !this.state.hideSidebar })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     WebSocketStore.subscribeUser(SSUser.id)
 
     window.addEventListener('showStudentCard', ::this.showStudentCard)
@@ -56,23 +57,23 @@ class UserMain extends Component {
     window.addEventListener('toggleSidebar', ::this.toggleSidebar)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('showStudentCard', ::this.showStudentCard)
     window.removeEventListener('onCloseStudentCard', ::this.onCloseStudentCard)
     window.removeEventListener('toggleSidebar', ::this.toggleSidebar)
   }
 
-  render() {
+  render () {
     return (
       <VJSContainer>
         <div className='container-fluid pt-4'>
           <div className='row'>
-            <CallingController/>
-            <NavBar/>
-            <UserMenu/>
-            <AppContainer/>
-            <ActionBar store={SMSInboxStore}/>
-            <Sidebar hidden={this.state.hideSidebar}/>
+            <CallingController />
+            <NavBar />
+            <UserMenu />
+            <AppContainer />
+            <ActionBar store={SMSInboxStore} />
+            <Sidebar hidden={this.state.hideSidebar} />
           </div>
         </div>
       </VJSContainer>
