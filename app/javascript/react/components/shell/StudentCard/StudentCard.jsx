@@ -89,8 +89,13 @@ export default class StudentCard extends Component {
     console.log('-- will receive')
   }
 
-  renderCard(){
-    const { store, match } = this.props
+  isActive = (tab) => {
+    const {match} = this.props
+    return () => tab === match.params.tab
+  }
+
+  renderCard() {
+    const { store, match, location } = this.props
     const { student, groupedContacts: contacts } = store
 
     return (
@@ -100,72 +105,59 @@ export default class StudentCard extends Component {
           <Demographics student={student} />
           <FinancialAid student={student} />
 
-          {/* <Card> */}
-          {/*   <RRNavLink to={`${match.url}/overview`}>Overview</RRNavLink> */}
-          {/*   <RRNavLink to={`${match.url}/contacts`}>Contacts</RRNavLink> */}
-          {/*   {this.props.children} */}
-            {/* <h5 className='p-2 pb-0 mb-0'>Details</h5> */}
-            {/* <UserMenuSection title='Details'> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Overview' */}
-            {/*     iconClass='icon-list' */}
-            {/*     link={`${match.url}/overview`} */}
-            {/*   /> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Contacts' */}
-            {/*     iconClass='icon-calendar' */}
-            {/*     link={`${match.url}/contacts`} */}
-            {/*   /> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Discipline' */}
-            {/*     iconClass='icon-thermometer' */}
-            {/*     link={`${match.url}/discipline`} */}
-            {/*   /> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Assessment' */}
-            {/*     iconClass='icon-bar-graph' */}
-            {/*     link={`${match.url}/assessment`} */}
-            {/*   /> */}
-            {/* </UserMenuSection> */}
-          {/* </Card> */}
+          <Card> 
+            {this.props.children} 
+            <UserMenuSection title='Details'> 
+              <UserMenuItem 
+                title     = 'Overview'
+                iconClass = 'icon-list'
+                link      = 'overview'
+                isActive  = {this.isActive('overview')}
+              /> 
+              <UserMenuItem 
+                title     = 'Contacts'
+                iconClass = 'icon-calendar'
+                link      = 'contacts'
+                isActive  = {this.isActive('contacts')}
+              /> 
+              <UserMenuItem 
+                title     = 'Discipline'
+                iconClass = 'icon-thermometer'
+                link      = 'discipline'
+                isActive  = {this.isActive('discipline')}
+              /> 
+              <UserMenuItem 
+                title     = 'Assessment'
+                iconClass = 'icon-bar-graph'
+                link      = 'assessment'
+                isActive  = {this.isActive('assessment')}
+              /> 
+            </UserMenuSection> 
+          </Card> 
         </Col>
 
         {/* Root Container */}
         <Col sm='9'>
-          <Switch>
-            <Redirect exact from={`${match.url}`} to={`${match.url}/overview`}/>
-
-            <Route
-              path   = {`${match.url}/overview`}
-              render = {() => <Overview student={student} handleClick={this.closeCard}/> }
-            />
-
-            <Route
-              path   = {`${match.url}/contacts`}
-              render = {() => <Contacts student={student} contacts={contacts}/> }
-            />
-          </Switch>
-
-          <Card>
-            <CardBlock>
-              <h5>Contacts</h5>
-
-              <Contacts contacts={contacts}/>
-            </CardBlock>
-          </Card>
+          <Route
+            render = {this.renderRoutes}
+          />
         </Col>
       </Row>
     )
   }
 
-  renderSubComponents = page => {
-    return (
-      <Card>
-        <CardImg src={`http://via.placeholder.com/318x180?text=${page}`} />
-        <CardBlock>
-          <CardSubtitle className='text-center'>sub component</CardSubtitle>
-        </CardBlock>
-      </Card>
-    )
+  renderRoutes = () => {
+    const { store, match, location } = this.props
+    const { student, groupedContacts: contacts } = store
+
+    const tab = match.params.tab
+    switch(tab){
+      case 'overview':
+        return <Overview student={student} handleClick={this.closeCard}/>
+      case 'contacts':
+        return <Contacts student={student} contacts={contacts}/>
+      default:
+        return <div>404 </div>
+    }
   }
 }
