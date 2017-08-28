@@ -17,7 +17,13 @@ export default class UserMenuItem extends Component {
   render() {
     return (
       <NavItem className='pr-1'>
-        <NavLink tag={RRNavLink} activeStyle={activeItem} className='pr-4 pl-4 p-1' to={(this.props.link || '/404')}>
+        <NavLink 
+          tag={RRNavLink} 
+          activeStyle={activeItem} 
+          className='pr-4 pl-4 p-1' 
+          to={(this.props.link || '/404')}
+          isActive={this.props.isActive}
+        >
           <span className={`text-muted mr-3 icon ${this.props.iconClass}`} style={navIcon} />
           {this.props.title}
         </NavLink>

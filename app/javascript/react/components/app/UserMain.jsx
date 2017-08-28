@@ -32,7 +32,7 @@ class UserMain extends Component {
     this.currentPath = this.props.location.pathname
 
     if (e.detail.student) {
-      history.push(`${history.location.pathname}/students/${e.detail.student}`)
+      history.push(`${history.location.pathname}/students/${e.detail.student}/overview`)
     }
   }
 
