@@ -24,6 +24,10 @@
     color: $pagination-active-color;
     background-color: $pagination-active-bg;
     border-color: $pagination-active-border;
+    cursor: auto;
+    @include hover-focus {
+      color: $pagination-active-color;
+    }
   }
 
   &.disabled .page-link {
@@ -44,7 +48,7 @@
   color: $pagination-color;
   background-color: $pagination-bg;
   border: $pagination-border-width solid $pagination-border-color;
-
+  cursor: pointer;
   @include hover-focus {
     color: $pagination-hover-color;
     text-decoration: none;
