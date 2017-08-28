@@ -53,9 +53,10 @@ html, body {
   color: #282828
 }
 
-.student-search-container .active .typeahead-highlight {
+.student-search-container .active .typeahead-highlight, .dropdown-item:active .typeahead-highlight {
   color: white
 }
+
 
 .text-clear {
   color: white;
