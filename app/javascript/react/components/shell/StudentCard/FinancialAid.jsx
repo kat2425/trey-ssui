@@ -1,7 +1,8 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React         from 'react'
+import { observer }  from 'mobx-react'
+import PropTypes     from 'prop-types'
 
-import VJSChart  from 'ui/vjs/VJSChart'
+import VJSChart      from 'ui/vjs/VJSChart'
 
 const FinancialAid = ({student}) => {
   return (
@@ -23,4 +24,4 @@ FinancialAid.defaultProps = {}
 
 FinancialAid.propTypes = {}
 
-export default FinancialAid
+export default observer(FinancialAid)
