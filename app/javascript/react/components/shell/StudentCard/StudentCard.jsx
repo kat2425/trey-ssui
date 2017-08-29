@@ -85,15 +85,6 @@ export default class StudentCard extends Component {
     </Row>
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('-- will receive')
-  }
-
-  isActive = (tab) => {
-    const {match} = this.props
-    return () => tab === match.params.tab
-  }
-
   renderCard() {
     const { store, match, location } = this.props
     const { student, groupedContacts: contacts } = store
@@ -111,26 +102,26 @@ export default class StudentCard extends Component {
               <UserMenuItem 
                 title     = 'Overview'
                 iconClass = 'icon-list'
-                link      = 'overview'
-                isActive  = {this.isActive('overview')}
+                link      = {`${match.url}/overview`}
+                location  = {location}
               /> 
               <UserMenuItem 
                 title     = 'Contacts'
                 iconClass = 'icon-calendar'
-                link      = 'contacts'
-                isActive  = {this.isActive('contacts')}
+                link      = {`${match.url}/contacts`}
+                location  = {location}
               /> 
               <UserMenuItem 
                 title     = 'Discipline'
                 iconClass = 'icon-thermometer'
-                link      = 'discipline'
-                isActive  = {this.isActive('discipline')}
+                link      = {`${match.url}/discipline`}
+                location  = {location}
               /> 
               <UserMenuItem 
                 title     = 'Assessment'
                 iconClass = 'icon-bar-graph'
-                link      = 'assessment'
-                isActive  = {this.isActive('assessment')}
+                link      = {`${match.url}/assessment`}
+                location  = {location}
               /> 
             </UserMenuSection> 
           </Card> 
@@ -138,26 +129,20 @@ export default class StudentCard extends Component {
 
         {/* Root Container */}
         <Col sm='9'>
-          <Route
-            render = {this.renderRoutes}
-          />
+          <Switch location={location}>
+            <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
+            <Route
+              path   = {`${match.url}/overview`}
+              render = {() => <Overview student={student} handleClick={this.closeCard}/> }
+            />
+            <Route
+              path   = {`${match.url}/contacts`}
+              render = {() => <Contacts student={student} contacts={contacts}/> }
+            />
+            <Route render={() => <div>404</div>} />
+          </Switch>
         </Col>
       </Row>
     )
-  }
-
-  renderRoutes = () => {
-    const { store, match, location } = this.props
-    const { student, groupedContacts: contacts } = store
-
-    const tab = match.params.tab
-    switch(tab){
-      case 'overview':
-        return <Overview student={student} handleClick={this.closeCard}/>
-      case 'contacts':
-        return <Contacts student={student} contacts={contacts}/>
-      default:
-        return <div>404 </div>
-    }
   }
 }
