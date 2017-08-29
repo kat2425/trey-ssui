@@ -48,6 +48,11 @@ class SMSConversationStore {
     })
   }
 
+  @action
+  setRead(id) {
+    xhr.put(`/commo/sms_log/${id}/read`)
+  }
+
   @computed
   get descMessages() {
     return _.sortBy(this.messages, m => m.created_at)

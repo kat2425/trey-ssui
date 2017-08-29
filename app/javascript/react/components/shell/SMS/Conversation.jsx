@@ -23,7 +23,7 @@ export default class Conversation extends Component {
   }
 
   renderMessage(msg, index) {
-    const {id, direction, body, media_url, created_at} = msg
+    const {id, direction, body, media_url, read_status, created_at} = msg
 
     // TODO: extract to function
     const time = do {
@@ -34,7 +34,16 @@ export default class Conversation extends Component {
       }
     }
 
-    return <ChatBubble key={id} direction={direction} text={body} media={media_url} time={time} />
+    return <ChatBubble
+      key       = {id}
+      msgID     = {id}
+      direction = {direction}
+      text      = {body}
+      media     = {media_url}
+      time      = {time}
+      isRead    = {read_status}
+      setRead   = {::this.props.setRead}
+    />
   }
 
   render() {

@@ -8,7 +8,7 @@ import InboxItem from './InboxItem'
 @observer
 export default class Inbox extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
@@ -20,11 +20,12 @@ export default class Inbox extends Component {
     return (
       <li key={msg.id} onClick = {() => this.props.handleSelect(msg.conversation_id, msg.broker.contact.id)}>
         <InboxItem
-          key     = {msg.id}
-          read    = {msg.read_status}
-          name    = {msg.broker.contact.name}
-          time    = {msg.created_at}
-          message = {msg.body}
+          key       = {msg.id}
+          read      = {msg.read_status}
+          direction = {msg.direction}
+          name      = {msg.broker.contact.name}
+          time      = {msg.created_at}
+          message   = {msg.body}
         />
       </li>
     )

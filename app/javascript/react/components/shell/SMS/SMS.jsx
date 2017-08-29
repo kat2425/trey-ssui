@@ -8,7 +8,7 @@ import Conversation        from './Conversation'
 @observer
 export default class SMS extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
@@ -20,6 +20,10 @@ export default class SMS extends Component {
     this.props.store.fetchConversation(this.props.conversation)
   }
 
+  setRead(id) {
+    this.props.store.setRead(id)
+  }
+
   renderConversation({isLoading, descMessages}) {
     return do {
       if (isLoading) {
@@ -28,7 +32,7 @@ export default class SMS extends Component {
         </div>
       } else {
         <div className='p-3 pb-5'>
-          <Conversation messages={descMessages} />
+          <Conversation messages={descMessages} setRead={::this.setRead} />
         </div>
       }
     }

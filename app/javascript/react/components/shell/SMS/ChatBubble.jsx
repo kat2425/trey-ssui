@@ -1,6 +1,6 @@
 import React            from 'react'
 import PropTypes        from 'prop-types'
-import VisivilitySensor from 'react-visibility-sensor'
+import VisibilitySensor from 'react-visibility-sensor'
 import moment           from 'moment'
 
 const ChatBubbleMMS = (props) => {
@@ -44,16 +44,25 @@ const ChatBubble = (props) => {
     }
   }
 
+  const onChange = (isVisible) => {
+    if (!props.isRead && isVisible && (props.direction === 'inbound')) {
+      console.log(`i am visible | ${props.direction} | ${props.isRead} | : ${isVisible}`)
+      props.setRead(props.msgID)
+    }
+  }
+
   return (
     <li className={`media ${bubbleDirection} mb-2`}>
-      <div className='media-body'>
-        <div className='media-body-text'>
-          { props.media && <ChatBubbleMMS src={props.media}/>}
-          {props.text}
-        </div>
+      <VisibilitySensor onChange={onChange}>
+        <div className='media-body'>
+          <div className='media-body-text'>
+            { props.media && <ChatBubbleMMS src={props.media}/> }
+            { props.text }
+          </div>
 
-        { renderFooter() }
-      </div>
+          { renderFooter() }
+        </div>
+      </VisibilitySensor>
     </li>
   )
 }
