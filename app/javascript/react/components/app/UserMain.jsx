@@ -27,12 +27,12 @@ class UserMain extends Component {
   }
 
   showStudentCard(e) {
-    const {history} = this.props
+    const {history, location} = this.props
 
-    this.currentPath = this.props.location.pathname
+    this.currentPath = location.pathname
 
     if (e.detail.student) {
-      history.push(`${history.location.pathname}/students/${e.detail.student}/overview`)
+      history.push(`${this.currentPath}/students/${e.detail.student}/overview`)
     }
   }
 
