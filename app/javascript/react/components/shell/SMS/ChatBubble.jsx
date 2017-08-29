@@ -1,6 +1,7 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
-import moment    from 'moment'
+import React            from 'react'
+import PropTypes        from 'prop-types'
+import VisivilitySensor from 'react-visibility-sensor'
+import moment           from 'moment'
 
 const ChatBubbleMMS = (props) => {
   const { mode, src, height, width, style } = props

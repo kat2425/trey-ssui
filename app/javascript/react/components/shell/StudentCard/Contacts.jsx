@@ -65,6 +65,7 @@ const ContactEntry = ({contact}) => {
 
 const Contacts = ({contacts}) => {
   return (
+    <Card>
       <Table>
         <thead>
           <tr>
@@ -87,6 +88,7 @@ const Contacts = ({contacts}) => {
           { contacts.map(c => <ContactEntry key={c.name} contact={c}/>) }
         </tbody>
       </Table>
+    </Card>
   )
 }
 

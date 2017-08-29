@@ -60,6 +60,7 @@
     "react-select": "^1.0.0-rc.5",
     "react-select-fast-filter-options": "^0.2.2",
     "react-virtualized-select": "^3.1.0",
+    "react-visibility-sensor": "^3.10.1",
     "react_ujs": "^2.2.1",
     "reactstrap": "^4.8.0",
     "resolve-url-loader": "^2.1.0",
