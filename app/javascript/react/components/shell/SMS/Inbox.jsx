@@ -16,9 +16,13 @@ export default class Inbox extends Component {
     super(props)
   }
 
+  handleSelect = (msg) => () => {
+    this.props.handleSelect(msg.conversation_id, msg.broker.contact)
+  }
+
   renderItem(msg) {
     return (
-      <li key={msg.id} onClick = {() => this.props.handleSelect(msg.conversation_id, msg.broker.contact.id)}>
+      <li key={msg.id} onClick = {this.handleSelect(msg)}>
         <InboxItem
           key       = {msg.id}
           read      = {msg.read_status}

@@ -42,7 +42,7 @@ export default class Conversation extends Component {
       media     = {media_url}
       time      = {time}
       isRead    = {read_status}
-      setRead   = {::this.props.setRead}
+      setRead   = {this.props.setRead}
     />
   }
 

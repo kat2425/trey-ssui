@@ -1,3 +1,6 @@
+// FIXME
+// Make stateless
+
 import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
@@ -16,11 +19,7 @@ export default class SMS extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.store.fetchConversation(this.props.conversation)
-  }
-
-  setRead(id) {
+  setRead = (id) => {
     this.props.store.setRead(id)
   }
 
@@ -32,7 +31,7 @@ export default class SMS extends Component {
         </div>
       } else {
         <div className='p-3 pb-5'>
-          <Conversation messages={descMessages} setRead={::this.setRead} />
+          <Conversation messages={descMessages} setRead={this.setRead} />
         </div>
       }
     }

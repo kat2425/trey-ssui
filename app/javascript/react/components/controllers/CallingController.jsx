@@ -15,7 +15,7 @@ const style = {
 
 export default class CallingController extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
