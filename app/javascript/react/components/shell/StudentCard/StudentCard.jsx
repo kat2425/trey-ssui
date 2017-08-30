@@ -24,6 +24,8 @@ import Overview        from './Overview'
 import Demographics    from './Demographics'
 import FinancialAid    from './FinancialAid'
 import Contacts        from './Contacts'
+import Notes           from '../Notes'
+
 
 import fireEvent       from 'helpers/FireEvent'
 import _               from 'lodash'
@@ -123,6 +125,12 @@ export default class StudentCard extends Component {
                 link      = {`${match.url}/assessment`}
                 location  = {location}
               /> 
+              <UserMenuItem 
+                title     = 'Notes'
+                iconClass = 'icon-pencil'
+                link      = {`${match.url}/notes`}
+                location  = {location}
+              /> 
             </UserMenuSection> 
           </Card> 
         </Col>
@@ -138,6 +146,10 @@ export default class StudentCard extends Component {
             <Route
               path   = {`${match.url}/contacts`}
               render = {() => <Contacts student={student} contacts={contacts}/> }
+            />
+            <Route
+              path   = {`${match.url}/notes`}
+              render = {() => <Notes student={student} noteStore={this.props.noteStore}/> }
             />
             <Route render={() => <div>404</div>} />
           </Switch>
