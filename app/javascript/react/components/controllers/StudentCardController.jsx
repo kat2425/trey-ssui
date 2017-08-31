@@ -10,6 +10,8 @@ export default class StudentCardController extends Component {
     const studentId = match.params.studentId
 
     StudentCardStore.fetchStudent(studentId)
+
+    /*Notes*/
     NoteStore.fetchStudentNotes(studentId)
     NoteStore.fetchGroups()
     NoteStore.fetchNoteTags()

@@ -10,6 +10,9 @@ import ReactMarkdown          from 'react-markdown'
 
 import Picker                 from '../Picker'
 import GroupPicker            from '../GroupPicker'
+import NotesForm              from '../NotesForm'
+import NoteTags              from '../NoteTags'
+
 
 @observer
 export default class Notes extends Component {
@@ -17,8 +20,6 @@ export default class Notes extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      titleError: null,
-      bodyError:  null,
       selectedIndex: 0
     }
   }
@@ -64,35 +65,16 @@ export default class Notes extends Component {
     }
   }
 
-  renderTagNames() {
-    const { notes }     = this.props.noteStore
-    const currentNote   = notes[this.state.selectedIndex]
-    const notesTags     = currentNote.student_note_tags;
-    const noteStoreTags = this.props.noteStore.tags.toJS()
-
-    if (notesTags) {
-      return notesTags.map((g) => {
-        return _.find(noteStoreTags, (tag) => { return tag.id === g.id })
-      }).map(
-        (t) => <Badge key={ t.id } color="primary" pill style={{ marginRight: 5 }}>
-                 <span className='icon icon-tag' style={{ padding: 5 }}>{' '}{t.name}</span>
-               </Badge>
-      )
-    } else {
-      return("butt")
-    }
-  }
-
   renderVisibleTo(notes) {
-      return (
-        <CardBlock className='float-right'>
-        <p>
-          <span style={{color: '#3f9fcf'}} className='icon icon-eye'> </span> 
-          <span style={{color: '#3f9fcf'}}>Visible to: </span> 
-          <span style={{color: '#A9A9A9'}}>{notes.length > 0 ? this.renderGroupNames() : null}</span>
-        </p>
-        </CardBlock>  
-      ) 
+    return (
+      <Col sm="6">
+      <p>
+        <span style={{color: '#3f9fcf'}} className='icon icon-eye'> </span> 
+        <span style={{color: '#3f9fcf'}}>Visible to: </span> 
+        <span style={{color: '#A9A9A9'}}>{notes.length > 0 ? this.renderGroupNames() : null}</span>
+      </p>
+      </Col>  
+    ) 
   }
 
   renderStudentNoteTags(notes) {
@@ -105,85 +87,10 @@ export default class Notes extends Component {
     )
   }
 
-  handleTagChange(val) {
-    this.props.noteStore.selectedTags = val
-  }
-
-  renderForm() {
-    const { notes, visibilityGroups, groups, tags, selectedTags } = this.props.noteStore
-    return (
-      <CardBlock>
-        <FormGroup color={this.state.titleError}>
-          <Label for="title">Title</Label>
-          <Input 
-            onChange={(e) => this.props.noteStore.setNoteTitle(e.target.value)} 
-            value={this.props.noteStore.title}
-            type="text" 
-            name="text" 
-          />
-          { this.state.titleError && <FormFeedback>Oops! You must enter a title.</FormFeedback> }
-        </FormGroup>
-        <FormGroup color={this.state.bodyError}>
-          <Label for="message">Message</Label>
-          <Input 
-            onChange={(e) => this.props.noteStore.setNoteMessage(e.target.value)} 
-            value={this.props.noteStore.message} 
-            type="textarea" 
-            name="text" 
-          />
-          { this.state.bodyError && <FormFeedback>Oops! You must enter a note message.</FormFeedback> }
-        </FormGroup>
-        <FormGroup>
-          <Label for="tags">Visible to</Label>
-          <GroupPicker 
-            labelKey={'name'} 
-            valueKey={'id'} 
-            defaultKey={1} 
-            groupKey={3} 
-            options={visibilityGroups} 
-            groups={groups}
-            note={notes[this.state.selectedIndex]}
-          />
-        </FormGroup> 
-        <FormGroup>
-          <Label for="tags">Tags</Label>
-          <Picker 
-            placeholder={'Select tags...'} 
-            multi 
-            selectedValues={selectedTags} 
-            handleChange={(val) => this.handleTagChange(val)} 
-            options={tags} 
-            labelKey={'name'} 
-            valueKey={'id'} 
-          />
-        </FormGroup> 
-        <Button className='float-right mt-4' onClick={() => this.submitNote()} color="primary">Save Note</Button>
-      </CardBlock>
-    )
-  }
-
   deleteNote = (note) => {
     const { notes } = this.props.noteStore
     this.props.noteStore.deleteStudentNote(note)
     this.setState({ selectedIndex: 0 })
-  }
-
-  submitNote = () => {
-    if (!this.props.noteStore.title) {
-      this.setState({ titleError: 'danger' })
-      return false
-    } else {
-      this.setState({ titleError: null })
-    }
-
-    if (!this.props.noteStore.message) {
-      this.setState({ bodyError: 'danger' })
-      return false
-    } else {
-      this.setState({ bodyError: null })
-    }
-
-    this.props.noteStore.createStudentNote(this.props.student.id)
   }
 
   render() {
@@ -205,11 +112,15 @@ export default class Notes extends Component {
             <CardBlock>
               { notes.length > 0 ? this.renderNote(notes[this.state.selectedIndex]) : this.renderEmptyMessage() }
             </CardBlock>
-            {notes.length > 0 && this.renderVisibleTo(notes)}
-            {notes.length > 0 && this.renderStudentNoteTags(notes)}
+            <CardBlock>
+              <Row>
+                {notes.length > 0 && this.renderVisibleTo(notes)}
+                {notes.length > 0 && <NoteTags notes={notes} tags={tags} currentNote={notes[this.state.selectedIndex]}/>}
+              </Row>
+            </CardBlock>
           </Col>
         </Row>
-        {this.renderForm()}
+        <NotesForm noteStore={this.props.noteStore} studentId={this.props.student.id} />
       </Card>
     )
   }
