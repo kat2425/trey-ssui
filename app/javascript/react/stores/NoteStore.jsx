@@ -12,6 +12,7 @@ class NoteStore {
   @observable selectedVisibilityIndex = 1
   @observable global = false
   @observable showGroups = false
+  @observable edit = false
 
   visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 } ]
   
@@ -23,7 +24,7 @@ class NoteStore {
       params: {
         student_id: studentId,
         only: [
-          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id'
+          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id', 'student_note_tags.name', 'groups.group_name'
         ].join(',')
       }
     }).then(this.fetchStudentNotesOK)
@@ -90,6 +91,7 @@ class NoteStore {
     this.selectedTags   = []
     this.selectedVisibilityIndex = 1
     this.showGroups = false
+    this.edit = false
   }
 
   /* Note Groups */
@@ -116,6 +118,41 @@ class NoteStore {
   addNoteGroup(group) {
     this.selectedGroups = group
   }
+
+  @action.bound
+  getEditableNote(note) {
+    console.log(note)
+    this.title = note.title
+    this.message = note.body
+    this.selectedGroups = note.groups
+    this.selectedTags   = note.student_note_tags
+
+    if(note.groups.length > 0) {
+      this.selectedVisibilityIndex = 3
+      this.showGroups = true
+    } else if(!note.groups.length && note.global ) {
+      this.selectedVisibilityIndex = 2
+    }
+    else  {
+      this.selectedVisibilityIndex = 1
+    }
+  }
+
+  @action.bound
+  updateStudentNote(noteId) {
+    _xhr.put(`/student_notes/${noteId}`, {
+      title:      this.title,
+      body:       this.message,
+      group_ids:  this.selectedGroups.map((group) => { return group.id }).join(','),
+      tag_ids:    this.selectedTags.map((tag)     => { return tag.id   }).join(','),
+      global:     this.global
+    }).then((res) => {
+      let index = _.findIndex(this.notes, {id: noteId});
+      this.notes[index] = res.data
+      this.resetNoteForm()
+    })
+  }
+  
 
   /* Tags */
 

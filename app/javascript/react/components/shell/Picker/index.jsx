@@ -4,10 +4,6 @@ import Select               from 'react-select'
 
 @observer
 export default class Picker extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {    
     return (
       <div>

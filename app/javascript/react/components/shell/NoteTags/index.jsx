@@ -4,19 +4,15 @@ import { Badge, CardBlock, Col }          from 'reactstrap'
 
 @observer
 export default class NoteTags extends Component {
-
-  constructor(props) {
-    super(props)
-  }
-
+  
   componentDidMount() {
     console.log(this.props.tags)
   }
 
   renderTags() {
-    const { notes, currentNote, tags }     = this.props
-    const notesTags                  = currentNote.student_note_tags
-    const noteStoreTags              = tags.toJS()
+    const { notes, currentNote, tags } = this.props
+    const notesTags                    = currentNote.student_note_tags
+    const noteStoreTags                = tags.toJS()
 
     return notesTags.map((g) => {
       return _.find(noteStoreTags, (tag) => { return tag.id === g.id })

@@ -11,9 +11,8 @@ export default class GroupPicker extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedItem: null,
-      selectedGroup: null,
-      groupsVisible: false
+      selectedItem:  null,
+      selectedGroup: null
     }
   }
 
@@ -29,19 +28,19 @@ export default class GroupPicker extends Component {
     NoteStore.selectedVisibilityIndex = val.id
     switch(val.id) {
       case 1:
-        NoteStore.global = false
+        NoteStore.global     = false
         NoteStore.showGroups = false
         break
       case 2:
-        NoteStore.global = true
+        NoteStore.global     = true
         NoteStore.showGroups = false
         break
       case 3:
-        NoteStore.global = false
+        NoteStore.global     = false
         NoteStore.showGroups = true
         break
       default:
-        NoteStore.global = false
+        NoteStore.global     = false
     }
 
   }

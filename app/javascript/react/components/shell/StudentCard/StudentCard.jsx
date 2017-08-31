@@ -59,8 +59,8 @@ export default class StudentCard extends Component {
   }
 
   closeCard = () => {
-    const { store } = this.props
-
+    const { store, noteStore } = this.props
+    noteStore.resetNoteForm()
     store.hideCard()
     fireEvent('onCloseStudentCard', { student: store.student.id })
   }

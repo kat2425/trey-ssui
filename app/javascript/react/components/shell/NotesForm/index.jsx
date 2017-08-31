@@ -39,59 +39,77 @@ export default class NotesForm extends Component {
       this.setState({ bodyError: null })
     }
 
-    this.props.noteStore.createStudentNote(this.props.studentId)
+    if(!this.props.noteStore.edit) {
+      this.props.noteStore.createStudentNote(this.props.studentId)
+    } else {
+      const { notes }       = this.props.noteStore
+      const { currentNote } = this.props
+
+      this.props.noteStore.updateStudentNote(currentNote.id)
+    }
   }
 
   render() {
-    const { notes, visibilityGroups, groups, tags, selectedTags } = this.props.noteStore
+    const { notes, visibilityGroups, groups, tags, selectedTags, edit } = this.props.noteStore
 
     return (
       <CardBlock>
         <FormGroup color={this.state.titleError}>
           <Label for="title">Title</Label>
           <Input 
-            onChange={(e) => this.props.noteStore.setNoteTitle(e.target.value)} 
-            value={this.props.noteStore.title}
-            type="text" 
-            name="text" 
+            onChange  = {(e) => this.props.noteStore.setNoteTitle(e.target.value)} 
+            value     = {this.props.noteStore.title}
+            type      = "text" 
+            name      = "text" 
           />
           { this.state.titleError && <FormFeedback>Oops! You must enter a title.</FormFeedback> }
         </FormGroup>
         <FormGroup color={this.state.bodyError}>
           <Label for="message">Message</Label>
           <Input 
-            onChange={(e) => this.props.noteStore.setNoteMessage(e.target.value)} 
-            value={this.props.noteStore.message} 
-            type="textarea" 
-            name="text" 
+            onChange = {(e) => this.props.noteStore.setNoteMessage(e.target.value)} 
+            value    = {this.props.noteStore.message} 
+            type     = "textarea" 
+            name     = "text" 
           />
           { this.state.bodyError && <FormFeedback>Oops! You must enter a note message.</FormFeedback> }
         </FormGroup>
         <FormGroup>
           <Label for="tags">Visible to</Label>
           <GroupPicker 
-            labelKey={'name'} 
-            valueKey={'id'} 
-            defaultKey={1} 
-            groupKey={3} 
-            options={visibilityGroups} 
-            groups={groups}
-            note={notes[this.state.selectedIndex]}
+            labelKey   = {'name'} 
+            valueKey   = {'id'} 
+            defaultKey = {1} 
+            groupKey   = {3} 
+            options    = {visibilityGroups} 
+            groups     = {groups}
+            note       = {notes[this.state.selectedIndex]}
           />
         </FormGroup> 
         <FormGroup>
           <Label for="tags">Tags</Label>
           <Picker 
-            placeholder={'Select tags...'} 
+            placeholder    = {'Select tags...'} 
             multi 
-            selectedValues={selectedTags} 
-            handleChange={(val) => this.handleTagChange(val)} 
-            options={tags} 
-            labelKey={'name'} 
-            valueKey={'id'} 
+            selectedValues = {selectedTags} 
+            handleChange   = {(val) => this.handleTagChange(val)} 
+            options        = {tags} 
+            labelKey       = {'name'} 
+            valueKey       = {'id'} 
           />
         </FormGroup> 
-        <Button className='float-right mt-4' onClick={() => this.submitNote()} color="primary">Save Note</Button>
+        <Button 
+          className = 'float-right mt-4' 
+          onClick   = {() => this.submitNote()} color="primary">{edit ? 'Update Note' : 'Save Note'}
+        </Button>
+        {edit &&
+        <Button 
+          className = 'float-right mt-4 mr-4' 
+          onClick = {() => { this.props.noteStore.edit = false; this.props.noteStore.resetNoteForm() }} 
+          color = "primary">
+            Cancel
+        </Button>
+        }
       </CardBlock>
     )
   }

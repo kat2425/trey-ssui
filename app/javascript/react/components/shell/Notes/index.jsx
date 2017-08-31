@@ -27,8 +27,21 @@ export default class Notes extends Component {
   renderNote(note) {
     return (
       <Card key={note.id} className='mb-3'>
+        <div className="float-right p-2">
+          <span 
+            style={{color: '#696969', cursor: 'pointer'}} 
+            className='icon icon-trash float-right mr-2' 
+            onClick={() => this.deleteNote(note)}>{' '} 
+            Delete Note
+          </span>
+          <span 
+            style={{color: '#696969', cursor: 'pointer'}} 
+            className='icon icon-edit float-right mr-4' 
+            onClick={() => this.editNote(note)}>{' '}
+            Edit Note
+          </span>
+        </div>
         <CardBlock>
-            <span style={{color: '#696969', cursor: 'pointer'}} className='icon icon-trash float-right' onClick={() => this.deleteNote(note)}> Delete Note</span>
           <CardTitle>{note.title}</CardTitle>
           <ReactMarkdown source={note.body} />
         </CardBlock>
@@ -61,7 +74,8 @@ export default class Notes extends Component {
     else {
       return notesGroups.map((g) => {
         return _.find(noteStoreGroups, (group) => { return group.id === g.id })
-      }).map(({group_name}) => group_name).join(', ')
+      })
+      .map(({group_name}) => group_name).join(', ')
     }
   }
 
@@ -93,6 +107,11 @@ export default class Notes extends Component {
     this.setState({ selectedIndex: 0 })
   }
 
+  editNote = (note) => {
+    this.props.noteStore.edit = true
+    this.props.noteStore.getEditableNote(note)
+  }
+
   render() {
     const { notes, visibilityGroups, groups, tags } = this.props.noteStore
     return (
@@ -120,7 +139,7 @@ export default class Notes extends Component {
             </CardBlock>
           </Col>
         </Row>
-        <NotesForm noteStore={this.props.noteStore} studentId={this.props.student.id} />
+        <NotesForm noteStore={this.props.noteStore} currentNote={notes[this.state.selectedIndex]} studentId={this.props.student.id} />
       </Card>
     )
   }
