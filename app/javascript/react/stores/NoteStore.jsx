@@ -8,6 +8,7 @@ class NoteStore {
   @observable tags = []
   @observable groups = []
   @observable selectedGroups = []
+  @observable selectedTags   = []
   @observable selectedVisibilityIndex = 1
   @observable global = false
   @observable showGroups = false
@@ -18,12 +19,11 @@ class NoteStore {
 
   @action
   fetchStudentNotes(studentId) {
-
     _xhr.get(`/student_notes`, {
       params: {
         student_id: studentId,
         only: [
-          'id', 'title', 'body', 'groups.id', 'global'
+          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id'
         ].join(',')
       }
     }).then(this.fetchStudentNotesOK)
@@ -39,10 +39,11 @@ class NoteStore {
   @action
   createStudentNote(studentId) {
     _xhr.post(`/student_notes`, {
-      title: this.title,
-      body: this.message,
-      group_ids: this.selectedGroups.map((group) => { return group.id }).join(','),
-      global: this.global,
+      title:      this.title,
+      body:       this.message,
+      group_ids:  this.selectedGroups.map((group) => { return group.id }).join(','),
+      tag_ids:    this.selectedTags.map((tag)     => { return tag.id   }).join(','),
+      global:     this.global,
       student_id: studentId
     }).then((res) => {
       this.addStudentNote(res.data)
@@ -86,6 +87,7 @@ class NoteStore {
     this.message = ''
     this.global = false
     this.selectedGroups = []
+    this.selectedTags   = []
     this.selectedVisibilityIndex = 1
     this.showGroups = false
   }
@@ -118,7 +120,7 @@ class NoteStore {
   /* Tags */
 
   @action.bound
-  fetchNoteTags(id) {
+  fetchNoteTags() {
     _xhr.get(`/student_note_tags`)
     .then((res) => this.tags = res.data)
   }

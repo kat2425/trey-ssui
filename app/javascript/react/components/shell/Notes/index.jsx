@@ -64,6 +64,25 @@ export default class Notes extends Component {
     }
   }
 
+  renderTagNames() {
+    const { notes }     = this.props.noteStore
+    const currentNote   = notes[this.state.selectedIndex]
+    const notesTags     = currentNote.student_note_tags;
+    const noteStoreTags = this.props.noteStore.tags.toJS()
+
+    if (notesTags) {
+      return notesTags.map((g) => {
+        return _.find(noteStoreTags, (tag) => { return tag.id === g.id })
+      }).map(
+        (t) => <Badge key={ t.id } color="primary" pill style={{ marginRight: 5 }}>
+                 <span className='icon icon-tag' style={{ padding: 5 }}>{' '}{t.name}</span>
+               </Badge>
+      )
+    } else {
+      return("butt")
+    }
+  }
+
   renderVisibleTo(notes) {
       return (
         <CardBlock className='float-right'>
@@ -76,18 +95,42 @@ export default class Notes extends Component {
       ) 
   }
 
+  renderStudentNoteTags(notes) {
+    return (
+      <CardBlock className='float-right'>
+      <p>
+        <span style={{color: '#A9A9A9'}}>{notes.length > 0 ? this.renderTagNames() : null}</span>
+      </p>
+      </CardBlock>  
+    )
+  }
+
+  handleTagChange(val) {
+    this.props.noteStore.selectedTags = val
+  }
+
   renderForm() {
-    const { notes, visibilityGroups, groups, tags } = this.props.noteStore
+    const { notes, visibilityGroups, groups, tags, selectedTags } = this.props.noteStore
     return (
       <CardBlock>
         <FormGroup color={this.state.titleError}>
           <Label for="title">Title</Label>
-          <Input onChange={(e) => this.props.noteStore.setNoteTitle(e.target.value)} value={this.props.noteStore.title} type="text" name="text" />
+          <Input 
+            onChange={(e) => this.props.noteStore.setNoteTitle(e.target.value)} 
+            value={this.props.noteStore.title}
+            type="text" 
+            name="text" 
+          />
           { this.state.titleError && <FormFeedback>Oops! You must enter a title.</FormFeedback> }
         </FormGroup>
         <FormGroup color={this.state.bodyError}>
           <Label for="message">Message</Label>
-          <Input onChange={(e) => this.props.noteStore.setNoteMessage(e.target.value)} value={this.props.noteStore.message} type="textarea" name="text" />
+          <Input 
+            onChange={(e) => this.props.noteStore.setNoteMessage(e.target.value)} 
+            value={this.props.noteStore.message} 
+            type="textarea" 
+            name="text" 
+          />
           { this.state.bodyError && <FormFeedback>Oops! You must enter a note message.</FormFeedback> }
         </FormGroup>
         <FormGroup>
@@ -100,11 +143,19 @@ export default class Notes extends Component {
             options={visibilityGroups} 
             groups={groups}
             note={notes[this.state.selectedIndex]}
-            />
+          />
         </FormGroup> 
         <FormGroup>
           <Label for="tags">Tags</Label>
-          <Picker placeholder={'Select tags...'} multi options={tags} labelKey={'name'} />
+          <Picker 
+            placeholder={'Select tags...'} 
+            multi 
+            selectedValues={selectedTags} 
+            handleChange={(val) => this.handleTagChange(val)} 
+            options={tags} 
+            labelKey={'name'} 
+            valueKey={'id'} 
+          />
         </FormGroup> 
         <Button className='float-right mt-4' onClick={() => this.submitNote()} color="primary">Save Note</Button>
       </CardBlock>
@@ -155,6 +206,7 @@ export default class Notes extends Component {
               { notes.length > 0 ? this.renderNote(notes[this.state.selectedIndex]) : this.renderEmptyMessage() }
             </CardBlock>
             {notes.length > 0 && this.renderVisibleTo(notes)}
+            {notes.length > 0 && this.renderStudentNoteTags(notes)}
           </Col>
         </Row>
         {this.renderForm()}

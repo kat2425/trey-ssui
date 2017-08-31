@@ -55,15 +55,15 @@ export default class GroupPicker extends Component {
   renderGroups = () => {
     return (
       <Select 
-      multi
-      style={{marginTop: 10}}
-      placeholder="Select group(s)"
-      value={NoteStore.selectedGroups.toJS()}
-      options={this.props.groups}
-      labelKey={'group_name'}
-      valueKey={'id'}
-      onChange={this.handleGroupChange}
-    />
+        multi
+        style={{marginTop: 10}}
+        placeholder="Select group(s)"
+        value={NoteStore.selectedGroups.toJS()}
+        options={this.props.groups.toJS()}
+        labelKey={'group_name'}
+        valueKey={'id'}
+        onChange={this.handleGroupChange}
+      />
     )
   }
   
