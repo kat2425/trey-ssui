@@ -10,9 +10,11 @@ class NoteStore {
   @observable selectedGroups = []
   @observable selectedTags   = []
   @observable selectedVisibilityIndex = 1
+  @observable selectedNoteIndex = 0
   @observable global = false
   @observable showGroups = false
   @observable edit = false
+  @observable isCreating = false
 
   visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 } ]
   
@@ -54,9 +56,8 @@ class NoteStore {
 
   @action.bound
   deleteStudentNote(note) {
-    this.removeStudentNote(note)
     _xhr.delete(`/student_notes/${note.id}`)
-    this.resetNoteForm()
+    this.removeStudentNote(note)
   }
 
   @action
@@ -71,15 +72,17 @@ class NoteStore {
 
   @action.bound
   addStudentNote(note){
-    this.notes.push(note)
+    this.notes.unshift(note)
     this.resetNoteForm()
+    this.selectedNoteIndex = 0
   }
 
   @action.bound
   removeStudentNote(note){
-    this.notes.splice(this.notes.indexOf(note), 1);
+    this.notes.splice(this.notes.indexOf(note), 1)
     console.log(this.notes)
     this.resetNoteForm()
+    this.selectedNoteIndex = this.selectedNoteIndex != 0 ? this.selectedNoteIndex - 1 : 0
   }
 
   @action
@@ -92,6 +95,7 @@ class NoteStore {
     this.selectedVisibilityIndex = 1
     this.showGroups = false
     this.edit = false
+    this.isCreating = false
   }
 
   /* Note Groups */
