@@ -1,3 +1,8 @@
+// FIXME
+// Make header dry
+// Add Contact object as a prop
+// Make stateless component
+
 import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
@@ -6,13 +11,13 @@ import _    from 'lodash'
 
 const headerStyle = {
   position: 'absolute',
-  top: 37
+  top:      37
 }
 
 @observer
 export default class ConversationHeader extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
@@ -20,8 +25,8 @@ export default class ConversationHeader extends Component {
     super(props)
   }
 
-  renderHeader(msg) {
-    const { contact } = msg
+  renderHeader() {
+    const {contact} = this.props
 
     return (
       <div key={ contact.id } className='text-right'>
@@ -36,15 +41,15 @@ export default class ConversationHeader extends Component {
     return (
       <div>
         <Col className='float-left col-sm-1' style={headerStyle}>
-          <span onClick={this.props.handleBack} style={{lineHeight:'20px'}} className='icon icon-chevron-thin-left'/>
+          <span 
+            onClick   = {this.props.handleBack}
+            style     = {{lineHeight:'20px'}}
+            className = 'icon icon-chevron-thin-left'
+          />
         </Col>
 
         <Col className='float-right pt-3 col-sm-11'>
-          { this.props.store.messages.map((m,i) => {
-            if (i < 1) {
-              return this.renderHeader(m)
-            }
-          }) }
+          {this.renderHeader()}
         </Col>
       </div>
     )

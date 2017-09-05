@@ -1,7 +1,8 @@
-import { observable, action, computed, runInAction, autorun } from 'mobx'
-
+import { observable, action, computed } from 'mobx'
 import _   from 'lodash'
 import xhr from 'helpers/XHR'
+
+import uiStore from 'stores/UiStore'
 
 class SMSConversationStore {
   @observable isLoading = false
@@ -31,13 +32,32 @@ class SMSConversationStore {
         limit: 30,
         page:  1
       }
-    }).then(::this.fetchConversationOK)
+    }).then(this.fetchConversationOK)
   }
 
   @action.bound
   fetchConversationOK(res) {
     this.isLoading = false
     this.messages  = res.data
+  }
+
+  @action
+  initiateConversation = (contact, callback) => {
+    return xhr.post('/commo/conversations', {
+      number:     contact.phone,
+      contact_id: contact.id
+    })
+      .then(res => res.data)
+      .then(this.initiateConversationOk(contact))
+  }
+
+  @action
+  initiateConversationOk = contact => ({id}) => {
+    uiStore.setCurrentContact(contact)
+    uiStore.setCurrentConversation(id)
+    uiStore.setSidebarVisibility(true)
+    uiStore.setShowInbox(false)
+    uiStore.setSidebarMaxHeight(true)
   }
 
   @action
@@ -58,6 +78,7 @@ class SMSConversationStore {
     return _.sortBy(this.messages, m => m.created_at)
   }
 
+  @action
   addMessage(msg) {
     if (!_.find(this.messages, m => m.id === msg.id)) {
       this.messages.push(msg)
@@ -66,5 +87,3 @@ class SMSConversationStore {
 }
 
 export default SMSConversationStore = new SMSConversationStore()
-
-// /commo/sms/conversation/4553dec9-9b09-4d33-a3af-a41746cc70fa?only=id,conversation_id,direction,sent_state,body,media_url,read_status,contact.id,contact.name

@@ -6,6 +6,9 @@ import {
   ButtonGroup, Button, Card, Table
 } from 'reactstrap'
 
+import fireEvent       from 'helpers/FireEvent'
+
+
 const ContactEntry = ({contact}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
@@ -27,9 +30,10 @@ const ContactEntry = ({contact}) => {
                 </Button>
 
                 <Button
-                  size='sm'
-                  color='primary'
-                  disabled={ref.number_type !== 'mobile'}
+                  size     = 'sm'
+                  color    = 'primary'
+                  disabled = {ref.number_type !== 'mobile'}
+                  onClick  = {() => fireEvent('toggleSidebar', {contact: ref})}
                 >
                   <span className='icon icon-chat' />
                 </Button>

@@ -25,19 +25,19 @@ export default class ChatInput extends Component {
     this.state = { message: '' }
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({ message: e.target.value })
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     if (keycode(e) === 'enter') {
       this.sendMessage(this.state.message)
     }
   }
 
-  sendMessage(msg) {
+  sendMessage = (msg) => {
     if (!!msg) {
-      SMSConversationStore.sendMessage(msg, this.props.contact)
+      SMSConversationStore.sendMessage(msg, this.props.contact.id)
       this.setState({ message: '' })
     }
   }
@@ -51,8 +51,12 @@ export default class ChatInput extends Component {
               <span className='icon icon-attachment text-muted'/>
             </Button>
           </InputGroupButton>
-
-          <Input onChange={::this.handleChange} onKeyUp={::this.handleSubmit} value={this.state.message} placeholder='Message'/>
+          <Input 
+            onChange    = {this.handleChange}
+            onKeyUp     = {this.handleSubmit}
+            value       = {this.state.message}
+            placeholder = 'Message'
+          />
         </InputGroup>
       </div>
     )
