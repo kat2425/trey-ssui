@@ -9144,6 +9144,626 @@ img.zoom-img {
   background-color: #9cf76f;
   border-top: 1px solid #88f552 !important; }
 
+.vjs-bar-cell span {
+  display: none; }
+
+.vjs-bar-cell {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important; }
+  .vjs-bar-cell:before {
+    content: '\a0';
+    color: white;
+    font-size: 10px;
+    padding: 5px;
+    display: inline-block;
+    background-color: #32495e; }
+
+.vjs-bar-cell-0:before {
+  width: 0%; }
+
+.vjs-bar-cell-1:before {
+  width: 1%; }
+
+.vjs-bar-cell-2:before {
+  width: 2%; }
+
+.vjs-bar-cell-3:before {
+  width: 3%; }
+
+.vjs-bar-cell-4:before {
+  width: 4%; }
+
+.vjs-bar-cell-5:before {
+  width: 5%; }
+
+.vjs-bar-cell-6:before {
+  width: 6%; }
+
+.vjs-bar-cell-7:before {
+  width: 7%; }
+
+.vjs-bar-cell-8:before {
+  width: 8%; }
+
+.vjs-bar-cell-9:before {
+  width: 9%; }
+
+.vjs-bar-cell-10:before {
+  width: 10%; }
+
+.vjs-bar-cell-11:before {
+  width: 11%; }
+
+.vjs-bar-cell-12:before {
+  width: 12%; }
+
+.vjs-bar-cell-13:before {
+  width: 13%; }
+
+.vjs-bar-cell-14:before {
+  width: 14%; }
+
+.vjs-bar-cell-15:before {
+  width: 15%; }
+
+.vjs-bar-cell-16:before {
+  width: 16%; }
+
+.vjs-bar-cell-17:before {
+  width: 17%; }
+
+.vjs-bar-cell-18:before {
+  width: 18%; }
+
+.vjs-bar-cell-19:before {
+  width: 19%; }
+
+.vjs-bar-cell-20:before {
+  width: 20%; }
+
+.vjs-bar-cell-21:before {
+  width: 21%; }
+
+.vjs-bar-cell-22:before {
+  width: 22%; }
+
+.vjs-bar-cell-23:before {
+  width: 23%; }
+
+.vjs-bar-cell-24:before {
+  width: 24%; }
+
+.vjs-bar-cell-25:before {
+  width: 25%; }
+
+.vjs-bar-cell-26:before {
+  width: 26%; }
+
+.vjs-bar-cell-27:before {
+  width: 27%; }
+
+.vjs-bar-cell-28:before {
+  width: 28%; }
+
+.vjs-bar-cell-29:before {
+  width: 29%; }
+
+.vjs-bar-cell-30:before {
+  width: 30%; }
+
+.vjs-bar-cell-31:before {
+  width: 31%; }
+
+.vjs-bar-cell-32:before {
+  width: 32%; }
+
+.vjs-bar-cell-33:before {
+  width: 33%; }
+
+.vjs-bar-cell-34:before {
+  width: 34%; }
+
+.vjs-bar-cell-35:before {
+  width: 35%; }
+
+.vjs-bar-cell-36:before {
+  width: 36%; }
+
+.vjs-bar-cell-37:before {
+  width: 37%; }
+
+.vjs-bar-cell-38:before {
+  width: 38%; }
+
+.vjs-bar-cell-39:before {
+  width: 39%; }
+
+.vjs-bar-cell-40:before {
+  width: 40%; }
+
+.vjs-bar-cell-41:before {
+  width: 41%; }
+
+.vjs-bar-cell-42:before {
+  width: 42%; }
+
+.vjs-bar-cell-43:before {
+  width: 43%; }
+
+.vjs-bar-cell-44:before {
+  width: 44%; }
+
+.vjs-bar-cell-45:before {
+  width: 45%; }
+
+.vjs-bar-cell-46:before {
+  width: 46%; }
+
+.vjs-bar-cell-47:before {
+  width: 47%; }
+
+.vjs-bar-cell-48:before {
+  width: 48%; }
+
+.vjs-bar-cell-49:before {
+  width: 49%; }
+
+.vjs-bar-cell-50:before {
+  width: 50%; }
+
+.vjs-bar-cell-51:before {
+  width: 51%; }
+
+.vjs-bar-cell-52:before {
+  width: 52%; }
+
+.vjs-bar-cell-53:before {
+  width: 53%; }
+
+.vjs-bar-cell-54:before {
+  width: 54%; }
+
+.vjs-bar-cell-55:before {
+  width: 55%; }
+
+.vjs-bar-cell-56:before {
+  width: 56%; }
+
+.vjs-bar-cell-57:before {
+  width: 57%; }
+
+.vjs-bar-cell-58:before {
+  width: 58%; }
+
+.vjs-bar-cell-59:before {
+  width: 59%; }
+
+.vjs-bar-cell-60:before {
+  width: 60%; }
+
+.vjs-bar-cell-61:before {
+  width: 61%; }
+
+.vjs-bar-cell-62:before {
+  width: 62%; }
+
+.vjs-bar-cell-63:before {
+  width: 63%; }
+
+.vjs-bar-cell-64:before {
+  width: 64%; }
+
+.vjs-bar-cell-65:before {
+  width: 65%; }
+
+.vjs-bar-cell-66:before {
+  width: 66%; }
+
+.vjs-bar-cell-67:before {
+  width: 67%; }
+
+.vjs-bar-cell-68:before {
+  width: 68%; }
+
+.vjs-bar-cell-69:before {
+  width: 69%; }
+
+.vjs-bar-cell-70:before {
+  width: 70%; }
+
+.vjs-bar-cell-71:before {
+  width: 71%; }
+
+.vjs-bar-cell-72:before {
+  width: 72%; }
+
+.vjs-bar-cell-73:before {
+  width: 73%; }
+
+.vjs-bar-cell-74:before {
+  width: 74%; }
+
+.vjs-bar-cell-75:before {
+  width: 75%; }
+
+.vjs-bar-cell-76:before {
+  width: 76%; }
+
+.vjs-bar-cell-77:before {
+  width: 77%; }
+
+.vjs-bar-cell-78:before {
+  width: 78%; }
+
+.vjs-bar-cell-79:before {
+  width: 79%; }
+
+.vjs-bar-cell-80:before {
+  width: 80%; }
+
+.vjs-bar-cell-81:before {
+  width: 81%; }
+
+.vjs-bar-cell-82:before {
+  width: 82%; }
+
+.vjs-bar-cell-83:before {
+  width: 83%; }
+
+.vjs-bar-cell-84:before {
+  width: 84%; }
+
+.vjs-bar-cell-85:before {
+  width: 85%; }
+
+.vjs-bar-cell-86:before {
+  width: 86%; }
+
+.vjs-bar-cell-87:before {
+  width: 87%; }
+
+.vjs-bar-cell-88:before {
+  width: 88%; }
+
+.vjs-bar-cell-89:before {
+  width: 89%; }
+
+.vjs-bar-cell-90:before {
+  width: 90%; }
+
+.vjs-bar-cell-91:before {
+  width: 91%; }
+
+.vjs-bar-cell-92:before {
+  width: 92%; }
+
+.vjs-bar-cell-93:before {
+  width: 93%; }
+
+.vjs-bar-cell-94:before {
+  width: 94%; }
+
+.vjs-bar-cell-95:before {
+  width: 95%; }
+
+.vjs-bar-cell-96:before {
+  width: 96%; }
+
+.vjs-bar-cell-97:before {
+  width: 97%; }
+
+.vjs-bar-cell-98:before {
+  width: 98%; }
+
+.vjs-bar-cell-99:before {
+  width: 99%; }
+
+.vjs-bar-cell-100:before {
+  width: 100%; }
+
+.vjs-bar-cell-label-0:before {
+  content: '0%'; }
+
+.vjs-bar-cell-label-1:before {
+  content: '1%'; }
+
+.vjs-bar-cell-label-2:before {
+  content: '2%'; }
+
+.vjs-bar-cell-label-3:before {
+  content: '3%'; }
+
+.vjs-bar-cell-label-4:before {
+  content: '4%'; }
+
+.vjs-bar-cell-label-5:before {
+  content: '5%'; }
+
+.vjs-bar-cell-label-6:before {
+  content: '6%'; }
+
+.vjs-bar-cell-label-7:before {
+  content: '7%'; }
+
+.vjs-bar-cell-label-8:before {
+  content: '8%'; }
+
+.vjs-bar-cell-label-9:before {
+  content: '9%'; }
+
+.vjs-bar-cell-label-10:before {
+  content: '10%'; }
+
+.vjs-bar-cell-label-11:before {
+  content: '11%'; }
+
+.vjs-bar-cell-label-12:before {
+  content: '12%'; }
+
+.vjs-bar-cell-label-13:before {
+  content: '13%'; }
+
+.vjs-bar-cell-label-14:before {
+  content: '14%'; }
+
+.vjs-bar-cell-label-15:before {
+  content: '15%'; }
+
+.vjs-bar-cell-label-16:before {
+  content: '16%'; }
+
+.vjs-bar-cell-label-17:before {
+  content: '17%'; }
+
+.vjs-bar-cell-label-18:before {
+  content: '18%'; }
+
+.vjs-bar-cell-label-19:before {
+  content: '19%'; }
+
+.vjs-bar-cell-label-20:before {
+  content: '20%'; }
+
+.vjs-bar-cell-label-21:before {
+  content: '21%'; }
+
+.vjs-bar-cell-label-22:before {
+  content: '22%'; }
+
+.vjs-bar-cell-label-23:before {
+  content: '23%'; }
+
+.vjs-bar-cell-label-24:before {
+  content: '24%'; }
+
+.vjs-bar-cell-label-25:before {
+  content: '25%'; }
+
+.vjs-bar-cell-label-26:before {
+  content: '26%'; }
+
+.vjs-bar-cell-label-27:before {
+  content: '27%'; }
+
+.vjs-bar-cell-label-28:before {
+  content: '28%'; }
+
+.vjs-bar-cell-label-29:before {
+  content: '29%'; }
+
+.vjs-bar-cell-label-30:before {
+  content: '30%'; }
+
+.vjs-bar-cell-label-31:before {
+  content: '31%'; }
+
+.vjs-bar-cell-label-32:before {
+  content: '32%'; }
+
+.vjs-bar-cell-label-33:before {
+  content: '33%'; }
+
+.vjs-bar-cell-label-34:before {
+  content: '34%'; }
+
+.vjs-bar-cell-label-35:before {
+  content: '35%'; }
+
+.vjs-bar-cell-label-36:before {
+  content: '36%'; }
+
+.vjs-bar-cell-label-37:before {
+  content: '37%'; }
+
+.vjs-bar-cell-label-38:before {
+  content: '38%'; }
+
+.vjs-bar-cell-label-39:before {
+  content: '39%'; }
+
+.vjs-bar-cell-label-40:before {
+  content: '40%'; }
+
+.vjs-bar-cell-label-41:before {
+  content: '41%'; }
+
+.vjs-bar-cell-label-42:before {
+  content: '42%'; }
+
+.vjs-bar-cell-label-43:before {
+  content: '43%'; }
+
+.vjs-bar-cell-label-44:before {
+  content: '44%'; }
+
+.vjs-bar-cell-label-45:before {
+  content: '45%'; }
+
+.vjs-bar-cell-label-46:before {
+  content: '46%'; }
+
+.vjs-bar-cell-label-47:before {
+  content: '47%'; }
+
+.vjs-bar-cell-label-48:before {
+  content: '48%'; }
+
+.vjs-bar-cell-label-49:before {
+  content: '49%'; }
+
+.vjs-bar-cell-label-50:before {
+  content: '50%'; }
+
+.vjs-bar-cell-label-51:before {
+  content: '51%'; }
+
+.vjs-bar-cell-label-52:before {
+  content: '52%'; }
+
+.vjs-bar-cell-label-53:before {
+  content: '53%'; }
+
+.vjs-bar-cell-label-54:before {
+  content: '54%'; }
+
+.vjs-bar-cell-label-55:before {
+  content: '55%'; }
+
+.vjs-bar-cell-label-56:before {
+  content: '56%'; }
+
+.vjs-bar-cell-label-57:before {
+  content: '57%'; }
+
+.vjs-bar-cell-label-58:before {
+  content: '58%'; }
+
+.vjs-bar-cell-label-59:before {
+  content: '59%'; }
+
+.vjs-bar-cell-label-60:before {
+  content: '60%'; }
+
+.vjs-bar-cell-label-61:before {
+  content: '61%'; }
+
+.vjs-bar-cell-label-62:before {
+  content: '62%'; }
+
+.vjs-bar-cell-label-63:before {
+  content: '63%'; }
+
+.vjs-bar-cell-label-64:before {
+  content: '64%'; }
+
+.vjs-bar-cell-label-65:before {
+  content: '65%'; }
+
+.vjs-bar-cell-label-66:before {
+  content: '66%'; }
+
+.vjs-bar-cell-label-67:before {
+  content: '67%'; }
+
+.vjs-bar-cell-label-68:before {
+  content: '68%'; }
+
+.vjs-bar-cell-label-69:before {
+  content: '69%'; }
+
+.vjs-bar-cell-label-70:before {
+  content: '70%'; }
+
+.vjs-bar-cell-label-71:before {
+  content: '71%'; }
+
+.vjs-bar-cell-label-72:before {
+  content: '72%'; }
+
+.vjs-bar-cell-label-73:before {
+  content: '73%'; }
+
+.vjs-bar-cell-label-74:before {
+  content: '74%'; }
+
+.vjs-bar-cell-label-75:before {
+  content: '75%'; }
+
+.vjs-bar-cell-label-76:before {
+  content: '76%'; }
+
+.vjs-bar-cell-label-77:before {
+  content: '77%'; }
+
+.vjs-bar-cell-label-78:before {
+  content: '78%'; }
+
+.vjs-bar-cell-label-79:before {
+  content: '79%'; }
+
+.vjs-bar-cell-label-80:before {
+  content: '80%'; }
+
+.vjs-bar-cell-label-81:before {
+  content: '81%'; }
+
+.vjs-bar-cell-label-82:before {
+  content: '82%'; }
+
+.vjs-bar-cell-label-83:before {
+  content: '83%'; }
+
+.vjs-bar-cell-label-84:before {
+  content: '84%'; }
+
+.vjs-bar-cell-label-85:before {
+  content: '85%'; }
+
+.vjs-bar-cell-label-86:before {
+  content: '86%'; }
+
+.vjs-bar-cell-label-87:before {
+  content: '87%'; }
+
+.vjs-bar-cell-label-88:before {
+  content: '88%'; }
+
+.vjs-bar-cell-label-89:before {
+  content: '89%'; }
+
+.vjs-bar-cell-label-90:before {
+  content: '90%'; }
+
+.vjs-bar-cell-label-91:before {
+  content: '91%'; }
+
+.vjs-bar-cell-label-92:before {
+  content: '92%'; }
+
+.vjs-bar-cell-label-93:before {
+  content: '93%'; }
+
+.vjs-bar-cell-label-94:before {
+  content: '94%'; }
+
+.vjs-bar-cell-label-95:before {
+  content: '95%'; }
+
+.vjs-bar-cell-label-96:before {
+  content: '96%'; }
+
+.vjs-bar-cell-label-97:before {
+  content: '97%'; }
+
+.vjs-bar-cell-label-98:before {
+  content: '98%'; }
+
+.vjs-bar-cell-label-99:before {
+  content: '99%'; }
+
+.vjs-bar-cell-label-100:before {
+  content: '100%'; }
+
 html {
   font-size: 14px; }
 

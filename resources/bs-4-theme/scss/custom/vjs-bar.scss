@@ -1,0 +1,224 @@
+.vjs-bar-cell { span { display: none } }
+
+.vjs-bar-cell {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+
+  &:before {
+    content:          '\a0';
+    color:            white;
+    font-size:        11px;
+    padding:          5px;
+    display:          inline-block;
+    background-color: #32495e;
+  }
+}
+
+.vjs-bar-cell {
+  &-0:before { width: 0% }
+  &-1:before { width: 1% }
+  &-2:before { width: 2% }
+  &-3:before { width: 3% }
+  &-4:before { width: 4% }
+  &-5:before { width: 5% }
+  &-6:before { width: 6% }
+  &-7:before { width: 7% }
+  &-8:before { width: 8% }
+  &-9:before { width: 9% }
+  &-10:before { width: 10% }
+  &-11:before { width: 11% }
+  &-12:before { width: 12% }
+  &-13:before { width: 13% }
+  &-14:before { width: 14% }
+  &-15:before { width: 15% }
+  &-16:before { width: 16% }
+  &-17:before { width: 17% }
+  &-18:before { width: 18% }
+  &-19:before { width: 19% }
+  &-20:before { width: 20% }
+  &-21:before { width: 21% }
+  &-22:before { width: 22% }
+  &-23:before { width: 23% }
+  &-24:before { width: 24% }
+  &-25:before { width: 25% }
+  &-26:before { width: 26% }
+  &-27:before { width: 27% }
+  &-28:before { width: 28% }
+  &-29:before { width: 29% }
+  &-30:before { width: 30% }
+  &-31:before { width: 31% }
+  &-32:before { width: 32% }
+  &-33:before { width: 33% }
+  &-34:before { width: 34% }
+  &-35:before { width: 35% }
+  &-36:before { width: 36% }
+  &-37:before { width: 37% }
+  &-38:before { width: 38% }
+  &-39:before { width: 39% }
+  &-40:before { width: 40% }
+  &-41:before { width: 41% }
+  &-42:before { width: 42% }
+  &-43:before { width: 43% }
+  &-44:before { width: 44% }
+  &-45:before { width: 45% }
+  &-46:before { width: 46% }
+  &-47:before { width: 47% }
+  &-48:before { width: 48% }
+  &-49:before { width: 49% }
+  &-50:before { width: 50% }
+  &-51:before { width: 51% }
+  &-52:before { width: 52% }
+  &-53:before { width: 53% }
+  &-54:before { width: 54% }
+  &-55:before { width: 55% }
+  &-56:before { width: 56% }
+  &-57:before { width: 57% }
+  &-58:before { width: 58% }
+  &-59:before { width: 59% }
+  &-60:before { width: 60% }
+  &-61:before { width: 61% }
+  &-62:before { width: 62% }
+  &-63:before { width: 63% }
+  &-64:before { width: 64% }
+  &-65:before { width: 65% }
+  &-66:before { width: 66% }
+  &-67:before { width: 67% }
+  &-68:before { width: 68% }
+  &-69:before { width: 69% }
+  &-70:before { width: 70% }
+  &-71:before { width: 71% }
+  &-72:before { width: 72% }
+  &-73:before { width: 73% }
+  &-74:before { width: 74% }
+  &-75:before { width: 75% }
+  &-76:before { width: 76% }
+  &-77:before { width: 77% }
+  &-78:before { width: 78% }
+  &-79:before { width: 79% }
+  &-80:before { width: 80% }
+  &-81:before { width: 81% }
+  &-82:before { width: 82% }
+  &-83:before { width: 83% }
+  &-84:before { width: 84% }
+  &-85:before { width: 85% }
+  &-86:before { width: 86% }
+  &-87:before { width: 87% }
+  &-88:before { width: 88% }
+  &-89:before { width: 89% }
+  &-90:before { width: 90% }
+  &-91:before { width: 91% }
+  &-92:before { width: 92% }
+  &-93:before { width: 93% }
+  &-94:before { width: 94% }
+  &-95:before { width: 95% }
+  &-96:before { width: 96% }
+  &-97:before { width: 97% }
+  &-98:before { width: 98% }
+  &-99:before { width: 99% }
+  &-100:before { width: 100% }
+}
+
+.vjs-bar-cell-label {
+  &-0:before { content: '0%' }
+  &-1:before { content: '1%' }
+  &-2:before { content: '2%' }
+  &-3:before { content: '3%' }
+  &-4:before { content: '4%' }
+  &-5:before { content: '5%' }
+  &-6:before { content: '6%' }
+  &-7:before { content: '7%' }
+  &-8:before { content: '8%' }
+  &-9:before { content: '9%' }
+  &-10:before { content: '10%' }
+  &-11:before { content: '11%' }
+  &-12:before { content: '12%' }
+  &-13:before { content: '13%' }
+  &-14:before { content: '14%' }
+  &-15:before { content: '15%' }
+  &-16:before { content: '16%' }
+  &-17:before { content: '17%' }
+  &-18:before { content: '18%' }
+  &-19:before { content: '19%' }
+  &-20:before { content: '20%' }
+  &-21:before { content: '21%' }
+  &-22:before { content: '22%' }
+  &-23:before { content: '23%' }
+  &-24:before { content: '24%' }
+  &-25:before { content: '25%' }
+  &-26:before { content: '26%' }
+  &-27:before { content: '27%' }
+  &-28:before { content: '28%' }
+  &-29:before { content: '29%' }
+  &-30:before { content: '30%' }
+  &-31:before { content: '31%' }
+  &-32:before { content: '32%' }
+  &-33:before { content: '33%' }
+  &-34:before { content: '34%' }
+  &-35:before { content: '35%' }
+  &-36:before { content: '36%' }
+  &-37:before { content: '37%' }
+  &-38:before { content: '38%' }
+  &-39:before { content: '39%' }
+  &-40:before { content: '40%' }
+  &-41:before { content: '41%' }
+  &-42:before { content: '42%' }
+  &-43:before { content: '43%' }
+  &-44:before { content: '44%' }
+  &-45:before { content: '45%' }
+  &-46:before { content: '46%' }
+  &-47:before { content: '47%' }
+  &-48:before { content: '48%' }
+  &-49:before { content: '49%' }
+  &-50:before { content: '50%' }
+  &-51:before { content: '51%' }
+  &-52:before { content: '52%' }
+  &-53:before { content: '53%' }
+  &-54:before { content: '54%' }
+  &-55:before { content: '55%' }
+  &-56:before { content: '56%' }
+  &-57:before { content: '57%' }
+  &-58:before { content: '58%' }
+  &-59:before { content: '59%' }
+  &-60:before { content: '60%' }
+  &-61:before { content: '61%' }
+  &-62:before { content: '62%' }
+  &-63:before { content: '63%' }
+  &-64:before { content: '64%' }
+  &-65:before { content: '65%' }
+  &-66:before { content: '66%' }
+  &-67:before { content: '67%' }
+  &-68:before { content: '68%' }
+  &-69:before { content: '69%' }
+  &-70:before { content: '70%' }
+  &-71:before { content: '71%' }
+  &-72:before { content: '72%' }
+  &-73:before { content: '73%' }
+  &-74:before { content: '74%' }
+  &-75:before { content: '75%' }
+  &-76:before { content: '76%' }
+  &-77:before { content: '77%' }
+  &-78:before { content: '78%' }
+  &-79:before { content: '79%' }
+  &-80:before { content: '80%' }
+  &-81:before { content: '81%' }
+  &-82:before { content: '82%' }
+  &-83:before { content: '83%' }
+  &-84:before { content: '84%' }
+  &-85:before { content: '85%' }
+  &-86:before { content: '86%' }
+  &-87:before { content: '87%' }
+  &-88:before { content: '88%' }
+  &-89:before { content: '89%' }
+  &-90:before { content: '90%' }
+  &-91:before { content: '91%' }
+  &-92:before { content: '92%' }
+  &-93:before { content: '93%' }
+  &-94:before { content: '94%' }
+  &-95:before { content: '95%' }
+  &-96:before { content: '96%' }
+  &-97:before { content: '97%' }
+  &-98:before { content: '98%' }
+  &-99:before { content: '99%' }
+  &-100:before { content: '100%' }
+}
+
