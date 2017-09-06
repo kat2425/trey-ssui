@@ -11,9 +11,10 @@ import Sidebar              from 'ui/shell/SMS/Sidebar'
 
 import CallingController    from 'ui/controllers/CallingController'
 
-import SMSInboxStore        from 'stores/SMSInbox'
-import WebSocketStore       from 'stores/WebSocket'
-import SMSConversationStore from 'stores/SMSConversation'
+import StudentCardStore      from 'stores/StudentCard'
+import SMSInboxStore         from 'stores/SMSInbox'
+import CallingStore          from 'stores/CallingStore'
+import WebSocketStore        from 'stores/WebSocket'
 
 import VJSContainer         from 'ui/vjs/VJSContainer'
 
@@ -84,7 +85,7 @@ class UserMain extends Component {
       <VJSContainer>
         <div className='container-fluid pt-4'>
           <div className='row'>
-            <CallingController />
+            <CallingController store={CallingStore} />
             <NavBar />
             <UserMenu />
             <AppContainer />
