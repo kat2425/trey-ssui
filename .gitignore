@@ -22,8 +22,8 @@
 /public/assets
 
 /resources/bs-4-theme/node_modules
-/resources/bs-4-theme/dist
 /resources/bs-4-theme/dist/*
+!/resources/bs-4-theme/dist/.gitkeep
 
 .byebug_history
 /public/packs
