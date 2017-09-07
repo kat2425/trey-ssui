@@ -69,30 +69,34 @@ const ContactEntry = ({contact}) => {
 
 const Contacts = ({contacts}) => {
   return (
-    <Card>
-      <Table>
-        <thead>
-          <tr>
-            <td>
-              <strong>Name</strong>
-            </td>
-            <td>
-              <strong>Relationship</strong>
-            </td>
-            <td>
-              <strong>Phone</strong>
-            </td>
-            <td>
-              <strong>Email</strong>
-            </td>
-          </tr>
-        </thead>
+    <div>
+      <h4 className='m-1 mb-3'>Contacts</h4>
 
-        <tbody>
-          { contacts.map(c => <ContactEntry key={c.name} contact={c}/>) }
-        </tbody>
-      </Table>
-    </Card>
+      <Card>
+        <Table>
+          <thead>
+            <tr>
+              <td>
+                <strong>Name</strong>
+              </td>
+              <td>
+                <strong>Relationship</strong>
+              </td>
+              <td>
+                <strong>Phone</strong>
+              </td>
+              <td>
+                <strong>Email</strong>
+              </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            { contacts.map(c => <ContactEntry key={c.name} contact={c}/>) }
+          </tbody>
+        </Table>
+      </Card>
+    </div>
   )
 }
 

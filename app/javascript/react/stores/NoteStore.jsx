@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx'
-import _xhr from 'helpers/_XHR'
+import _xhr from 'helpers/XHR'
 
 class NoteStore {
   @observable notes = []
@@ -17,7 +17,7 @@ class NoteStore {
   @observable isCreating = false
 
   visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 } ]
-  
+
   /* Notes */
 
   @action
@@ -65,7 +65,7 @@ class NoteStore {
     this.title = title
   }
 
-  @action 
+  @action
   setNoteMessage = (message) => {
     this.message = message
   }
@@ -156,7 +156,7 @@ class NoteStore {
       this.resetNoteForm()
     })
   }
-  
+
 
   /* Tags */
 

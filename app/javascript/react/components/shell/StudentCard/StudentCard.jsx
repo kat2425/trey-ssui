@@ -49,7 +49,7 @@ const cardStyle = {
 }
 
 const CloseBtn = ({onClick}) => (
-  <div className='text-right h4 p-1 pr-0 mb-2'>
+  <div className='float-right h4 p-1 pr-0 mb-2'>
     <span className='icon icon-cross' onClick={onClick} />
   </div>
 )
