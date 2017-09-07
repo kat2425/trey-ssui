@@ -8,9 +8,6 @@ const Overview = ({student, handleClick}) => {
     <div>
       <h4 className='m-1 mb-3'>
         Overview
-        <div className='float-right'>
-          <span className='icon icon-cross' onClick={handleClick} />
-        </div>
       </h4>
 
       <div>
