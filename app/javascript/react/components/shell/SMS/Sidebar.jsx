@@ -8,8 +8,6 @@ import SMSInboxController from 'ui/controllers/SMSInboxController'
 import SMSConversationStore from 'stores/SMSConversation'
 import SMSController from 'ui/controllers/SMSController'
 
-import fireEvent from 'helpers/FireEvent'
-
 const containerStyle = secondary => ({
   position:        'fixed', 
   top:             0,
@@ -32,25 +30,6 @@ const barStyle = secondary => ({
   right:           0
 })
 
-const closeStyle = secondary => ({
-  lineHeight: '22px',
-  top:        secondary ? 5 : '62px',
-  position:   'absolute',
-  fontSize:   18,
-  right:      8,
-  zIndex:     99999
-})
-
-const CloseBtn = ({onClick, secondary}) => (
-  <div style={closeStyle(secondary)}>
-    <span
-      className = 'icon icon-cross text-muted'
-      style     = {{lineHeight:'22px'}}
-      onClick   = {onClick}
-    />
-  </div>
-)
-
 @inject('uiStore')
 @observer
 export default class Sidebar extends Component {
@@ -71,10 +50,6 @@ export default class Sidebar extends Component {
 
   backToInbox = () => {
     this.props.uiStore.setShowInbox(true)
-  }
-
-  hideSidebar = () => {
-    fireEvent('toggleSidebar')
   }
 
   renderInbox() {
@@ -105,11 +80,9 @@ export default class Sidebar extends Component {
     return (
       <div className='col-md-3' style={containerStyle(isSecondary)} hidden={uiStore.hideSidebar}>
         <div style={barStyle(isSecondary)}>
-          <CloseBtn secondary={isSecondary} onClick={this.hideSidebar} />
           { uiStore.showInbox ? this.renderInbox() : this.renderConversation() }
         </div>
       </div>
     )
   }
 }
-
