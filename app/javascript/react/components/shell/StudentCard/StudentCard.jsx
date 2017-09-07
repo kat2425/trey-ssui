@@ -104,41 +104,41 @@ export default class StudentCard extends Component {
           <Demographics student={student} />
           <FinancialAid student={student} />
 
-          <Card> 
-            {this.props.children} 
-            <UserMenuSection title='Details'> 
-              <UserMenuItem 
+          <Card>
+            {this.props.children}
+            <UserMenuSection title='Details'>
+              <UserMenuItem
                 title     = 'Overview'
                 iconClass = 'icon-list'
                 link      = {`${match.url}/overview`}
                 location  = {location}
-              /> 
-              <UserMenuItem 
+              />
+              <UserMenuItem
                 title     = 'Contacts'
                 iconClass = 'icon-calendar'
                 link      = {`${match.url}/contacts`}
                 location  = {location}
-              /> 
-              <UserMenuItem 
-                title     = 'Discipline'
-                iconClass = 'icon-thermometer'
-                link      = {`${match.url}/discipline`}
-                location  = {location}
-              /> 
-              <UserMenuItem 
-                title     = 'Assessment'
-                iconClass = 'icon-bar-graph'
-                link      = {`${match.url}/assessment`}
-                location  = {location}
-              /> 
-              <UserMenuItem 
+              />
+              {/* <UserMenuItem  */}
+              {/*   title     = 'Discipline' */}
+              {/*   iconClass = 'icon-thermometer' */}
+              {/*   link      = {`${match.url}/discipline`} */}
+              {/*   location  = {location} */}
+              {/* />  */}
+              {/* <UserMenuItem  */}
+              {/*   title     = 'Assessment' */}
+              {/*   iconClass = 'icon-bar-graph' */}
+              {/*   link      = {`${match.url}/assessment`} */}
+              {/*   location  = {location} */}
+              {/* />  */}
+              <UserMenuItem
                 title     = 'Notes'
                 iconClass = 'icon-pencil'
                 link      = {`${match.url}/notes`}
                 location  = {location}
-              /> 
-            </UserMenuSection> 
-          </Card> 
+              />
+            </UserMenuSection>
+          </Card>
         </Col>
 
         {/* Root Container */}

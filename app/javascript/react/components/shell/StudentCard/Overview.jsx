@@ -1,7 +1,7 @@
 import React     from 'react'
 import PropTypes from 'prop-types'
 
-import Courses         from './Courses'
+import Courses   from './Courses'
 
 const Overview = ({student, handleClick}) => {
   return (
@@ -22,26 +22,3 @@ Overview.defaultProps = {}
 Overview.propTypes = {}
 
 export default Overview
-
-//<Card>
-//  <Table>
-//    <thead>
-//      <tr>
-//        <td>
-//          <strong>Name</strong>
-//        </td>
-//        <td>
-//          <strong>Relationship</strong>
-//        </td>
-//        <td>
-//          <strong>Phone</strong>
-//        </td>
-//        <td>
-//          <strong>Email</strong>
-//        </td>
-//      </tr>
-//    </thead>
-//
-//    <Contacts contacts={contacts}/>
-//  </Table>
-//</Card>
