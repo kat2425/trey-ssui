@@ -17,11 +17,16 @@ export class UiStore {
   showInbox = true
 
   @setter @observable 
+  shouldScrollToBottom = true
+
+  @setter @observable 
   sidebarMaxHeight = false
 
   constructor() {
     autorun('fetch conversation everytime it is updated', () => {
       if(!this.currentConversation) return 
+
+      this.shouldScrollToBottom = true
       SMSConversationStore.fetchConversation(this.currentConversation)
     })
   }

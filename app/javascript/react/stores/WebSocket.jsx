@@ -6,6 +6,7 @@ import _    from 'lodash'
 
 import SMSConversationStore from 'stores/SMSConversation'
 import SMSInboxStore from 'stores/SMSInbox'
+import uiStore from 'stores/UiStore'
 
 class WebSocketStore {
   constructor() {
@@ -31,6 +32,7 @@ class WebSocketStore {
 
         SMSConversationStore.addMessage(_msg)
         SMSInboxStore.fetchInbox()
+        uiStore.setShouldScrollToBottom(true)
       }
     })
   }
