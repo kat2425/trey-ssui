@@ -1,8 +1,3 @@
-// FIXME
-// Make header dry
-// Add Contact object as a prop
-// Make stateless component
-
 import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
@@ -11,7 +6,7 @@ import _    from 'lodash'
 
 const headerStyle = {
   position: 'absolute',
-  top:      37
+  top:      67
 }
 
 @observer
@@ -48,7 +43,7 @@ export default class ConversationHeader extends Component {
           />
         </Col>
 
-        <Col className='float-right pt-3 col-sm-11'>
+        <Col className='float-right mt-5 col-sm-11'>
           {this.renderHeader()}
         </Col>
       </div>

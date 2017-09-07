@@ -21,7 +21,7 @@ const fooStyle = secondary => ({
   boxShadow:       '0 1px 1px rgba(0,0,0,0.15)',
   position:        'absolute',
   width:           '100%',
-  height:          '103px',
+  height:          '130px',
   top:             secondary ? 0 : 57
 })
 
@@ -29,7 +29,7 @@ const redContainer = {
   backgroundColor: 'rgb(244,247,249)',
   position:        'absolute',
   width:           '100%',
-  top:             '160px',
+  top:             '188px',
   bottom:          '50px',
   overflow:        'auto'
 }

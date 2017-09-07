@@ -18,7 +18,7 @@ const inboxStyle = {
 const headerStyle = secondary => ({
   position:        'absolute',
   width:           '100%',
-  height:          '65px',
+  height:          '80px',
   backgroundColor: 'rgb(245,245,245)',
   borderBottom:    '1px solid rgba(0,0,0,0.125)',
   top:             secondary ? 0 : 57
@@ -27,7 +27,7 @@ const headerStyle = secondary => ({
 const listStyle = secondary => ({
   position:        'absolute',
   width:           '100%',
-  top:             secondary ? 65 : 122,
+  top:             secondary ? 80 : 137,
   bottom:          '50px',
   overflow:        'auto'
 })
@@ -59,18 +59,10 @@ export default class SMSInboxController extends Component {
     return (
       <div style={inboxStyle}>
         <div className='p-0 pl-4 pr-3' style={headerStyle(isSecondary)}>
-          <h4 className='m-0' style={{lineHeight:'22px',top:'18px',position:'absolute'}}>
+          <h4 className='m-0' style={{lineHeight:'22px',top:'30px',position:'absolute'}}>
             <span className='icon icon-chat text-muted mr-4'/>
             Messages
           </h4>
-
-          <div className='float-right' style={{lineHeight:'22px',top:'21px',position:'relative',fontSize:18}}>
-            <span
-              className = 'icon icon-cross text-muted'
-              style     = {{lineHeight:'22px'}}
-              onClick   = {this.hideSidebar}
-            />
-          </div>
         </div>
 
         <div style={listStyle(isSecondary)}>

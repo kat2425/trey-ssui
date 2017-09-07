@@ -46,6 +46,12 @@ const cardStyle = {
   }
 }
 
+const CloseBtn = ({onClick}) => (
+  <div className='text-right h4 p-1 pr-0 mb-2'>
+    <span className='icon icon-cross' onClick={onClick} />
+  </div>
+)
+
 @withRouter
 @observer
 export default class StudentCard extends Component {
@@ -129,6 +135,7 @@ export default class StudentCard extends Component {
 
         {/* Root Container */}
         <Col sm='9'>
+          <CloseBtn onClick={this.closeCard} />
           <Switch location={location}>
             <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
             <Route
