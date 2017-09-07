@@ -9,14 +9,12 @@ class CallingStore {
   @setter @observable isCalling = false
   @setter @observable callBarVisible   = false
   @observable studentID         = null
-  @observable phoneNumber       = null
-  @observable contactName       = null
-  @observable contactPhone      = null
-  @observable token             = null
-  @observable userId            = null
-  @observable connection        = null
-  @observable contactID         = null
   @observable contact           = null
+  @observable contactName       = null
+  @observable phoneNumber       = null
+  @observable connection        = null
+
+ 
   @setter @observable selectCall = false
 
   @action
@@ -36,10 +34,9 @@ class CallingStore {
     this.setIsCalling(true)
     this.setCallBarVisible(true)
 
-    
-    this.contactID   = contact.refs[0].id
-    this.contactName = contact.refs[0].name
-    this.phoneNumber = contact.refs[0].phone
+    const contactID   = this.contact.refs[0].id
+    this.contactName = this.contact.refs[0].name
+    const phoneNumber = this.contact.refs[0].phone
     this.studentID   = studentId
   
     const token = data.data.token
@@ -47,29 +44,44 @@ class CallingStore {
 
     this.setupDevice(token)
     setTimeout(() =>
-    this.connect(this.phoneNumber), 2000)
+    this.connect(phoneNumber), 2000)
   }
 
   @action
   connect(number) {
+    const contactID   = this.contact.refs[0].id
+    const contactName = this.contact.refs[0].name
+    const studentID   = this.studentID
+
     const params = {
-      contact_id: this.contactID,
-      student_id: this.studentID,
+      contact_id: contactID,
+      student_id: studentID,
       tocall:     number,
       user_id:    this.userId
     }
-    console.log(number)
+ 
     this.connection = Twilio.Device.connect(params)
     
     this.connection.accept((conn) => {
       console.log('accepted')
     })
-    this.connection.disconnect((conn) => 
-      console.log('DISCONNECTED')
-  )
+    this.connection.disconnect((conn) => {
+      this.setIsCalling(false)
+      setTimeout(() => 
+      this.setCallBarVisible(false), 5000)
+    })
+    this.connection.reject((conn) => {
+      this.setIsCalling(false)
+      setTimeout(() => 
+      this.setCallBarVisible(false), 5000)
+    })
+
+    Twilio.Device.connect((conn) => {
+      console.log('asdff', conn)
+    })
 
   Twilio.Device.incoming(function(conn) {
-    console.log(conn)
+    console.log(conn.status)
   });
   }
 

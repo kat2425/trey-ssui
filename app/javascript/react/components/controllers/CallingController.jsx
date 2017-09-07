@@ -4,6 +4,7 @@ import { observer }          from 'mobx-react'
 import {
   Navbar, Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const style = {
   callBar: {
@@ -63,8 +64,12 @@ export default class CallingController extends Component {
     const { callBarVisible, selectCall, selectCallOption, contact, studentId } = this.props.store
     return (
       <div style={{zIndex: 9999}}>
-          {callBarVisible &&
-          <div>{this.renderBar()}</div>}
+        <ReactCSSTransitionGroup
+          transitionName="callBar"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
+
+        </ReactCSSTransitionGroup>
           <Modal style={{zIndex: 99999}} isOpen={selectCall}>
           <ModalHeader>Call</ModalHeader>
           <ModalBody>
@@ -75,9 +80,6 @@ export default class CallingController extends Component {
               <Button color="secondary" onClick={() => this.props.store.initiateConferenceCall(contact, studentId)}>Call Using My Cell Phone</Button>
             </div>
           </ModalBody>
-          <ModalFooter>
-            
-          </ModalFooter>
         </Modal>
       </div>
     )

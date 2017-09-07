@@ -46,7 +46,8 @@ const cardStyle = {
     right:           55,
     borderRadius:    '0.25em',
     border:          'none',
-    backgroundColor: '#f7f9fb'
+    backgroundColor: '#f7f9fb',
+    paddingBottom: 35
   }
 }
 

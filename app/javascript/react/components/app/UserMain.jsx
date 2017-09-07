@@ -89,7 +89,7 @@ class UserMain extends Component {
             <NavBar />
             <UserMenu />
             <AppContainer />
-            <ActionBar store={SMSInboxStore} />
+            <ActionBar store={SMSInboxStore} callingStore={CallingStore}/>
             <Sidebar />
           </div>
         </div>
