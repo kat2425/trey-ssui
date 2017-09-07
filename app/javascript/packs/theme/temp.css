@@ -142,3 +142,21 @@ button.jive_button.over {
 .jive_form input {
   margin-right: 5px !important;
 }
+
+.callBar-enter {
+  opacity: 0.01;
+}
+
+.callBar-enter.callBar-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.callBar-leave {
+  opacity: 1;
+}
+
+.callBar-leave.callBar-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
