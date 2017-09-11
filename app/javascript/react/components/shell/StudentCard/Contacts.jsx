@@ -24,7 +24,7 @@ const ContactEntry = ({contact, store, student}) => {
           return (
             <div key={ref.id} className='mb-1'>
               <ButtonGroup className='mr-2'>
-                <Button onClick={() => {store.selectCallOption(true); store.contact = contact; store.studentId = student.id}} size='sm' color='success'>
+                <Button onClick={() => {store.isCall(true); store.contact = contact; store.studentId = student.id}} size='sm' color='success'>
                   <span className='icon icon-phone'/>
                 </Button>
 
