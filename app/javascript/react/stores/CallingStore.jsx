@@ -5,6 +5,7 @@ import _   from 'lodash'
 import xhr from 'helpers/XHR'
 import axios from 'axios'
 import moment from 'moment'
+import {isEmpty, padCharsStart} from 'lodash/fp'
 class CallingStore {
   @setter @observable isCalling = false
   @setter @observable callBarVisible   = false
@@ -18,6 +19,10 @@ class CallingStore {
   @setter @observable selectCall = false
   @setter @observable selectDialPad = false
   @setter @observable selectMute    = false
+  @observable isConnected = false
+  @observable intervalHandler = null
+ disposerTmr = null
+  @setter @observable callTime = null
 
   generateToken = () => {
     return xhr.get('/commo/capability_token')
@@ -48,7 +53,7 @@ class CallingStore {
   }
 
   @action
-  connect(number) {
+  connect = (number) => {
     const params = {
       contact_id: this.contact.refs[0].id,
       student_id: this.studentID,
@@ -60,7 +65,23 @@ class CallingStore {
 
     this.connection.accept((conn) => {
       console.log('accepted')
+      this.isConnected = true
+
     })
+
+          // set timer when calls are initiated
+          this.disposerTmr = autorun(() => {
+            if (this.isConnected) {
+              const callStartTime = Date.now()
+              this.intervalHandler = setInterval(action('SETTING CALL TIME', () => {
+                const t = getTime(callStartTime, Date.now())
+                console.log('CALL TIME => ', t)
+                this.setCallTime(t)
+              }), 1000)
+            } else {
+              this.intervalHandler = null
+            }
+          })
 
     this.connection.disconnect((conn) => {
       this.setIsCalling(false)
@@ -120,9 +141,11 @@ class CallingStore {
   }
 
   @action
-  hangUp() {
+  hangUp = () => {
     this.connection.disconnect()
     this.setIsCalling(false)
+    this.isConnected = false
+    this.disposerTmr()
     setTimeout(() => 
     this.setCallBarVisible(false), 5000)
     this.isDialPad(false)
@@ -153,6 +176,19 @@ class CallingStore {
       console.log(e)
     }
   }
+}
+
+function getTime (start, end) {
+  var startTime = moment(start)
+  var endTime = moment(end)
+  var duration = moment.duration(endTime.diff(startTime))
+  const padTime = padCharsStart('0')(2)
+
+  var hours = parseInt(duration.asHours()).toString()
+  var minutes = (parseInt(duration.asMinutes()) - hours * 60).toString()
+  var secs = (parseInt(duration.asSeconds()) - minutes * 60).toString()
+
+  return `${padTime(minutes)}:${padTime(secs)}`
 }
 
 export default CallingStore = new CallingStore()

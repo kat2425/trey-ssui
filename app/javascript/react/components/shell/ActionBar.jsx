@@ -7,6 +7,7 @@ import {
   ButtonGroup
 } from 'reactstrap'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import moment from 'moment'
 import fireEvent from 'helpers/FireEvent'
 
@@ -41,8 +42,15 @@ const style = {
     fontSize: '1.5em'
   },
   callBarBtn: {
-    color: 'dimgray',
-    backgroundColor: 'white',
+    color: 'white',
+    backgroundColor: 'gray',
+    border: 'none',
+    marginRight: 5
+  },
+  unmuteBtn: {
+    color: 'white',
+    backgroundColor: 'darkgray',
+    border: 'none',
     marginRight: 5
   }
 }
@@ -59,33 +67,40 @@ export default class ActionBar extends Component {
   }
 
   renderBar() {
-    const { callBar, callBarDisable, callBarCallText, callBarBtn, callBarEndText, isMute } = style
-    const { isCalling } = this.props.callingStore
+    const { callBar, callBarDisable, callBarCallText, callBarBtn, callBarEndText, unmuteBtn } = style
+    const { isCalling, isConnected, selectMute, isMute, callTime } = this.props.callingStore
       return (
         <Navbar style={callBar}>
           <Row>
             <Col sm="8">
               <p style={callBarCallText}>
                 <span className="icon icon-phone"> </span>
-                  { isCalling ? `Calling ${this.props.callingStore.contactName}` : 'Call Ended' }
+                  { isCalling ? `Calling ${this.props.callingStore.contactName}` : 'Call Ended' }    
+                  <span style={{float: 'right'}}>{callTime}</span>      
               </p>
             </Col>
-              { isCalling 
-                ? <Col sm="4">
-                    <ButtonGroup>        
+              <Col sm="4">            
+                <ReactCSSTransitionGroup
+                  transitionName="callBar"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={200}>               
+               { isCalling && isConnected 
+                ?     <ButtonGroup>    
                         <Button 
                           id="Popover1"
                           style={callBarBtn} 
                           onClick={() => this.props.callingStore.isDialPad(true)}>Dialpad</Button>
                         <Button 
-                          style={callBarBtn} 
-                          onClick={() => this.props.callingStore.isMute(true)}>Mute</Button>
+                          style={selectMute ? unmuteBtn : callBarBtn} 
+                          onClick={() => isMute(!selectMute)}>{ selectMute ? 'Unmute' : 'Mute' }</Button>
                         <Button 
                           style={callBarBtn} 
                           onClick={() => this.props.callingStore.hangUp()}>End Call</Button> 
-                    </ButtonGroup>
-                  </Col>
-                : null }       
+                      </ButtonGroup>
+                      : null } 
+                </ReactCSSTransitionGroup>
+              </Col>
+                      
           </Row>
         </Navbar>
       )
