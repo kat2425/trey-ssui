@@ -1,10 +1,14 @@
 import React, { Component}  from 'react'
 
 import { inject, observer } from 'mobx-react'
+import _                    from 'lodash'
 
 import ChatInput            from 'ui/shell/SMS/ChatInput'
 import SMS                  from 'ui/shell/SMS/SMS'
 import ConversationHeader   from 'ui/shell/SMS/ConversationHeader'
+import LoadingSpinner       from 'ui/shell/LoadingSpinner'
+
+import VisibilitySensor     from 'react-visibility-sensor'
 
 const conversationStyle = {
   backgroundColor: 'rgb(244,247,249)',
@@ -25,14 +29,14 @@ const fooStyle = secondary => ({
   top:             secondary ? 0 : 57
 })
 
-const redContainer = {
+const redContainer = (isSecondary) => ({
   backgroundColor: 'rgb(244,247,249)',
   position:        'absolute',
   width:           '100%',
-  top:             '160px',
+  top:             isSecondary ? '104px' : '160px',
   bottom:          '50px',
   overflow:        'auto'
-}
+})
 
 const redStyle = {
   overflow:        'auto'
@@ -46,6 +50,12 @@ const yellowStyle = secondary => ({
   width:           '100%'
 })
 
+const Spinner = () => (
+  <div className='text-center'>
+    <LoadingSpinner/>
+  </div>
+)
+
 @inject('uiStore')
 @observer
 export default class SMSController extends Component {
@@ -53,8 +63,13 @@ export default class SMSController extends Component {
     super(props)
   }
 
+  handleChange = (isVisible) => {
+    if(!isVisible) return
+    this.props.store.loadMore()
+  }
+
   render() {
-    const { uiStore } = this.props
+    const { uiStore, store, handleBack } = this.props
     const isSecondary = uiStore.sidebarMaxHeight ? true : false
 
     return (
@@ -62,16 +77,22 @@ export default class SMSController extends Component {
         <div style={fooStyle(isSecondary)}>
           <ConversationHeader 
             contact    = {uiStore.currentContact}
-            handleBack = {this.props.handleBack}
-            store      = {this.props.store}
+            handleBack = {handleBack}
+            store      = {store}
           />
         </div>
 
-        <div style={redContainer}>
+        <div style={redContainer(isSecondary)}>
           <div style={redStyle}>
+            <VisibilitySensor onChange={this.handleChange}>
+              <div className='invisible p-1'>invisible</div>
+            </VisibilitySensor>
+
+            { store.isLoading && <Spinner /> }
+
             <SMS 
               conversation = {uiStore.currentConversation}
-              store        = {this.props.store}
+              store        = {store}
             />
           </div>
         </div>
