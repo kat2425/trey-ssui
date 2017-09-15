@@ -3,6 +3,7 @@ import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
 
 import ChatBubble          from './ChatBubble'
+import uiStore             from 'stores/UiStore'
 
 @observer
 export default class Conversation extends Component {
@@ -19,7 +20,7 @@ export default class Conversation extends Component {
   }
 
   componentDidUpdate() {
-    this.scrollToBottom()
+    uiStore.shouldScrollToBottom && this.scrollToBottom()
   }
 
   renderMessage(msg, index) {
