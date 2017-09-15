@@ -1,10 +1,14 @@
-import React                 from 'react'
-import { Switch, Route, withRouter, Redirect }     from 'react-router-dom'
+import React from 'react'
+
+import {
+  Switch, Route, withRouter, Redirect
+} from 'react-router-dom'
 
 import Attendance            from 'modules/logic/Attendance'
 import Infractions           from 'modules/logic/Infractions'
 import Financials            from 'modules/logic/Financials'
 import MyStudents            from 'modules/logic/MyStudents'
+import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 
 import ChannelHistory        from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
@@ -28,6 +32,7 @@ const AppContainer = ({match}) => {
         <Route path='/r/infractions' component={Infractions} />
         <Route path='/r/assessment/tvaas' component={TVAASController} />
         <Route path='/r/financials' component={Financials} />
+        <Route path='/r/risk_analysis' component={RiskAnalysis} />
 
         {/* Channel */}
         <Route path='/r/channel/inbox' component={SMSController} />

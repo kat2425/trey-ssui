@@ -1,3 +1,40 @@
+.vjs-bool-cell-true {
+  border-top: 1px solid darken(#e6fbe6, 6%) !important;
+  background-color: #e6fbe6;
+}
+
+.vjs-bool-cell-true > span[style] {
+  color: #5cb85c !important;
+}
+
+.vjs-bool-cell-false {
+  border-top: 1px solid darken(#fbe0df, 6%) !important;
+  background-color: #fbe0df;
+}
+
+.vjs-bool-cell-false > span[style] {
+  color: #d9534f !important;
+}
+
+.vjs-bucket-cell > span[style] {
+  color: #ffffff !important;
+}
+
+.vjs-bucket-cell-high {
+  border-top: 1px solid darken(#d9534f, 6%) !important;
+  background-color: #d9534f;
+}
+
+.vjs-bucket-cell-medium {
+  border-top: 1px solid darken(#f0ad4e, 6%) !important;
+  background-color: #f0ad4e;
+}
+
+.vjs-bucket-cell-low {
+  border-top: 1px solid darken(#5cb85c, 6%) !important;
+  background-color: #5cb85c;
+}
+
 .vjs-rank-cell {
   font-weight: bold;
   text-shadow: 0 1px 0 rgba(255,255,255,0.125), 0 -1px 0 rgba(255,255,255,0.125), 1px 0 0 rgba(255,255,255,0.125), -1px 0 0 rgba(255,255,255,0.125);

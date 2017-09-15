@@ -117,7 +117,7 @@ export default class MyStudents extends Component {
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/user_teachers'
             selectedValue = {this.state.selected.teacher_id}
             handleChange  = {::this.setTeacherFilter}
-            placeholder   = 'Teacher'
+            placeholder   = 'Instructor'
             width         = {250}
           />
         </ModuleHeader>
