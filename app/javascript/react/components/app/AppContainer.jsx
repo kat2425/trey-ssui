@@ -38,6 +38,7 @@ const AppContainer = ({match}) => {
         <Route path='/r/dumb' component={DumbContainer} />
         <Route render={() => <DumbContainer>404 :(</DumbContainer>} />
       </Switch>
+
       <Route path='*/students/:studentId' component={StudentCardController} />
     </div>
   )

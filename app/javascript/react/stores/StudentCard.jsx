@@ -23,7 +23,8 @@ class StudentCardStore {
         only: [
           'id', 'sis_id', 'state_id', 'first_name', 'last_name', 'dob',
           'gender', 'race', 'address', 'city', 'state', 'zip',
-          'enrollment_status', 'grade', 'school.school_name', 'data_relations'
+          'enrollment_status', 'grade', 'school.school_name', 'data_relations',
+          'major', 'advisor', 'coach'
         ].join(',')
       }
     }).then(this.fetchStudentOK)
@@ -44,7 +45,7 @@ class StudentCardStore {
   // XXX: i feel like this is smelly -jd
   @action.bound
   fetchNumberCapability(contact) {
-    xhr.post(`/commo/validate_number`, {
+    xhr.post('/commo/validate_number', {
       number: contact.phone
     }).then(res => {
       const cidx = this.contacts.findIndex(c => c.id == contact.id)
@@ -79,8 +80,6 @@ class StudentCardStore {
 
   @computed
   get groupedContacts() {
-    // const _contacts = toJS(this.contacts)
-
     return _.map(_.groupBy(this.contacts, c => [ c.name, c.relationship ]), group =>
       ({
         name:         group[0].name,

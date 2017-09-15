@@ -19,7 +19,7 @@ export default class Financials extends Component {
     this.setState({
       params: {
         ...this.state.params,
-        student_filter: [ jrsValue ]
+        student_id: [ jrsValue ]
       },
 
       selected: {

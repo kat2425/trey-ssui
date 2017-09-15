@@ -37,6 +37,7 @@ export default class VJSICSelect extends Component {
   renderOptions() {
     this.control = window.vjsClient.inputControls({
       resource: this.props.inputPath,
+      params:   (this.props.params || {}),
       success:  (ic) => {
         if (this._isMounted) {
           const filter = _.find(ic, { id: this.props.id })
@@ -51,13 +52,14 @@ export default class VJSICSelect extends Component {
 
   render() {
     return (
-      <div style={{width: (this.props.width || 100)}}>
+      <div style={{width: (this.props.width || 100)}} className='ml-2'>
         <Select
-          name          = {this.props.id}
-          placeholder   = {this.props.placeholder}
-          options       = {this.state.options}
-          value         = {this.props.selectedValue}
-          onChange      = {this.props.handleChange}
+          name           = {this.props.id}
+          placeholder    = {this.props.placeholder}
+          options        = {this.state.options}
+          value          = {this.props.selectedValue}
+          onChange       = {this.props.handleChange}
+          optionRenderer = {this.props.optionRenderer || null}
         />
       </div>
     )

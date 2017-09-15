@@ -7,6 +7,18 @@ import {
 
 const iconStyle = { fontSize: '16px' }
 
+const renderItem = (item, label, icon) => {
+  if (item) {
+    return (
+      <li>
+        <span className={`mr-3 text-muted icon ${icon}`} style={iconStyle}/>
+        <span>{label}: </span>
+        <span className='text-info'>{ item }</span>
+      </li>
+    )
+  }
+}
+
 const Demographics = ({ student }) => {
   return (
     <Card className='mb-4'>
@@ -31,6 +43,10 @@ const Demographics = ({ student }) => {
             <span>Gender: </span>
             <span className='text-info'>{ student.gender }</span>
           </li>
+
+          {renderItem(student.advisor, 'Advisor', 'icon-compass')}
+          {renderItem(student.coach,   'Coach',   'icon-feather')}
+          {renderItem(student.major,   'Major',   'icon-trophy')}
         </ul>
       </CardBlock>
     </Card>
