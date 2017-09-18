@@ -8649,6 +8649,14 @@ img.zoom-img {
 .card-link-list a {
   margin-left: 5px; }
 
+.itemSelector {
+  max-height: 350px;
+  overflow-y: auto;
+  border-bottom: solid 1px #D3D3D3; }
+
+.itemSelector__item {
+  padding: 15px 10px; }
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
