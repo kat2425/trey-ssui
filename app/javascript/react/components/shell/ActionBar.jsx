@@ -84,7 +84,7 @@ export default class ActionBar extends Component {
   }
 
 
-  renderBar() {
+  renderCallBar() {
     const {
       callBar,
       callBarDisable,
@@ -96,6 +96,7 @@ export default class ActionBar extends Component {
 
     const {
       isCalling,
+      isConferenceCalling,
       isConnected,
       selectMute,
       isMute,
@@ -111,8 +112,8 @@ export default class ActionBar extends Component {
           <Col sm="8">
             <p style={callBarCallText}>
               <span className="icon icon-phone"> </span>
-              {isCalling ? `Calling ${this.props.callingStore.contactName}` : 'Call Ended'}
-              <span style={{ float: 'right' }}>{callTime ? callTime : null}</span>
+              { (isCalling ? `Calling ${this.props.callingStore.contactName}` : (isConferenceCalling ? `Expect a call shortly...` : 'Call Ended') ) }
+              <span style={{ float: 'right' }}>{!isConferenceCalling && callTime ? callTime : null}</span>
             </p>
           </Col>
           <Col sm="4">
@@ -156,16 +157,24 @@ export default class ActionBar extends Component {
   }
 
   render() {
-    const { isCalling, callBarVisible } = this.props.callingStore
+    const { isCalling, isConferenceCalling, callBarVisible } = this.props.callingStore
 
     const actionBarStyle = {
-      backgroundColor: isCalling ? '#5cb85c' : (!isCalling && callBarVisible ? '#d9534f' : '#e8e8e8'),
+      backgroundColor: isCalling || isConferenceCalling 
+      ? '#5cb85c' 
+      : (!isCalling && callBarVisible 
+        ? '#d9534f' 
+        : '#e8e8e8'),
       boxShadow: '1px 0px 2px 0 rgba(0,0,0,0.25), 1px 0 6px 0 rgba(0,0,0,0.175)',
       padding: 0,
       zIndex: 9999,
       border: 'none',
       transition: '0.5s all',
-      color: isCalling ? 'white' : (!isCalling && callBarVisible ? 'white' : 'dimgray'),
+      color: isCalling 
+      ? '#ffffff' 
+      : (!isCalling && callBarVisible 
+        ? '#ffffff' 
+        : '#696969'),
     }
 
     return (
@@ -181,7 +190,7 @@ export default class ActionBar extends Component {
               transitionEnterTimeout={500}
               transitionLeaveTimeout={300}>
               {callBarVisible &&
-                <div>{this.renderBar()}</div>}
+                <div>{this.renderCallBar()}</div>}
             </ReactCSSTransitionGroup>
           </Col>
           <Col sm="4">

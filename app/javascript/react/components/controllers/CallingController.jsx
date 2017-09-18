@@ -51,12 +51,12 @@ export default class CallingController extends Component {
   }
 
   render() {
-    const { selectCall, selectDialPad, selectConferenceCall, isConferenceCall, isCall, contact, studentId, buttonID, popoverOpen } = this.props.store
+    const { selectCall, selectDialPad, selectConferenceCall, isConferenceCall, isConferenceCalling, isCall, contact, studentId, buttonID, popoverOpen } = this.props.store
     return (
       <div style={{ zIndex: 9999 }}>
         {this.renderDialPad()}
         <Modal style={{ zIndex: 99999 }} isOpen={selectCall}>
-          <ModalHeader>Place a Call</ModalHeader>
+          <ModalHeader style={{ justifyContent: 'center' }}>Place a Call</ModalHeader>
           <ModalBody style={{ textAlign: 'center' }}>
             <ButtonGroup vertical>
               <Button
@@ -65,7 +65,7 @@ export default class CallingController extends Component {
                 onClick={() => { isCall(false); this.props.store.initiateCall(contact, studentId) }}>
                 Call Using My Computer (Free)
                 </Button>
-              <Button color="secondary" onClick={() => isConferenceCall(!selectConferenceCall)}>Call Using My Cell Phone</Button>
+              <Button color="secondary" onClick={() => { isConferenceCall(!selectConferenceCall); }}>Call Using My Cell Phone</Button>
             </ButtonGroup>
             <Collapse isOpen={selectConferenceCall}>
               <Card className='mt-4'>
