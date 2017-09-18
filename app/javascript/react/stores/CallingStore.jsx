@@ -7,26 +7,30 @@ import axios from 'axios'
 import moment from 'moment'
 import { isEmpty, padCharsStart } from 'lodash/fp'
 class CallingStore {
-  
-  @observable studentID = null
-  @observable contact = null
-  @observable contactName = null
-  @observable phoneNumber = null
-  @observable connection = null
-  @observable isConnected = false
-  @observable currentOutputDevice = null
-  @observable outputDevices = []
 
-  @setter @observable isCalling = false
+  // Observables                                                                {{{
+  // ------------------------------------------------------------------------------
   @setter @observable callBarVisible = false
-  @setter @observable selectConferenceCall = false
+  @setter @observable callTime = null
+  @setter @observable isCalling = false
+  @setter @observable isConferenceCalling = false
   @setter @observable selectCall = false
+  @setter @observable selectConferenceCall = false
   @setter @observable selectDialPad = false
   @setter @observable selectMute = false
-  @setter @observable callTime = null
 
+  @observable connection = null
+  @observable contact = null
+  @observable contactName = null
+  @observable isConnected = false
+  @observable phoneNumber = null
+  @observable studentID = null
+  @observable currentOutputDevice = null
+  @observable outputDevices = []
+  // }}}
+
+  device = null
   intervalHandler = null
-  disposerTmr = null
   callStartTime = null
 
   generateToken = () => {
@@ -51,13 +55,13 @@ class CallingStore {
 
     this.contactName = this.contact.refs[0].name
     this.studentID = studentId
-    const phoneNumber = '6012128813'
+    this.phoneNumber = this.contact.refs[0].phone
     const token = data.data.token
     this.userId = data.data.user
 
     this.setupDevice(token)
     setTimeout(() =>
-      this.connect(phoneNumber), 2000)
+      this.connect(this.phoneNumber), 2000)
   }
 
   @action
@@ -65,7 +69,7 @@ class CallingStore {
     const params = {
       contact_id: this.contact.refs[0].id,
       student_id: this.studentID,
-      tocall: '6012128183',
+      tocall: this.phoneNumber,
       user_id: this.userId
     }
 
@@ -96,9 +100,6 @@ class CallingStore {
       setTimeout(() =>
         this.setCallBarVisible(false), 5000)
     })
-
-
-
   }
 
   /* Open Dialpad */
@@ -122,12 +123,17 @@ class CallingStore {
     xhr.post('/commo/voice/mobile_call', {
       contact_id: this.contactID
     })
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((response) => {
+        this.setIsConferenceCalling(true)
+        this.setCallBarVisible(true)
+        setTimeout(() => {
+          this.setIsConferenceCalling(false)
+          this.setCallBarVisible(false);
+        }, 5000)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   @action
@@ -163,7 +169,7 @@ class CallingStore {
     this.isConnected = false
     this.connection.disconnect()
     this.setIsCalling(false)
-
+    this.setIsConferenceCalling(false)
     setTimeout(() => {
       this.setCallBarVisible(false);
     }, 5000)
