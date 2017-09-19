@@ -41,13 +41,13 @@ const cardStyle = {
   content: {
     zIndex:          3050,
     top:             20,
-    bottom:          20,
+    bottom:          70,
     left:            55,
     right:           55,
     borderRadius:    '0.25em',
     border:          'none',
     backgroundColor: '#f7f9fb',
-    paddingBottom: 35
+    paddingBottom:   35
   }
 }
 
