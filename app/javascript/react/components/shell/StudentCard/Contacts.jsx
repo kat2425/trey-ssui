@@ -1,15 +1,14 @@
 import React     from 'react'
 import PropTypes from 'prop-types'
 import _         from 'lodash'
-
 import {
-  ButtonGroup, Button, Card, Table
+  ButtonGroup, Button, Card, Table, Alert
 } from 'reactstrap'
 
 import fireEvent       from 'helpers/FireEvent'
 
 
-const ContactEntry = ({contact}) => {
+const ContactEntry = ({contact, store, student}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
       <td>
@@ -25,8 +24,8 @@ const ContactEntry = ({contact}) => {
           return (
             <div key={ref.id} className='mb-1'>
               <ButtonGroup className='mr-2'>
-                <Button size='sm' color='success' disabled>
-                  <span className='icon icon-phone' />
+                <Button onClick={() => {store.isCall(true); store.contact = contact; store.studentId = student.id}} size='sm' color='success'>
+                  <span className='icon icon-phone'/>
                 </Button>
 
                 <Button
@@ -67,7 +66,7 @@ const ContactEntry = ({contact}) => {
   )
 }
 
-const Contacts = ({contacts}) => {
+const Contacts = ({contacts, store, student}) => {
   return (
     <div>
       <h4 className='m-1 mb-3'>Contacts</h4>
@@ -92,7 +91,7 @@ const Contacts = ({contacts}) => {
           </thead>
 
           <tbody>
-            { contacts.map(c => <ContactEntry key={c.name} contact={c}/>) }
+            { contacts.map(c => <ContactEntry store={store} student={student} key={c.name} contact={c}/>) }
           </tbody>
         </Table>
       </Card>
