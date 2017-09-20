@@ -1,37 +1,35 @@
 import { observable, action, computed, runInAction, autorun, toJS } from 'mobx'
 import { setter } from 'mobx-decorators'
 
-import _ from 'lodash'
-import xhr from 'helpers/XHR'
-import axios from 'axios'
-import moment from 'moment'
+import _                          from 'lodash'
+import xhr                        from 'helpers/XHR'
+import axios                      from 'axios'
+import moment                     from 'moment'
 import { isEmpty, padCharsStart } from 'lodash/fp'
+
 class CallingStore {
-
-  // Observables                                                                {{{
-  // ------------------------------------------------------------------------------
-  @setter @observable callBarVisible = false
-  @setter @observable callTime = null
-  @setter @observable isCalling = false
-  @setter @observable isConferenceCalling = false
-  @setter @observable selectCall = false
+  // Observables
+  @setter @observable callBarVisible       = false
+  @setter @observable callTime             = null
+  @setter @observable isCalling            = false
+  @setter @observable isConferenceCalling  = false
+  @setter @observable selectCall           = false
   @setter @observable selectConferenceCall = false
-  @setter @observable selectDialPad = false
-  @setter @observable selectMute = false
+  @setter @observable selectDialPad        = false
+  @setter @observable selectMute           = false
 
-  @observable connection = null
-  @observable contact = null
-  @observable contactName = null
-  @observable isConnected = false
-  @observable phoneNumber = null
-  @observable studentID = null
+  @observable connection          = null
+  @observable contact             = null
+  @observable contactName         = null
+  @observable isConnected         = false
+  @observable phoneNumber         = null
+  @observable studentID           = null
   @observable currentOutputDevice = null
-  @observable outputDevices = []
-  // }}}
+  @observable outputDevices       = []
 
-  device = null
+  device          = null
   intervalHandler = null
-  callStartTime = null
+  callStartTime   = null
 
   generateToken = () => {
     return xhr.get('/commo/capability_token')
@@ -43,25 +41,29 @@ class CallingStore {
       })
   }
 
-  /* Calling from Browser */
+  // Browser calling
   @action
-  initiateCall = async (contact, studentId) => {
+  initiateCall = async(contact, studentId) => {
     this.callStartTime = null
+
     this.setCallTime(null)
     this.setSelectConferenceCall(false)
+
     const data = await this.generateToken()
+
     this.setIsCalling(true)
     this.setCallBarVisible(true)
 
     this.contactName = this.contact.refs[0].name
-    this.studentID = studentId
+    this.studentID   = studentId
     this.phoneNumber = this.contact.refs[0].phone
-    const token = data.data.token
-    this.userId = data.data.user
+    this.userId      = data.data.user
+
+    const token      = data.data.token
 
     this.setupDevice(token)
-    setTimeout(() =>
-      this.connect(this.phoneNumber), 2000)
+
+    setTimeout(() => this.connect(this.phoneNumber), 2000)
   }
 
   @action
@@ -69,8 +71,8 @@ class CallingStore {
     const params = {
       contact_id: this.contact.refs[0].id,
       student_id: this.studentID,
-      tocall: this.phoneNumber,
-      user_id: this.userId
+      tocall:     this.phoneNumber,
+      user_id:    this.userId
     }
 
     this.connection = Twilio.Device.connect(params)
@@ -78,12 +80,12 @@ class CallingStore {
     this.connection.accept((conn) => {
       this.getOutputDevices()
       this.isConnected = true
-      console.log(Twilio.Device.audio.speakerDevices)
+
       if (this.isConnected) {
         this.callStartTime = Date.now()
+
         this.intervalHandler = setInterval(action('SETTING CALL TIME', () => {
-          const t = getTime(this.callStartTime, Date.now())
-          this.setCallTime(t)
+          this.setCallTime(getTime(this.callStartTime, Date.now()))
         }), 1000)
       }
     })
@@ -97,12 +99,9 @@ class CallingStore {
 
     this.connection.reject((conn) => {
       this.setIsCalling(false)
-      setTimeout(() =>
-        this.setCallBarVisible(false), 5000)
     })
-  }
 
-  /* Open Dialpad */
+  // Dialpad
   @action
   isDialPad = (bool) => {
     this.setSelectDialPad(bool)
@@ -113,7 +112,7 @@ class CallingStore {
     this.connection.sendDigits(digit)
   }
 
-  /* Conference Calling */
+  // Cell-to-Cell Calling
   @action
   conferenceCall = () => {
     const params = {
@@ -126,9 +125,10 @@ class CallingStore {
       .then((response) => {
         this.setIsConferenceCalling(true)
         this.setCallBarVisible(true)
+
         setTimeout(() => {
           this.setIsConferenceCalling(false)
-          this.setCallBarVisible(false);
+          this.setCallBarVisible(false)
         }, 5000)
       })
       .catch((error) => {
@@ -137,16 +137,15 @@ class CallingStore {
   }
 
   @action
-  initiateConferenceCall = async (contact, student_id) => {
-    console.log(contact.refs[0].id)
-    this.contactID = contact.refs[0].id
+  initiateConferenceCall = async(contact, student_id) => {
+    const data  = await this.generateToken()
+    const token = data.data.token
+
+    this.contactID   = contact.refs[0].id
     this.contactName = contact.refs[0].name
     this.phoneNumber = contact.refs[0].phone
-    this.studentID = student_id
-
-    const data = await this.generateToken()
-    const token = data.data.token
-    this.userId = data.data.user
+    this.studentID   = student_id
+    this.userId      = data.data.user
 
     this.conferenceCall()
   }
@@ -170,9 +169,11 @@ class CallingStore {
     this.connection.disconnect()
     this.setIsCalling(false)
     this.setIsConferenceCalling(false)
+
     setTimeout(() => {
-      this.setCallBarVisible(false);
+      this.setCallBarVisible(false)
     }, 5000)
+
     this.isDialPad(false)
     this.outputDevices = []
   }
@@ -196,9 +197,9 @@ class CallingStore {
   @action
   setupDevice(token) {
     try {
-      const device = Twilio.Device.setup(token)
+      Twilio.Device.setup(token)
     }
-    catch (e) {
+    catch(e) {
       console.log(e)
     }
   }
@@ -206,13 +207,13 @@ class CallingStore {
 
 function getTime(start, end) {
   var startTime = moment(start)
-  var endTime = moment(end)
-  var duration = moment.duration(endTime.diff(startTime))
+  var endTime   = moment(end)
+  var duration  = moment.duration(endTime.diff(startTime))
   const padTime = padCharsStart('0')(2)
 
-  var hours = parseInt(duration.asHours()).toString()
-  var minutes = (parseInt(duration.asMinutes()) - hours * 60).toString()
-  var secs = (parseInt(duration.asSeconds()) - minutes * 60).toString()
+  var hours     = parseInt(duration.asHours()).toString()
+  var minutes   = (parseInt(duration.asMinutes()) - hours * 60).toString()
+  var secs      = (parseInt(duration.asSeconds()) - minutes * 60).toString()
 
   return `${padTime(minutes)}:${padTime(secs)}`
 }

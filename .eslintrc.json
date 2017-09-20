@@ -21,6 +21,9 @@
       "error",
       2
     ],
+    "max-len": [
+      "error", 110
+    ],
     "linebreak-style": [
       "error",
       "unix"
