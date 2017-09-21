@@ -1,11 +1,8 @@
-import { observable, action, computed, runInAction, autorun, toJS } from 'mobx'
-import { setter } from 'mobx-decorators'
-
-import _                          from 'lodash'
-import xhr                        from 'helpers/XHR'
-import axios                      from 'axios'
-import moment                     from 'moment'
-import { isEmpty, padCharsStart } from 'lodash/fp'
+import { observable, action }  from 'mobx'
+import { setter }              from 'mobx-decorators'
+import xhr                     from 'helpers/XHR'
+import moment                  from 'moment'
+import { padCharsStart }       from 'lodash/fp'
 
 class CallingStore {
   // Observables
@@ -99,7 +96,10 @@ class CallingStore {
 
     this.connection.reject((conn) => {
       this.setIsCalling(false)
+      setTimeout(() =>
+        this.setCallBarVisible(false), 5000)
     })
+  }
 
   // Dialpad
   @action
@@ -115,14 +115,10 @@ class CallingStore {
   // Cell-to-Cell Calling
   @action
   conferenceCall = () => {
-    const params = {
-      contact_id: this.contactID
-    }
-
     xhr.post('/commo/voice/mobile_call', {
       contact_id: this.contactID
     })
-      .then((response) => {
+      .then(() => {
         this.setIsConferenceCalling(true)
         this.setCallBarVisible(true)
 
@@ -139,7 +135,6 @@ class CallingStore {
   @action
   initiateConferenceCall = async(contact, student_id) => {
     const data  = await this.generateToken()
-    const token = data.data.token
 
     this.contactID   = contact.refs[0].id
     this.contactName = contact.refs[0].name
