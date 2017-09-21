@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import keycode from 'keycode'
+import PropTypes            from 'prop-types'
+import keycode              from 'keycode'
 
 import SMSConversationStore from 'stores/SMSConversation'
 
@@ -22,11 +22,15 @@ export default class ChatInput extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { message: '' }
+    this.state = { message: '', attachment: null }
   }
 
   handleChange = (e) => {
     this.setState({ message: e.target.value })
+  }
+
+  handleAttachmentChange = (e) => {
+    this.setState({ attachment: e.target.files[0] })
   }
 
   handleSubmit = (e) => {
@@ -35,10 +39,14 @@ export default class ChatInput extends Component {
     }
   }
 
+  handleAddAttachment = () => {
+    this.attachmentInput.click()
+  }
+
   sendMessage = (msg) => {
     if (!!msg) {
-      SMSConversationStore.sendMessage(msg, this.props.contact.id)
-      this.setState({ message: '' })
+      SMSConversationStore.sendMessage(msg, this.props.contact.id, this.state.attachment)
+      this.setState({ message: '', attachment: null })
     }
   }
 
@@ -47,8 +55,10 @@ export default class ChatInput extends Component {
       <div className='p-2' style={inputStyle}>
         <InputGroup>
           <InputGroupButton>
-            <Button>
-              <span className='icon icon-attachment text-muted'/>
+            <Button onClick={::this.handleAddAttachment} color={this.state.attachment ? 'info' : 'secondary' }>
+              <span className={this.state.attachment ? '' : 'text-muted'}>
+                <span className='icon icon-attachment'/>
+              </span>
             </Button>
           </InputGroupButton>
           <Input 
@@ -57,6 +67,7 @@ export default class ChatInput extends Component {
             value       = {this.state.message}
             placeholder = 'Message'
           />
+          <input ref={(input) => {this.attachmentInput = input} } type='file' onChange={this.handleAttachmentChange} style={{display: 'none'}}/>
         </InputGroup>
       </div>
     )
