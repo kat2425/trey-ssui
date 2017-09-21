@@ -4,27 +4,32 @@ import _   from 'lodash'
 import xhr from 'helpers/XHR'
 
 class StudentCardStore {
-  @observable isLoading = false
-  @observable visible   = false
-  @observable viewport  = 'overview'
+  @observable isLoading      = false
+  @observable visible        = false
+  @observable viewport       = 'overview'
 
-  @observable student   = null
-  @observable contacts  = [] // TODO: revisit how we pull this in
+  @observable student        = null
+  @observable contacts       = []
+  @observable communications = []
 
   @action
   fetchStudent(id) {
-    this.isLoading = true
-    this.visible   = false
-    this.student   = null
-    this.contacts  = []
+    this.isLoading      = true
+    this.visible        = false
+    this.student        = null
+    this.contacts       = []
+    this.communications = []
 
     xhr.get(`/students/${id}`, {
       params: {
+        channel_stats:  true,
+        list_relations: true,
+
         only: [
           'id', 'sis_id', 'state_id', 'first_name', 'last_name', 'dob',
           'gender', 'race', 'address', 'city', 'state', 'zip',
           'enrollment_status', 'grade', 'school.school_name', 'data_relations',
-          'major', 'advisor', 'coach'
+          'major', 'advisor', 'coach', 'channel_stats'
         ].join(',')
       }
     }).then(this.fetchStudentOK)
@@ -57,9 +62,23 @@ class StudentCardStore {
     })
   }
 
+  @action
+  fetchCommunicationHistory(id) {
+    xhr.get(`/channel/communications/${id}`, {
+      params: {
+        only: [
+          'type', 'preview', 'link_ref', 'direction', 'media_url',
+          'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
+          'contact.id', 'contact.name', 'contact.relationship', 'contact.email'
+        ]
+      }
+    }).then(this.fetchCommunicationHistoryOK)
+  }
+
   @action.bound
   fetchStudentOK(res) {
     this.fetchStudentContacts(res.data.id)
+    this.fetchCommunicationHistory(res.data.id)
 
     this.student = res.data
   }
@@ -71,6 +90,11 @@ class StudentCardStore {
 
     this.isLoading = false
     this.visible   = true
+  }
+
+  @action.bound
+  fetchCommunicationHistoryOK(res) {
+    this.communications = res.data
   }
 
   @action
