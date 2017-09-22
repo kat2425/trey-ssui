@@ -24,8 +24,10 @@ import Overview        from './Overview'
 import Demographics    from './Demographics'
 import FinancialAid    from './FinancialAid'
 import Contacts        from './Contacts'
-import Notes           from '../Notes'
+import Engagement      from './CommsHistory'
 
+// FIXME: needs to be inside StudentCard dir
+import Notes           from '../Notes'
 
 import CallingStore    from 'stores/CallingStore'
 
@@ -69,6 +71,7 @@ export default class StudentCard extends Component {
 
   closeCard = () => {
     const { store, noteStore } = this.props
+
     noteStore.resetNoteForm()
     store.hideCard()
     fireEvent('onCloseStudentCard', { student: store.student.id })
@@ -98,7 +101,12 @@ export default class StudentCard extends Component {
 
   renderCard() {
     const { store, match, location } = this.props
-    const { student, groupedContacts: contacts } = store
+
+    const {
+      student,
+      groupedContacts:      contacts,
+      sortedCommunications: communications
+    } = store
 
     return (
       <Row>
@@ -109,6 +117,7 @@ export default class StudentCard extends Component {
 
           <Card>
             {this.props.children}
+
             <UserMenuSection title='Details'>
               <UserMenuItem
                 title     = 'Overview'
@@ -116,12 +125,14 @@ export default class StudentCard extends Component {
                 link      = {`${match.url}/overview`}
                 location  = {location}
               />
+
               <UserMenuItem
                 title     = 'Contacts'
                 iconClass = 'icon-calendar'
                 link      = {`${match.url}/contacts`}
                 location  = {location}
               />
+
               {/* <UserMenuItem  */}
               {/*   title     = 'Discipline' */}
               {/*   iconClass = 'icon-thermometer' */}
@@ -134,6 +145,14 @@ export default class StudentCard extends Component {
               {/*   link      = {`${match.url}/assessment`} */}
               {/*   location  = {location} */}
               {/* />  */}
+
+              <UserMenuItem
+                title     = 'Engagement'
+                iconClass = 'icon-swap'
+                link      = {`${match.url}/engagement`}
+                location  = {location}
+              />
+
               <UserMenuItem
                 title     = 'Notes'
                 iconClass = 'icon-pencil'
@@ -149,18 +168,32 @@ export default class StudentCard extends Component {
           <CloseBtn onClick={this.closeCard} />
           <Switch location={location}>
             <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
+
             <Route
               path   = {`${match.url}/overview`}
               render = {() => <Overview student={student} handleClick={this.closeCard}/> }
             />
+
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() => <Contacts store={CallingStore} student={student} contacts={contacts}/> }
+              render = {() => <Contacts
+                store             = {CallingStore}
+                student           = {student}
+                contacts          = {contacts}
+                handleContactFave = {::this.props.store.toggleContactPrimary}
+              /> }
             />
+
+            <Route
+              path   = {`${match.url}/engagement`}
+              render = {() => <Engagement student={student} communications={communications}/> }
+            />
+
             <Route
               path   = {`${match.url}/notes`}
               render = {() => <Notes student={student} noteStore={this.props.noteStore}/> }
             />
+
             <Route render={() => <div>404</div>} />
           </Switch>
         </Col>

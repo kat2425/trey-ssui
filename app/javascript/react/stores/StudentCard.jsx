@@ -40,7 +40,7 @@ class StudentCardStore {
     xhr.get(`/students/${id}/contacts`, {
       params: {
         only: [
-          'id', 'student_id', 'name', 'phone', 'email',
+          'id', 'student_id', 'name', 'phone', 'email', 'primary',
           'relationship', 'resides_with', 'checkout', 'emergency', 'no_contact'
         ].join(',')
       }
@@ -63,14 +63,26 @@ class StudentCardStore {
   }
 
   @action
+  toggleContactPrimary(id, bool) {
+    xhr.put(`/contacts/${id}/primary`, {
+      primary: bool
+    }).then(res => this.fetchStudentContacts(this.student.id))
+  }
+
+  @action.bound
+  toggleContactPrimaryOK() {
+    this.fetchStudentContacts(this.student.id)
+  }
+
+  @action
   fetchCommunicationHistory(id) {
     xhr.get(`/channel/communications/${id}`, {
       params: {
         only: [
-          'type', 'preview', 'link_ref', 'direction', 'media_url',
+          'id', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
           'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
           'contact.id', 'contact.name', 'contact.relationship', 'contact.email'
-        ]
+        ].join(',')
       }
     }).then(this.fetchCommunicationHistoryOK)
   }
@@ -111,6 +123,11 @@ class StudentCardStore {
         refs:         _.map(group, (g, i) => _.merge(g, {index: i}))
       })
     )
+  }
+
+  @computed
+  get sortedCommunications() {
+    return _.orderBy(this.communications, c => c.created_at, ['desc'] )
   }
 }
 

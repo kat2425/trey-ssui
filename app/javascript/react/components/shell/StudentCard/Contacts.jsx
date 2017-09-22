@@ -1,14 +1,35 @@
 import React     from 'react'
 import PropTypes from 'prop-types'
 import _         from 'lodash'
+
 import {
   ButtonGroup, Button, Card, Table, Alert
 } from 'reactstrap'
 
 import fireEvent       from 'helpers/FireEvent'
 
+const faveIconStyle = (primary) => {
+  return {
+    fontSize:      18,
+    verticalAlign: 'middle',
+    opacity:       (primary ? '0.7' : '0.25'),
+    lineHeight:    '1px'
+  }
+}
 
-const ContactEntry = ({contact, store, student}) => {
+const ContactFaveIcon = ({primary, id, handleClick}) => {
+  const _icon = primary ? 'icon-star' : 'icon-star-outlined'
+
+  return (
+    <span
+      onClick   = {() => handleClick(id, !primary)}
+      className = {`text-muted mr-2 icon ${_icon}`}
+      style     = {faveIconStyle(primary)}
+    />
+  )
+}
+
+const ContactEntry = ({contact, store, student, handleClick}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
       <td>
@@ -23,8 +44,18 @@ const ContactEntry = ({contact, store, student}) => {
         {contact.refs.map(ref => {
           return (
             <div key={ref.id} className='mb-1'>
+              <ContactFaveIcon handleClick={handleClick} id={ref.id} primary={ref.primary}/>
+
               <ButtonGroup className='mr-2'>
-                <Button onClick={() => {store.isCall(true); store.contact = contact; store.studentId = student.id}} size='sm' color='success'>
+                <Button
+                  onClick = {() => {
+                    store.isCall(true)
+                    store.contact   = contact
+                    store.studentId = student.id
+                  }}
+                  size    = 'sm'
+                  color   = 'success'
+                >
                   <span className='icon icon-phone'/>
                 </Button>
 
@@ -50,14 +81,16 @@ const ContactEntry = ({contact, store, student}) => {
         {/* NOTE: should we uniq the email addy's in the store? */}
         {_.uniqBy(
           contact.refs.map((ref) => {
-            return (
-              <div key={ref.id} className='mb-1'>
-                <Button size='sm' color='info' className='mr-2' disabled>
-                  <span className='icon icon-mail' />
-                </Button>
-                {ref.email}
-              </div>
-            )
+            if (ref.email) {
+              return (
+                <div key={ref.id} className='mb-1'>
+                  <Button size='sm' color='info' className='mr-2' disabled>
+                    <span className='icon icon-mail' />
+                  </Button>
+                  {ref.email}
+                </div>
+              )
+            }
           }),
           'email'
         )}
@@ -66,7 +99,7 @@ const ContactEntry = ({contact, store, student}) => {
   )
 }
 
-const Contacts = ({contacts, store, student}) => {
+const Contacts = ({contacts, store, student, handleContactFave}) => {
   return (
     <div>
       <h4 className='m-1 mb-3'>Contacts</h4>
@@ -91,7 +124,13 @@ const Contacts = ({contacts, store, student}) => {
           </thead>
 
           <tbody>
-            { contacts.map(c => <ContactEntry store={store} student={student} key={c.name} contact={c}/>) }
+            { contacts.map(c => <ContactEntry
+              store       = {store}
+              student     = {student}
+              key         = {c.name}
+              contact     = {c}
+              handleClick = {handleContactFave}
+            />) }
           </tbody>
         </Table>
       </Card>

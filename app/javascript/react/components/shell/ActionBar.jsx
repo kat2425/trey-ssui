@@ -52,14 +52,14 @@ export default class ActionBar extends Component {
             </ReactCSSTransitionGroup>
           </NavItem>
 
-          <NavItem className='ml-4'>
-            <span className='icon icon-list mr-2' style={{opacity: '0.6'}}/>
-            <span>Tasks</span>
-          </NavItem>
+          {/* <NavItem className='ml-4'> */}
+          {/*   <span className='icon icon-list mr-2' style={{opacity: '0.6'}}/> */}
+          {/*   <span>Tasks</span> */}
+          {/* </NavItem> */}
 
           <NavItem className='ml-4'>
             <span className='icon icon-voicemail mr-2' style={{opacity: '0.6'}}/>
-            <span>Voicemail</span>
+            <span>Missed Calls</span>
           </NavItem>
 
           <NavItem className='ml-4' onClick={::this.showSidebar}>

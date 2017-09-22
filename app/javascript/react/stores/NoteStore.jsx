@@ -36,7 +36,6 @@ class NoteStore {
   @action.bound
   fetchStudentNotesOK(res) {
     this.notes = res.data
-    console.log(res.data)
   }
 
   @action
@@ -80,7 +79,6 @@ class NoteStore {
   @action.bound
   removeStudentNote(note){
     this.notes.splice(this.notes.indexOf(note), 1)
-    console.log(this.notes)
     this.resetNoteForm()
     this.selectedNoteIndex = this.selectedNoteIndex != 0 ? this.selectedNoteIndex - 1 : 0
   }
@@ -152,6 +150,7 @@ class NoteStore {
       global:     this.global
     }).then((res) => {
       let index = _.findIndex(this.notes, {id: noteId});
+
       this.notes[index] = res.data
       this.resetNoteForm()
     })
