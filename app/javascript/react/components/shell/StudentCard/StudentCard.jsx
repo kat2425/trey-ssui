@@ -27,24 +27,27 @@ import Contacts        from './Contacts'
 import Notes           from '../Notes'
 
 
+import CallingStore    from 'stores/CallingStore'
+
 import fireEvent       from 'helpers/FireEvent'
 import _               from 'lodash'
 
 const cardStyle = {
   overlay: {
-    zIndex:          3000,
+    zIndex:          1045,
     backgroundColor: 'rgba(0,0,0,0.75)'
   },
 
   content: {
     zIndex:          3050,
     top:             20,
-    bottom:          20,
+    bottom:          70,
     left:            55,
     right:           55,
     borderRadius:    '0.25em',
     border:          'none',
-    backgroundColor: '#f7f9fb'
+    backgroundColor: '#f7f9fb',
+    paddingBottom:   35
   }
 }
 
@@ -152,7 +155,7 @@ export default class StudentCard extends Component {
             />
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() => <Contacts student={student} contacts={contacts}/> }
+              render = {() => <Contacts store={CallingStore} student={student} contacts={contacts}/> }
             />
             <Route
               path   = {`${match.url}/notes`}
