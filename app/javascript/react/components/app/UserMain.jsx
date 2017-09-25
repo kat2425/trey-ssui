@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { withRouter }       from 'react-router-dom'
 import _                    from 'lodash'
-import { inject, observer }           from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 
 import UserMenu             from 'ui/shell/UserMenu/UserMenu'
 import ActionBar            from 'ui/shell/ActionBar'
 import NavBar               from 'ui/shell/NavBar'
 import AppContainer         from 'ui/app/AppContainer'
 import Sidebar              from 'ui/shell/SMS/Sidebar'
+import {CallSidebar}        from 'ui/shell/Call'
 
 import CallingController    from 'ui/controllers/CallingController'
 
-import StudentCardStore      from 'stores/StudentCard'
-import SMSInboxStore         from 'stores/SMSInbox'
-import CallingStore          from 'stores/CallingStore'
-import WebSocketStore        from 'stores/WebSocket'
-import SMSConversationStore  from 'stores/SMSConversation'
+import SMSInboxStore        from 'stores/SMSInbox'
+import CallingStore         from 'stores/CallingStore'
+import WebSocketStore       from 'stores/WebSocket'
+import SMSConversationStore from 'stores/SMSConversation'
+import callStore            from 'stores/CallStore'
 
 import VJSContainer         from 'ui/vjs/VJSContainer'
 
@@ -51,6 +52,10 @@ class UserMain extends Component {
     }
   }
 
+  toggleCallSidebar = () => {
+    this.props.uiStore.toggleCallSidebar()
+  }
+
   toggleSidebar = (e) => {
     const { uiStore }  = this.props
     const contact = _.get(e, 'detail.contact')
@@ -71,6 +76,7 @@ class UserMain extends Component {
     window.addEventListener('showStudentCard', this.showStudentCard)
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
     window.addEventListener('toggleSidebar', this.toggleSidebar)
+    window.addEventListener('toggleCallSidebar', this.toggleCallSidebar)
   }
 
   componentWillUnmount() {
@@ -92,6 +98,11 @@ class UserMain extends Component {
             <AppContainer />
             <ActionBar store={SMSInboxStore} callingStore={CallingStore}/>
             <Sidebar />
+            <CallSidebar 
+              store   = {callStore}
+              show    = {uiStore.showCallSidebar}
+              onClose = {this.toggleCallSidebar}
+            />
           </div>
         </div>
       </VJSContainer>

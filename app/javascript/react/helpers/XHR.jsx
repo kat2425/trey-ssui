@@ -5,7 +5,7 @@ const XHR = axios.create({
   timeout: 30000,
   headers: {
     'x-ss-api-key': 'd706f43dab55f958e7926b7f7fe9c47cd351718f8f431fe3',
-    'x-ss-token':   window.SSUser.accessToken
+    'x-ss-token':   window.SSUser && window.SSUser.accessToken
   }
 })
 

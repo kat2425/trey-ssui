@@ -25,6 +25,11 @@ export default class ActionBar extends Component {
     fireEvent('toggleSidebar')
   }
 
+  showCallSidebar() {
+    fireEvent('toggleCallSidebar')
+  }
+
+
   render() {
     const { isCalling, isConferenceCalling, callBarVisible } = this.props.callingStore
 
@@ -57,9 +62,9 @@ export default class ActionBar extends Component {
           {/*   <span>Tasks</span> */}
           {/* </NavItem> */}
 
-          <NavItem className='ml-4'>
+          <NavItem className='ml-4' onClick={this.showCallSidebar}>
             <span className='icon icon-voicemail mr-2' style={{opacity: '0.6'}}/>
-            <span>Missed Calls</span>
+            <span>Calls</span>
           </NavItem>
 
           <NavItem className='ml-4' onClick={::this.showSidebar}>
