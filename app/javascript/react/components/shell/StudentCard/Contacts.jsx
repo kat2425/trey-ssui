@@ -29,7 +29,7 @@ const ContactFaveIcon = ({primary, id, handleClick}) => {
   )
 }
 
-const ContactEntry = ({contact, store, student, handleClick}) => {
+const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
       <td>
@@ -44,7 +44,7 @@ const ContactEntry = ({contact, store, student, handleClick}) => {
         {contact.refs.map(ref => {
           return (
             <div key={ref.id} className='mb-1'>
-              <ContactFaveIcon handleClick={handleClick} id={ref.id} primary={ref.primary}/>
+              <ContactFaveIcon handleClick={handleFave} id={ref.id} primary={ref.primary}/>
 
               <ButtonGroup className='mr-2'>
                 <Button
@@ -84,7 +84,7 @@ const ContactEntry = ({contact, store, student, handleClick}) => {
             if (ref.email) {
               return (
                 <div key={ref.id} className='mb-1'>
-                  <Button size='sm' color='info' className='mr-2' disabled>
+                  <Button size='sm' color='info' className='mr-2' onClick={() => handleSendEmail(ref.id)}>
                     <span className='icon icon-mail' />
                   </Button>
                   {ref.email}
@@ -99,7 +99,7 @@ const ContactEntry = ({contact, store, student, handleClick}) => {
   )
 }
 
-const Contacts = ({contacts, store, student, handleContactFave}) => {
+const Contacts = ({contacts, store, student, handleContactFave, handleSendEmail}) => {
   return (
     <div>
       <h4 className='m-1 mb-3'>Contacts</h4>
@@ -125,11 +125,12 @@ const Contacts = ({contacts, store, student, handleContactFave}) => {
 
           <tbody>
             { contacts.map(c => <ContactEntry
-              store       = {store}
-              student     = {student}
-              key         = {c.name}
-              contact     = {c}
-              handleClick = {handleContactFave}
+              store           = {store}
+              student         = {student}
+              key             = {c.name}
+              contact         = {c}
+              handleFave      = {handleContactFave}
+              handleSendEmail = {handleSendEmail}
             />) }
           </tbody>
         </Table>

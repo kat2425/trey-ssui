@@ -69,6 +69,20 @@ class StudentCardStore {
     }).then(res => this.fetchStudentContacts(this.student.id))
   }
 
+  @action
+  triggerMailTo(id) {
+    xhr.get('/commo/email/get_conversation', {
+      params: {
+        id:   id,
+        type: 'individual'
+      }
+    }).then(res => {
+      const _contact = _.find(this.contacts, c => c.id === res.data.reference_id)
+
+      window.open(`mailto:${_contact.name} <${res.data.email_link}>`)
+    })
+  }
+
   @action.bound
   toggleContactPrimaryOK() {
     this.fetchStudentContacts(this.student.id)
