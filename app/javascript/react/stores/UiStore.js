@@ -1,7 +1,8 @@
-import { observable, autorun, action }     from 'mobx'
-import { setter, toggle } from 'mobx-decorators'
+import { observable, autorun, reaction, action } from 'mobx'
+import { setter, toggle }                        from 'mobx-decorators'
 
-import SMSConversationStore from 'stores/SMSConversation'
+import SMSConversationStore                      from 'stores/SMSConversation'
+import callStore                                 from 'stores/CallStore'
 
 export class UiStore {
   @setter @observable 
@@ -12,6 +13,9 @@ export class UiStore {
 
   @toggle('toggleSidebar') @observable 
   hideSidebar = true
+  
+  @toggle('toggleCallSidebar') @observable 
+  showCallSidebar = false
 
   @setter @observable 
   showInbox = true
@@ -23,6 +27,19 @@ export class UiStore {
   sidebarMaxHeight = false
 
   constructor() {
+    this.autoFetchSMSConversation() 
+    this.autoFetchCallLogs()
+    this.autoHideSMSSidebar()
+    this.autoHideCallSidebar()
+  }
+
+  // Actions
+  @action setSidebarVisibility(show){
+    this.hideSidebar = !show 
+  }
+
+  // Auto Actions
+  @action autoFetchSMSConversation(){
     autorun('fetch conversation everytime it is updated', () => {
       if(!this.currentConversation) return 
 
@@ -31,10 +48,30 @@ export class UiStore {
     })
   }
 
-  // Actions
-  @action setSidebarVisibility(show){
-    this.hideSidebar = !show 
+  @action autoFetchCallLogs(){
+    reaction(
+      () => this.showCallSidebar,
+      (show) => show && callStore.fetchCallLogs()
+    ) 
+  }
+
+  @action autoHideSMSSidebar = () => {
+    reaction(
+      () => this.showCallSidebar === true,
+      (show) => show && !this.hideSidebar && (this.hideSidebar = true),
+      true
+    )
+  }
+
+  @action autoHideCallSidebar = () => {
+    reaction(
+      () => this.hideSidebar === false,
+      (showSidebar) => showSidebar && this.showCallSidebar && (this.showCallSidebar = false),
+      true
+    )
   }
 }
 
-export default new UiStore()
+const singleton = new UiStore()
+
+export default singleton

@@ -69,8 +69,11 @@
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "styled-components": "^2.1.2",
+    "styled-tools": "^0.2.2",
     "tether": "^1.4.0",
     "turbolinks": "^5.0.3",
+    "uuid": "^3.1.0",
     "webpack": "^3.2.0",
     "webpack-manifest-plugin": "^1.1.2",
     "webpack-merge": "^4.1.0"
