@@ -99,7 +99,7 @@ class UserMain extends Component {
     setTimeout(function() {
       $('.intercom-launcher-frame').contents().find('.intercom-launcher').attr('style', 'display:none')
       $('.intercom-launcher-frame').attr('style', 'box-shadow:none !important;-webkit-box-shadow:none !important')
-    }, 1000)
+    }, 2500)
   }
 
   componentWillUnmount() {
