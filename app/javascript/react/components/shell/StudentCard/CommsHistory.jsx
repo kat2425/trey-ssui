@@ -43,7 +43,7 @@ const ItemTypeIcon = (type) => {
 }
 
 const ItemDirectionIcon = (direction) => {
-  if (direction === 'inbound') {
+  if ((direction === 'inbound') || (direction === 'incoming')) {
     return 'icon-arrow-long-left'
   } else {
     return 'icon-arrow-long-right'

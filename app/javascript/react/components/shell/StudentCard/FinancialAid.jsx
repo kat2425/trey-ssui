@@ -6,17 +6,19 @@ import VJSChart      from 'ui/vjs/VJSChart'
 
 const FinancialAid = ({student}) => {
   return (
-    <VJSChart
-      id               = 'sc-financial-aid-types'
-      reportPath       = '/public/VJS/ss_ui/financials/student_card'
-      scale            = 'container'
-      title            = 'Financial Aid Types'
-      isTable          = {true}
-      ignorePagination = {true}
-      params           = {{
-        student_id: [ student.id ]
-      }}
-    />
+    <div className='mt-4'>
+      <VJSChart
+        id               = 'sc-financial-aid-types'
+        reportPath       = '/public/VJS/ss_ui/financials/student_card'
+        scale            = 'container'
+        title            = 'Financial Aid Types'
+        isTable          = {true}
+        ignorePagination = {true}
+        params           = {{
+          student_id: [ student.id ]
+        }}
+      />
+    </div>
   )
 }
 

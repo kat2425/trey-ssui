@@ -20,9 +20,6 @@ class WebSocketStore {
   @action
   subscribeUser(id) {
     this.faye.subscribe(`/user/${id}`, (msg) => {
-      console.log('-- incoming ws msg')
-      console.log(msg)
-
       if (msg.stream_type === 'sms_log') {
         const _msg = _.pick(msg,
           'id', 'conversation_id', 'body',

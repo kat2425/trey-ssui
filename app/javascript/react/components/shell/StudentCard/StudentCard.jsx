@@ -21,7 +21,6 @@ import LoadingSpinner  from 'ui/shell/LoadingSpinner'
 
 import Info            from './Info'
 import Overview        from './Overview'
-import Demographics    from './Demographics'
 import FinancialAid    from './FinancialAid'
 import Contacts        from './Contacts'
 import Engagement      from './CommsHistory'
@@ -112,8 +111,6 @@ export default class StudentCard extends Component {
       <Row>
         <Col sm='3'>
           <Info student={student} />
-          <Demographics student={student} />
-          <FinancialAid student={student} />
 
           <Card>
             {this.props.children}
@@ -161,11 +158,14 @@ export default class StudentCard extends Component {
               />
             </UserMenuSection>
           </Card>
+
+          <FinancialAid student={student} />
         </Col>
 
         {/* Root Container */}
         <Col sm='9'>
           <CloseBtn onClick={this.closeCard} />
+
           <Switch location={location}>
             <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
 
