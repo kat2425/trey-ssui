@@ -111,11 +111,20 @@ class SMSConversationStore {
   }
 
   @action
-  sendMessage(msg, id) {
-    xhr.post('/commo/sms/send_message/contact', {
-      contact_id: id,
-      body:       msg
-    })
+  sendMessage(msg, id, attachment=null) {
+    if (attachment) {
+      let data = new FormData()
+      data.append('contact_id', id)
+      data.append('body',       msg)
+      data.append('attachment', attachment)
+
+      xhr.post('/commo/sms/send_message/contact', data, { 'Content-Type': 'multipart/form-data' })
+    } else {
+      xhr.post('/commo/sms/send_message/contact', {
+        contact_id: id,
+        body:       msg
+      })
+    }
   }
 
   @action
