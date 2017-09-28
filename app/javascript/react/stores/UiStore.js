@@ -24,6 +24,9 @@ export class UiStore {
   shouldScrollToBottom = true
 
   @setter @observable 
+  showCallInfo = false
+
+  @setter @observable 
   sidebarMaxHeight = false
 
   constructor() {
@@ -31,6 +34,7 @@ export class UiStore {
     this.autoFetchCallLogs()
     this.autoHideSMSSidebar()
     this.autoHideCallSidebar()
+    this.autoHideCallInfo()
   }
 
   // Actions
@@ -50,14 +54,14 @@ export class UiStore {
 
   @action autoFetchCallLogs(){
     reaction(
-      () => this.showCallSidebar,
+      ()     => this.showCallSidebar,
       (show) => show && callStore.fetchCallLogs()
     ) 
   }
 
   @action autoHideSMSSidebar = () => {
     reaction(
-      () => this.showCallSidebar === true,
+      ()     => this.showCallSidebar === true,
       (show) => show && !this.hideSidebar && (this.hideSidebar = true),
       true
     )
@@ -65,8 +69,21 @@ export class UiStore {
 
   @action autoHideCallSidebar = () => {
     reaction(
-      () => this.hideSidebar === false,
-      (showSidebar) => showSidebar && this.showCallSidebar && (this.showCallSidebar = false),
+      ()            => !this.hideSidebar,
+      (showSidebar) => {
+        if(showSidebar && this.showCallSidebar){ 
+          this.showCallSidebar = false
+          this.showCallInfo    = false
+        }
+      },
+      true
+    )
+  }
+
+  @action autoHideCallInfo = () => {
+    reaction(
+      ()     => !this.hideSidebar || !this.showCallSidebar,
+      (hide) => hide && this.showCallInfo && (this.showCallInfo = false),
       true
     )
   }

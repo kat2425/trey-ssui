@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
-import { withRouter }       from 'react-router-dom'
-import _                    from 'lodash'
-import { inject, observer } from 'mobx-react'
+import React, { Component }    from 'react'
+import { withRouter }          from 'react-router-dom'
+import _                       from 'lodash'
+import { inject, observer }    from 'mobx-react'
 
-import UserMenu             from 'ui/shell/UserMenu/UserMenu'
-import ActionBar            from 'ui/shell/ActionBar'
-import NavBar               from 'ui/shell/NavBar'
-import AppContainer         from 'ui/app/AppContainer'
-import Sidebar              from 'ui/shell/SMS/Sidebar'
-import {CallSidebar}        from 'ui/shell/Call'
+import UserMenu                from 'ui/shell/UserMenu/UserMenu'
+import ActionBar               from 'ui/shell/ActionBar'
+import NavBar                  from 'ui/shell/NavBar'
+import AppContainer            from 'ui/app/AppContainer'
+import Sidebar                 from 'ui/shell/SMS/Sidebar'
+import {CallSidebar, CallInfo} from 'ui/shell/Call'
 
-import CallingController    from 'ui/controllers/CallingController'
+import CallingController       from 'ui/controllers/CallingController'
 
-import SMSInboxStore        from 'stores/SMSInbox'
-import CallingStore         from 'stores/CallingStore'
-import WebSocketStore       from 'stores/WebSocket'
-import SMSConversationStore from 'stores/SMSConversation'
-import callStore            from 'stores/CallStore'
+import SMSInboxStore           from 'stores/SMSInbox'
+import CallingStore            from 'stores/CallingStore'
+import WebSocketStore          from 'stores/WebSocket'
+import SMSConversationStore    from 'stores/SMSConversation'
+import callStore               from 'stores/CallStore'
 
-import VJSContainer         from 'ui/vjs/VJSContainer'
+import VJSContainer            from 'ui/vjs/VJSContainer'
 
 @withRouter
 @inject('uiStore')
@@ -102,6 +102,11 @@ class UserMain extends Component {
               store   = {callStore}
               show    = {uiStore.showCallSidebar}
               onClose = {this.toggleCallSidebar}
+            />
+            <CallInfo 
+              store    = {callStore}
+              show     = {uiStore.showCallInfo}
+              onGoBack = {() => uiStore.setShowCallInfo(false)}
             />
           </div>
         </div>

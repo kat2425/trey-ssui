@@ -21,8 +21,6 @@ export const user = {
   district_id:       '5126918ae9c77f9384000053',
   teacher_ids:       [],
   teachers:          [],
-  avatar_url:
-    'https://api.schoolstatus.com/users/16c4c928-d91b-4c1b-bfd0-c03d9c80d14c/avatar',
   office_hours:      null
 }
 
@@ -52,8 +50,7 @@ export const call_log = {
   district_id:        '5126918ae9c77f9384000053',
   id:                 'aeb669ef-d297-4124-8f6a-10e4087a4674',
   recording_duration: 23,
-  recording_path:
-    'https://ss-student-buckets-production.s3.amazonaws.com/Anytown%20School%20District%20%285126918ae9c77f9384000053%29/Brown%2C%20John%20%2851db4bd8e9c77f81290001ec%29/REf1a3c67fc36389c0281338c418605325.mp3?AWSAccessKeyId=AKIAJ5G4GNHPUN3BKDFA&Expires=1506546635&Signature=25p5P5aHSOYvR8FCc92%2BApyKa74%3D',
+  recording_path:     '',
   recording_sid:      'REf1a3c67fc36389c0281338c418605325',
   school_id:          '51269191e9c77f9384000455',
   student_id:         '51db4bd8e9c77f81290001ec',
@@ -61,7 +58,12 @@ export const call_log = {
   notes:              [],
   contact:            contact,
   user:               user,
-  voicemails:         []
+  voicemails:         [],
+  call_transcripts:   [{
+    id:              '589ffee7-f33b-4fe4-a907-bc00083e916c',
+    created_at:      '2017-09-27T10:53:24.064-05:00',
+    call_transcript: 'Speaker 1: Hello world. Speaker 2: World Good.' 
+  }]
 }
 
 export default {

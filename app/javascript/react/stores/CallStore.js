@@ -9,16 +9,16 @@ import Call                             from 'stores/models/Call'
 const LIMIT = 30
 
 export class CallStore {
-  pager                         = new Pager(LIMIT, 0)
-  @setter @observable isLoading = false
-  @setter @observable isError   = null
-  @observable calls             = observable.map()
+  pager                            = new Pager(LIMIT, 0)
+  @setter @observable isLoading    = false
+  @setter @observable isError      = null
+  @observable calls                = observable.map()
+  @setter @observable selectedCall = null
 
   // Computed
   @computed get limit() {
     return this.pager.limit
-  }
-
+  } 
   @computed get descCalls() {
     return _.orderBy(this.calls.values(), c => c.createdAt, 'desc')
   }
@@ -30,6 +30,12 @@ export class CallStore {
       .value()
   }
 
+  @computed
+  get shouldLoadMore(){
+    if(this.isLoading || this.pager.isFilled) return false
+    return true
+  }
+
   // Actions
   @action fetchCallLogs = async() => {
     try {
@@ -38,9 +44,10 @@ export class CallStore {
 
       const { headers, data } = await xhr.get('/commo/call_log', { 
         params: { 
-          user_id: window.SSUser.id,
-          limit:   this.limit,
-          except:  ['district', 'school', 'student', 'contact.student'].join(','),
+          user_id:         window.SSUser.id,
+          show_transcript: true,
+          limit:           this.limit,
+          except:          ['district', 'school', 'student', 'contact.student'].join(','),
         } 
       })
 
@@ -67,7 +74,10 @@ export class CallStore {
   }
 
   @action loadMore = () => {
+    if(!this.shouldLoadMore) return
+
     this.pager.increment()
+    this.fetchCallLogs()
   }
 }
 
