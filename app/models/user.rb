@@ -3,6 +3,7 @@ class User < Sequel::Model(:users)
 
   # Minimal relations
   one_to_many :user_access_tokens
+  many_to_one :district
 
   # BCrypt Auth
   class << self
@@ -39,12 +40,20 @@ class User < Sequel::Model(:users)
 
   # UI props
   def ui_props
-    self.to_hash.slice(:id, :username, :first_name, :last_name).merge(
-      :api          => 'https://api.schoolstatus.com',
-      :accessToken  => last_access_token,
-      :jasper       => jasper_user_creds,
-      :modules      => [],
+    self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at).merge(
+      :api              => 'https://api.schoolstatus.com',
+      :accessToken      => last_access_token,
+      :districtID       => district_id,
+      :districtName     => district&.district_name,
+      :intercomUserHash => intercom_user_hash,
+      :jasper           => jasper_user_creds,
+      :modules          => [],
     )
+  end
+
+  # Itercom User Hash
+  def intercom_user_hash
+    OpenSSL::HMAC.hexdigest('sha256', 'u3VSD-b4LgBph_p8vDEu7GZbCAoGSLIA_bljrEoZ', id)
   end
 
   private
@@ -71,4 +80,7 @@ class User < Sequel::Model(:users)
 end
 
 class UserAccessToken < Sequel::Model(:user_access_tokens)
+end
+
+class District < Sequel::Model(:districts)
 end

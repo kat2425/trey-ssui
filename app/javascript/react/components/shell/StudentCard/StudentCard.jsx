@@ -181,7 +181,7 @@ export default class StudentCard extends Component {
                 student           = {student}
                 contacts          = {contacts}
                 handleContactFave = {::this.props.store.toggleContactPrimary}
-                handleSendEmail   = {::this.props.store.triggerMailTo}
+                handleSendEmail   = {::this.props.store.triggerNativeMailTo}
               /> }
             />
 

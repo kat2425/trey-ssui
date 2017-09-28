@@ -70,7 +70,7 @@ class StudentCardStore {
   }
 
   @action
-  triggerMailTo(id) {
+  triggerNativeMailTo(id) {
     xhr.get('/commo/email/get_conversation', {
       params: {
         id:   id,
@@ -78,8 +78,11 @@ class StudentCardStore {
       }
     }).then(res => {
       const _contact = _.find(this.contacts, c => c.id === res.data.reference_id)
+      const _mailto  = encodeURIComponent(`${_contact.name.replace(/,/g, '')} <${res.data.email_link}>`)
+      const _gmail   = `https://mail.google.com/mail/?view=cm&fs=1&to=${_mailto}`
 
-      window.open(`mailto:${_contact.name} <${res.data.email_link}>`)
+      window.studentCardMailer.location.href = _gmail
+      window.studentCardMailer.focus()
     })
   }
 

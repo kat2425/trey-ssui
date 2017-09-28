@@ -12,6 +12,26 @@ const itemStyle = {
   borderRadius: 0
 }
 
+const InboxMMS = (props) => {
+  const { mode, src, height, width, style } = props
+
+  const modes = {
+    fill: 'cover',
+    fit:  'contain'
+  }
+
+  const size = modes[mode] || 'contain'
+
+  const important = {
+    backgroundImage:  `url("${src}")`,
+    backgroundSize:   size,
+    backgroundRepeat: 'no-repeat',
+    minHeight:        '27px'
+  }
+
+  return <div {...props} style={{...style, ...important}} />
+}
+
 const InboxItem = (props) => {
   const unreadColor = ((props.read) ? 'text-clear' : ((props.direction === 'inbound') ? 'text-primary' : 'text-clear' ))
 
@@ -25,7 +45,7 @@ const InboxItem = (props) => {
       <Media body>
         <h6>{props.name}</h6>
 
-        {props.message}
+        { !!props.media ? <InboxMMS src={props.media}/> : props.message }
       </Media>
 
       <Media right>

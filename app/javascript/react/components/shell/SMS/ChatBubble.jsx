@@ -46,7 +46,6 @@ const ChatBubble = (props) => {
 
   const onChange = (isVisible) => {
     if (!props.isRead && isVisible && (props.direction === 'inbound')) {
-      console.log(`i am visible | ${props.direction} | ${props.isRead} | : ${isVisible}`)
       props.setRead(props.msgID)
     }
   }

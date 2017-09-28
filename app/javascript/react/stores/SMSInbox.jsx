@@ -17,6 +17,7 @@ class SMSInboxStore {
           'id',
           'conversation_id',
           'body',
+          'media_url',
           'created_at',
           'direction',
           'read_status',

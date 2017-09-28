@@ -44,6 +44,20 @@ export default class ActionBar extends Component {
       color:           (isCalling ? '#ffffff' : ((!isCalling && callBarVisible) ? '#ffffff' : '#292b2c')),
     }
 
+    const intercomButtonStyle = {
+      backgroundColor: '#2f4050',
+      height:          '35px',
+      width:           '35px',
+      marginTop:       '-7px',
+      fontSize:        '25px',
+      textAlign:       'center',
+      boxShadow:       [
+        'inset 0 1px rgba(255,255,255, 0.9)',
+        '0 1px rgba(255,255,255, 0.9)',
+        '0 1px 1px rgba(255,255,255, 0.9)'
+      ].join(',')
+    }
+
     return (
       <Navbar style={actionBarStyle} fixed='bottom' className='nav'>
         <Nav className='d-flex flex-row justify-content-end p-3' navbar>
@@ -74,6 +88,13 @@ export default class ActionBar extends Component {
             <Badge color='danger' style={actionBarNotification} hidden={this.props.store.totalUnread < 1} pill>
               {this.props.store.totalUnread}
             </Badge>
+          </NavItem>
+
+          <NavItem className='ml-4 rounded-circle' style={intercomButtonStyle} id='intercom-ss-launcher'>
+            <span
+              className = 'icon icon-typing'
+              style     = {{color:'#fff',textShadow:'0 1px rgba(0,0,0,0.75)'}}
+            />
           </NavItem>
         </Nav>
       </Navbar >

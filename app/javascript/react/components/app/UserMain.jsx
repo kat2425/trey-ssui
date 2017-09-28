@@ -77,6 +77,29 @@ class UserMain extends Component {
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
     window.addEventListener('toggleSidebar', this.toggleSidebar)
     window.addEventListener('toggleCallSidebar', this.toggleCallSidebar)
+
+    window.intercomSettings = {
+      app_id:     'c443b08a556eb87a1f39f088cda1b1f93e3a6631',
+      user_id:    window.SSUser.id,
+      user_hash:  window.SSUser.intercomUserHash,
+      name:       `${window.SSUser.firstName} ${window.SSUser.lastName}`,
+      first_name: window.SSUser.firstName,
+      last_name:  window.SSUser.lastName,
+      email:      window.SSUser.username,
+      created_at: window.SSUser.createdAt,
+
+      company: {
+        id:   window.SSUser.districtID,
+        name: window.SSUser.districtName,
+      },
+
+      custom_launcher_selector: '#intercom-ss-launcher'
+    }
+
+    setTimeout(function() {
+      $('.intercom-launcher-frame').contents().find('.intercom-launcher').attr('style', 'display:none')
+      $('.intercom-launcher-frame').attr('style', 'box-shadow:none !important;-webkit-box-shadow:none !important')
+    }, 1000)
   }
 
   componentWillUnmount() {
@@ -98,7 +121,7 @@ class UserMain extends Component {
             <AppContainer />
             <ActionBar store={SMSInboxStore} callingStore={CallingStore}/>
             <Sidebar />
-            <CallSidebar 
+            <CallSidebar
               store   = {callStore}
               show    = {uiStore.showCallSidebar}
               onClose = {this.toggleCallSidebar}

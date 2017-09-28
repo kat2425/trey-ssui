@@ -14,6 +14,20 @@ html, body {
   height: 57px;
 }
 
+#intercom-container .intercom-launcher-frame,
+.intercom-launcher-frame {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+#intercom-container .intercom-launcher {
+  display: none !important;
+}
+
+.intercom-launcher, .intercom-launcher-close-icon, .intercom-launcher-open-icon {
+  display: none !important;
+}
+
 .vjs-link {
   cursor: pointer;
 }

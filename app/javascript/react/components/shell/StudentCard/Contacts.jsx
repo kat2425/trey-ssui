@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import _         from 'lodash'
 
 import {
-  ButtonGroup, Button, Card, Table, Alert
+  ButtonGroup, ButtonDropdown, Button, Card, Table, Alert,
+  DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap'
 
 import fireEvent       from 'helpers/FireEvent'
@@ -84,7 +85,15 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
             if (ref.email) {
               return (
                 <div key={ref.id} className='mb-1'>
-                  <Button size='sm' color='info' className='mr-2' onClick={() => handleSendEmail(ref.id)}>
+                  <Button
+                    size      = 'sm'
+                    color     = 'info'
+                    className = 'mr-2'
+                    onClick   = {() => {
+                      window.studentCardMailer = window.open('', '_blank')
+                      handleSendEmail(ref.id)}
+                    }
+                  >
                     <span className='icon icon-mail' />
                   </Button>
                   {ref.email}
