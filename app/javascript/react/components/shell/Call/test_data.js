@@ -66,8 +66,37 @@ export const call_log = {
   }]
 }
 
+const comm = {
+  id:         '93bdf5f2-dfee-4d97-ae3c-fe57bf362eef',
+  created_at: '2017-10-02T09:35:37.848-05:00',
+  type:       'call',
+  preview:
+    'https://ss-student-buckets-production.s3.amazonaws.com/Anytown%20School%20District%20%285126918ae9c77f9384000053%29/Brown%2C%20John%20%2851db4bd8e9c77f81290001ec%29/REcaf443419d574456b07dbe34113aa222.mp3?AWSAccessKeyId=AKIAJ5G4GNHPUN3BKDFA&Expires=1506963733&Signature=WPvyDOSAE2ZYSY5q4p72iEkytc4%3D',
+  link_ref:
+    'https://api.schoolstatus.com/commo/call_log/93bdf5f2-dfee-4d97-ae3c-fe57bf362eef?show_transcript=true',
+  direction:  'outgoing',
+  user: {
+    id:         '16c4c928-d91b-4c1b-bfd0-c03d9c80d14c',
+    username:   'tyler@schoolstatus.com',
+    first_name: 'Tyler',
+    last_name:  'Cummings'
+  },
+  contact: {
+    id:           '1381288f-bbf2-4e34-b041-1752b2af4c75',
+    name:         'Lee, Ellen',
+    email:        'ellen@schoolstatus.com',
+    relationship: 'Cousin'
+  },
+  length: {
+    length: 28,
+    unit:   'seconds'
+  },
+  call_status: 'completed'
+}
+
 export default {
   call_log,
   user,
-  contact
+  contact,
+  comm
 }

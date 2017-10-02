@@ -15,19 +15,19 @@ export default class Player extends Component{
     src: PropTypes.string
   }
 
-  state = {
-    play:        false,
-    src:         this.props.src,
-    progress:    0,
-    loading:     false,
-    currentTime: 0,
-    duration:    0,
-    mute:        false,
-    volume:      1
-  }
-
   constructor(props){
     super(props)
+
+    this.state = this.getInitialState()
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.src){
+      this.reset()
+    } else if(nextProps.src != this.props.src){
+      this.setState({src: nextProps.src})
+      this.handleOnEnded()
+    }
   }
 
   play = () => {
@@ -70,6 +70,21 @@ export default class Player extends Component{
     this.setState({
       disable: true
     })
+  }
+
+  getInitialState = () => ({
+    play:        false,
+    src:         this.props.src,
+    progress:    0,
+    loading:     false,
+    currentTime: 0,
+    duration:    0,
+    mute:        false,
+    volume:      1
+  })
+
+  reset = () => {
+    this.setState(this.getInitialState())
   }
 
   handleOnEnded = () => {

@@ -1,7 +1,8 @@
-import { observable, action, computed, runInAction, autorun, toJS } from 'mobx'
+import { observable, action, computed } from 'mobx'
 
-import _   from 'lodash'
-import xhr from 'helpers/XHR'
+import _             from 'lodash'
+import xhr           from 'helpers/XHR'
+import Communication from 'stores/models/Communication'
 
 class StudentCardStore {
   @observable isLoading      = false
@@ -10,15 +11,15 @@ class StudentCardStore {
 
   @observable student        = null
   @observable contacts       = []
-  @observable communications = []
+  @observable communications = observable.map()
 
   @action
   fetchStudent(id) {
     this.isLoading      = true
     this.visible        = false
     this.student        = null
-    this.contacts       = []
-    this.communications = []
+    this.contacts.clear()
+    this.communications.clear()
 
     xhr.get(`/students/${id}`, {
       params: {
@@ -98,7 +99,7 @@ class StudentCardStore {
         only: [
           'id', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
           'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
-          'contact.id', 'contact.name', 'contact.relationship', 'contact.email'
+          'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'call_status'
         ].join(',')
       }
     }).then(this.fetchCommunicationHistoryOK)
@@ -123,7 +124,12 @@ class StudentCardStore {
 
   @action.bound
   fetchCommunicationHistoryOK(res) {
-    this.communications = res.data
+    res.data.forEach(this.createCommunication)
+  }
+
+  createCommunication = (comm) => {
+    if(this.communications.has(comm.id)) return
+    this.communications.set(comm.id, new Communication(this, comm))
   }
 
   @action
@@ -144,7 +150,7 @@ class StudentCardStore {
 
   @computed
   get sortedCommunications() {
-    return _.orderBy(this.communications, c => c.created_at, ['desc'] )
+    return _.orderBy(this.communications.values(), c => c.createdAt, ['desc'] )
   }
 }
 
