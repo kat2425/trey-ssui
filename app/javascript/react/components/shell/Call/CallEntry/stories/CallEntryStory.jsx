@@ -5,7 +5,7 @@ import CallEntry     from '../'
 import {test_data}   from 'ui/shell/Call'
 import Call          from 'stores/models/Call'
 
-const stories    = storiesOf('CallEntry')
+const stories    = storiesOf('CallEntry', module)
 const {call_log} = test_data
 const missedCall = {dial_call_status: 'no-answer'}
 const incoming   = {direction: 'incoming'}

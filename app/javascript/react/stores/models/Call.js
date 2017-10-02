@@ -14,16 +14,19 @@
     "student_id": "51db4bd8e9c77f81290001ec",
     "user_id": "adf387de-51f6-4b57-9250-1b4b9b120b59",
     "notes": [],
-    "voicemails": []
+    "voicemails": [],
+    "call_transcripts":[{}]
   }
 */
 
 import { observable, action, computed } from 'mobx'
 import { setter }                       from 'mobx-decorators'
 import DateFormat                       from 'helpers/DateFormat'
+import uiStore                          from 'stores/UiStore'
+import _                                from 'lodash'
 
-export default class CallEntry {
-  callInboxStore    = null
+export default class Call {
+  callStore         = null
   id                = null
   createdAt         = null
   contact           = null
@@ -36,7 +39,7 @@ export default class CallEntry {
   @setter @observable isRead     = true
 
   constructor(store, json){
-    this.callInboxStore = store
+    this.callStore = store
     this.update(json)
   }
 
@@ -65,6 +68,19 @@ export default class CallEntry {
     return this.contact.name
   }
 
+  @computed get transcript(){
+    if(_.isEmpty(this.callTranscript)) return []
+
+    return this.callTranscript
+      .split(/Speaker\s/)
+      .slice(1)    
+      .map(t => t.match(/(\d:)(.*)/).slice(1))
+      .map(([speakerNumber, speech]) =>  ({
+        speaker: `Speaker ${speakerNumber}`,
+        speech:  speech
+      }))
+  }
+
   // Actions
   @action markAsRead = () => {
     this.isRead = true
@@ -79,6 +95,7 @@ export default class CallEntry {
     recording_duration: recordingDuration,
     recording_path:     recordingPath,
     direction,
+    call_transcripts:   callTranscripts
   }) => {
     this.id                = id
     this.createdAt         = createdAt
@@ -88,5 +105,11 @@ export default class CallEntry {
     this.recordingPath     = recordingPath
     this.direction         = direction
     this.callStatus        = callStatus
+    this.callTranscript    = callTranscripts.length ? callTranscripts[0].call_transcript : []
+  }
+
+  @action handleSelect = () => {
+    this.callStore.setSelectedCall(this)
+    uiStore.setShowCallInfo(true)
   }
 }

@@ -36,3 +36,7 @@ config/secrets.yml.key
 # Ignore Environment Secrets
 .env*
 .env
+
+# Ignore Desktop Service Store
+*.DS_Store
+
