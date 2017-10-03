@@ -1,7 +1,8 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VisibilitySensor from 'react-visibility-sensor'
-import moment           from 'moment'
+import React                 from 'react'
+import PropTypes             from 'prop-types'
+import VisibilitySensor      from 'react-visibility-sensor'
+import moment                from 'moment'
+import {UncontrolledTooltip} from 'reactstrap'
 
 const ChatBubbleMMS = (props) => {
   const { mode, src, height, width, style } = props
@@ -32,7 +33,13 @@ const ChatBubble = (props) => {
     if (props.time) {
       return (
         <div className={`media-footer mb-3 text-muted ${footerDirection}`}>
-          <small>sent {timeFromNow()}</small>
+          <small id={props.msgID}>sent {timeFromNow()}</small>
+          <UncontrolledTooltip
+            placement = 'left'
+            target    = {props.msgID}
+          >
+            {moment(props.time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM DD YYYY hh:mm:ss a').toString()}
+          </UncontrolledTooltip>
         </div>
       )
     }
