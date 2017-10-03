@@ -21,6 +21,7 @@ import LoadingSpinner  from 'ui/shell/LoadingSpinner'
 
 import Info            from './Info'
 import Overview        from './Overview'
+import Assessment      from './Assessment'
 import FinancialAid    from './FinancialAid'
 import Contacts        from './Contacts'
 import Engagement      from './CommsHistory'
@@ -136,12 +137,13 @@ export default class StudentCard extends Component {
               {/*   link      = {`${match.url}/discipline`} */}
               {/*   location  = {location} */}
               {/* />  */}
-              {/* <UserMenuItem  */}
-              {/*   title     = 'Assessment' */}
-              {/*   iconClass = 'icon-bar-graph' */}
-              {/*   link      = {`${match.url}/assessment`} */}
-              {/*   location  = {location} */}
-              {/* />  */}
+
+              <UserMenuItem
+                title     = 'Assessment'
+                iconClass = 'icon-bar-graph'
+                link      = {`${match.url}/assessment`}
+                location  = {location}
+              />
 
               <UserMenuItem
                 title     = 'Engagement'
@@ -183,6 +185,11 @@ export default class StudentCard extends Component {
                 handleContactFave = {::this.props.store.toggleContactPrimary}
                 handleSendEmail   = {::this.props.store.triggerNativeMailTo}
               /> }
+            />
+
+            <Route
+              path   = {`${match.url}/assessment`}
+              render = {() => <Assessment student={student}/> }
             />
 
             <Route
