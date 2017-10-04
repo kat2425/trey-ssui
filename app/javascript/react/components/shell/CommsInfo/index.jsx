@@ -6,8 +6,9 @@ import Header     from './Header'
 import ScrollView from './ScrollView'
 import Wrapper    from './Wrapper'
 import SubHeader  from './SubHeader'
-import Transcript from './Transcript'
-import Player     from 'ui/shell/Player'
+import CallInfo   from './CallInfo'
+import SmsInfo    from './SmsInfo'
+import EmailInfo  from './EmailInfo'
 
 CommsInfo.propTypes = {
   store: PropTypes.object.isRequired,
@@ -18,21 +19,14 @@ function CommsInfo({store, show}) {
 
   if(!show) return null
   
-  if(!selectedComm) return (
-    <Wrapper>
-      <p className='text-muted text-align-center'>No communication selected</p>
-    </Wrapper>
-  )
-
-  const { isCall, preview } = selectedComm
-
   return (
     <Wrapper show={show}>
       <Header comm={selectedComm}/>
       <ScrollView>
         <SubHeader comm={selectedComm} />
-        {isCall && <Transcript comm={selectedComm} />}
-        {isCall && <Player src={preview} />}
+        <CallInfo comm={selectedComm} />
+        <EmailInfo comm={selectedComm} />
+        <SmsInfo comm={selectedComm} />
       </ScrollView>
     </Wrapper>
   )

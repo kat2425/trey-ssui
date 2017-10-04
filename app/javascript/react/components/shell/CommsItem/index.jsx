@@ -9,7 +9,7 @@ import {
   Outgoing
 } from './Directions'
 
-import {SmsIcon, CallIcon} from './CommsIcons'
+import {SmsIcon, CallIcon, EmailIcon} from './CommsIcons'
 
 CommsItem.propTypes = {
   first: PropTypes.bool,
@@ -54,10 +54,14 @@ function CommsItem({comm}){
 
 const renderIcon = (type) => {
   switch(type){
-    case 'sms':
-      return <SmsIcon />
-    case 'call':
-      return <CallIcon />
+  case 'sms':
+    return <SmsIcon />
+  case 'call':
+    return <CallIcon />
+  case 'email':
+    return <EmailIcon />
+  default:
+    null
   }
 }
 

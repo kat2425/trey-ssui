@@ -29,7 +29,6 @@ import { observable, action, computed, reaction } from 'mobx'
 
 import { setter }                       from 'mobx-decorators'
 import DateFormat                       from 'helpers/DateFormat'
-import uiStore                          from 'stores/UiStore'
 import _                                from 'lodash'
 import xhr                              from 'helpers/XHR'
 
@@ -46,13 +45,17 @@ export default class Communication {
 
   @setter @observable callStatus     = null
   @setter @observable callTranscript = null
+  @setter @observable email          = null
   @setter @observable isLoading      = false
   @setter @observable isError        = null
 
   constructor(store, json){
     this.commsStore = store
     this.update(json)
+
     this.autoFetchTranscript()
+    this.autoFetchEmail()
+    this.autoFetchSms()
   }
 
   // Computed
@@ -61,11 +64,26 @@ export default class Communication {
   }
 
   @computed get isIncoming(){
-    return this.direction === 'incoming'
+    switch (this.type) {
+    case 'call':
+    case 'voicemail':
+    case 'email':
+      return this.direction === 'incoming'
+    case 'sms':
+      return this.direction === 'inbound'
+    }
   }
 
   @computed get isCall(){
     return this.type === 'call'
+  }
+
+  @computed get isSms(){
+    return this.type === 'sms'
+  }
+
+  @computed get isEmail(){
+    return this.type === 'email'
   }
 
   @computed get isActive(){
@@ -103,8 +121,24 @@ export default class Communication {
 
   @action autoFetchTranscript(){
     reaction(
-      () => this.commsStore.selectedComm === this,
+      () => this.isCall && this.commsStore.selectedComm === this,
       (isFetch) => isFetch && this.fetchTranscript(),
+      true
+    ) 
+  }
+
+  @action autoFetchEmail(){
+    reaction(
+      () => this.isEmail && this.commsStore.selectedComm === this,
+      (isFetch) => isFetch && this.fetchEmail(),
+      true
+    ) 
+  }
+
+  @action autoFetchSms(){
+    reaction(
+      () => this.isSms && this.commsStore.selectedComm === this,
+      (isFetch) => isFetch && this.fetchSms(),
       true
     ) 
   }
@@ -162,5 +196,43 @@ export default class Communication {
 
   @action updateTranscript = ({call_transcripts : callTranscripts}) => {
     this.callTranscript = callTranscripts && callTranscripts.length ? callTranscripts[0].call_transcript : ''
+  }
+
+  @action fetchEmail = async(id = this.id) => {
+    try {
+      this.setIsLoading(true)
+      this.setIsError(null)
+
+      const { data } = await xhr.get(`/commo/email_log/${id}`, { 
+        params: { 
+          only: ['body','subject'].join(',')
+        } 
+      })
+
+      this.email = data
+    } catch (err) {
+      this.setIsError(err)
+    } finally {
+      this.setIsLoading(false)
+    }
+  }
+
+  @action fetchSms = async(id = this.id) => {
+    try {
+      this.setIsLoading(true)
+      this.setIsError(null)
+
+      const { data } = await xhr.get(`/commo/sms_log/${id}`, { 
+        params: { 
+          only: ['body'].join(',')
+        } 
+      })
+
+      this.sms = data
+    } catch (err) {
+      this.setIsError(err)
+    } finally {
+      this.setIsLoading(false)
+    }
   }
 }
