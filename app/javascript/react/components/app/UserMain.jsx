@@ -93,13 +93,9 @@ class UserMain extends Component {
         name: window.SSUser.districtName,
       },
 
+      hide_default_launcher:    true,
       custom_launcher_selector: '#intercom-ss-launcher'
     }
-
-    setTimeout(function() {
-      $('.intercom-launcher-frame').contents().find('.intercom-launcher').attr('style', 'display:none')
-      $('.intercom-launcher-frame').attr('style', 'box-shadow:none !important;-webkit-box-shadow:none !important')
-    }, 2500)
   }
 
   componentWillUnmount() {
@@ -126,7 +122,7 @@ class UserMain extends Component {
               show    = {uiStore.showCallSidebar}
               onClose = {this.toggleCallSidebar}
             />
-            <CallInfo 
+            <CallInfo
               store    = {callStore}
               show     = {uiStore.showCallInfo}
               onGoBack = {() => uiStore.setShowCallInfo(false)}
