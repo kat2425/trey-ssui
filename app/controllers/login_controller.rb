@@ -3,6 +3,7 @@ class LoginController < ApplicationController
   layout 'login'
 
   def index
+    redirect_to '/home' if user
   end
 
   def warden_login
@@ -12,6 +13,7 @@ class LoginController < ApplicationController
 
   def warden_logout
     logout
+    cookies.delete 'rack.session'
     redirect_to :login
   end
 
