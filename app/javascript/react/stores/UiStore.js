@@ -29,6 +29,9 @@ export class UiStore {
   @setter @observable 
   sidebarMaxHeight = false
 
+  @setter @observable 
+  isStudentCardOpen = false
+
   constructor() {
     this.autoFetchSMSConversation() 
     this.autoFetchCallLogs()

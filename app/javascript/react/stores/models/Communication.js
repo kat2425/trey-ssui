@@ -158,7 +158,7 @@ export default class Communication {
     this.createdAt      = createdAt
     this.contact        = contact
     this.user           = user
-    this.length         = length.length
+    this.length         = length ? length.length : 0
     this.preview        = preview
     this.direction      = direction
     this.callStatus     = callStatus
