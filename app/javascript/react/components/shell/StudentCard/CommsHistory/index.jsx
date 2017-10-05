@@ -21,13 +21,17 @@ export default class Engament extends Component {
   }
 
   componentDidMount(){
+    this.fetchCommsHistory()
+  }
+
+  fetchCommsHistory = () => {
     const { student } = this.props
 
     commsStore.fetchCommunicationHistory(student.id)
   }
 
   setDefaultSelectedComm = (comm) => {
-    !commsStore.selectedComm && commsStore.setSelectedComm(comm)
+    commsStore.setSelectedComm(comm)
   }
 
   renderCommunications = () => {
