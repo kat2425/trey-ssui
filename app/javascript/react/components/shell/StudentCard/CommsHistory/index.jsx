@@ -11,6 +11,9 @@ import Right              from './Right'
 import Main               from './Main'
 import Container          from './Container'
 import Loader             from './Loader'
+import MsgWrapper         from './MsgWrapper'
+
+
 
 @observer
 export default class Engament extends Component {
@@ -49,7 +52,13 @@ export default class Engament extends Component {
     return (
       <div className='h-100'>
         <h4 className='m-1 mb-3'>Engagement</h4>
+
         <Loader isLoading={isLoading} />
+
+        {(!isLoading && _.isEmpty(sortedCommunications)) && (
+          <MsgWrapper>No engagement for this student yet.</MsgWrapper>
+        )}
+
         {!_.isEmpty(sortedCommunications) && (
           <Container>
             <Main>
