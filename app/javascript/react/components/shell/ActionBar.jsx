@@ -48,9 +48,9 @@ export default class ActionBar extends Component {
 
     const intercomButtonStyle = {
       backgroundColor: '#2f4050',
-      height:          '40px',
-      width:           '40px',
-      marginTop:       '-10px',
+      height:          '38px',
+      width:           '38px',
+      marginTop:       '-9px',
       fontSize:        '25px',
       textAlign:       'center',
       boxShadow:       [
@@ -97,7 +97,7 @@ export default class ActionBar extends Component {
             {/*   className = 'icon icon-typing' */}
             {/*   style     = {{color:'#fff',textShadow:'0 1px rgba(0,0,0,0.75)'}} */}
             {/* /> */}
-            <img src={intercomIcon} style={{width: '32px', height:'32px', marginTop: '-3px'}}/>
+            <img src={intercomIcon} style={{width: '32px', height: '32px', marginTop: '-4px'}}/>
           </NavItem>
         </Nav>
       </Navbar >

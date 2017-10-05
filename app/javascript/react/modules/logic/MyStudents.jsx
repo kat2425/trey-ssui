@@ -151,6 +151,17 @@ export default class MyStudents extends Component {
             title      = 'Recent Activity'
             className  = 'col-md-5'
             isTable    = {true}
+            linkOptions = {{
+              events: {
+                click: (ev, link) => {
+                  const studentID = link.parameters._student_id
+
+                  if (studentID) {
+                    fireEvent('showStudentCard', { student: studentID })
+                  }
+                }
+              }
+            }}
           />
         </div>
       </div>
