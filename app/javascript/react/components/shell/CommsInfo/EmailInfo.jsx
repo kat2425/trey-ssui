@@ -1,7 +1,6 @@
 import React      from 'react'
 import {observer} from 'mobx-react'
 import styled     from 'styled-components'
-import {prop}     from 'styled-tools'
 import renderHTML from 'react-render-html'
 import { Card }   from 'reactstrap'
 
@@ -11,13 +10,13 @@ const EmailInfo = ({comm}) => {
   if(!isEmail) return null
 
   if(isLoading) return (
-    <Wrapper bg='#f3f3f3'>
+    <Wrapper>
       <p className='text-center m-0 p-3 text-muted'>Loading ...</p>
     </Wrapper>
   )
 
   if(!email) return (
-    <Wrapper bg='#f3f3f3'>
+    <Wrapper>
       <p className='text-center m-0 p-3 text-muted'> Empty email </p>
     </Wrapper>
   )
@@ -30,7 +29,7 @@ const EmailInfo = ({comm}) => {
 }
 
 const Wrapper = styled(Card)`
-  background-color: ${prop('bg', '#fff')};
+  background-color: #fff;
   padding: 15px;
 `
 
