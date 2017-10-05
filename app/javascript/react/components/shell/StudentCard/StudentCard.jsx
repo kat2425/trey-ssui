@@ -1,6 +1,6 @@
-import React, { Component }  from 'react'
-import { observer }          from 'mobx-react'
-import Modal                 from 'react-modal'
+import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
+import Modal                from 'react-modal'
 
 import {
   Switch, withRouter, Route, Redirect, Link as RRNavLink
@@ -60,6 +60,7 @@ const CloseBtn = ({onClick}) => (
 )
 
 @withRouter
+@inject('uiStore')
 @observer
 export default class StudentCard extends Component {
   constructor(props) {

@@ -17,6 +17,8 @@ import CallingStore            from 'stores/CallingStore'
 import WebSocketStore          from 'stores/WebSocket'
 import SMSConversationStore    from 'stores/SMSConversation'
 import callStore               from 'stores/CallStore'
+import StudentCardStore        from 'stores/StudentCard'
+import NoteStore               from 'stores/NoteStore'
 
 import VJSContainer            from 'ui/vjs/VJSContainer'
 
@@ -31,12 +33,34 @@ class UserMain extends Component {
   }
 
   showStudentCard = (e) => {
-    const {history, location} = this.props
+    if(!e.detail.student) return
+    const studentId = e.detail.student
 
-    this.currentPath = location.pathname
-    if (e.detail.student) {
-      history.push(`${this.currentPath}/students/${e.detail.student}/overview`)
+    this.fetchNotes(studentId)
+    this.fetchStudent(studentId)
+    this.goToStudentCard(studentId)
+  }
+
+  goToStudentCard = (studentId) => {
+    const {history, location, uiStore} = this.props
+
+    if(uiStore.isStudentCardOpen){
+      history.replace(`${this.currentPath}/students/${studentId}/overview`)
+    } else {
+      this.currentPath = location.pathname
+      history.push(`${this.currentPath}/students/${studentId}/overview`)
     }
+    uiStore.setIsStudentCardOpen(true)
+  }
+
+  fetchStudent = (studentId) => {
+    StudentCardStore.fetchStudent(studentId)
+  }
+
+  fetchNotes = (studentId) => {
+    NoteStore.fetchStudentNotes(studentId)
+    NoteStore.fetchGroups()
+    NoteStore.fetchNoteTags()
   }
 
   onCloseStudentCard = () => {
@@ -50,6 +74,8 @@ class UserMain extends Component {
     } else {
       history.push('/r/my_students')
     }
+
+    uiStore.setIsStudentCardOpen(false)
   }
 
   toggleCallSidebar = () => {
