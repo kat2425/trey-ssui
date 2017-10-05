@@ -21,13 +21,8 @@ export default class Player extends Component{
     this.state = this.getInitialState()
   }
 
-  componentWillReceiveProps(nextProps){
-    if(!nextProps.src){
-      this.reset()
-    } else if(nextProps.src != this.props.src){
-      this.setState({src: nextProps.src})
-      this.handleOnEnded()
-    }
+  componentWillReceiveProps(){
+    this.stop()
   }
 
   play = () => {
@@ -39,6 +34,11 @@ export default class Player extends Component{
     this.setState({play: false})
     this.audioEl.pause()
   } 
+
+  stop = () => {
+    this.pause()
+    this.audioEl.load()
+  }
 
   toggleMute = () => {
     if(this.state.mute){
@@ -67,14 +67,10 @@ export default class Player extends Component{
 
   handleOnError = () => {
     this.handleOnEnded()
-    this.setState({
-      disable: true
-    })
   }
 
   getInitialState = () => ({
     play:        false,
-    src:         this.props.src,
     progress:    0,
     loading:     false,
     currentTime: 0,
@@ -83,17 +79,12 @@ export default class Player extends Component{
     volume:      1
   })
 
-  reset = () => {
-    this.setState(this.getInitialState())
-  }
-
   handleOnEnded = () => {
     this.setState({play: false})
   }
 
   handleOnLoadedMetadata = () => {
     this.setState({
-      disable:  !this.audioEl.duration,
       duration: this.audioEl.duration || 0,
       volume:   (this.audioEl.volume * 100)
     })
@@ -145,7 +136,6 @@ export default class Player extends Component{
       duration,
       progress,
       volume,
-      src,
       mute
     } = this.state
 
@@ -176,7 +166,7 @@ export default class Player extends Component{
           </InnerWrapper>
         )}
         <audio 
-          src              = {src}
+          src              = {this.props.src}
           ref              = {this.setAudioRef}
           preload          = 'auto'
           onLoadStart      = {this.handleOnLoadStart}
