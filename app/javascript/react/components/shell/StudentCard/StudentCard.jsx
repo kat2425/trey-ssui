@@ -24,7 +24,7 @@ import Overview        from './Overview'
 import Assessment      from './Assessment'
 import FinancialAid    from './FinancialAid'
 import Contacts        from './Contacts'
-import Engagement      from './CommsHistory'
+import Engagement      from './CommsHistory/'
 
 // FIXME: needs to be inside StudentCard dir
 import Notes           from '../Notes'
@@ -194,7 +194,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/engagement`}
-              render = {() => <Engagement student={student} communications={communications}/> }
+              render = {() => <Engagement student={student} /> }
             />
 
             <Route
