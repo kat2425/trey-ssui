@@ -21,22 +21,22 @@ const headerStyle = secondary => ({
   height:          '65px',
   backgroundColor: 'rgb(245,245,245)',
   borderBottom:    '1px solid rgba(0,0,0,0.125)',
-  top:             secondary ? 0 : 57
+  top:             57
 })
 
 const listStyle = secondary => ({
-  position:        'absolute',
-  width:           '100%',
-  top:             secondary ? 65 : 122,
-  bottom:          '50px',
-  overflow:        'auto'
+  position: 'absolute',
+  width:    '100%',
+  top:      122,
+  bottom:   '50px',
+  overflow: 'auto'
 })
 
 @inject('uiStore')
 @observer
 export default class SMSInboxController extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 

@@ -9,6 +9,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import fireEvent               from 'helpers/FireEvent'
 import CallBar                 from 'ui/shell/ActionBar/Calling/CallBar'
 
+import intercomIcon from 'images/intercom-icon.svg'
+
 const actionBarNotification = {
   fontSize:      '70%',
   verticalAlign: 'top',
@@ -46,9 +48,9 @@ export default class ActionBar extends Component {
 
     const intercomButtonStyle = {
       backgroundColor: '#2f4050',
-      height:          '35px',
-      width:           '35px',
-      marginTop:       '-7px',
+      height:          '40px',
+      width:           '40px',
+      marginTop:       '-10px',
       fontSize:        '25px',
       textAlign:       'center',
       boxShadow:       [
@@ -91,10 +93,11 @@ export default class ActionBar extends Component {
           </NavItem>
 
           <NavItem className='ml-4 rounded-circle' style={intercomButtonStyle} id='intercom-ss-launcher'>
-            <span
-              className = 'icon icon-typing'
-              style     = {{color:'#fff',textShadow:'0 1px rgba(0,0,0,0.75)'}}
-            />
+            {/* <span */}
+            {/*   className = 'icon icon-typing' */}
+            {/*   style     = {{color:'#fff',textShadow:'0 1px rgba(0,0,0,0.75)'}} */}
+            {/* /> */}
+            <img src={intercomIcon} style={{width: '32px', height:'32px', marginTop: '-3px'}}/>
           </NavItem>
         </Nav>
       </Navbar >

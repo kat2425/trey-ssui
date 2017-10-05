@@ -36,16 +36,16 @@ import _               from 'lodash'
 
 const cardStyle = {
   overlay: {
-    zIndex:          1045,
+    zIndex:          1027,
     backgroundColor: 'rgba(0,0,0,0.75)'
   },
 
   content: {
-    zIndex:          3050,
-    top:             20,
+    zIndex:          1028,
+    top:             75,
     bottom:          70,
-    left:            55,
-    right:           55,
+    left:            17,
+    right:           17,
     borderRadius:    '0.25em',
     border:          'none',
     backgroundColor: '#f7f9fb',

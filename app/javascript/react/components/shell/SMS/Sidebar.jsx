@@ -9,17 +9,17 @@ import SMSConversationStore from 'stores/SMSConversation'
 import SMSController from 'ui/controllers/SMSController'
 
 const containerStyle = secondary => ({
-  position:        'fixed', 
-  top:             0,
-  right:           0,
-  height:          '100%',
-  zIndex:          secondary ? 10290 : 1029,
-  pointerEvents:   'none',
+  position:      'fixed',
+  top:           0,
+  right:         0,
+  height:        '100%',
+  zIndex:        1029,
+  pointerEvents: 'none',
 })
 
 const barStyle = secondary => ({
   backgroundColor: '#e8e8e8',
-  zIndex:          secondary ? 10290 : 1029,
+  zIndex:          1029,
   pointerEvents:   'all',
   width:           '100%',
   borderLeft:      '1px solid rgba(255,255,255,0.75)',
@@ -54,7 +54,7 @@ export default class Sidebar extends Component {
 
   renderInbox() {
     return (
-      <SMSInboxController 
+      <SMSInboxController
         handleSelect     = {this.selectConversation}
         store            = {SMSInboxStore}
       />
@@ -63,6 +63,7 @@ export default class Sidebar extends Component {
 
   renderConversation() {
     const { uiStore } = this.props
+
     return (
       <SMSController
         handleBack       = {this.backToInbox}
@@ -75,7 +76,8 @@ export default class Sidebar extends Component {
 
   render() {
     const {uiStore} = this.props
-    const isSecondary = uiStore.sidebarMaxHeight ?  true : false
+    const isSecondary = true
+    // const isSecondary = uiStore.sidebarMaxHeight ?  true : false
 
     return (
       <div className='col-md-3' style={containerStyle(isSecondary)} hidden={uiStore.hideSidebar}>

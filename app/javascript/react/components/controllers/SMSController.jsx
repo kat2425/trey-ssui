@@ -26,14 +26,14 @@ const fooStyle = secondary => ({
   position:        'absolute',
   width:           '100%',
   height:          '103px',
-  top:             secondary ? 0 : 57
+  top:             57
 })
 
 const redContainer = (isSecondary) => ({
   backgroundColor: 'rgb(244,247,249)',
   position:        'absolute',
   width:           '100%',
-  top:             isSecondary ? '104px' : '160px',
+  top:             '160px',
   bottom:          '50px',
   overflow:        'auto'
 })
@@ -43,11 +43,11 @@ const redStyle = {
 }
 
 const yellowStyle = secondary => ({
-  height:          52,
-  position:        'absolute',
-  bottom:          secondary ? 0 : 50,
-  borderBottom:    '1px solid rgba(0,0,0,0.25)',
-  width:           '100%'
+  height:       52,
+  position:     'absolute',
+  bottom:       50,
+  borderBottom: '1px solid rgba(0,0,0,0.25)',
+  width:        '100%'
 })
 
 const Spinner = () => (
@@ -75,7 +75,7 @@ export default class SMSController extends Component {
     return (
       <div style={conversationStyle}>
         <div style={fooStyle(isSecondary)}>
-          <ConversationHeader 
+          <ConversationHeader
             contact    = {uiStore.currentContact}
             handleBack = {handleBack}
             store      = {store}
@@ -90,7 +90,7 @@ export default class SMSController extends Component {
 
             { store.isLoading && <Spinner /> }
 
-            <SMS 
+            <SMS
               conversation = {uiStore.currentConversation}
               store        = {store}
             />
