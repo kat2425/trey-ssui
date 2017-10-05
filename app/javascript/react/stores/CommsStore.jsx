@@ -25,10 +25,18 @@ export class CommsStore {
     }
   })
 
+  @action clearData = () => {
+    this.communications.clear()
+    this.selectedComm = null
+  }
+
   @action fetchCommunicationHistory = async(id) => {
     try {
+      this.clearData()
+
       this.setIsLoading(true)
       this.setIsError(false)
+
 
       const {data}   = await xhr.get( `/channel/communications/${id}`, this.getCommHistoryParams())
 
@@ -45,7 +53,6 @@ export class CommsStore {
   }
 
   @action createCommunication = (comm) => {
-    if(this.communications.has(comm.id)) return
     this.communications.set(comm.id, new Communication(this, comm))
   }
 }
