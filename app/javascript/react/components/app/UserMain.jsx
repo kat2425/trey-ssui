@@ -17,8 +17,6 @@ import CallingStore            from 'stores/CallingStore'
 import WebSocketStore          from 'stores/WebSocket'
 import SMSConversationStore    from 'stores/SMSConversation'
 import callStore               from 'stores/CallStore'
-import StudentCardStore        from 'stores/StudentCard'
-import NoteStore               from 'stores/NoteStore'
 
 import VJSContainer            from 'ui/vjs/VJSContainer'
 
@@ -36,8 +34,6 @@ class UserMain extends Component {
     if(!e.detail.student) return
     const studentId = e.detail.student
 
-    this.fetchNotes(studentId)
-    this.fetchStudent(studentId)
     this.goToStudentCard(studentId)
   }
 
@@ -51,16 +47,6 @@ class UserMain extends Component {
       history.push(`${this.currentPath}/students/${studentId}/overview`)
     }
     uiStore.setIsStudentCardOpen(true)
-  }
-
-  fetchStudent = (studentId) => {
-    StudentCardStore.fetchStudent(studentId)
-  }
-
-  fetchNotes = (studentId) => {
-    NoteStore.fetchStudentNotes(studentId)
-    NoteStore.fetchGroups()
-    NoteStore.fetchNoteTags()
   }
 
   onCloseStudentCard = () => {

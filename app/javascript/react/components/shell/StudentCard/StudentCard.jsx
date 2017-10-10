@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Modal                from 'react-modal'
+import {scrollStyle}   from 'helpers/modal-style'
 
 import {
   Switch, withRouter, Route, Redirect, Link as RRNavLink
@@ -110,8 +111,8 @@ export default class StudentCard extends Component {
     } = store
 
     return (
-      <Row>
-        <Col sm='3'>
+      <Row style={{overflow: 'hidden'}}>
+        <Col sm='3' style={scrollStyle}>
           <Info student={student} />
 
           <Card>

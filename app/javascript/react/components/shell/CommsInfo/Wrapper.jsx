@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { ifProp } from 'styled-tools'
 
 const Wrapper = styled.div`
-  height: 100%;
+  min-height: 100%;
+  overflow-y: scroll;
   background-color: rgba(0, 0, 0, 0.025);
   border: 1px solid rgba(0, 0, 0, 0.04);
   border-top-right-radius: 6px;

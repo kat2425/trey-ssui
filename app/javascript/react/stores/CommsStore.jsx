@@ -1,11 +1,14 @@
 import { observable, action, computed } from 'mobx'
 import { setter }                       from 'mobx-decorators'
 
-import _             from 'lodash'
-import xhr           from 'helpers/XHR'
-import Communication from 'stores/models/Communication'
+import moment                           from 'moment'
+import _                                from 'lodash'
+import xhr                              from 'helpers/XHR'
+import Communication                    from 'stores/models/Communication'
 
 export class CommsStore {
+  prevStudentId = null
+
   @setter @observable isLoading    = false
   @setter @observable isError      = false
   @observable communications       = observable.map()
@@ -25,6 +28,81 @@ export class CommsStore {
     }
   })
 
+  isCommEqualToSelectedComm = (communication) => (
+    communication.contact.id === this.selectedComm.contact.id && 
+    communication.user.id === this.selectedComm.user.id
+  )
+
+  @computed get groupedSms() {
+    return _(this.communications.values())
+      .filter(c => c.type === 'sms' && this.isCommEqualToSelectedComm(c))
+      .value()
+  }
+
+  @computed get groupedEmails() {
+    return _(this.communications.values())
+      .filter(c => c.type === 'email' && this.isCommEqualToSelectedComm(c))
+      .value()
+  }
+
+
+  getDate = (date) => {
+    return moment(date).calendar(null, {
+      lastDay:  '[Yesterday]',
+      sameDay:  '[Today]',
+      nextDay:  '[Tomorrow]',
+      lastWeek: '[last] dddd',
+      nextWeek: 'dddd',
+      sameElse: 'L'
+    })
+  }
+
+  /*
+   * returns @ { date: [sms1, sms2] }
+   * eg. _.map({ date: [sms1, sms2] }, (date, smsArray) => {})
+   */
+  @computed get orderedSms() {
+    return _
+      .chain(this.groupedSms)
+      .map(s => {
+        s['groupDate'] = this.getDate(s.createdAt)
+        return s
+      })
+      .orderBy(['createdAt'], ['asc'])
+      .reduce((acc, curr) => {
+        if (!acc[curr.groupDate]) {
+          acc[curr.groupDate] = []
+        }
+
+        acc[curr.groupDate].push(curr)
+        return acc
+      }, {})
+      .value()
+  }
+
+  /*
+   * returns @ { date: [email1, email2] }
+   * eg. _.map({ date: [email1, email2] }, (date, emailArray) => {})
+   */
+  @computed get orderedEmails() {
+    return _
+      .chain(this.groupedEmails)
+      .map(s => {
+        s['groupDate'] = this.getDate(s.createdAt)
+        return s
+      })
+      .orderBy(['createdAt'], ['asc'])
+      .reduce((acc, curr) => {
+        if (!acc[curr.groupDate]) {
+          acc[curr.groupDate] = []
+        }
+
+        acc[curr.groupDate].push(curr)
+        return acc
+      }, {})
+      .value()
+  }
+
   @action clearData = () => {
     this.communications.clear()
     this.selectedComm = null
@@ -32,7 +110,9 @@ export class CommsStore {
 
   @action fetchCommunicationHistory = async(id) => {
     try {
-      this.clearData()
+      if(this.prevStudentId !== id){
+        this.clearData()
+      }
 
       this.setIsLoading(true)
       this.setIsError(false)
@@ -41,6 +121,7 @@ export class CommsStore {
       const {data}   = await xhr.get( `/channel/communications/${id}`, this.getCommHistoryParams())
 
       this.fetchCommunicationHistoryOK(data)
+      this.prevStudentId = id
     } catch(e){
       this.setIsError(true)
     } finally {
@@ -53,6 +134,7 @@ export class CommsStore {
   }
 
   @action createCommunication = (comm) => {
+    if(this.communications.has(comm.id)) return
     this.communications.set(comm.id, new Communication(this, comm))
   }
 }
