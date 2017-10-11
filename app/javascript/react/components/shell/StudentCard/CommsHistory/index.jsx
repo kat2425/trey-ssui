@@ -16,7 +16,7 @@ import MsgWrapper         from './MsgWrapper'
 
 
 @observer
-export default class Engament extends Component {
+export default class CommsHistory extends Component {
   static propTypes = {
     student: PropTypes.shape({
       id: PropTypes.string.isRequired

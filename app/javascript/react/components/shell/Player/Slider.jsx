@@ -12,9 +12,9 @@ export default function Slider({onChange, ...rest}) {
     <RcSlider
       style       = {{height: 12}}
       onChange    = {onChange}
-      trackStyle  = {{backgroundColor: '#397af2', height: '1.5px' }}
+      trackStyle  = {{backgroundColor: '#397af2', height: '2px' }}
       handleStyle = {{backgroundColor: '#397af2', width: 12, height: 12, border: '0'}}
-      railStyle   = {{backgroundColor: '#505050', height: '1.5px' }}
+      railStyle   = {{backgroundColor: '#505050', height: '2px' }}
       {...rest}
     />
   )

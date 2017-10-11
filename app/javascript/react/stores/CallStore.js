@@ -5,6 +5,7 @@ import _                                from 'lodash'
 
 import Pager                            from 'stores/models/Pager'
 import Call                             from 'stores/models/Call'
+import userStore                        from 'stores/UserStore'
 
 const LIMIT = 30
 
@@ -44,7 +45,7 @@ export class CallStore {
 
       const { headers, data } = await xhr.get('/commo/call_log', { 
         params: { 
-          user_id:         window.SSUser.id,
+          user_id:         userStore.user.id,
           show_transcript: true,
           limit:           this.limit,
           except:          ['district', 'school', 'student', 'contact.student'].join(','),

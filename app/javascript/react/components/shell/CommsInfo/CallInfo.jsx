@@ -1,16 +1,14 @@
 import React      from 'react'
 import {observer} from 'mobx-react'
-import Transcript from './Transcript'
+import Transcript from 'ui/shell/Transcript'
 import Player     from 'ui/shell/Player'
 
 const CallInfo = ({comm}) => {
-  const {isCall, preview} = comm
-
-  if(!isCall) return null
+  const {preview, transcript, isLoading} = comm
 
   return (
     <div className='d-flex flex-column'>
-      <Transcript comm={comm}/>
+      <Transcript isLoading={isLoading} transcript={transcript}/>
       <Player src={preview}/>
     </div>
   )
