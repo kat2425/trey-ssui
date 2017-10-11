@@ -17,6 +17,7 @@ var wrapper      = require('gulp-wrapper')
 var Paths = {
   HERE                 : './',
   DIST                 : 'dist',
+  DIST_THEME           : '../../app/javascript/packs/theme',
   DIST_TOOLKIT_JS      : 'dist/toolkit.js',
   SCSS_TOOLKIT_SOURCES : './scss/toolkit*',
   SCSS                 : './scss/**/**',
@@ -79,6 +80,7 @@ gulp.task('scss', function () {
     .pipe(autoprefixer())
     .pipe(sourcemaps.write(Paths.HERE))
     .pipe(gulp.dest(Paths.DIST))
+    .pipe(gulp.dest(Paths.DIST_THEME))
 })
 
 gulp.task('scss-min', ['scss'], function () {
@@ -92,6 +94,7 @@ gulp.task('scss-min', ['scss'], function () {
     }))
     .pipe(sourcemaps.write(Paths.HERE))
     .pipe(gulp.dest(Paths.DIST))
+    .pipe(gulp.dest(Paths.DIST_THEME))
 })
 
 gulp.task('js', function () {
