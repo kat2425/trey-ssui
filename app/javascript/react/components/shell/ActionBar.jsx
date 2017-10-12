@@ -93,11 +93,7 @@ export default class ActionBar extends Component {
           </NavItem>
 
           <NavItem className='ml-4 rounded-circle' style={intercomButtonStyle} id='intercom-ss-launcher'>
-            {/* <span */}
-            {/*   className = 'icon icon-typing' */}
-            {/*   style     = {{color:'#fff',textShadow:'0 1px rgba(0,0,0,0.75)'}} */}
-            {/* /> */}
-            <img src={intercomIcon} style={{width: '32px', height: '32px', marginTop: '-4px'}}/>
+            <img src={intercomIcon} style={{width: '32px', height: '32px', marginTop: '-6px'}}/>
           </NavItem>
         </Nav>
       </Navbar >
