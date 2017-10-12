@@ -89,9 +89,12 @@
     "@storybook/addon-notes": "^3.2.10",
     "eslint": "^4.4.1",
     "eslint-plugin-react": "^7.3.0",
+    "gulp": "^3.9.1",
     "webpack-dev-server": "^2.5.1"
   },
   "scripts": {
-    "storybook": "start-storybook -p 3220 -c .storybook"
+    "storybook": "start-storybook -p 3220 -c .storybook",
+    "sass": "cd ./resources/bs-4-theme && yarn && gulp && cd ../../",
+    "sass-watch": "cd ./resources/bs-4-theme && yarn && gulp watch && cd ../../"
   }
 }
