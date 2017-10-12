@@ -11,15 +11,19 @@ export default function SubHeader({ comm }){
   return (
     <div className='d-flex flex-column align-items-end mb-5'>
       {isCall && getIcon(comm)}
-      <small>
-        {fullDate}
-        <span className='text-muted ml-1'>
-          <em> ( {timeAgo} )</em>
-        </span>
-      </small>
+      {isCall && <Date fullDate={fullDate} timeAgo={timeAgo} />}
     </div>
   )
 }
+
+const Date = ({fullDate, timeAgo}) => (
+  <small>
+    {fullDate}
+    <span className='text-muted ml-1'>
+      <em> ( {timeAgo} )</em>
+    </span>
+  </small>
+)
 
 const MissedCallLabel = () => (
   <small>

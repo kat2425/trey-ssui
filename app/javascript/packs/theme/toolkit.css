@@ -6878,6 +6878,12 @@ textarea {
     background-color: #f5f5f5;
     border-color: #eceeef; }
 
+.ReactModal__Body--open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%; }
+
 .container-fill-height {
   display: table;
   width: 100%;
@@ -8561,6 +8567,9 @@ img.zoom-img {
   .media-list-stream .media-object {
     width: 60px; } }
 
+.media-list-conversation .media-body {
+  max-width: 100%; }
+
 .media-list-conversation .media-object {
   width: 42px;
   margin-right: 5px; }
@@ -8571,7 +8580,8 @@ img.zoom-img {
   background-color: #fff;
   border-radius: 9px;
   border-bottom-left-radius: 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.125); }
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.125);
+  word-wrap: break-word; }
 
 .media-list-conversation .media-body-text + .media-body-text {
   margin-top: 5px; }

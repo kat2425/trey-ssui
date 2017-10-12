@@ -7,8 +7,8 @@ import ScrollView from './ScrollView'
 import Wrapper    from './Wrapper'
 import SubHeader  from './SubHeader'
 import CallInfo   from './CallInfo'
-import SmsInfo    from './SmsInfo'
-import EmailInfo  from './EmailInfo'
+import SmsInfo    from './SmsInfo/'
+import EmailInfo  from './EmailInfo/'
 
 CommsInfo.propTypes = {
   store: PropTypes.object.isRequired,
@@ -16,6 +16,7 @@ CommsInfo.propTypes = {
 }
 function CommsInfo({store, show}) {
   const {selectedComm} = store
+  const {isCall, isSms, isEmail} = selectedComm
 
   if(!show) return null
   
@@ -24,9 +25,9 @@ function CommsInfo({store, show}) {
       <Header comm={selectedComm}/>
       <ScrollView>
         <SubHeader comm={selectedComm} />
-        <CallInfo comm={selectedComm} />
-        <EmailInfo comm={selectedComm} />
-        <SmsInfo comm={selectedComm} />
+        {isCall  && <CallInfo comm={selectedComm} />}
+        {isEmail && <EmailInfo store={store} comm={selectedComm} />}
+        {isSms   && <SmsInfo store={store} comm={selectedComm} />}
       </ScrollView>
     </Wrapper>
   )

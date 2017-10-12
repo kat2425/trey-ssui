@@ -23,8 +23,8 @@ const Wrapper = styled.span`
   `)}
 
   ${ifProp('email', `
-    background-color: #50b8d9  
-  `)}
+    background-color: #ceb7d6  
+   `)}
 `
 
 export const SmsIcon = () => (

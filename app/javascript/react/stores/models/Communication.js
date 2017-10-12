@@ -55,7 +55,7 @@ export default class Communication {
 
     this.autoFetchTranscript()
     this.autoFetchEmail()
-    this.autoFetchSms()
+    //this.autoFetchSms()
   }
 
   // Computed
@@ -129,7 +129,7 @@ export default class Communication {
 
   @action autoFetchEmail(){
     reaction(
-      () => this.isEmail && this.commsStore.selectedComm === this,
+      () => this.isEmail, //&& this.commsStore.selectedComm === this,
       (isFetch) => isFetch && this.fetchEmail(),
       true
     ) 
@@ -137,7 +137,7 @@ export default class Communication {
 
   @action autoFetchSms(){
     reaction(
-      () => this.isSms && this.commsStore.selectedComm === this,
+      () => this.isSms, //&& this.commsStore.selectedComm === this,
       (isFetch) => isFetch && this.fetchSms(),
       true
     ) 

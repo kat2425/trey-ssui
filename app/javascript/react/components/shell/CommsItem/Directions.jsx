@@ -16,9 +16,9 @@ export const Incoming = ({userName, contactName, secondary}) => (
 
 export const Outgoing = ({userName, contactName, secondary}) => (
   <Wrapper secondary={secondary}>
-    <Name>{contactName}</Name>
+    <Name>{userName}</Name>
     <RightIcon />
-    <Name bg>{userName}</Name>
+    <Name bg>{contactName}</Name>
   </Wrapper>
 )
 
@@ -43,7 +43,7 @@ const Name      = styled.span`
   text-align: left;
   padding: 6px;
   ${ifProp('bg', `
-    background-color: #f2f2f2;
+    background-color: #eaeaea;
     border-radius: 10px;
   `)}
 `
