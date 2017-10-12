@@ -33,7 +33,7 @@ const StudentSearchItem = ({ student, search }) => {
       <div className='col-sm-9 ml-1'>
         <span dangerouslySetInnerHTML={{__html: formatResults(search, `${ student.last_name }, ${ student.first_name }`)}}></span>
         <br/>
-        <small>{ student.school.school_name }</small>
+        <small>{ student.school_name }</small>
         <br/>
         <small>{ student.state_id }</small>
       </div>
@@ -60,12 +60,8 @@ export default class StudentSearch extends Component {
   // least be moved into a top-level controller
   _lookupStudent(val) {
     if (val.length >= 3) {
-      xhr.get('/students', {
-        params: {
-          only:        'id,state_id,grade,first_name,last_name,school.school_name',
-          limit:       20,
-          text_filter: val
-        }
+      xhr.get('/typeahead/students', {
+        params: { text_filter: val }
       }).then((res) => {
         this.setState({ students: res.data })
       })
@@ -102,6 +98,7 @@ export default class StudentSearch extends Component {
           onChange               = {::this.selectStudent}
           renderMenuItemChildren = {::this.renderResults}
           placeholder            = 'Find a student...'
+          minLength              = {3}
         />
       </div>
     )
