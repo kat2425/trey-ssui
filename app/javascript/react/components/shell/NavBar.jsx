@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component }     from 'react'
+import { NavLink as RRNavLink } from 'react-router-dom'
 
 import {
   Collapse, Navbar,  NavbarToggler, NavbarBrand,
@@ -41,11 +42,13 @@ export default class NavBar extends Component {
           </NavItem>
 
           <NavItem>
-            <NavLink>Settings</NavLink>
+            <NavLink style={{color: '#c3c3c3'}}>
+              { window.SSUser.username }
+            </NavLink>
           </NavItem>
 
           <NavItem>
-            <NavLink>Help</NavLink>
+            <NavLink tag={RRNavLink} to='/r/user_settings'>Settings</NavLink>
           </NavItem>
 
           <NavItem>

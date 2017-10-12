@@ -18,6 +18,7 @@ import SMSController         from 'ui/controllers/SMSController'
 
 import StudentCardController from 'ui/controllers/StudentCardController'
 
+import UserSettings          from 'modules/UserSettings'
 import DumbContainer         from 'ui/shell/DumbContainer'
 
 const AppContainer = ({match}) => {
@@ -40,8 +41,21 @@ const AppContainer = ({match}) => {
         <Route path='/r/channel/engagement' component={ChannelEngagement} />
 
         {/* Misc */}
+        <Route path='/r/user_settings' component={UserSettings} />
         <Route path='/r/dumb' component={DumbContainer} />
-        <Route render={() => <DumbContainer>404 :(</DumbContainer>} />
+
+        <Route render={() => {
+          return (
+            <DumbContainer>
+              <div style={{textAlign: 'center'}}>
+                <h1>404</h1>
+                <h4 className='text-muted'>Not Found</h4>
+                <br/>
+                <span>You are requesting a resource that is unavailble or no longer exists.</span>
+              </div>
+            </DumbContainer>
+          )
+        }} />
       </Switch>
 
       <Route path='*/students/:studentId' component={StudentCardController} />
