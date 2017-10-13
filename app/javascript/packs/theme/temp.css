@@ -174,3 +174,17 @@ button.jive_button.over {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+
+.alert-leave {
+  transform: translateX(-100%);
+  transition: transform 1000ms ease-out;
+}
+
+.alert-leave.alert-leave-active {
+  opacity: 0.01;
+  transition: 500ms;
+}
+
+.growl-alert {
+  padding: 5px !important;
+}
