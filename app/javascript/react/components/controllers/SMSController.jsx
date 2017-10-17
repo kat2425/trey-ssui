@@ -43,7 +43,6 @@ const redStyle = {
 }
 
 const yellowStyle = secondary => ({
-  height:       52,
   position:     'absolute',
   bottom:       50,
   borderBottom: '1px solid rgba(0,0,0,0.25)',

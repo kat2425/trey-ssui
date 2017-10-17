@@ -10,13 +10,22 @@ const inputStyle = {
   backgroundColor: 'rgb(245,245,245)',
   borderTop:       '1px solid rgba(255,255,255,0.75)',
   borderBottom:    '1px solid rgba(255,255,255,0.75)',
-  boxShadow:       '0 -1px 1px rgba(0,0,0,0.15)',
-  height:          52
+  boxShadow:       '0 -1px 1px rgba(0,0,0,0.15)'
+}
+
+const customInput = {
+  width:      '100%', 
+  background: 'white', 
+  maxHeight:  300, 
+  border:     'solid thin lightgray', 
+  overflow:   'auto',
+  outline:    'none',
+  padding:    '0px 5px'
 }
 
 export default class ChatInput extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
@@ -26,7 +35,7 @@ export default class ChatInput extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({ message: e.target.value })
+    this.setState({ message: e.nativeEvent.target.textContent })
   }
 
   handleAttachmentChange = (e) => {
@@ -34,7 +43,7 @@ export default class ChatInput extends Component {
   }
 
   handleSubmit = (e) => {
-    if (keycode(e) === 'enter') {
+    if (keycode(e) === 'enter') { 
       this.sendMessage(this.state.message)
     }
   }
@@ -46,6 +55,7 @@ export default class ChatInput extends Component {
   sendMessage = (msg) => {
     if (!!msg) {
       SMSConversationStore.sendMessage(msg, this.props.contact.id, this.state.attachment)
+      this.smsInput.innerHTML = ''
       this.setState({ message: '', attachment: null })
     }
   }
@@ -61,12 +71,14 @@ export default class ChatInput extends Component {
               </span>
             </Button>
           </InputGroupButton>
-          <Input 
-            onChange    = {this.handleChange}
-            onKeyUp     = {this.handleSubmit}
-            value       = {this.state.message}
-            placeholder = 'Message'
-          />
+          <div 
+            ref     = {(input) => {this.smsInput = input} }
+            onKeyUp = {this.handleSubmit} 
+            onInput = {this.handleChange} 
+            style   = {customInput} 
+            contentEditable
+          >
+          </div>
           <input ref={(input) => {this.attachmentInput = input} } type='file' onChange={this.handleAttachmentChange} style={{display: 'none'}}/>
         </InputGroup>
       </div>
