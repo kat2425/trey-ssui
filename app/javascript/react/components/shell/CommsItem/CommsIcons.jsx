@@ -24,7 +24,11 @@ const Wrapper = styled.span`
 
   ${ifProp('email', `
     background-color: #ceb7d6  
-   `)}
+  `)}
+
+  ${ifProp('voicemail', `
+    background-color: #a2a9fa  
+  `)}
 `
 
 export const SmsIcon = () => (
@@ -42,6 +46,12 @@ export const CallIcon = () => (
 export const EmailIcon = () => (
   <Wrapper email>
     <span className='icon icon-mail' />
+  </Wrapper>
+)
+
+export const VoicemailIcon = () => (
+  <Wrapper voicemail>
+    <span className='icon icon-voicemail' />
   </Wrapper>
 )
 

@@ -2,16 +2,18 @@ import React from 'react'
 import { 
   MdPhone, 
   MdPhoneMissed, 
-  MdPhoneForwarded 
+  MdPhoneForwarded,
+  MdVoicemail
 } from 'react-icons/lib/md'
 
 export default function SubHeader({ comm }){
-  const { fullDate, timeAgo, isCall } = comm
+  const { fullDate, timeAgo, isCall, isVoicemail } = comm
+  const show = (isCall || isVoicemail)
 
   return (
     <div className='d-flex flex-column align-items-end mb-5'>
-      {isCall && getIcon(comm)}
-      {isCall && <Date fullDate={fullDate} timeAgo={timeAgo} />}
+      {show && getIcon(comm)}
+      {show && <Date fullDate={fullDate} timeAgo={timeAgo} />}
     </div>
   )
 }
@@ -25,6 +27,12 @@ const Date = ({fullDate, timeAgo}) => (
   </small>
 )
 
+const VoicemailLabel = () => (
+  <small>
+    <MdVoicemail />
+    <span className='ml-1'>Voicemail</span>
+  </small>
+)
 const MissedCallLabel = () => (
   <small>
     <MdPhoneMissed style={{color: 'red'}} />
@@ -44,7 +52,8 @@ const OutgoingCallLabel = () => (
   </small>
 )
 
-const getIcon = ({isMissedCall, isIncoming}) => {
+const getIcon = ({isMissedCall, isIncoming, isVoicemail}) => {
+  if(isVoicemail) return <VoicemailLabel /> 
   if(isMissedCall) return <MissedCallLabel /> 
   return isIncoming ? <IncomingCallLabel /> : <OutgoingCallLabel />
 }

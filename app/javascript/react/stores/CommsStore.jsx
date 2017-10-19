@@ -21,9 +21,9 @@ export class CommsStore {
   getCommHistoryParams = () => ({
     params: {
       only: [
-        'id', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
+        'id', 'action', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
         'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
-        'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'call_status'
+        'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'call_status', 'voicemail_url'
       ].join(',')
     }
   })
@@ -58,8 +58,8 @@ export class CommsStore {
   }
 
   /*
-   * returns @ { date: [sms1, sms2] }
-   * eg. _.map({ date: [sms1, sms2] }, (date, smsArray) => {})
+   * returns @ { groupDate: [sms1, sms2] }
+   * eg. {'Today':[{sms1}, {sms2}]}
    */
   @computed get orderedSms() {
     return _
@@ -81,8 +81,8 @@ export class CommsStore {
   }
 
   /*
-   * returns @ { date: [email1, email2] }
-   * eg. _.map({ date: [email1, email2] }, (date, emailArray) => {})
+   * returns @ { groupDate: [email1, email2] }
+   * eg. {'Today':[{email1}, {email2}]}
    */
   @computed get orderedEmails() {
     return _

@@ -16,7 +16,7 @@ CommsInfo.propTypes = {
 }
 function CommsInfo({store, show}) {
   const {selectedComm} = store
-  const {isCall, isSms, isEmail} = selectedComm
+  const {isCall, isSms, isEmail, isVoicemail} = selectedComm
 
   if(!show) return null
   
@@ -25,7 +25,7 @@ function CommsInfo({store, show}) {
       <Header comm={selectedComm}/>
       <ScrollView>
         <SubHeader comm={selectedComm} />
-        {isCall  && <CallInfo comm={selectedComm} />}
+        {(isCall || isVoicemail)  && <CallInfo comm={selectedComm} />}
         {isEmail && <EmailInfo store={store} comm={selectedComm} />}
         {isSms   && <SmsInfo store={store} comm={selectedComm} />}
       </ScrollView>

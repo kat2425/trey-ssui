@@ -2,7 +2,8 @@ import React from 'react'
 import { 
   MdPhone, 
   MdPhoneMissed, 
-  MdPhoneForwarded 
+  MdPhoneForwarded,
+  MdVoicemail
 } from 'react-icons/lib/md'
 
 export default function SubHeader({ call }){
@@ -21,6 +22,12 @@ export default function SubHeader({ call }){
   )
 }
 
+const VoicemailLabel = () => (
+  <small>
+    <MdVoicemail />
+    <span className='ml-1'>Voicemail</span>
+  </small>
+)
 const MissedCallLabel = () => (
   <small>
     <MdPhoneMissed style={{color: 'red'}} />
@@ -40,7 +47,8 @@ const OutgoingCallLabel = () => (
   </small>
 )
 
-const getIcon = ({isMissedCall, isIncoming}) => {
+const getIcon = ({isMissedCall, isIncoming, isVoicemail}) => {
+  if(isVoicemail) return <VoicemailLabel />
   if(isMissedCall) return <MissedCallLabel /> 
   return isIncoming ? <IncomingCallLabel /> : <OutgoingCallLabel />
 }

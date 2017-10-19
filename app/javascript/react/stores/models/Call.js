@@ -19,7 +19,12 @@
   }
 */
 
-import { observable, action, computed } from 'mobx'
+import { 
+  observable, 
+  action, 
+  computed,
+} from 'mobx'
+
 import { setter }                       from 'mobx-decorators'
 import DateFormat                       from 'helpers/DateFormat'
 import uiStore                          from 'stores/UiStore'
@@ -31,21 +36,30 @@ export default class Call {
   createdAt         = null
   contact           = null
   user              = null
-  recordingDuration = 0
-  recordingPath     = null
   direction         = null
 
-  @setter @observable callStatus = null
-  @setter @observable isRead     = true
+  @setter @observable action            = null
+  @setter @observable recordingPath     = null
+  @setter @observable recordingDuration = 0
+  @setter @observable callStatus        = null
+  @setter @observable isRead            = true
+  @setter @observable isLoading         = false
+  @setter @observable isError           = false
+  @setter @observable voiceTranscript   = false
 
   constructor(store, json){
     this.callStore = store
     this.update(json)
+    this.setVoicemail()
   }
 
   // Computed
   @computed get isMissedCall(){
-    return this.callStatus !== 'completed'
+    return !this.isVoicemail && this.callStatus !== 'completed'
+  }
+
+  @computed get isVoicemail(){
+    return this.action === 'voicemail'
   }
 
   @computed get isIncoming(){
@@ -68,7 +82,13 @@ export default class Call {
     return this.contact.name
   }
 
+  @computed get isSelected(){
+    return this.callStore.selectedCall === this
+  }
+
   @computed get transcript(){
+    if(this.isVoicemail) return this.voiceTranscript
+
     if(_.isEmpty(this.callTranscript)) return []
 
     return this.callTranscript
@@ -88,6 +108,7 @@ export default class Call {
 
   @action update = ({
     id,
+    action,
     created_at:          createdAt,
     dial_call_status:   callStatus,
     contact,
@@ -95,9 +116,11 @@ export default class Call {
     recording_duration: recordingDuration,
     recording_path:     recordingPath,
     direction,
-    call_transcripts:   callTranscripts
+    call_transcripts:   callTranscripts,
+    voicemails = []
   }) => {
     this.id                = id
+    this.action            = action
     this.createdAt         = createdAt
     this.contact           = contact
     this.user              = user
@@ -106,10 +129,21 @@ export default class Call {
     this.direction         = direction
     this.callStatus        = callStatus
     this.callTranscript    = callTranscripts.length ? callTranscripts[0].call_transcript : []
+    this.voicemails        = voicemails 
   }
 
   @action handleSelect = () => {
     this.callStore.setSelectedCall(this)
     uiStore.setShowCallInfo(true)
+  }
+
+  @action setVoicemail = () => {
+    if(!this.isVoicemail || _.isEmpty(this.voicemails)) return
+
+    const {recording_url = '', duration = 0, transcript = ''} = this.voicemails[0]
+
+    this.setRecordingPath(recording_url)
+    this.setRecordingDuration(duration)
+    this.setVoiceTranscript(transcript)
   }
 }
