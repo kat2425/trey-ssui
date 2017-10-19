@@ -14,13 +14,13 @@ const inputStyle = {
 }
 
 const customInput = {
-  width:      '100%', 
-  background: 'white', 
-  maxHeight:  300, 
-  border:     'solid thin lightgray', 
+  width:      '100%',
+  background: 'white',
+  maxHeight:  300,
+  border:     'solid thin lightgray',
   overflow:   'auto',
   outline:    'none',
-  padding:    '0px 5px'
+  padding:    '5px'
 }
 
 export default class ChatInput extends Component {
@@ -43,7 +43,7 @@ export default class ChatInput extends Component {
   }
 
   handleSubmit = (e) => {
-    if (keycode(e) === 'enter') { 
+    if (keycode(e) === 'enter') {
       this.sendMessage(this.state.message)
     }
   }
@@ -71,14 +71,15 @@ export default class ChatInput extends Component {
               </span>
             </Button>
           </InputGroupButton>
-          <div 
+
+          <div
             ref     = {(input) => {this.smsInput = input} }
-            onKeyUp = {this.handleSubmit} 
-            onInput = {this.handleChange} 
-            style   = {customInput} 
+            onKeyUp = {this.handleSubmit}
+            onInput = {this.handleChange}
+            style   = {customInput}
             contentEditable
-          >
-          </div>
+          />
+
           <input ref={(input) => {this.attachmentInput = input} } type='file' onChange={this.handleAttachmentChange} style={{display: 'none'}}/>
         </InputGroup>
       </div>
