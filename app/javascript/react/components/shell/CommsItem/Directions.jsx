@@ -30,6 +30,7 @@ const Wrapper   = styled.div`
     color: red;
   `)}
 `
+
 const getArrow  = Icon => styled(Icon)`
   margin: 0 10px;
 `

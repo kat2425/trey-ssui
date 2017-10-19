@@ -12,8 +12,13 @@ export default class SMS extends Component {
   componentDidMount(){
     this.scrollIntoView()
   }
+
   componentDidUpdate(){
     this.scrollIntoView()
+  }
+
+  componentWillUnmount(){
+    clearTimeout(this.timeoutId)
   }
 
   scrollIntoView = () => {

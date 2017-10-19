@@ -10,8 +10,13 @@ export default class StudentCardController extends Component {
     uiStore.setIsStudentCardOpen(true)
     this.fetchStudentInfo(this.props.match.params.studentId)
   }
-  componentWillReceiveProps({match}){
-    this.fetchStudentInfo(match.params.studentId)
+  componentWillReceiveProps(nextProps){
+    const studentId     = this.props.match.params.studentId
+    const nextStudentId = nextProps.match.params.studentId
+
+    if(studentId === nextStudentId) return
+
+    this.fetchStudentInfo(nextStudentId)
   }
 
   componentWillUnmount(){

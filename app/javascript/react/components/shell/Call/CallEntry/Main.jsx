@@ -10,13 +10,14 @@ Main.propTypes = {
     userName:     PropTypes.string.isRequired,
     contactName:  PropTypes.string.isRequired,
     isMissedCall: PropTypes.bool.isRequired,
+    isVoicemail:  PropTypes.bool.isRequired,
     isIncoming:   PropTypes.bool.isRequired
   }).isRequired
 }
 
 
 function Main({call}){
-  const {contactName, isMissedCall, isIncoming} = call
+  const {contactName, isMissedCall, isVoicemail, isIncoming} = call
 
   return (
     <div className='d-flex flex-row align-items-center'>
@@ -25,6 +26,7 @@ function Main({call}){
         <Name secondary={isMissedCall}>{contactName}</Name>
         <small className='text-muted'>
           {(() => {
+            if(isVoicemail) return 'voicemail'
             if(isMissedCall) return 'missed'
             return isIncoming ? 'incoming' : 'outgoing'
           })()}

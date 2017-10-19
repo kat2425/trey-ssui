@@ -13,6 +13,7 @@ CallEntry.propTypes = {
     userName:     PropTypes.string.isRequired,
     contactName:  PropTypes.string.isRequired,
     isMissedCall: PropTypes.bool.isRequired,
+    isVoicemail:  PropTypes.bool.isRequired,
     isIncoming:   PropTypes.bool.isRequired,
     fullDate:     PropTypes.string.isRequired,
     timeAgo:      PropTypes.string.isRequired,

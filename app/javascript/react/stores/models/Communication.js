@@ -21,11 +21,12 @@
   length: {
     length: 28,
     unit: 'seconds'
-  }
+  },
+  voicemail_url: null
 }
 */
 
-import { observable, action, computed, reaction } from 'mobx'
+import { observable, action, computed, reaction, runInAction } from 'mobx'
 
 import { setter }                       from 'mobx-decorators'
 import DateFormat                       from 'helpers/DateFormat'
@@ -33,21 +34,23 @@ import _                                from 'lodash'
 import xhr                              from 'helpers/XHR'
 
 export default class Communication {
-  commsStore = null
-  id         = null
-  createdAt  = null
-  contact    = null
-  user       = null
-  length     = 0
-  preview    = null
-  direction  = null
-  type       = null
+  commsStore   = null
+  id           = null
+  createdAt    = null
+  contact      = null
+  user         = null
+  direction    = null
+  voicemailUrl = null
 
-  @setter @observable callStatus     = null
-  @setter @observable callTranscript = null
-  @setter @observable email          = null
-  @setter @observable isLoading      = false
-  @setter @observable isError        = null
+  @setter @observable length              = 0
+  @setter @observable preview             = null
+  @setter @observable callStatus          = null
+  @setter @observable callTranscript      = null
+  @setter @observable voiceTranscript     = null
+  @setter @observable email               = null
+  @setter @observable isLoading           = false
+  @setter @observable isError             = null
+  @setter @observable type                = null
 
   constructor(store, json){
     this.commsStore = store
@@ -55,7 +58,7 @@ export default class Communication {
 
     this.autoFetchTranscript()
     this.autoFetchEmail()
-    //this.autoFetchSms()
+    this.autoFetchVoicemail()
   }
 
   // Computed
@@ -86,6 +89,10 @@ export default class Communication {
     return this.type === 'email'
   }
 
+  @computed get isVoicemail(){
+    return !!this.voicemailUrl
+  }
+
   @computed get isActive(){
     return this.commsStore.selectedComm === this
   }
@@ -107,6 +114,8 @@ export default class Communication {
   }
 
   @computed get transcript(){
+    if(this.isVoicemail) return this.voiceTranscript
+
     if(_.isEmpty(this.callTranscript)) return []
 
     return this.callTranscript
@@ -119,25 +128,33 @@ export default class Communication {
       }))
   }
 
-  @action autoFetchTranscript(){
+  @action autoFetchTranscript = () => {
     reaction(
-      () => this.isCall && this.commsStore.selectedComm === this,
+      ()        => this.isActive && this.isCall,
       (isFetch) => isFetch && this.fetchTranscript(),
       true
     ) 
   }
 
-  @action autoFetchEmail(){
+  @action autoFetchVoicemail = () => {
     reaction(
-      () => this.isEmail, //&& this.commsStore.selectedComm === this,
+      ()        => this.isActive && this.isVoicemail,
+      (isFetch) => isFetch && this.fetchVoicemail(),
+      true
+    ) 
+  }
+
+  @action autoFetchEmail = () => {
+    reaction(
+      ()        => this.isEmail,
       (isFetch) => isFetch && this.fetchEmail(),
       true
     ) 
   }
 
-  @action autoFetchSms(){
+  @action autoFetchSms = () => {
     reaction(
-      () => this.isSms, //&& this.commsStore.selectedComm === this,
+      ()        => this.isActive && this.isSms,
       (isFetch) => isFetch && this.fetchSms(),
       true
     ) 
@@ -145,8 +162,9 @@ export default class Communication {
 
   @action update = ({
     id,
-    created_at:       createdAt,
-    call_status:      callStatus,
+    created_at:    createdAt,
+    call_status:   callStatus,
+    voicemail_url: voicemailUrl,
     contact,
     user,
     length,
@@ -154,15 +172,16 @@ export default class Communication {
     direction,
     type
   }) => {
-    this.id             = id
-    this.createdAt      = createdAt
-    this.contact        = contact
-    this.user           = user
-    this.length         = length ? length.length : 0
-    this.preview        = preview
-    this.direction      = direction
-    this.callStatus     = callStatus
-    this.type           = type
+    this.id           = id
+    this.createdAt    = createdAt
+    this.contact      = contact
+    this.user         = user
+    this.length       = length ? length.length : 0
+    this.preview      = voicemailUrl ? voicemailUrl : preview
+    this.direction    = direction
+    this.callStatus   = callStatus
+    this.voicemailUrl = voicemailUrl
+    this.type         = voicemailUrl ? 'voicemail' : type
   }
 
   @action handleSelect = () => {
@@ -173,14 +192,15 @@ export default class Communication {
   @action fetchTranscript = async(id = this.id) => {
     try {
       this.setIsLoading(true)
-      this.setIsError(null)
+      this.setIsError(false)
 
-      const { data } = await xhr.get(`/commo/call_log/${id}`, { 
-        params: { 
-          show_transcript: true,
-          only:            ['call_transcripts.call_transcript'].join(',')
-        } 
-      })
+      const params = { 
+        show_transcript: true,
+        only:            ['call_transcripts.call_transcript'].join(',')
+      } 
+
+
+      const { data } = await this.fetchCallLog(params) 
 
       this.fetchTranscriptOk(data)
     } catch (err) {
@@ -201,7 +221,7 @@ export default class Communication {
   @action fetchEmail = async(id = this.id) => {
     try {
       this.setIsLoading(true)
-      this.setIsError(null)
+      this.setIsError(false)
 
       const { data } = await xhr.get(`/commo/email_log/${id}`, { 
         params: { 
@@ -220,7 +240,7 @@ export default class Communication {
   @action fetchSms = async(id = this.id) => {
     try {
       this.setIsLoading(true)
-      this.setIsError(null)
+      this.setIsError(false)
 
       const { data } = await xhr.get(`/commo/sms_log/${id}`, { 
         params: { 
@@ -235,4 +255,38 @@ export default class Communication {
       this.setIsLoading(false)
     }
   }
+
+  @action fetchCallLog = async(params, id = this.id) => {
+    try {
+      this.setIsLoading(true)
+      this.setIsError(false)
+
+      return await xhr.get(`/commo/call_log/${id}`, { 
+        params: params      
+      })
+    } catch (err) {
+      this.setIsError(err)
+    } finally {
+      this.setIsLoading(false)
+    }
+  }
+
+  @action fetchVoicemail = async() => {
+    try {
+      const {data}      = await this.fetchCallLog({only: ['voicemails'].join(',')})
+      const {voicemails} = data
+
+      if(_.isEmpty(voicemails)) return
+
+      const {duration = 0, transcript = ''} = voicemails[0]
+
+      runInAction(() => {
+        this.setLength(duration)
+        this.setVoiceTranscript(transcript)
+      })
+    } catch(err){
+      this.setIsError(err)
+    }   
+  }
 }
+
