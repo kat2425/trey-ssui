@@ -75,10 +75,8 @@ gulp.task('server', function () {
 
 gulp.task('scss', function () {
   return gulp.src(Paths.SCSS_TOOLKIT_SOURCES)
-    .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
-    .pipe(sourcemaps.write(Paths.HERE))
     .pipe(gulp.dest(Paths.DIST))
     .pipe(gulp.dest(Paths.DIST_THEME))
 })
@@ -94,7 +92,6 @@ gulp.task('scss-min', ['scss'], function () {
     }))
     .pipe(sourcemaps.write(Paths.HERE))
     .pipe(gulp.dest(Paths.DIST))
-    .pipe(gulp.dest(Paths.DIST_THEME))
 })
 
 gulp.task('js', function () {
