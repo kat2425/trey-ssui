@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Media } from 'reactstrap'
 
 import DateFormat from 'helpers/DateFormat'
+import _ from 'lodash'
 
 const itemStyle = {
   borderLeft:   'none',
@@ -44,8 +45,7 @@ const InboxItem = (props) => {
 
       <Media body>
         <h6>{props.name}</h6>
-
-        { !!props.media ? <InboxMMS src={props.media}/> : props.message }
+        <p>{ !!props.media ? <InboxMMS src={props.media}/> : _.truncate(props.message, {'length': 45}) }</p>
       </Media>
 
       <Media right>
