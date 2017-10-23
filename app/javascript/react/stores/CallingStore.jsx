@@ -192,7 +192,7 @@ class CallingStore {
   @action
   setupDevice(token) {
     try {
-      Twilio.Device.setup(token)
+      Twilio.Device.setup(token, { region: 'us1', debug: true })
     }
     catch(e) {
       console.log(e)
