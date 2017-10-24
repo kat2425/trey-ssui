@@ -111,7 +111,7 @@ export default class StudentCard extends Component {
     } = store
 
     return (
-      <Row style={{overflow: 'hidden'}}>
+      <Row>
         <Col sm='3' style={scrollStyle}>
           <Info student={student} />
 
