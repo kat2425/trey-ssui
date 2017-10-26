@@ -166,7 +166,7 @@ class CallingStore {
     this.setIsConferenceCalling(false)
 
     setTimeout(() => {
-      this.setCallBarVisible(false)
+      !this.isCalling && this.setCallBarVisible(false)
     }, 5000)
 
     this.isDialPad(false)
