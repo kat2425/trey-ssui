@@ -9,6 +9,7 @@ import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
 import Sidebar                 from 'ui/shell/SMS/Sidebar'
 import {CallSidebar, CallInfo} from 'ui/shell/Call'
+import Notification            from 'ui/shell/Notification/Notification'
 
 import CallingController       from 'ui/controllers/CallingController'
 
@@ -85,10 +86,10 @@ class UserMain extends Component {
   componentDidMount() {
     WebSocketStore.subscribeUser(window.SSUser.id)
 
-    window.addEventListener('showStudentCard', this.showStudentCard)
+    window.addEventListener('showStudentCard',    this.showStudentCard)
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
-    window.addEventListener('toggleSidebar', this.toggleSidebar)
-    window.addEventListener('toggleCallSidebar', this.toggleCallSidebar)
+    window.addEventListener('toggleSidebar',      this.toggleSidebar)
+    window.addEventListener('toggleCallSidebar',  this.toggleCallSidebar)
 
     window.intercomSettings = {
       app_id:     'c443b08a556eb87a1f39f088cda1b1f93e3a6631',
@@ -111,9 +112,9 @@ class UserMain extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('showStudentCard', this.showStudentCard)
+    window.removeEventListener('showStudentCard',    this.showStudentCard)
     window.removeEventListener('onCloseStudentCard', this.onCloseStudentCard)
-    window.removeEventListener('toggleSidebar', this.toggleSidebar)
+    window.removeEventListener('toggleSidebar',      this.toggleSidebar)
   }
 
   render() {
@@ -139,6 +140,22 @@ class UserMain extends Component {
               show     = {uiStore.showCallInfo}
               onGoBack = {() => uiStore.setShowCallInfo(false)}
             />
+            {_.map(uiStore.notifications, (n,i) => {
+              return (
+                <span key={i}>
+                  <Notification
+                    visible           = {true}
+                    loading           = {false}
+                    notificationTitle = {n.title}
+                    notificationText  = {n.body}
+                    dismissable       = {true}
+                    type              = 'alert-warning'
+                    style             = {{top: (i+1)*25+(i*80)}}
+                    onDismissed       = {() => uiStore.removeNotification(i)}
+                  />
+                </span>
+              )
+            })}
           </div>
         </div>
       </VJSContainer>

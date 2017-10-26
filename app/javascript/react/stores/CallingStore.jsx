@@ -3,6 +3,7 @@ import { setter }              from 'mobx-decorators'
 import xhr                     from 'helpers/XHR'
 import moment                  from 'moment'
 import { padCharsStart }       from 'lodash/fp'
+import UiStore                 from 'stores/UiStore'
 
 class CallingStore {
   // Observables
@@ -18,15 +19,15 @@ class CallingStore {
   @observable connection          = null
   @observable contact             = null
   @observable contactName         = null
+  @observable currentOutputDevice = null
   @observable isConnected         = false
+  @observable outputDevices       = []
   @observable phoneNumber         = null
   @observable studentID           = null
-  @observable currentOutputDevice = null
-  @observable outputDevices       = []
 
+  callStartTime   = null
   device          = null
   intervalHandler = null
-  callStartTime   = null
 
   generateToken = () => {
     return xhr.get('/commo/capability_token')
@@ -128,7 +129,16 @@ class CallingStore {
         }, 5000)
       })
       .catch((error) => {
-        console.log(error)
+        let errorMessage = 'We experienced an unknown error.'  // default error message
+
+        if (error.response.data && error.response.data.message) { // specific errors
+          // TODO: if this is a problem of the user not verifying their mobile number,
+          // it'd be nice to give them the option to verify here.
+          errorMessage = error.response.data.message
+        }
+
+        UiStore.addNotification('Error', errorMessage)
+        console.error('Calling Error:', error)
       })
   }
 
@@ -192,23 +202,49 @@ class CallingStore {
   @action
   setupDevice(token) {
     try {
-      Twilio.Device.setup(token, { region: 'us1', debug: true })
+      this.device = Twilio.Device.setup(token, { region: 'us1', debug: true })
     }
     catch(e) {
       console.log(e)
     }
+
+    this.device.error((error) => {
+      let errorMessage = null
+      
+      switch(error.code) {
+        case 31000:
+          errorMessage = "We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet."
+          break;
+        case 31002:
+          errorMessage = "This contact's number does not allow communication from SchoolStatus."
+          break;
+        case 31003:
+          errorMessage = "We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet."
+          break;
+        case 31205:
+          errorMessage = "There was an error attempting to place the call. Please refresh the page and try again."
+        case 31208: 
+          errorMessage = 'We require access to your microphone.'
+          break;
+        default: 
+          errorMessage = 'We experienced an unknown error.'
+      }
+
+      UiStore.addNotification('Error', errorMessage)
+      console.error('Calling Error:', error)
+    })
   }
 }
 
 function getTime(start, end) {
-  var startTime = moment(start)
-  var endTime   = moment(end)
-  var duration  = moment.duration(endTime.diff(startTime))
-  const padTime = padCharsStart('0')(2)
+  const startTime = moment(start)
+  const endTime   = moment(end)
+  const duration  = moment.duration(endTime.diff(startTime))
+  const padTime   = padCharsStart('0')(2)
 
-  var hours     = parseInt(duration.asHours()).toString()
-  var minutes   = (parseInt(duration.asMinutes()) - hours * 60).toString()
-  var secs      = (parseInt(duration.asSeconds()) - minutes * 60).toString()
+  const hours     = parseInt(duration.asHours()).toString()
+  const minutes   = (parseInt(duration.asMinutes()) - hours * 60).toString()
+  const secs      = (parseInt(duration.asSeconds()) - minutes * 60).toString()
 
   return `${padTime(minutes)}:${padTime(secs)}`
 }

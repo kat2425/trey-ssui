@@ -9,11 +9,13 @@ stories.addDecorator(withKnobs)
 stories.add('Notification', () => 
   <div>
     <Notification 
-      visible          = {boolean('Visible', true)}
-      loading          = {boolean('Loading', true)}
-      loadingText      = {text('Loading Text', 'This is the loading text')}
-      notificationText = {text('Notification Text', 'This is the notification content')} 
-      dismissable      = {boolean('Dismissable', true)}
+      visible           = {boolean('Visible', true)}
+      loading           = {boolean('Loading', true)}
+      loadingText       = {text('Loading Text', 'This is the loading text')}
+      notificationTitle = {text('Notification Title', 'TITLE')}
+      notificationText  = {text('Notification Text', 'This is the notification content')}
+      dismissable       = {boolean('Dismissable', true)}
+      type              = {text('Alert Type', 'alert-warning')}
     />
   </div>
 )
