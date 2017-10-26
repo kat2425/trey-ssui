@@ -3,7 +3,7 @@ import React, { Component}  from 'react'
 import { inject, observer } from 'mobx-react'
 import _                    from 'lodash'
 
-import ChatInput            from 'ui/shell/SMS/ChatInput'
+import ChatInput            from 'ui/shell/SMS/ChatInput/'
 import SMS                  from 'ui/shell/SMS/SMS'
 import ConversationHeader   from 'ui/shell/SMS/ConversationHeader'
 import LoadingSpinner       from 'ui/shell/LoadingSpinner'
