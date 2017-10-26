@@ -8,7 +8,7 @@ const Counter = ({counter, isOverLimit}) => (
     { counter }
     { isOverLimit && (
       <UncontrolledTooltip placement='top' target='counter'>
-        Your mesages will be broken down in to chunks before being sent to the recipient's phone. 
+        Your message will be broken down into chunks before being sent to the recipient's phone.      
       </UncontrolledTooltip>
     )}
   </Wrapper>
@@ -19,7 +19,8 @@ const Wrapper = styled.span`
   color: black;
   display: inline-block;
   margin-left: auto;
-  margin-right: 10px;
+  margin-right: 5px;
+  padding:5px;
 
   ${ifProp('sec', `
     color: red;
