@@ -13,7 +13,7 @@ class LoginController < ApplicationController
 
   def warden_logout
     logout
-    cookies.delete 'rack.session'
+    cookies.delete 'ss_session'
     redirect_to :login
   end
 

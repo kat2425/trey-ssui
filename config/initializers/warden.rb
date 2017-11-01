@@ -34,11 +34,11 @@ end
 
 Warden::Strategies.add(:ss_core_token) do
   def valid?
-    !cookies['rack.session'].blank?
+    !cookies['ss_session'].blank?
   end
 
   def authenticate!
-    raw_cookie    = CGI::unescape(cookies['rack.session'])
+    raw_cookie    = CGI::unescape(cookies['ss_session'])
     parsed_cookie = Marshal.load Rack::Session::Cookie::Base64.new.decode(Rack::Utils.unescape(raw_cookie))
 
     if (user = User[parsed_cookie['warden.user.session.key']])

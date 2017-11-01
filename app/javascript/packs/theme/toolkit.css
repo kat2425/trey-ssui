@@ -9191,6 +9191,2026 @@ img.zoom-img {
   background-color: #9cf76f;
   border-top: 1px solid #88f552 !important; }
 
+.vjs-rank-cell-red-100 {
+  background-color: #dc5b42;
+  border-top: 1px solid #d74528 !important; }
+
+.vjs-rank-cell-red-99 {
+  background-color: #dc5c43;
+  border-top: 1px solid #d74629 !important; }
+
+.vjs-rank-cell-red-98 {
+  background-color: #dc5d45;
+  border-top: 1px solid #d7472b !important; }
+
+.vjs-rank-cell-red-97 {
+  background-color: #dc5f46;
+  border-top: 1px solid #d7492c !important; }
+
+.vjs-rank-cell-red-96 {
+  background-color: #dd6048;
+  border-top: 1px solid #d84a2e !important; }
+
+.vjs-rank-cell-red-95 {
+  background-color: #dd614a;
+  border-top: 1px solid #d84b30 !important; }
+
+.vjs-rank-cell-red-94 {
+  background-color: #dd634b;
+  border-top: 1px solid #d84d31 !important; }
+
+.vjs-rank-cell-red-93 {
+  background-color: #dd644d;
+  border-top: 1px solid #d84e33 !important; }
+
+.vjs-rank-cell-red-92 {
+  background-color: #de664f;
+  border-top: 1px solid #d95035 !important; }
+
+.vjs-rank-cell-red-91 {
+  background-color: #de6750;
+  border-top: 1px solid #d95136 !important; }
+
+.vjs-rank-cell-red-90 {
+  background-color: #de6852;
+  border-top: 1px solid #d95238 !important; }
+
+.vjs-rank-cell-red-89 {
+  background-color: #de6a53;
+  border-top: 1px solid #d95439 !important; }
+
+.vjs-rank-cell-red-88 {
+  background-color: #df6b55;
+  border-top: 1px solid #da553b !important; }
+
+.vjs-rank-cell-red-87 {
+  background-color: #df6d57;
+  border-top: 1px solid #da573d !important; }
+
+.vjs-rank-cell-red-86 {
+  background-color: #df6e58;
+  border-top: 1px solid #da583e !important; }
+
+.vjs-rank-cell-red-85 {
+  background-color: #df6f5a;
+  border-top: 1px solid #da5940 !important; }
+
+.vjs-rank-cell-red-84 {
+  background-color: #e0715c;
+  border-top: 1px solid #db5b42 !important; }
+
+.vjs-rank-cell-red-83 {
+  background-color: #e0725d;
+  border-top: 1px solid #db5c43 !important; }
+
+.vjs-rank-cell-red-82 {
+  background-color: #e0745f;
+  border-top: 1px solid #db5e45 !important; }
+
+.vjs-rank-cell-red-81 {
+  background-color: #e07560;
+  border-top: 1px solid #db5f46 !important; }
+
+.vjs-rank-cell-red-80 {
+  background-color: #e17662;
+  border-top: 1px solid #dc6048 !important; }
+
+.vjs-rank-cell-red-79 {
+  background-color: #e17864;
+  border-top: 1px solid #dc624a !important; }
+
+.vjs-rank-cell-red-78 {
+  background-color: #e17965;
+  border-top: 1px solid #dc634b !important; }
+
+.vjs-rank-cell-red-77 {
+  background-color: #e17a67;
+  border-top: 1px solid #dc644d !important; }
+
+.vjs-rank-cell-red-76 {
+  background-color: #e27c69;
+  border-top: 1px solid #dd664f !important; }
+
+.vjs-rank-cell-red-75 {
+  background-color: #e27d6a;
+  border-top: 1px solid #dd6750 !important; }
+
+.vjs-rank-cell-red-74 {
+  background-color: #e27f6c;
+  border-top: 1px solid #dd6952 !important; }
+
+.vjs-rank-cell-red-73 {
+  background-color: #e2806e;
+  border-top: 1px solid #dd6a55 !important; }
+
+.vjs-rank-cell-red-72 {
+  background-color: #e3816f;
+  border-top: 1px solid #de6b55 !important; }
+
+.vjs-rank-cell-red-71 {
+  background-color: #e38371;
+  border-top: 1px solid #de6d57 !important; }
+
+.vjs-rank-cell-red-70 {
+  background-color: #e38472;
+  border-top: 1px solid #de6e58 !important; }
+
+.vjs-rank-cell-red-69 {
+  background-color: #e38674;
+  border-top: 1px solid #de705b !important; }
+
+.vjs-rank-cell-red-68 {
+  background-color: #e48776;
+  border-top: 1px solid #df715c !important; }
+
+.vjs-rank-cell-red-67 {
+  background-color: #e48877;
+  border-top: 1px solid #df725d !important; }
+
+.vjs-rank-cell-red-66 {
+  background-color: #e48a79;
+  border-top: 1px solid #df7460 !important; }
+
+.vjs-rank-cell-red-65 {
+  background-color: #e48b7b;
+  border-top: 1px solid #df7562 !important; }
+
+.vjs-rank-cell-red-64 {
+  background-color: #e58d7c;
+  border-top: 1px solid #e07762 !important; }
+
+.vjs-rank-cell-red-63 {
+  background-color: #e58e7e;
+  border-top: 1px solid #e07865 !important; }
+
+.vjs-rank-cell-red-62 {
+  background-color: #e58f7f;
+  border-top: 1px solid #e07966 !important; }
+
+.vjs-rank-cell-red-61 {
+  background-color: #e59181;
+  border-top: 1px solid #e07b68 !important; }
+
+.vjs-rank-cell-red-60 {
+  background-color: #e69283;
+  border-top: 1px solid #e17c6a !important; }
+
+.vjs-rank-cell-red-59 {
+  background-color: #e69384;
+  border-top: 1px solid #e17d6b !important; }
+
+.vjs-rank-cell-red-58 {
+  background-color: #e69586;
+  border-top: 1px solid #e17f6d !important; }
+
+.vjs-rank-cell-red-57 {
+  background-color: #e69688;
+  border-top: 1px solid #e1806f !important; }
+
+.vjs-rank-cell-red-56 {
+  background-color: #e79889;
+  border-top: 1px solid #e28270 !important; }
+
+.vjs-rank-cell-red-55 {
+  background-color: #e7998b;
+  border-top: 1px solid #e28372 !important; }
+
+.vjs-rank-cell-red-54 {
+  background-color: #e79a8c;
+  border-top: 1px solid #e28473 !important; }
+
+.vjs-rank-cell-red-53 {
+  background-color: #e79c8e;
+  border-top: 1px solid #e28675 !important; }
+
+.vjs-rank-cell-red-52 {
+  background-color: #e89d90;
+  border-top: 1px solid #e38777 !important; }
+
+.vjs-rank-cell-red-51 {
+  background-color: #e89f91;
+  border-top: 1px solid #e38978 !important; }
+
+.vjs-rank-cell-red-50 {
+  background-color: #e8a093;
+  border-top: 1px solid #e38a7a !important; }
+
+.vjs-rank-cell-red-49 {
+  background-color: #e8a195;
+  border-top: 1px solid #e38b7c !important; }
+
+.vjs-rank-cell-red-48 {
+  background-color: #e9a396;
+  border-top: 1px solid #e48d7d !important; }
+
+.vjs-rank-cell-red-47 {
+  background-color: #e9a498;
+  border-top: 1px solid #e48e7f !important; }
+
+.vjs-rank-cell-red-46 {
+  background-color: #e9a69a;
+  border-top: 1px solid #e49081 !important; }
+
+.vjs-rank-cell-red-45 {
+  background-color: #e9a79b;
+  border-top: 1px solid #e39182 !important; }
+
+.vjs-rank-cell-red-44 {
+  background-color: #eaa89d;
+  border-top: 1px solid #e59284 !important; }
+
+.vjs-rank-cell-red-43 {
+  background-color: #eaaa9e;
+  border-top: 1px solid #e59485 !important; }
+
+.vjs-rank-cell-red-42 {
+  background-color: #eaaba0;
+  border-top: 1px solid #e49587 !important; }
+
+.vjs-rank-cell-red-41 {
+  background-color: #eaada2;
+  border-top: 1px solid #e49789 !important; }
+
+.vjs-rank-cell-red-40 {
+  background-color: #ebaea3;
+  border-top: 1px solid #e6988a !important; }
+
+.vjs-rank-cell-red-39 {
+  background-color: #ebafa5;
+  border-top: 1px solid #e5998c !important; }
+
+.vjs-rank-cell-red-38 {
+  background-color: #ebb1a7;
+  border-top: 1px solid #e59b8e !important; }
+
+.vjs-rank-cell-red-37 {
+  background-color: #ebb2a8;
+  border-top: 1px solid #e59c8f !important; }
+
+.vjs-rank-cell-red-36 {
+  background-color: #ecb3aa;
+  border-top: 1px solid #e69d91 !important; }
+
+.vjs-rank-cell-red-35 {
+  background-color: #ecb5ab;
+  border-top: 1px solid #e69f92 !important; }
+
+.vjs-rank-cell-red-34 {
+  background-color: #ecb6ad;
+  border-top: 1px solid #e6a094 !important; }
+
+.vjs-rank-cell-red-33 {
+  background-color: #ecb8af;
+  border-top: 1px solid #e6a296 !important; }
+
+.vjs-rank-cell-red-32 {
+  background-color: #edb9b0;
+  border-top: 1px solid #e7a397 !important; }
+
+.vjs-rank-cell-red-31 {
+  background-color: #edbab2;
+  border-top: 1px solid #e7a499 !important; }
+
+.vjs-rank-cell-red-30 {
+  background-color: #edbcb4;
+  border-top: 1px solid #e7a69b !important; }
+
+.vjs-rank-cell-red-29 {
+  background-color: #edbdb5;
+  border-top: 1px solid #e7a79c !important; }
+
+.vjs-rank-cell-red-28 {
+  background-color: #eebfb7;
+  border-top: 1px solid #e8a99e !important; }
+
+.vjs-rank-cell-red-27 {
+  background-color: #eec0b8;
+  border-top: 1px solid #e8aa9f !important; }
+
+.vjs-rank-cell-red-26 {
+  background-color: #eec1ba;
+  border-top: 1px solid #e8aba1 !important; }
+
+.vjs-rank-cell-red-25 {
+  background-color: #eec3bc;
+  border-top: 1px solid #e8ada4 !important; }
+
+.vjs-rank-cell-red-24 {
+  background-color: #efc4bd;
+  border-top: 1px solid #e9aea4 !important; }
+
+.vjs-rank-cell-red-23 {
+  background-color: #efc6bf;
+  border-top: 1px solid #e9b0a7 !important; }
+
+.vjs-rank-cell-red-22 {
+  background-color: #efc7c1;
+  border-top: 1px solid #e9b1a9 !important; }
+
+.vjs-rank-cell-red-21 {
+  background-color: #efc8c2;
+  border-top: 1px solid #e9b2aa !important; }
+
+.vjs-rank-cell-red-20 {
+  background-color: #f0cac4;
+  border-top: 1px solid #eab4ac !important; }
+
+.vjs-rank-cell-red-19 {
+  background-color: #f0cbc6;
+  border-top: 1px solid #eab5ae !important; }
+
+.vjs-rank-cell-red-18 {
+  background-color: #f0ccc7;
+  border-top: 1px solid #eab6af !important; }
+
+.vjs-rank-cell-red-17 {
+  background-color: #f0cec9;
+  border-top: 1px solid #e9b8b1 !important; }
+
+.vjs-rank-cell-red-16 {
+  background-color: #f1cfca;
+  border-top: 1px solid #ebb9b2 !important; }
+
+.vjs-rank-cell-red-15 {
+  background-color: #f1d1cc;
+  border-top: 1px solid #eabbb4 !important; }
+
+.vjs-rank-cell-red-14 {
+  background-color: #f1d2ce;
+  border-top: 1px solid #eabcb6 !important; }
+
+.vjs-rank-cell-red-13 {
+  background-color: #f1d3cf;
+  border-top: 1px solid #eabdb7 !important; }
+
+.vjs-rank-cell-red-12 {
+  background-color: #f2d5d1;
+  border-top: 1px solid #ebbfb9 !important; }
+
+.vjs-rank-cell-red-11 {
+  background-color: #f2d6d3;
+  border-top: 1px solid #ebc0bb !important; }
+
+.vjs-rank-cell-red-10 {
+  background-color: #f2d8d4;
+  border-top: 1px solid #ebc3bd !important; }
+
+.vjs-rank-cell-red-9 {
+  background-color: #f2d9d6;
+  border-top: 1px solid #ebc3bf !important; }
+
+.vjs-rank-cell-red-8 {
+  background-color: #f3dad7;
+  border-top: 1px solid #ecc4bf !important; }
+
+.vjs-rank-cell-red-7 {
+  background-color: #f3dcd9;
+  border-top: 1px solid #ecc7c2 !important; }
+
+.vjs-rank-cell-red-6 {
+  background-color: #f3dddb;
+  border-top: 1px solid #ebc7c4 !important; }
+
+.vjs-rank-cell-red-5 {
+  background-color: #f3dfdc;
+  border-top: 1px solid #ebcac5 !important; }
+
+.vjs-rank-cell-red-4 {
+  background-color: #f4e0de;
+  border-top: 1px solid #eccac7 !important; }
+
+.vjs-rank-cell-red-3 {
+  background-color: #f4e1e0;
+  border-top: 1px solid #eccbc9 !important; }
+
+.vjs-rank-cell-red-2 {
+  background-color: #f4e3e1;
+  border-top: 1px solid #eccecb !important; }
+
+.vjs-rank-cell-red-1 {
+  background-color: #f4e4e3;
+  border-top: 1px solid #ebcfcd !important; }
+
+.vjs-rank-cell-red-0 {
+  background-color: #f5e6e5;
+  border-top: 1px solid #edd1cf !important; }
+
+.vjs-rank-cell-orange-100 {
+  background-color: #ffba00;
+  border-top: 1px solid #e0a400 !important; }
+
+.vjs-rank-cell-orange-99 {
+  background-color: #feba02;
+  border-top: 1px solid #e1a401 !important; }
+
+.vjs-rank-cell-orange-98 {
+  background-color: #febb04;
+  border-top: 1px solid #e2a601 !important; }
+
+.vjs-rank-cell-orange-97 {
+  background-color: #febb06;
+  border-top: 1px solid #e4a701 !important; }
+
+.vjs-rank-cell-orange-96 {
+  background-color: #febc08;
+  border-top: 1px solid #e6a901 !important; }
+
+.vjs-rank-cell-orange-95 {
+  background-color: #febc0a;
+  border-top: 1px solid #e8aa01 !important; }
+
+.vjs-rank-cell-orange-94 {
+  background-color: #febd0d;
+  border-top: 1px solid #ebac01 !important; }
+
+.vjs-rank-cell-orange-93 {
+  background-color: #febd0f;
+  border-top: 1px solid #edad01 !important; }
+
+.vjs-rank-cell-orange-92 {
+  background-color: #febe11;
+  border-top: 1px solid #efaf01 !important; }
+
+.vjs-rank-cell-orange-91 {
+  background-color: #febe13;
+  border-top: 1px solid #f1b001 !important; }
+
+.vjs-rank-cell-orange-90 {
+  background-color: #febf15;
+  border-top: 1px solid #f3b201 !important; }
+
+.vjs-rank-cell-orange-89 {
+  background-color: #febf17;
+  border-top: 1px solid #f5b301 !important; }
+
+.vjs-rank-cell-orange-88 {
+  background-color: #fdc01a;
+  border-top: 1px solid #f6b502 !important; }
+
+.vjs-rank-cell-orange-87 {
+  background-color: #fdc01c;
+  border-top: 1px solid #f8b602 !important; }
+
+.vjs-rank-cell-orange-86 {
+  background-color: #fdc11e;
+  border-top: 1px solid #fab702 !important; }
+
+.vjs-rank-cell-orange-85 {
+  background-color: #fdc120;
+  border-top: 1px solid #fcb802 !important; }
+
+.vjs-rank-cell-orange-84 {
+  background-color: #fdc222;
+  border-top: 1px solid #fdba04 !important; }
+
+.vjs-rank-cell-orange-83 {
+  background-color: #fdc224;
+  border-top: 1px solid #fdba06 !important; }
+
+.vjs-rank-cell-orange-82 {
+  background-color: #fdc327;
+  border-top: 1px solid #fdbb09 !important; }
+
+.vjs-rank-cell-orange-81 {
+  background-color: #fdc329;
+  border-top: 1px solid #fdbb0b !important; }
+
+.vjs-rank-cell-orange-80 {
+  background-color: #fdc42b;
+  border-top: 1px solid #fdbc0d !important; }
+
+.vjs-rank-cell-orange-79 {
+  background-color: #fdc42d;
+  border-top: 1px solid #fdbb0f !important; }
+
+.vjs-rank-cell-orange-78 {
+  background-color: #fdc52f;
+  border-top: 1px solid #fdbd11 !important; }
+
+.vjs-rank-cell-orange-77 {
+  background-color: #fcc531;
+  border-top: 1px solid #fcbd13 !important; }
+
+.vjs-rank-cell-orange-76 {
+  background-color: #fcc634;
+  border-top: 1px solid #fcbe16 !important; }
+
+.vjs-rank-cell-orange-75 {
+  background-color: #fcc636;
+  border-top: 1px solid #fcbd18 !important; }
+
+.vjs-rank-cell-orange-74 {
+  background-color: #fcc738;
+  border-top: 1px solid #fcbf1a !important; }
+
+.vjs-rank-cell-orange-73 {
+  background-color: #fcc73a;
+  border-top: 1px solid #fcbe1c !important; }
+
+.vjs-rank-cell-orange-72 {
+  background-color: #fcc83c;
+  border-top: 1px solid #fcc01e !important; }
+
+.vjs-rank-cell-orange-71 {
+  background-color: #fcc83e;
+  border-top: 1px solid #fcbf20 !important; }
+
+.vjs-rank-cell-orange-70 {
+  background-color: #fcc941;
+  border-top: 1px solid #fcc023 !important; }
+
+.vjs-rank-cell-orange-69 {
+  background-color: #fcc943;
+  border-top: 1px solid #fcc025 !important; }
+
+.vjs-rank-cell-orange-68 {
+  background-color: #fcca45;
+  border-top: 1px solid #fcc127 !important; }
+
+.vjs-rank-cell-orange-67 {
+  background-color: #fcca47;
+  border-top: 1px solid #fcc129 !important; }
+
+.vjs-rank-cell-orange-66 {
+  background-color: #fbcb49;
+  border-top: 1px solid #fac22b !important; }
+
+.vjs-rank-cell-orange-65 {
+  background-color: #fbcb4b;
+  border-top: 1px solid #fac22d !important; }
+
+.vjs-rank-cell-orange-64 {
+  background-color: #fbcc4e;
+  border-top: 1px solid #fac330 !important; }
+
+.vjs-rank-cell-orange-63 {
+  background-color: #fbcc50;
+  border-top: 1px solid #fac332 !important; }
+
+.vjs-rank-cell-orange-62 {
+  background-color: #fbcd52;
+  border-top: 1px solid #fac434 !important; }
+
+.vjs-rank-cell-orange-61 {
+  background-color: #fbcd54;
+  border-top: 1px solid #fac436 !important; }
+
+.vjs-rank-cell-orange-60 {
+  background-color: #fbce56;
+  border-top: 1px solid #fac538 !important; }
+
+.vjs-rank-cell-orange-59 {
+  background-color: #fbce58;
+  border-top: 1px solid #fac53a !important; }
+
+.vjs-rank-cell-orange-58 {
+  background-color: #fbcf5b;
+  border-top: 1px solid #fac63d !important; }
+
+.vjs-rank-cell-orange-57 {
+  background-color: #fbcf5d;
+  border-top: 1px solid #fac63f !important; }
+
+.vjs-rank-cell-orange-56 {
+  background-color: #fbd05f;
+  border-top: 1px solid #fac741 !important; }
+
+.vjs-rank-cell-orange-55 {
+  background-color: #fad061;
+  border-top: 1px solid #f9c743 !important; }
+
+.vjs-rank-cell-orange-54 {
+  background-color: #fad163;
+  border-top: 1px solid #f9c845 !important; }
+
+.vjs-rank-cell-orange-53 {
+  background-color: #fad165;
+  border-top: 1px solid #f9c847 !important; }
+
+.vjs-rank-cell-orange-52 {
+  background-color: #fad268;
+  border-top: 1px solid #f9c94a !important; }
+
+.vjs-rank-cell-orange-51 {
+  background-color: #fad26a;
+  border-top: 1px solid #f9c94c !important; }
+
+.vjs-rank-cell-orange-50 {
+  background-color: #fad36c;
+  border-top: 1px solid #f9ca4e !important; }
+
+.vjs-rank-cell-orange-49 {
+  background-color: #fad36e;
+  border-top: 1px solid #f9ca50 !important; }
+
+.vjs-rank-cell-orange-48 {
+  background-color: #fad470;
+  border-top: 1px solid #f9cb52 !important; }
+
+.vjs-rank-cell-orange-47 {
+  background-color: #fad473;
+  border-top: 1px solid #f9cb55 !important; }
+
+.vjs-rank-cell-orange-46 {
+  background-color: #fad575;
+  border-top: 1px solid #f9cc57 !important; }
+
+.vjs-rank-cell-orange-45 {
+  background-color: #fad577;
+  border-top: 1px solid #f9cc59 !important; }
+
+.vjs-rank-cell-orange-44 {
+  background-color: #f9d679;
+  border-top: 1px solid #f8cd5c !important; }
+
+.vjs-rank-cell-orange-43 {
+  background-color: #f9d67b;
+  border-top: 1px solid #f8cd5e !important; }
+
+.vjs-rank-cell-orange-42 {
+  background-color: #f9d77d;
+  border-top: 1px solid #f8ce60 !important; }
+
+.vjs-rank-cell-orange-41 {
+  background-color: #f9d780;
+  border-top: 1px solid #f8ce63 !important; }
+
+.vjs-rank-cell-orange-40 {
+  background-color: #f9d882;
+  border-top: 1px solid #f8cf65 !important; }
+
+.vjs-rank-cell-orange-39 {
+  background-color: #f9d884;
+  border-top: 1px solid #f8cf67 !important; }
+
+.vjs-rank-cell-orange-38 {
+  background-color: #f9d986;
+  border-top: 1px solid #f8d069 !important; }
+
+.vjs-rank-cell-orange-37 {
+  background-color: #f9d988;
+  border-top: 1px solid #f8d06b !important; }
+
+.vjs-rank-cell-orange-36 {
+  background-color: #f9da8a;
+  border-top: 1px solid #f8d16d !important; }
+
+.vjs-rank-cell-orange-35 {
+  background-color: #f9da8d;
+  border-top: 1px solid #f7d170 !important; }
+
+.vjs-rank-cell-orange-34 {
+  background-color: #f9db8f;
+  border-top: 1px solid #f7d272 !important; }
+
+.vjs-rank-cell-orange-33 {
+  background-color: #f8db91;
+  border-top: 1px solid #f6d274 !important; }
+
+.vjs-rank-cell-orange-32 {
+  background-color: #f8dc93;
+  border-top: 1px solid #f6d376 !important; }
+
+.vjs-rank-cell-orange-31 {
+  background-color: #f8dc95;
+  border-top: 1px solid #f6d378 !important; }
+
+.vjs-rank-cell-orange-30 {
+  background-color: #f8dd97;
+  border-top: 1px solid #f6d47a !important; }
+
+.vjs-rank-cell-orange-29 {
+  background-color: #f8dd9a;
+  border-top: 1px solid #f6d37d !important; }
+
+.vjs-rank-cell-orange-28 {
+  background-color: #f8de9c;
+  border-top: 1px solid #f6d47f !important; }
+
+.vjs-rank-cell-orange-27 {
+  background-color: #f8de9e;
+  border-top: 1px solid #f6d481 !important; }
+
+.vjs-rank-cell-orange-26 {
+  background-color: #f8dfa0;
+  border-top: 1px solid #f6d584 !important; }
+
+.vjs-rank-cell-orange-25 {
+  background-color: #f8dfa2;
+  border-top: 1px solid #f6d586 !important; }
+
+.vjs-rank-cell-orange-24 {
+  background-color: #f8e0a4;
+  border-top: 1px solid #f6d688 !important; }
+
+.vjs-rank-cell-orange-23 {
+  background-color: #f8e0a7;
+  border-top: 1px solid #f6d68b !important; }
+
+.vjs-rank-cell-orange-22 {
+  background-color: #f7e1a9;
+  border-top: 1px solid #f4d78d !important; }
+
+.vjs-rank-cell-orange-21 {
+  background-color: #f7e1ab;
+  border-top: 1px solid #f4d78f !important; }
+
+.vjs-rank-cell-orange-20 {
+  background-color: #f7e2ad;
+  border-top: 1px solid #f4d891 !important; }
+
+.vjs-rank-cell-orange-19 {
+  background-color: #f7e2af;
+  border-top: 1px solid #f4d893 !important; }
+
+.vjs-rank-cell-orange-18 {
+  background-color: #f7e3b1;
+  border-top: 1px solid #f4d995 !important; }
+
+.vjs-rank-cell-orange-17 {
+  background-color: #f7e3b4;
+  border-top: 1px solid #f4d998 !important; }
+
+.vjs-rank-cell-orange-16 {
+  background-color: #f7e3b6;
+  border-top: 1px solid #f4d89a !important; }
+
+.vjs-rank-cell-orange-15 {
+  background-color: #f7e4b8;
+  border-top: 1px solid #f4da9c !important; }
+
+.vjs-rank-cell-orange-14 {
+  background-color: #f7e5ba;
+  border-top: 1px solid #f4db9f !important; }
+
+.vjs-rank-cell-orange-13 {
+  background-color: #f7e5bc;
+  border-top: 1px solid #f4daa1 !important; }
+
+.vjs-rank-cell-orange-12 {
+  background-color: #f7e6be;
+  border-top: 1px solid #f4dca3 !important; }
+
+.vjs-rank-cell-orange-11 {
+  background-color: #f6e6c1;
+  border-top: 1px solid #f2dba6 !important; }
+
+.vjs-rank-cell-orange-10 {
+  background-color: #f6e7c3;
+  border-top: 1px solid #f2dca8 !important; }
+
+.vjs-rank-cell-orange-9 {
+  background-color: #f6e7c5;
+  border-top: 1px solid #f2dcab !important; }
+
+.vjs-rank-cell-orange-8 {
+  background-color: #f6e8c7;
+  border-top: 1px solid #f2ddad !important; }
+
+.vjs-rank-cell-orange-7 {
+  background-color: #f6e8c9;
+  border-top: 1px solid #f2ddaf !important; }
+
+.vjs-rank-cell-orange-6 {
+  background-color: #f6e8cb;
+  border-top: 1px solid #f1dcb1 !important; }
+
+.vjs-rank-cell-orange-5 {
+  background-color: #f6e9ce;
+  border-top: 1px solid #f1ddb4 !important; }
+
+.vjs-rank-cell-orange-4 {
+  background-color: #f6ead0;
+  border-top: 1px solid #f1dfb6 !important; }
+
+.vjs-rank-cell-orange-3 {
+  background-color: #f6ead2;
+  border-top: 1px solid #f1deb9 !important; }
+
+.vjs-rank-cell-orange-2 {
+  background-color: #f6ebd4;
+  border-top: 1px solid #f1dfbb !important; }
+
+.vjs-rank-cell-orange-1 {
+  background-color: #f6ebd6;
+  border-top: 1px solid #f0dfbd !important; }
+
+.vjs-rank-cell-orange-0 {
+  background-color: #f6ecd9;
+  border-top: 1px solid #f0e0c0 !important; }
+
+.vjs-rank-cell-yellow-100 {
+  background-color: #f9ec03;
+  border-top: 1px solid #dbcf03 !important; }
+
+.vjs-rank-cell-yellow-99 {
+  background-color: #f8ec05;
+  border-top: 1px solid #dacf04 !important; }
+
+.vjs-rank-cell-yellow-98 {
+  background-color: #f8ec07;
+  border-top: 1px solid #dad006 !important; }
+
+.vjs-rank-cell-yellow-97 {
+  background-color: #f8ec09;
+  border-top: 1px solid #dcd106 !important; }
+
+.vjs-rank-cell-yellow-96 {
+  background-color: #f8ec0b;
+  border-top: 1px solid #ded306 !important; }
+
+.vjs-rank-cell-yellow-95 {
+  background-color: #f8ec0d;
+  border-top: 1px solid #e0d506 !important; }
+
+.vjs-rank-cell-yellow-94 {
+  background-color: #f8ec0f;
+  border-top: 1px solid #e2d707 !important; }
+
+.vjs-rank-cell-yellow-93 {
+  background-color: #f8ec11;
+  border-top: 1px solid #e4d807 !important; }
+
+.vjs-rank-cell-yellow-92 {
+  background-color: #f8ec14;
+  border-top: 1px solid #e7db07 !important; }
+
+.vjs-rank-cell-yellow-91 {
+  background-color: #f8ec16;
+  border-top: 1px solid #e8dc07 !important; }
+
+.vjs-rank-cell-yellow-90 {
+  background-color: #f8ed18;
+  border-top: 1px solid #eadf07 !important; }
+
+.vjs-rank-cell-yellow-89 {
+  background-color: #f8ed1a;
+  border-top: 1px solid #ece107 !important; }
+
+.vjs-rank-cell-yellow-88 {
+  background-color: #f8ed1c;
+  border-top: 1px solid #eee307 !important; }
+
+.vjs-rank-cell-yellow-87 {
+  background-color: #f8ed1e;
+  border-top: 1px solid #f0e407 !important; }
+
+.vjs-rank-cell-yellow-86 {
+  background-color: #f8ed20;
+  border-top: 1px solid #f2e608 !important; }
+
+.vjs-rank-cell-yellow-85 {
+  background-color: #f8ed23;
+  border-top: 1px solid #f5e808 !important; }
+
+.vjs-rank-cell-yellow-84 {
+  background-color: #f8ed25;
+  border-top: 1px solid #f6ea08 !important; }
+
+.vjs-rank-cell-yellow-83 {
+  background-color: #f8ed27;
+  border-top: 1px solid #f7eb09 !important; }
+
+.vjs-rank-cell-yellow-82 {
+  background-color: #f8ed29;
+  border-top: 1px solid #f7eb0b !important; }
+
+.vjs-rank-cell-yellow-81 {
+  background-color: #f8ed2b;
+  border-top: 1px solid #f7ea0d !important; }
+
+.vjs-rank-cell-yellow-80 {
+  background-color: #f8ee2d;
+  border-top: 1px solid #f7ec0f !important; }
+
+.vjs-rank-cell-yellow-79 {
+  background-color: #f8ee2f;
+  border-top: 1px solid #f7ec11 !important; }
+
+.vjs-rank-cell-yellow-78 {
+  background-color: #f8ee32;
+  border-top: 1px solid #f7ec14 !important; }
+
+.vjs-rank-cell-yellow-77 {
+  background-color: #f8ee34;
+  border-top: 1px solid #f7ec16 !important; }
+
+.vjs-rank-cell-yellow-76 {
+  background-color: #f8ee36;
+  border-top: 1px solid #f7eb18 !important; }
+
+.vjs-rank-cell-yellow-75 {
+  background-color: #f8ee38;
+  border-top: 1px solid #f7eb1a !important; }
+
+.vjs-rank-cell-yellow-74 {
+  background-color: #f8ee3a;
+  border-top: 1px solid #f7eb1c !important; }
+
+.vjs-rank-cell-yellow-73 {
+  background-color: #f8ee3c;
+  border-top: 1px solid #f7eb1e !important; }
+
+.vjs-rank-cell-yellow-72 {
+  background-color: #f8ee3e;
+  border-top: 1px solid #f7eb20 !important; }
+
+.vjs-rank-cell-yellow-71 {
+  background-color: #f8ee41;
+  border-top: 1px solid #f7eb23 !important; }
+
+.vjs-rank-cell-yellow-70 {
+  background-color: #f8ef43;
+  border-top: 1px solid #f7ec25 !important; }
+
+.vjs-rank-cell-yellow-69 {
+  background-color: #f8ef45;
+  border-top: 1px solid #f7ec28 !important; }
+
+.vjs-rank-cell-yellow-68 {
+  background-color: #f8ef47;
+  border-top: 1px solid #f7ec2a !important; }
+
+.vjs-rank-cell-yellow-67 {
+  background-color: #f8ef49;
+  border-top: 1px solid #f7ec2c !important; }
+
+.vjs-rank-cell-yellow-66 {
+  background-color: #f8ef4b;
+  border-top: 1px solid #f7ec2e !important; }
+
+.vjs-rank-cell-yellow-65 {
+  background-color: #f8ef4d;
+  border-top: 1px solid #f7ec30 !important; }
+
+.vjs-rank-cell-yellow-64 {
+  background-color: #f8ef50;
+  border-top: 1px solid #f7ec33 !important; }
+
+.vjs-rank-cell-yellow-63 {
+  background-color: #f8ef52;
+  border-top: 1px solid #f7ec35 !important; }
+
+.vjs-rank-cell-yellow-62 {
+  background-color: #f8ef54;
+  border-top: 1px solid #f7ec37 !important; }
+
+.vjs-rank-cell-yellow-61 {
+  background-color: #f8ef56;
+  border-top: 1px solid #f7ec39 !important; }
+
+.vjs-rank-cell-yellow-60 {
+  background-color: #f8f058;
+  border-top: 1px solid #f7ed3b !important; }
+
+.vjs-rank-cell-yellow-59 {
+  background-color: #f8f05a;
+  border-top: 1px solid #f7ed3d !important; }
+
+.vjs-rank-cell-yellow-58 {
+  background-color: #f8f05c;
+  border-top: 1px solid #f7ed3f !important; }
+
+.vjs-rank-cell-yellow-57 {
+  background-color: #f8f05f;
+  border-top: 1px solid #f7ed42 !important; }
+
+.vjs-rank-cell-yellow-56 {
+  background-color: #f8f061;
+  border-top: 1px solid #f7ed44 !important; }
+
+.vjs-rank-cell-yellow-55 {
+  background-color: #f8f063;
+  border-top: 1px solid #f7ed46 !important; }
+
+.vjs-rank-cell-yellow-54 {
+  background-color: #f8f065;
+  border-top: 1px solid #f7ed48 !important; }
+
+.vjs-rank-cell-yellow-53 {
+  background-color: #f8f067;
+  border-top: 1px solid #f7ed4a !important; }
+
+.vjs-rank-cell-yellow-52 {
+  background-color: #f8f069;
+  border-top: 1px solid #f7ed4c !important; }
+
+.vjs-rank-cell-yellow-51 {
+  background-color: #f8f06b;
+  border-top: 1px solid #f7ed4e !important; }
+
+.vjs-rank-cell-yellow-50 {
+  background-color: #f8f16e;
+  border-top: 1px solid #f7ee51 !important; }
+
+.vjs-rank-cell-yellow-49 {
+  background-color: #f8f170;
+  border-top: 1px solid #f7ee53 !important; }
+
+.vjs-rank-cell-yellow-48 {
+  background-color: #f8f172;
+  border-top: 1px solid #f7ee55 !important; }
+
+.vjs-rank-cell-yellow-47 {
+  background-color: #f8f174;
+  border-top: 1px solid #f7ee57 !important; }
+
+.vjs-rank-cell-yellow-46 {
+  background-color: #f8f176;
+  border-top: 1px solid #f7ee59 !important; }
+
+.vjs-rank-cell-yellow-45 {
+  background-color: #f8f178;
+  border-top: 1px solid #f6ee5b !important; }
+
+.vjs-rank-cell-yellow-44 {
+  background-color: #f8f17a;
+  border-top: 1px solid #f6ee5d !important; }
+
+.vjs-rank-cell-yellow-43 {
+  background-color: #f8f17c;
+  border-top: 1px solid #f6ee5f !important; }
+
+.vjs-rank-cell-yellow-42 {
+  background-color: #f8f17f;
+  border-top: 1px solid #f6ee62 !important; }
+
+.vjs-rank-cell-yellow-41 {
+  background-color: #f8f181;
+  border-top: 1px solid #f6ee64 !important; }
+
+.vjs-rank-cell-yellow-40 {
+  background-color: #f8f283;
+  border-top: 1px solid #f6ef66 !important; }
+
+.vjs-rank-cell-yellow-39 {
+  background-color: #f8f285;
+  border-top: 1px solid #f6ef68 !important; }
+
+.vjs-rank-cell-yellow-38 {
+  background-color: #f8f287;
+  border-top: 1px solid #f6ef6a !important; }
+
+.vjs-rank-cell-yellow-37 {
+  background-color: #f8f289;
+  border-top: 1px solid #f6ef6c !important; }
+
+.vjs-rank-cell-yellow-36 {
+  background-color: #f8f28b;
+  border-top: 1px solid #f6ef6e !important; }
+
+.vjs-rank-cell-yellow-35 {
+  background-color: #f8f28e;
+  border-top: 1px solid #f6ef71 !important; }
+
+.vjs-rank-cell-yellow-34 {
+  background-color: #f8f290;
+  border-top: 1px solid #f6ef73 !important; }
+
+.vjs-rank-cell-yellow-33 {
+  background-color: #f8f292;
+  border-top: 1px solid #f6ef75 !important; }
+
+.vjs-rank-cell-yellow-32 {
+  background-color: #f8f294;
+  border-top: 1px solid #f6ef77 !important; }
+
+.vjs-rank-cell-yellow-31 {
+  background-color: #f8f296;
+  border-top: 1px solid #f6ee79 !important; }
+
+.vjs-rank-cell-yellow-30 {
+  background-color: #f8f398;
+  border-top: 1px solid #f6f07b !important; }
+
+.vjs-rank-cell-yellow-29 {
+  background-color: #f8f39a;
+  border-top: 1px solid #f6f07d !important; }
+
+.vjs-rank-cell-yellow-28 {
+  background-color: #f8f39d;
+  border-top: 1px solid #f6f080 !important; }
+
+.vjs-rank-cell-yellow-27 {
+  background-color: #f8f39f;
+  border-top: 1px solid #f6ef82 !important; }
+
+.vjs-rank-cell-yellow-26 {
+  background-color: #f8f3a1;
+  border-top: 1px solid #f6ef85 !important; }
+
+.vjs-rank-cell-yellow-25 {
+  background-color: #f8f3a3;
+  border-top: 1px solid #f6ef87 !important; }
+
+.vjs-rank-cell-yellow-24 {
+  background-color: #f8f3a5;
+  border-top: 1px solid #f6ef89 !important; }
+
+.vjs-rank-cell-yellow-23 {
+  background-color: #f8f3a7;
+  border-top: 1px solid #f6ef8b !important; }
+
+.vjs-rank-cell-yellow-22 {
+  background-color: #f8f3a9;
+  border-top: 1px solid #f6ef8d !important; }
+
+.vjs-rank-cell-yellow-21 {
+  background-color: #f8f3ac;
+  border-top: 1px solid #f6ef90 !important; }
+
+.vjs-rank-cell-yellow-20 {
+  background-color: #f8f4ae;
+  border-top: 1px solid #f6f092 !important; }
+
+.vjs-rank-cell-yellow-19 {
+  background-color: #f8f4b0;
+  border-top: 1px solid #f6f094 !important; }
+
+.vjs-rank-cell-yellow-18 {
+  background-color: #f8f4b2;
+  border-top: 1px solid #f5f096 !important; }
+
+.vjs-rank-cell-yellow-17 {
+  background-color: #f8f4b4;
+  border-top: 1px solid #f5f098 !important; }
+
+.vjs-rank-cell-yellow-16 {
+  background-color: #f8f4b6;
+  border-top: 1px solid #f5f09a !important; }
+
+.vjs-rank-cell-yellow-15 {
+  background-color: #f8f4b8;
+  border-top: 1px solid #f5f09c !important; }
+
+.vjs-rank-cell-yellow-14 {
+  background-color: #f8f4bb;
+  border-top: 1px solid #f5f09f !important; }
+
+.vjs-rank-cell-yellow-13 {
+  background-color: #f8f4bd;
+  border-top: 1px solid #f5efa1 !important; }
+
+.vjs-rank-cell-yellow-12 {
+  background-color: #f8f4bf;
+  border-top: 1px solid #f5efa3 !important; }
+
+.vjs-rank-cell-yellow-11 {
+  background-color: #f8f4c1;
+  border-top: 1px solid #f5efa6 !important; }
+
+.vjs-rank-cell-yellow-10 {
+  background-color: #f8f5c3;
+  border-top: 1px solid #f5f0a8 !important; }
+
+.vjs-rank-cell-yellow-9 {
+  background-color: #f8f5c5;
+  border-top: 1px solid #f5f0aa !important; }
+
+.vjs-rank-cell-yellow-8 {
+  background-color: #f8f5c7;
+  border-top: 1px solid #f5f0ac !important; }
+
+.vjs-rank-cell-yellow-7 {
+  background-color: #f8f5ca;
+  border-top: 1px solid #f4f0af !important; }
+
+.vjs-rank-cell-yellow-6 {
+  background-color: #f8f5cc;
+  border-top: 1px solid #f4f0b1 !important; }
+
+.vjs-rank-cell-yellow-5 {
+  background-color: #f8f5ce;
+  border-top: 1px solid #f4f0b3 !important; }
+
+.vjs-rank-cell-yellow-4 {
+  background-color: #f8f5d0;
+  border-top: 1px solid #f4efb5 !important; }
+
+.vjs-rank-cell-yellow-3 {
+  background-color: #f8f5d2;
+  border-top: 1px solid #f4efb8 !important; }
+
+.vjs-rank-cell-yellow-2 {
+  background-color: #f8f5d4;
+  border-top: 1px solid #f4efba !important; }
+
+.vjs-rank-cell-yellow-1 {
+  background-color: #f8f5d6;
+  border-top: 1px solid #f4efbc !important; }
+
+.vjs-rank-cell-yellow-0 {
+  background-color: #f8f6d9;
+  border-top: 1px solid #f3f0bf !important; }
+
+-rank-cell-puke-100 {
+  background-color: #d5ea0a;
+  border-top: 1px solid #bacd09 !important; }
+
+.vjs-rank-cell-puke-99 {
+  background-color: #d5ea0b;
+  border-top: 1px solid #bacd0a !important; }
+
+.vjs-rank-cell-puke-98 {
+  background-color: #d5ea0d;
+  border-top: 1px solid #bbcd0b !important; }
+
+.vjs-rank-cell-puke-97 {
+  background-color: #d5ea0f;
+  border-top: 1px solid #bbcd0d !important; }
+
+.vjs-rank-cell-puke-96 {
+  background-color: #d5ea11;
+  border-top: 1px solid #bbcd0f !important; }
+
+.vjs-rank-cell-puke-95 {
+  background-color: #d6ea13;
+  border-top: 1px solid #bcce11 !important; }
+
+.vjs-rank-cell-puke-94 {
+  background-color: #d6ea15;
+  border-top: 1px solid #bcce12 !important; }
+
+.vjs-rank-cell-puke-93 {
+  background-color: #d6ea17;
+  border-top: 1px solid #bed013 !important; }
+
+.vjs-rank-cell-puke-92 {
+  background-color: #d6ea19;
+  border-top: 1px solid #bfd113 !important; }
+
+.vjs-rank-cell-puke-91 {
+  background-color: #d7ea1b;
+  border-top: 1px solid #c1d313 !important; }
+
+.vjs-rank-cell-puke-90 {
+  background-color: #d7ea1d;
+  border-top: 1px solid #c3d514 !important; }
+
+.vjs-rank-cell-puke-89 {
+  background-color: #d7ea1f;
+  border-top: 1px solid #c4d614 !important; }
+
+.vjs-rank-cell-puke-88 {
+  background-color: #d7ea21;
+  border-top: 1px solid #c5d814 !important; }
+
+.vjs-rank-cell-puke-87 {
+  background-color: #d8ea23;
+  border-top: 1px solid #c8da15 !important; }
+
+.vjs-rank-cell-puke-86 {
+  background-color: #d8ea25;
+  border-top: 1px solid #c9db15 !important; }
+
+.vjs-rank-cell-puke-85 {
+  background-color: #d8eb27;
+  border-top: 1px solid #cbdf15 !important; }
+
+.vjs-rank-cell-puke-84 {
+  background-color: #d8eb29;
+  border-top: 1px solid #cde015 !important; }
+
+.vjs-rank-cell-puke-83 {
+  background-color: #d9eb2a;
+  border-top: 1px solid #cee115 !important; }
+
+.vjs-rank-cell-puke-82 {
+  background-color: #d9eb2c;
+  border-top: 1px solid #d0e316 !important; }
+
+.vjs-rank-cell-puke-81 {
+  background-color: #d9eb2e;
+  border-top: 1px solid #d1e516 !important; }
+
+.vjs-rank-cell-puke-80 {
+  background-color: #d9eb30;
+  border-top: 1px solid #d2e616 !important; }
+
+.vjs-rank-cell-puke-79 {
+  background-color: #daeb32;
+  border-top: 1px solid #d5e817 !important; }
+
+.vjs-rank-cell-puke-78 {
+  background-color: #daeb34;
+  border-top: 1px solid #d5e818 !important; }
+
+.vjs-rank-cell-puke-77 {
+  background-color: #daeb36;
+  border-top: 1px solid #d5e81a !important; }
+
+.vjs-rank-cell-puke-76 {
+  background-color: #daeb38;
+  border-top: 1px solid #d5e81c !important; }
+
+.vjs-rank-cell-puke-75 {
+  background-color: #dbeb3a;
+  border-top: 1px solid #d6e81e !important; }
+
+.vjs-rank-cell-puke-74 {
+  background-color: #dbeb3c;
+  border-top: 1px solid #d6e820 !important; }
+
+.vjs-rank-cell-puke-73 {
+  background-color: #dbeb3e;
+  border-top: 1px solid #d6e822 !important; }
+
+.vjs-rank-cell-puke-72 {
+  background-color: #dbeb40;
+  border-top: 1px solid #d6e824 !important; }
+
+.vjs-rank-cell-puke-71 {
+  background-color: #dbec42;
+  border-top: 1px solid #d6e926 !important; }
+
+.vjs-rank-cell-puke-70 {
+  background-color: #dcec44;
+  border-top: 1px solid #d7e928 !important; }
+
+.vjs-rank-cell-puke-69 {
+  background-color: #dcec46;
+  border-top: 1px solid #d7e92a !important; }
+
+.vjs-rank-cell-puke-68 {
+  background-color: #dcec48;
+  border-top: 1px solid #d7e92c !important; }
+
+.vjs-rank-cell-puke-67 {
+  background-color: #dcec4a;
+  border-top: 1px solid #d7e92e !important; }
+
+.vjs-rank-cell-puke-66 {
+  background-color: #ddec4b;
+  border-top: 1px solid #d8e92f !important; }
+
+.vjs-rank-cell-puke-65 {
+  background-color: #ddec4d;
+  border-top: 1px solid #d8e931 !important; }
+
+.vjs-rank-cell-puke-64 {
+  background-color: #ddec4f;
+  border-top: 1px solid #d8e933 !important; }
+
+.vjs-rank-cell-puke-63 {
+  background-color: #ddec51;
+  border-top: 1px solid #d8e935 !important; }
+
+.vjs-rank-cell-puke-62 {
+  background-color: #deec53;
+  border-top: 1px solid #d9e937 !important; }
+
+.vjs-rank-cell-puke-61 {
+  background-color: #deec55;
+  border-top: 1px solid #d9e939 !important; }
+
+.vjs-rank-cell-puke-60 {
+  background-color: #deec57;
+  border-top: 1px solid #d9e93c !important; }
+
+.vjs-rank-cell-puke-59 {
+  background-color: #deec59;
+  border-top: 1px solid #d9e93e !important; }
+
+.vjs-rank-cell-puke-58 {
+  background-color: #dfec5b;
+  border-top: 1px solid #dae940 !important; }
+
+.vjs-rank-cell-puke-57 {
+  background-color: #dfed5d;
+  border-top: 1px solid #daea41 !important; }
+
+.vjs-rank-cell-puke-56 {
+  background-color: #dfed5f;
+  border-top: 1px solid #d9ea43 !important; }
+
+.vjs-rank-cell-puke-55 {
+  background-color: #dfed61;
+  border-top: 1px solid #d9ea46 !important; }
+
+.vjs-rank-cell-puke-54 {
+  background-color: #e0ed63;
+  border-top: 1px solid #dbea48 !important; }
+
+.vjs-rank-cell-puke-53 {
+  background-color: #e0ed65;
+  border-top: 1px solid #daea4a !important; }
+
+.vjs-rank-cell-puke-52 {
+  background-color: #e0ed67;
+  border-top: 1px solid #daea4c !important; }
+
+.vjs-rank-cell-puke-51 {
+  background-color: #e0ed69;
+  border-top: 1px solid #daea4e !important; }
+
+.vjs-rank-cell-puke-50 {
+  background-color: #e1ed6b;
+  border-top: 1px solid #dbea50 !important; }
+
+.vjs-rank-cell-puke-49 {
+  background-color: #e1ed6c;
+  border-top: 1px solid #dbea51 !important; }
+
+.vjs-rank-cell-puke-48 {
+  background-color: #e1ed6e;
+  border-top: 1px solid #dbea53 !important; }
+
+.vjs-rank-cell-puke-47 {
+  background-color: #e1ed70;
+  border-top: 1px solid #dbea55 !important; }
+
+.vjs-rank-cell-puke-46 {
+  background-color: #e1ed72;
+  border-top: 1px solid #dbea57 !important; }
+
+.vjs-rank-cell-puke-45 {
+  background-color: #e2ed74;
+  border-top: 1px solid #dce959 !important; }
+
+.vjs-rank-cell-puke-44 {
+  background-color: #e2ed76;
+  border-top: 1px solid #dce95b !important; }
+
+.vjs-rank-cell-puke-43 {
+  background-color: #e2ed78;
+  border-top: 1px solid #dce95d !important; }
+
+.vjs-rank-cell-puke-42 {
+  background-color: #e2ee7a;
+  border-top: 1px solid #dceb5f !important; }
+
+.vjs-rank-cell-puke-41 {
+  background-color: #e3ee7c;
+  border-top: 1px solid #ddea61 !important; }
+
+.vjs-rank-cell-puke-40 {
+  background-color: #e3ee7e;
+  border-top: 1px solid #ddea63 !important; }
+
+.vjs-rank-cell-puke-39 {
+  background-color: #e3ee80;
+  border-top: 1px solid #ddea65 !important; }
+
+.vjs-rank-cell-puke-38 {
+  background-color: #e3ee82;
+  border-top: 1px solid #ddea67 !important; }
+
+.vjs-rank-cell-puke-37 {
+  background-color: #e4ee84;
+  border-top: 1px solid #deea69 !important; }
+
+.vjs-rank-cell-puke-36 {
+  background-color: #e4ee86;
+  border-top: 1px solid #deea6b !important; }
+
+.vjs-rank-cell-puke-35 {
+  background-color: #e4ee88;
+  border-top: 1px solid #deea6d !important; }
+
+.vjs-rank-cell-puke-34 {
+  background-color: #e4ee8a;
+  border-top: 1px solid #deea6f !important; }
+
+.vjs-rank-cell-puke-33 {
+  background-color: #e5ee8b;
+  border-top: 1px solid #dfea70 !important; }
+
+.vjs-rank-cell-puke-32 {
+  background-color: #e5ee8d;
+  border-top: 1px solid #dfea72 !important; }
+
+.vjs-rank-cell-puke-31 {
+  background-color: #e5ee8f;
+  border-top: 1px solid #dfea74 !important; }
+
+.vjs-rank-cell-puke-30 {
+  background-color: #e5ee91;
+  border-top: 1px solid #dfea76 !important; }
+
+.vjs-rank-cell-puke-29 {
+  background-color: #e6ee93;
+  border-top: 1px solid #e0ea79 !important; }
+
+.vjs-rank-cell-puke-28 {
+  background-color: #e6ef95;
+  border-top: 1px solid #e0eb7a !important; }
+
+.vjs-rank-cell-puke-27 {
+  background-color: #e6ef97;
+  border-top: 1px solid #e0eb7c !important; }
+
+.vjs-rank-cell-puke-26 {
+  background-color: #e6ef99;
+  border-top: 1px solid #e0eb7f !important; }
+
+.vjs-rank-cell-puke-25 {
+  background-color: #e7ef9b;
+  border-top: 1px solid #e1eb81 !important; }
+
+.vjs-rank-cell-puke-24 {
+  background-color: #e7ef9d;
+  border-top: 1px solid #e1eb83 !important; }
+
+.vjs-rank-cell-puke-23 {
+  background-color: #e7ef9f;
+  border-top: 1px solid #e0eb85 !important; }
+
+.vjs-rank-cell-puke-22 {
+  background-color: #e7efa1;
+  border-top: 1px solid #e0eb87 !important; }
+
+.vjs-rank-cell-puke-21 {
+  background-color: #e7efa3;
+  border-top: 1px solid #e0ea89 !important; }
+
+.vjs-rank-cell-puke-20 {
+  background-color: #e8efa5;
+  border-top: 1px solid #e1ea8b !important; }
+
+.vjs-rank-cell-puke-19 {
+  background-color: #e8efa7;
+  border-top: 1px solid #e1ea8d !important; }
+
+.vjs-rank-cell-puke-18 {
+  background-color: #e8efa9;
+  border-top: 1px solid #e1ea8f !important; }
+
+.vjs-rank-cell-puke-17 {
+  background-color: #e8efab;
+  border-top: 1px solid #e1ea91 !important; }
+
+.vjs-rank-cell-puke-16 {
+  background-color: #e9efac;
+  border-top: 1px solid #e2ea92 !important; }
+
+.vjs-rank-cell-puke-15 {
+  background-color: #e9efae;
+  border-top: 1px solid #e2ea94 !important; }
+
+.vjs-rank-cell-puke-14 {
+  background-color: #e9f0b0;
+  border-top: 1px solid #e2eb96 !important; }
+
+.vjs-rank-cell-puke-13 {
+  background-color: #e9f0b2;
+  border-top: 1px solid #e2eb98 !important; }
+
+.vjs-rank-cell-puke-12 {
+  background-color: #eaf0b4;
+  border-top: 1px solid #e3eb9b !important; }
+
+.vjs-rank-cell-puke-11 {
+  background-color: #eaf0b6;
+  border-top: 1px solid #e3eb9d !important; }
+
+.vjs-rank-cell-puke-10 {
+  background-color: #eaf0b8;
+  border-top: 1px solid #e3eb9f !important; }
+
+.vjs-rank-cell-puke-9 {
+  background-color: #eaf0ba;
+  border-top: 1px solid #e2eba1 !important; }
+
+.vjs-rank-cell-puke-8 {
+  background-color: #ebf0bc;
+  border-top: 1px solid #e4eaa3 !important; }
+
+.vjs-rank-cell-puke-7 {
+  background-color: #ebf0be;
+  border-top: 1px solid #e3eaa5 !important; }
+
+.vjs-rank-cell-puke-6 {
+  background-color: #ebf0c0;
+  border-top: 1px solid #e3eaa7 !important; }
+
+.vjs-rank-cell-puke-5 {
+  background-color: #ebf0c2;
+  border-top: 1px solid #e3eaa9 !important; }
+
+.vjs-rank-cell-puke-4 {
+  background-color: #ecf0c4;
+  border-top: 1px solid #e4eaac !important; }
+
+.vjs-rank-cell-puke-3 {
+  background-color: #ecf0c6;
+  border-top: 1px solid #e4eaae !important; }
+
+.vjs-rank-cell-puke-2 {
+  background-color: #ecf0c8;
+  border-top: 1px solid #e4e9b0 !important; }
+
+.vjs-rank-cell-puke-1 {
+  background-color: #ecf0ca;
+  border-top: 1px solid #e3e9b2 !important; }
+
+.vjs-rank-cell-puke-0 {
+  background-color: #edf1cc;
+  border-top: 1px solid #e5eab4 !important; }
+
+.vjs-rank-cell-green-100 {
+  background-color: #8adb38;
+  border-top: 1px solid #7bcf25 !important; }
+
+.vjs-rank-cell-green-99 {
+  background-color: #8adb39;
+  border-top: 1px solid #7bd026 !important; }
+
+.vjs-rank-cell-green-98 {
+  background-color: #8bdb3b;
+  border-top: 1px solid #7cd126 !important; }
+
+.vjs-rank-cell-green-97 {
+  background-color: #8cdb3c;
+  border-top: 1px solid #7dd227 !important; }
+
+.vjs-rank-cell-green-96 {
+  background-color: #8ddb3e;
+  border-top: 1px solid #7ed327 !important; }
+
+.vjs-rank-cell-green-95 {
+  background-color: #8edc3f;
+  border-top: 1px solid #7fd527 !important; }
+
+.vjs-rank-cell-green-94 {
+  background-color: #8fdc41;
+  border-top: 1px solid #80d728 !important; }
+
+.vjs-rank-cell-green-93 {
+  background-color: #90dc42;
+  border-top: 1px solid #81d728 !important; }
+
+.vjs-rank-cell-green-92 {
+  background-color: #90dc44;
+  border-top: 1px solid #81d72a !important; }
+
+.vjs-rank-cell-green-91 {
+  background-color: #91dc45;
+  border-top: 1px solid #82d72b !important; }
+
+.vjs-rank-cell-green-90 {
+  background-color: #92dd47;
+  border-top: 1px solid #83d82d !important; }
+
+.vjs-rank-cell-green-89 {
+  background-color: #93dd48;
+  border-top: 1px solid #84d82e !important; }
+
+.vjs-rank-cell-green-88 {
+  background-color: #94dd4a;
+  border-top: 1px solid #85d830 !important; }
+
+.vjs-rank-cell-green-87 {
+  background-color: #95dd4c;
+  border-top: 1px solid #86d832 !important; }
+
+.vjs-rank-cell-green-86 {
+  background-color: #96de4d;
+  border-top: 1px solid #87d933 !important; }
+
+.vjs-rank-cell-green-85 {
+  background-color: #97de4f;
+  border-top: 1px solid #88d935 !important; }
+
+.vjs-rank-cell-green-84 {
+  background-color: #97de50;
+  border-top: 1px solid #88d936 !important; }
+
+.vjs-rank-cell-green-83 {
+  background-color: #98de52;
+  border-top: 1px solid #89d938 !important; }
+
+.vjs-rank-cell-green-82 {
+  background-color: #99de53;
+  border-top: 1px solid #8ad939 !important; }
+
+.vjs-rank-cell-green-81 {
+  background-color: #9adf55;
+  border-top: 1px solid #8bda3b !important; }
+
+.vjs-rank-cell-green-80 {
+  background-color: #9bdf56;
+  border-top: 1px solid #8cda3c !important; }
+
+.vjs-rank-cell-green-79 {
+  background-color: #9cdf58;
+  border-top: 1px solid #8dda3e !important; }
+
+.vjs-rank-cell-green-78 {
+  background-color: #9ddf59;
+  border-top: 1px solid #8eda3f !important; }
+
+.vjs-rank-cell-green-77 {
+  background-color: #9ee05b;
+  border-top: 1px solid #8fdb41 !important; }
+
+.vjs-rank-cell-green-76 {
+  background-color: #9ee05c;
+  border-top: 1px solid #8fdb42 !important; }
+
+.vjs-rank-cell-green-75 {
+  background-color: #9fe05e;
+  border-top: 1px solid #90db44 !important; }
+
+.vjs-rank-cell-green-74 {
+  background-color: #a0e060;
+  border-top: 1px solid #91db46 !important; }
+
+.vjs-rank-cell-green-73 {
+  background-color: #a1e061;
+  border-top: 1px solid #92db47 !important; }
+
+.vjs-rank-cell-green-72 {
+  background-color: #a2e163;
+  border-top: 1px solid #93dc49 !important; }
+
+.vjs-rank-cell-green-71 {
+  background-color: #a3e164;
+  border-top: 1px solid #94dc4a !important; }
+
+.vjs-rank-cell-green-70 {
+  background-color: #a4e166;
+  border-top: 1px solid #95dc4c !important; }
+
+.vjs-rank-cell-green-69 {
+  background-color: #a4e167;
+  border-top: 1px solid #95dc4d !important; }
+
+.vjs-rank-cell-green-68 {
+  background-color: #a5e269;
+  border-top: 1px solid #96dd4f !important; }
+
+.vjs-rank-cell-green-67 {
+  background-color: #a6e26a;
+  border-top: 1px solid #97dd50 !important; }
+
+.vjs-rank-cell-green-66 {
+  background-color: #a7e26c;
+  border-top: 1px solid #98dd52 !important; }
+
+.vjs-rank-cell-green-65 {
+  background-color: #a8e26d;
+  border-top: 1px solid #99dd53 !important; }
+
+.vjs-rank-cell-green-64 {
+  background-color: #a9e26f;
+  border-top: 1px solid #9add56 !important; }
+
+.vjs-rank-cell-green-63 {
+  background-color: #aae370;
+  border-top: 1px solid #9bde56 !important; }
+
+.vjs-rank-cell-green-62 {
+  background-color: #abe372;
+  border-top: 1px solid #9cde58 !important; }
+
+.vjs-rank-cell-green-61 {
+  background-color: #abe374;
+  border-top: 1px solid #9cde5b !important; }
+
+.vjs-rank-cell-green-60 {
+  background-color: #ace375;
+  border-top: 1px solid #9dde5c !important; }
+
+.vjs-rank-cell-green-59 {
+  background-color: #ade477;
+  border-top: 1px solid #9edf5d !important; }
+
+.vjs-rank-cell-green-58 {
+  background-color: #aee478;
+  border-top: 1px solid #9fdf5f !important; }
+
+.vjs-rank-cell-green-57 {
+  background-color: #afe47a;
+  border-top: 1px solid #a0df61 !important; }
+
+.vjs-rank-cell-green-56 {
+  background-color: #b0e47b;
+  border-top: 1px solid #a1df62 !important; }
+
+.vjs-rank-cell-green-55 {
+  background-color: #b1e47d;
+  border-top: 1px solid #a2df64 !important; }
+
+.vjs-rank-cell-green-54 {
+  background-color: #b2e57e;
+  border-top: 1px solid #a3e065 !important; }
+
+.vjs-rank-cell-green-53 {
+  background-color: #b2e580;
+  border-top: 1px solid #a3e067 !important; }
+
+.vjs-rank-cell-green-52 {
+  background-color: #b3e581;
+  border-top: 1px solid #a4e068 !important; }
+
+.vjs-rank-cell-green-51 {
+  background-color: #b4e583;
+  border-top: 1px solid #a5e06a !important; }
+
+.vjs-rank-cell-green-50 {
+  background-color: #b5e685;
+  border-top: 1px solid #a6e16c !important; }
+
+.vjs-rank-cell-green-49 {
+  background-color: #b6e686;
+  border-top: 1px solid #a7e16d !important; }
+
+.vjs-rank-cell-green-48 {
+  background-color: #b7e688;
+  border-top: 1px solid #a8e16f !important; }
+
+.vjs-rank-cell-green-47 {
+  background-color: #b8e689;
+  border-top: 1px solid #a9e170 !important; }
+
+.vjs-rank-cell-green-46 {
+  background-color: #b8e68b;
+  border-top: 1px solid #a9e172 !important; }
+
+.vjs-rank-cell-green-45 {
+  background-color: #b9e78c;
+  border-top: 1px solid #aae273 !important; }
+
+.vjs-rank-cell-green-44 {
+  background-color: #bae78e;
+  border-top: 1px solid #abe275 !important; }
+
+.vjs-rank-cell-green-43 {
+  background-color: #bbe78f;
+  border-top: 1px solid #ace276 !important; }
+
+.vjs-rank-cell-green-42 {
+  background-color: #bce791;
+  border-top: 1px solid #ade278 !important; }
+
+.vjs-rank-cell-green-41 {
+  background-color: #bde792;
+  border-top: 1px solid #aee179 !important; }
+
+.vjs-rank-cell-green-40 {
+  background-color: #bee894;
+  border-top: 1px solid #afe37b !important; }
+
+.vjs-rank-cell-green-39 {
+  background-color: #bfe895;
+  border-top: 1px solid #b0e37c !important; }
+
+.vjs-rank-cell-green-38 {
+  background-color: #bfe897;
+  border-top: 1px solid #b0e27e !important; }
+
+.vjs-rank-cell-green-37 {
+  background-color: #c0e899;
+  border-top: 1px solid #b1e280 !important; }
+
+.vjs-rank-cell-green-36 {
+  background-color: #c1e99a;
+  border-top: 1px solid #b2e481 !important; }
+
+.vjs-rank-cell-green-35 {
+  background-color: #c2e99c;
+  border-top: 1px solid #b3e383 !important; }
+
+.vjs-rank-cell-green-34 {
+  background-color: #c3e99d;
+  border-top: 1px solid #b4e384 !important; }
+
+.vjs-rank-cell-green-33 {
+  background-color: #c4e99f;
+  border-top: 1px solid #b5e386 !important; }
+
+.vjs-rank-cell-green-32 {
+  background-color: #c5e9a0;
+  border-top: 1px solid #b6e387 !important; }
+
+.vjs-rank-cell-green-31 {
+  background-color: #c6eaa2;
+  border-top: 1px solid #b7e489 !important; }
+
+.vjs-rank-cell-green-30 {
+  background-color: #c6eaa3;
+  border-top: 1px solid #b7e48a !important; }
+
+.vjs-rank-cell-green-29 {
+  background-color: #c7eaa5;
+  border-top: 1px solid #b8e48c !important; }
+
+.vjs-rank-cell-green-28 {
+  background-color: #c8eaa6;
+  border-top: 1px solid #b9e48d !important; }
+
+.vjs-rank-cell-green-27 {
+  background-color: #c9eba8;
+  border-top: 1px solid #bae58f !important; }
+
+.vjs-rank-cell-green-26 {
+  background-color: #caeba9;
+  border-top: 1px solid #bbe590 !important; }
+
+.vjs-rank-cell-green-25 {
+  background-color: #cbebab;
+  border-top: 1px solid #bce592 !important; }
+
+.vjs-rank-cell-green-24 {
+  background-color: #ccebad;
+  border-top: 1px solid #bde594 !important; }
+
+.vjs-rank-cell-green-23 {
+  background-color: #ccebae;
+  border-top: 1px solid #bde595 !important; }
+
+.vjs-rank-cell-green-22 {
+  background-color: #cdecb0;
+  border-top: 1px solid #bde697 !important; }
+
+.vjs-rank-cell-green-21 {
+  background-color: #ceecb1;
+  border-top: 1px solid #bfe698 !important; }
+
+.vjs-rank-cell-green-20 {
+  background-color: #cfecb3;
+  border-top: 1px solid #c0e69b !important; }
+
+.vjs-rank-cell-green-19 {
+  background-color: #d0ecb4;
+  border-top: 1px solid #c1e69c !important; }
+
+.vjs-rank-cell-green-18 {
+  background-color: #d1edb6;
+  border-top: 1px solid #c2e79d !important; }
+
+.vjs-rank-cell-green-17 {
+  background-color: #d2edb7;
+  border-top: 1px solid #c3e79f !important; }
+
+.vjs-rank-cell-green-16 {
+  background-color: #d3edb9;
+  border-top: 1px solid #c4e7a1 !important; }
+
+.vjs-rank-cell-green-15 {
+  background-color: #d3edba;
+  border-top: 1px solid #c4e7a2 !important; }
+
+.vjs-rank-cell-green-14 {
+  background-color: #d4edbc;
+  border-top: 1px solid #c5e7a4 !important; }
+
+.vjs-rank-cell-green-13 {
+  background-color: #d5eebd;
+  border-top: 1px solid #c6e8a5 !important; }
+
+.vjs-rank-cell-green-12 {
+  background-color: #d6eebf;
+  border-top: 1px solid #c7e8a7 !important; }
+
+.vjs-rank-cell-green-11 {
+  background-color: #d7eec1;
+  border-top: 1px solid #c8e7a9 !important; }
+
+.vjs-rank-cell-green-10 {
+  background-color: #d8eec2;
+  border-top: 1px solid #c9e7aa !important; }
+
+.vjs-rank-cell-green-9 {
+  background-color: #d9efc4;
+  border-top: 1px solid #c9e8ac !important; }
+
+.vjs-rank-cell-green-8 {
+  background-color: #daefc5;
+  border-top: 1px solid #cbe8ad !important; }
+
+.vjs-rank-cell-green-7 {
+  background-color: #daefc7;
+  border-top: 1px solid #cae8af !important; }
+
+.vjs-rank-cell-green-6 {
+  background-color: #dbefc8;
+  border-top: 1px solid #cbe8b0 !important; }
+
+.vjs-rank-cell-green-5 {
+  background-color: #dcefca;
+  border-top: 1px solid #cce8b2 !important; }
+
+.vjs-rank-cell-green-4 {
+  background-color: #ddf0cb;
+  border-top: 1px solid #cde9b3 !important; }
+
+.vjs-rank-cell-green-3 {
+  background-color: #def0cd;
+  border-top: 1px solid #cee9b5 !important; }
+
+.vjs-rank-cell-green-2 {
+  background-color: #dff0ce;
+  border-top: 1px solid #d0e9b7 !important; }
+
+.vjs-rank-cell-green-1 {
+  background-color: #e0f0d0;
+  border-top: 1px solid #d1e9b9 !important; }
+
+.vjs-rank-cell-green-0 {
+  background-color: #e1f1d2;
+  border-top: 1px solid #d1eabb !important; }
+
 .vjs-bar-cell span {
   display: none; }
 
