@@ -32,12 +32,22 @@ export class UiStore {
   @setter @observable 
   isStudentCardOpen = false
 
+  @observable notifications = []
+
   constructor() {
     this.autoFetchSMSConversation() 
     this.autoFetchCallLogs()
     this.autoHideSMSSidebar()
     this.autoHideCallSidebar()
     this.autoHideCallInfo()
+  }
+
+  @action addNotification(title, body) {
+    this.notifications.push({title, body})
+  }
+
+  @action removeNotification(index) {
+    this.notifications.splice(index, 1)
   }
 
   // Actions
