@@ -1,13 +1,14 @@
-import React          from 'react'
-import styled         from 'styled-components'
-import {ifProp}       from 'styled-tools'
-import PropTypes      from 'prop-types'
+import React       from 'react'
+import styled      from 'styled-components'
+import {ifProp}    from 'styled-tools'
+import PropTypes   from 'prop-types'
+import ContactLink from 'ui/shell/ContactLink'
 
-import PhoneIcon      from './PhoneIcon'
+import PhoneIcon   from './PhoneIcon'
 
 Main.propTypes = {
   call: PropTypes.shape({
-    userName:     PropTypes.string.isRequired,
+    studentId:    PropTypes.string.isRequired,
     contactName:  PropTypes.string.isRequired,
     isMissedCall: PropTypes.bool.isRequired,
     isVoicemail:  PropTypes.bool.isRequired,
@@ -15,15 +16,14 @@ Main.propTypes = {
   }).isRequired
 }
 
-
 function Main({call}){
-  const {contactName, isMissedCall, isVoicemail, isIncoming} = call
+  const {contactName, studentId, isMissedCall, isVoicemail, isIncoming} = call
 
   return (
     <div className='d-flex flex-row align-items-center'>
       <PhoneIcon call={call} />
       <div className='d-flex flex-column'>
-        <Name secondary={isMissedCall}>{contactName}</Name>
+        <Contact secondary={isMissedCall} name={contactName} studentId={studentId} />
         <small className='text-muted'>
           {(() => {
             if(isVoicemail) return 'voicemail'
@@ -36,7 +36,7 @@ function Main({call}){
   )
 }
 
-const Name = styled.p`
+const Contact = styled(ContactLink)`
   margin: 0;
 
   ${ifProp('secondary', `
