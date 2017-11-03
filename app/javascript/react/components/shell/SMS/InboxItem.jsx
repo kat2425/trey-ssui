@@ -3,10 +3,48 @@ import { Media }   from 'reactstrap'
 import DateFormat  from 'helpers/DateFormat'
 import _           from 'lodash'
 import ContactLink from 'ui/shell/ContactLink'
-import styled      from 'styled-components'
 import {ifProp}    from 'styled-tools'
+import omitStyled  from 'helpers/omitStyled'
 
-const StyledMedia = styled(Media).attrs({ className: 'list-group-item' })`
+const InboxItem = (props) => {
+  const isUnread = !props.read && props.direction === 'inbound'
+
+  return (
+    <StyledMedia unread={isUnread}>
+
+      <Media className='pr-4 pl-2 pb-2 pt-2' left>
+        {props.avatar}
+      </Media>
+
+      <Media body>
+        <ContactLink tag='h6' name={props.name} studentId={props.studentId} />
+        <div>
+          { props.media
+            ? <InboxMMS src={props.media} />
+            : _.truncate(props.message, {'length': 45})
+          }
+        </div>
+      </Media>
+
+      <Media right>
+        <small className='text-muted'>
+          { DateFormat.timeAgo(props.time) }
+        </small>
+      </Media>
+
+      <Media className='pl-2' right>
+        <small>
+          <ReadableSpan unread={isUnread}/>
+        </small>
+      </Media>
+    </StyledMedia>
+  )
+}
+
+const omitProps = ['unread']
+
+const StyledMedia = omitStyled(Media, omitProps)
+  .attrs({ className: 'list-group-item' })` 
   border-left:      none;
   border-right:     none;
   border-top:       none;
@@ -24,7 +62,8 @@ const StyledMedia = styled(Media).attrs({ className: 'list-group-item' })`
   `)}
 `
 
-const ReadableSpan = styled.span.attrs({ className: 'ml-2 icon icon-controller-record'})`
+const ReadableSpan = omitStyled('span', omitProps)
+  .attrs({ className: 'ml-2 icon icon-controller-record'})`
   font-size: 12px;
   color: white;
   opacity: 0.0;
@@ -53,42 +92,5 @@ const InboxMMS = (props) => {
 
   return <div {...props} style={{...style, ...important}} />
 }
-
-const InboxItem = (props) => {
-  return (
-    <StyledMedia unread={!props.read && props.direction === 'inbound'}>
-
-      <Media className='pr-4 pl-2 pb-2 pt-2' left>
-        {props.avatar}
-      </Media>
-
-      <Media body>
-        <ContactLink tag='h6' name={props.name} studentId={props.studentId} className='d-inline-block' />
-        <div>
-          { props.media
-            ? <InboxMMS src={props.media} />
-            : _.truncate(props.message, {'length': 45})
-          }
-        </div>
-      </Media>
-
-      <Media right>
-        <small className='text-muted'>
-          { DateFormat.timeAgo(props.time) }
-        </small>
-      </Media>
-
-      <Media className='pl-2' right>
-        <small>
-          <ReadableSpan unread={!props.read && props.direction === 'inbound'}/>
-        </small>
-      </Media>
-    </StyledMedia>
-  )
-}
-
-InboxItem.defaultProps = {}
-
-InboxItem.propTypes = {}
 
 export default InboxItem

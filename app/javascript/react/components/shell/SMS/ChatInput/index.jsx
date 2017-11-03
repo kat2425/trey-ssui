@@ -1,29 +1,37 @@
-import React, { Component }    from 'react'
-import _                       from 'lodash'
+import React, { Component } from 'react'
+import _                    from 'lodash'
 
-import SMSConversationStore    from 'stores/SMSConversation'
+import Wrapper              from './Wrapper'
+import Footer               from './Footer'
+import Input                from './Input'
+import SendButton           from './SendButton'
+import Counter              from './Counter'
+import AttachmentWrapper    from './AttachmentWrapper'
+import AttachmentButton     from './AttachmentButton'
+import Attachment           from 'ui/shell/Attachment'
+import TranslationContainer from 'ui/shell/TranslationContainer'
 
-import Wrapper                 from './Wrapper'
-import Footer                  from './Footer'
-import Input                   from './Input'
-import SendButton              from './SendButton'
-import Counter                 from './Counter'
-import AttachmentWrapper       from './AttachmentWrapper'
-import AttachmentButton        from './AttachmentButton'
-import Attachment              from 'ui/shell/Attachment'
+import smsConversationStore from 'stores/SMSConversation'
+import { STATE }            from 'stores/models/Translator'
+import userStore            from 'stores/UserStore'
 
 const CHAR_LIMIT = 160
 
 export default class ChatInput extends Component {
   state = {
-    message:     '',
-    attachment:  null,
-    textCounter: CHAR_LIMIT
+    message:       '',
+    attachment:    null,
+    textCounter:   CHAR_LIMIT,
+    isTranslating: false
   }
 
   handleChange = (e) => {
     const text = e.nativeEvent.target.innerText.trim()
 
+    this.setMessage(text)
+  }
+
+  setMessage = (text) => {
     this.setState({ 
       message:     text,
       textCounter: CHAR_LIMIT - text.length
@@ -58,23 +66,37 @@ export default class ChatInput extends Component {
 
   sendMessage = (msg) => {
     if(!msg && !this.attachmentInput.value) return
-
-    SMSConversationStore.sendMessage(msg, this.props.contact.id, this.state.attachment)
+    smsConversationStore.sendMessage(
+      msg,
+      this.props.contact.id,
+      this.state.attachment
+    )
 
     this.smsInput.innerHTML = ''
     this.attachmentInput.value = null
 
-    this.setState({ 
+    this.setState({
       message:     '',
       attachment:  null,
       textCounter: CHAR_LIMIT
     })
   }
 
+  handleOnTranslate = (isError, translatedText) => {
+    if(isError) return
+
+    this.smsInput.innerHTML = translatedText
+    this.setMessage(translatedText)
+  }
+
+  handleOnTranslating = (isTranslating) => {
+    this.setState({isTranslating})
+  }
+
   render() {
-    const {textCounter, attachment} = this.state
-    const isOverLimit               = textCounter < 0
-    const disableButton             = textCounter === CHAR_LIMIT && !attachment
+    const {textCounter, attachment, isTranslating} = this.state
+    const isOverLimit   = textCounter < 0
+    const disableButton = textCounter === CHAR_LIMIT && !attachment
 
     return (
       <Wrapper>
@@ -97,8 +119,22 @@ export default class ChatInput extends Component {
         )}
         <Footer>
           <AttachmentButton onClick={this.handleAddAttachment} />
+          {userStore.user.hasChannel && (
+            <TranslationContainer
+              className       = 'mx-2'
+              style           = {{marginTop: -17}}
+              onTranslating   = {this.handleOnTranslating}
+              onTranslate     = {this.handleOnTranslate}
+              renderLabel     = {() => <p>Translate to</p>}
+              textToTranslate = {this.state.message}
+              state           = {STATE.SELECT_ONLY}
+              disabled        = {disableButton}
+            />
+          )}
           <Counter isOverLimit={isOverLimit} counter={textCounter} />
-          <SendButton onClick={this.handleSubmit} disabled={disableButton}>Send</SendButton>
+          <SendButton onClick={this.handleSubmit} disabled={disableButton || isTranslating}>
+            Send
+          </SendButton>
         </Footer>
       </Wrapper>
     )

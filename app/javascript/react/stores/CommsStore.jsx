@@ -1,7 +1,7 @@
-import { setter }    from 'mobx-decorators'
-import moment        from 'moment'
-import xhr           from 'helpers/XHR'
-import Communication from 'stores/models/Communication'
+import { setter }       from 'mobx-decorators'
+import moment           from 'moment'
+import xhr              from 'helpers/XHR'
+import Communication    from 'stores/models/Communication'
 
 import { 
   observable, 
@@ -33,7 +33,7 @@ export class CommsStore {
         'id', 'action', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
         'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
         'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'contact.phone',
-        'call_status', 'voicemail_url'
+        'call_status', 'voicemail_url', 'language', 'meta'
       ].join(',')
     }
   })
@@ -140,8 +140,10 @@ export class CommsStore {
   @action createCommunication = (comm) => {
     this.communications.push(new Communication(this, comm))
   }
+
+  @action dispose = () => {
+    this.communications.forEach(c => c.dispose())
+  }
 }
 
-const singleton = new CommsStore()
-
-export default singleton
+export default new CommsStore()

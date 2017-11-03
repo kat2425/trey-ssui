@@ -23,19 +23,23 @@ import {
   observable, 
   action, 
   computed,
+  autorun
 } from 'mobx'
+
 import { setter } from 'mobx-decorators'
 import DateFormat from 'helpers/DateFormat'
 import uiStore    from 'stores/UiStore'
 import _          from 'lodash'
+import Transcript from 'stores/models/Transcript'
 
 export default class Call {
-  callStore         = null
-  id                = null
-  createdAt         = null
-  contact           = null
-  user              = null
-  direction         = null
+  callStore   = null
+  id          = null
+  createdAt   = null
+  contact     = null
+  user        = null
+  direction   = null
+  _transcript = new Transcript()
 
   @setter @observable action            = null
   @setter @observable recordingPath     = null
@@ -43,13 +47,15 @@ export default class Call {
   @setter @observable callStatus        = null
   @setter @observable isRead            = true
   @setter @observable isLoading         = false
+  @setter @observable isTranslating     = false
   @setter @observable isError           = false
-  @setter @observable voiceTranscript   = false
 
   constructor(store, json){
     this.callStore = store
     this.update(json)
     this.setVoicemail()
+
+    this.initAutoruns()
   }
 
   // Computed
@@ -86,18 +92,32 @@ export default class Call {
   }
 
   @computed get transcript(){
-    if(this.isVoicemail) return this.voiceTranscript
+    return this._transcript.transcript
+  }
 
-    if(_.isEmpty(this.callTranscript)) return []
+  @computed get isFetchingTranscript(){
+    return this._transcript.isFetchingTranscript
+  }
 
-    return this.callTranscript
-      .split(/Speaker\s/)
-      .slice(1)    
-      .map(t => t.match(/(\d:)(.*)/).slice(1))
-      .map(([speakerNumber, speech]) =>  ({
-        speaker: `Speaker ${speakerNumber}`,
-        speech:  speech
-      }))
+  @computed get originalTranscript(){
+    return this._transcript.originalTranscript
+  }
+
+  // Autoruns
+  initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if(this.isError && !this.isError.hideNotification){
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    'error'
+        })
+      }
+    })
   }
 
   // Actions
@@ -115,24 +135,27 @@ export default class Call {
     recording_duration: recordingDuration,
     recording_path:     recordingPath,
     direction,
-    call_transcripts:   callTranscripts,
+    call_transcripts,
     voicemails = [],
     notes = [],
     student_id:         studentId
   }) => {
-    this.id                = id
-    this.action            = action
-    this.createdAt         = createdAt
-    this.contact           = contact
-    this.user              = user
-    this.recordingDuration = recordingDuration
-    this.recordingPath     = recordingPath
-    this.direction         = direction
-    this.callStatus        = callStatus
-    this.callTranscript    = callTranscripts.length ? callTranscripts[0].call_transcript : []
-    this.voicemails        = voicemails 
-    this.notes             = notes
-    this.studentId         = studentId
+    this.id                 = id
+    this.action             = action
+    this.createdAt          = createdAt
+    this.contact            = contact
+    this.user               = user
+    this.recordingDuration  = recordingDuration
+    this.recordingPath      = recordingPath
+    this.direction          = direction
+    this.callStatus         = callStatus
+    this.voicemails         = voicemails
+    this.notes              = notes
+    this.studentId          = studentId
+
+
+    this._transcript.setIsVoicemail(action === 'voicemail')
+    this._transcript.updateFromJSON({call_transcripts})
   }
 
   @action handleSelect = () => {
@@ -147,6 +170,18 @@ export default class Call {
 
     this.setRecordingPath(recording_url)
     this.setRecordingDuration(duration)
-    this.setVoiceTranscript(transcript)
+    this._transcript.setVoiceTranscript(transcript)
+  }
+
+  @action handleOnTranslate = (isError, translatedText) => {
+    !isError && this._transcript.translateTranscript(translatedText)
+  }
+
+  @action handleOnTranslating = (isTranslating) => {
+    this.setIsTranslating(isTranslating)
+  }
+
+  @action dispose = () => {
+    this._transcript.dispose()
   }
 }

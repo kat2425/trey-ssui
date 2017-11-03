@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
-import uiStore                          from 'stores/UiStore'
-import _                                from 'lodash'
+import uiStore                from 'stores/UiStore'
+import Message                from 'stores/models/Message'
 
 const TIME_TO_LIVE  = 1000 * 60 * 60  // 1 hour
 const INTERVAL_TIME = 1000 * 5      // 5 seconds
@@ -11,14 +11,14 @@ export default class Conversation {
   intervalId           = null
   nonce                = null
 
-  @observable messages = []
+  @observable messages = observable.map()
 
   constructor({ id, store, messages = [] }) {
     this.id         = id
     this.store      = store
 
     this.refreshNonce()
-    this.update(messages)
+    this.updateMessages(messages)
     this.initTimer()
   }
 
@@ -32,15 +32,24 @@ export default class Conversation {
 
   @action
   add = (msg) => {
-    if (!_.find(this.messages, m => m.id === msg.id)) {
-      this.messages.push(msg)
-      this.refreshNonce()
-    }   
+    if(this.messages.has(msg.id)) {
+      this.updateMessage(msg)
+      return
+    }
+
+    this.messages.set(msg.id, new Message(this, msg))
   }
 
   @action
-  update = (msgs = []) => {
-    this.messages.replace(msgs)
+  updateMessage = (msg) => {
+    const _msg = this.messages.get(msg.id)
+
+    _msg.update(msg)
+  }
+
+  @action
+  updateMessages = (msgs = []) => {
+    msgs.forEach(this.add)
   }
 
   @action

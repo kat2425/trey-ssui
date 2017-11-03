@@ -19,7 +19,7 @@ export default class SMS extends Component {
     this.props.store.setRead(id)
   }
 
-  renderConversation({isLoading, descMessages}) {
+  renderConversation({descMessages}) {
     return (
       <div className='p-3'>
         <Conversation messages={descMessages} setRead={this.setRead} />

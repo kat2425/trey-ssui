@@ -1,38 +1,31 @@
-import { observable, action, computed, runInAction, autorun } from 'mobx'
+import {  action }          from 'mobx'
+import Faye                 from 'faye'
 
-import Faye from 'faye'
-import xhr  from 'helpers/XHR'
-import _    from 'lodash'
+import smsConversationStore from 'stores/SMSConversation'
+import smsInboxStore        from 'stores/SMSInbox'
+import uiStore              from 'stores/UiStore'
 
-import SMSConversationStore from 'stores/SMSConversation'
-import SMSInboxStore from 'stores/SMSInbox'
-import uiStore from 'stores/UiStore'
+const fayeURL = 'https://api.schoolstatus.com/rt'
 
-class WebSocketStore {
+export class WebSocketStore {
+  faye = null
+
   constructor() {
-    let fayeURL = 'https://api.schoolstatus.com/rt'
-
     this.faye = new Faye.Client(fayeURL, {
       timeout: 120
     })
   }
 
   @action
-  subscribeUser(id) {
+  subscribeUser = (id) => {
     this.faye.subscribe(`/user/${id}`, (msg) => {
       if (msg.stream_type === 'sms_log') {
-        const _msg = _.pick(msg,
-          'id', 'conversation_id', 'body',
-          'created_at', 'direction', 'media_url',
-          'read_status', 'sent_state'
-        )
-
-        SMSConversationStore.addMessage(_msg)
-        SMSInboxStore.fetchInbox()
+        smsConversationStore.addMessage(msg)
+        smsInboxStore.fetchInbox()
         uiStore.setShouldScrollToBottom(true)
       }
     })
   }
 }
 
-export default WebSocketStore = new WebSocketStore()
+export default new WebSocketStore()

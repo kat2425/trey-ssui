@@ -5,13 +5,17 @@ import Player     from 'ui/shell/Player'
 import CallNotes  from 'ui/shell/Call/CallNotes'
 
 const CallInfo = ({comm}) => {
-  const {preview, transcript, isLoading, notes} = comm
-
   return (
     <div className='d-flex flex-column'>
-      <Player src={preview}/>
-      <Transcript isLoading={isLoading} transcript={transcript}/>
-      <CallNotes notes={notes} />
+      <Player src={comm.preview}/>
+      <Transcript 
+        isLoading          = {comm.isFetchingTranscript}
+        transcript         = {comm.transcript}
+        onTranslate        = {comm.handleOnTranslate}
+        onTranslating      = {comm.handleOnTranslating}
+        originalTranscript = {comm.originalTranscript}
+      />
+      <CallNotes notes={comm.notes} />
     </div>
   )
 }

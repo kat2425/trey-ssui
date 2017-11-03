@@ -15,6 +15,7 @@ const containerStyle = secondary => ({
   height:        '100%',
   zIndex:        1029,
   pointerEvents: 'none',
+  minWidth:      365
 })
 
 const barStyle = secondary => ({

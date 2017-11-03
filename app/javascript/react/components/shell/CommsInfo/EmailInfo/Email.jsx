@@ -1,12 +1,21 @@
-import React, {Component}  from 'react'
-import {observer}          from 'mobx-react'
-import styled, {keyframes} from 'styled-components'
-import {ifProp}            from 'styled-tools'
-import renderHTML          from 'react-render-html'
-import { Card }            from 'reactstrap'
-import DateFormat          from 'helpers/DateFormat'
-import ReactDOM            from 'react-dom'
-import LoadingSpinner      from 'ui/shell/LoadingSpinner'
+import React, {Component}            from 'react'
+import {observer}                    from 'mobx-react'
+import styled, {keyframes}           from 'styled-components'
+import {ifProp}                      from 'styled-tools'
+import renderHTML                    from 'react-render-html'
+import { Card }                      from 'reactstrap'
+import DateFormat                    from 'helpers/DateFormat'
+import ReactDOM                      from 'react-dom'
+import LoadingSpinner                from 'ui/shell/LoadingSpinner'
+import withTranslator                from 'ui/hoc/withTranslator'
+import { isEmptyHTML, getInnerText } from 'helpers/HTMLParser'
+
+
+const Text = styled.span`
+  font-size: 14px;
+  display: inline-block;
+`
+const EText = withTranslator(Text)
 
 @observer
 export default class Email extends Component {
@@ -42,12 +51,18 @@ export default class Email extends Component {
   }
 
   getBody = () => {
-    const {comm} = this.props
-    const {email, preview, isLoading} = comm
+    const {email, preview, isLoading} = this.props.comm
     const body = email && email.body ? renderHTML(email.body) : preview
 
     return isLoading ? <LoadingSpinner center/> : body
   }
+
+  getText = () => {
+    const { email, isLoading} = this.props.comm
+
+    return (isLoading || !email) ? '' : getInnerText(email.body)
+  }
+
   render(){
     const {isActive} = this.props.comm
 
@@ -57,7 +72,9 @@ export default class Email extends Component {
           {this.getSubject()} 
           <small>{this.getTime()}</small> 
         </Subject>
-        <Body>{this.getBody()}</Body>
+        <Body>
+          <EText textToTranslate={this.getText()}>{this.getBody()}</EText>
+        </Body>
       </Wrapper>
     )
   }

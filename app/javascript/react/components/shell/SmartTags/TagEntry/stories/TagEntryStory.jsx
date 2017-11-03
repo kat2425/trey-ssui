@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { action }    from '@storybook/addon-actions'
 import TagEntry      from '../'
 
-const stories = storiesOf('TagEntry')
+const stories = storiesOf('TagEntry', module) // eslint-disable-line
 
 const tag = {
   'id':       '0',
