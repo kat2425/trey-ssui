@@ -13,6 +13,7 @@ default: &default
     - .ts
     - .vue
     - .sass
+    - .less
     - .scss
     - .css
     - .png

@@ -51,6 +51,7 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-transition-group": "^15.6.0",
+    "react-awesome-query-builder": "^0.1.21",
     "react-bootstrap-typeahead": "^2.0.0-alpha.3",
     "react-datetime": "^2.10.3",
     "react-dom": "^15.6.1",
@@ -91,6 +92,11 @@
     "eslint": "^4.4.1",
     "eslint-plugin-react": "^7.3.0",
     "gulp": "^3.9.1",
+    "json-stringify-safe": "^5.0.1",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "react-json-pretty": "^1.7.4",
+    "react-json-tree": "^0.11.0",
     "webpack-dev-server": "^2.5.1"
   },
   "scripts": {
