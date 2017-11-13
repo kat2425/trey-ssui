@@ -2,13 +2,12 @@ import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
 
-import LoadingSpinner      from 'ui/shell/LoadingSpinner'
 import Conversation        from './Conversation'
 
 @observer
 export default class SMS extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
@@ -16,22 +15,16 @@ export default class SMS extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.store.fetchConversation(this.props.conversation)
+  setRead = (id) => {
+    this.props.store.setRead(id)
   }
 
   renderConversation({isLoading, descMessages}) {
-    return do {
-      if (isLoading) {
-        <div className='text-center'>
-          <LoadingSpinner/>
-        </div>
-      } else {
-        <div className='p-3 pb-5'>
-          <Conversation messages={descMessages} />
-        </div>
-      }
-    }
+    return (
+      <div className='p-3 pb-5'>
+        <Conversation messages={descMessages} setRead={this.setRead} />
+      </div>
+    )
   }
 
   render() {

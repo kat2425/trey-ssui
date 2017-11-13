@@ -3,6 +3,7 @@ import { render }           from 'react-dom'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
+import fireEvent            from 'helpers/FireEvent'
 
 export default class Engagement extends Component {
   render() {
@@ -43,6 +44,17 @@ export default class Engagement extends Component {
             title      = 'Student Detail'
             className  = 'col-md-6'
             isTable    = {true}
+            linkOptions = {{
+              events: {
+                click: (ev, link) => {
+                  const studentID = link.parameters._student_id
+
+                  if (studentID) {
+                    fireEvent('showStudentCard', { student: studentID })
+                  }
+                }
+              }
+            }}
           />
         </div>
       </div>

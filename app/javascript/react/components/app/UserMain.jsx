@@ -1,80 +1,161 @@
-import React, { Component }  from 'react'
-import { withRouter }        from 'react-router-dom'
+import React, { Component }    from 'react'
+import { withRouter }          from 'react-router-dom'
+import _                       from 'lodash'
+import { inject, observer }    from 'mobx-react'
 
-import UserMenu              from 'ui/shell/UserMenu/UserMenu'
-import ActionBar             from 'ui/shell/ActionBar'
-import NavBar                from 'ui/shell/NavBar'
-import AppContainer          from 'ui/app/AppContainer'
-import Sidebar               from 'ui/shell/SMS/Sidebar'
+import UserMenu                from 'ui/shell/UserMenu/UserMenu'
+import ActionBar               from 'ui/shell/ActionBar'
+import NavBar                  from 'ui/shell/NavBar'
+import AppContainer            from 'ui/app/AppContainer'
+import Sidebar                 from 'ui/shell/SMS/Sidebar'
+import {CallSidebar, CallInfo} from 'ui/shell/Call'
+import Notification            from 'ui/shell/Notification/Notification'
 
-import CallingController     from 'ui/controllers/CallingController'
+import CallingController       from 'ui/controllers/CallingController'
 
-import StudentCardStore      from 'stores/StudentCard'
-import SMSInboxStore         from 'stores/SMSInbox'
-import WebSocketStore        from 'stores/WebSocket'
+import SMSInboxStore           from 'stores/SMSInbox'
+import CallingStore            from 'stores/CallingStore'
+import WebSocketStore          from 'stores/WebSocket'
+import SMSConversationStore    from 'stores/SMSConversation'
+import callStore               from 'stores/CallStore'
 
-import VJSContainer          from 'ui/vjs/VJSContainer'
+import VJSContainer            from 'ui/vjs/VJSContainer'
 
 @withRouter
+@inject('uiStore')
+@observer
 class UserMain extends Component {
   constructor(props) {
     super(props)
 
     this.currentPath = null
-    this.state       = {
-      hideSidebar: true
-    }
   }
 
-  showStudentCard(e) {
-    const {history} = this.props
+  showStudentCard = (e) => {
+    if(!e.detail.student) return
+    const studentId = e.detail.student
 
-    this.currentPath = this.props.location.pathname
-
-    if (e.detail.student) {
-      history.push(`${history.location.pathname}/students/${e.detail.student}`)
-    }
+    this.goToStudentCard(studentId)
   }
 
-  onCloseStudentCard() {
-    const { history } = this.props
+  goToStudentCard = (studentId) => {
+    const {history, location, uiStore} = this.props
+
+    if(uiStore.isStudentCardOpen){
+      history.replace(`${this.currentPath}/students/${studentId}/overview`)
+    } else {
+      this.currentPath = location.pathname
+      history.push(`${this.currentPath}/students/${studentId}/overview`)
+    }
+    uiStore.setIsStudentCardOpen(true)
+  }
+
+  onCloseStudentCard = () => {
+    const { history, uiStore } = this.props
+
+    // Reset side bar to normal height
+    uiStore.setSidebarMaxHeight(false)
 
     if (this.currentPath) {
       history.push(this.currentPath)
     } else {
       history.push('/r/my_students')
     }
+
+    uiStore.setIsStudentCardOpen(false)
   }
 
-  toggleSidebar(e) {
-    this.setState({ hideSidebar: !this.state.hideSidebar })
+  toggleCallSidebar = () => {
+    this.props.uiStore.toggleCallSidebar()
+  }
+
+  toggleSidebar = (e) => {
+    const { uiStore }  = this.props
+    const contact = _.get(e, 'detail.contact')
+
+    if(contact){
+      SMSConversationStore
+        .initiateConversation(contact)
+      return
+    }
+
+    uiStore.setSidebarMaxHeight(false)
+    uiStore.toggleSidebar()
   }
 
   componentDidMount() {
     WebSocketStore.subscribeUser(window.SSUser.id)
 
-    window.addEventListener('showStudentCard', ::this.showStudentCard)
-    window.addEventListener('onCloseStudentCard', ::this.onCloseStudentCard)
-    window.addEventListener('toggleSidebar', ::this.toggleSidebar)
+    window.addEventListener('showStudentCard',    this.showStudentCard)
+    window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
+    window.addEventListener('toggleSidebar',      this.toggleSidebar)
+    window.addEventListener('toggleCallSidebar',  this.toggleCallSidebar)
+
+    window.intercomSettings = {
+      app_id:     'c443b08a556eb87a1f39f088cda1b1f93e3a6631',
+      user_id:    window.SSUser.id,
+      user_hash:  window.SSUser.intercomUserHash,
+      name:       `${window.SSUser.firstName} ${window.SSUser.lastName}`,
+      first_name: window.SSUser.firstName,
+      last_name:  window.SSUser.lastName,
+      email:      window.SSUser.username,
+      created_at: window.SSUser.createdAt,
+
+      company: {
+        id:   window.SSUser.districtID,
+        name: window.SSUser.districtName,
+      },
+
+      hide_default_launcher:    true,
+      custom_launcher_selector: '#intercom-ss-launcher'
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('showStudentCard', ::this.showStudentCard)
-    window.removeEventListener('onCloseStudentCard', ::this.onCloseStudentCard)
-    window.removeEventListener('toggleSidebar', ::this.toggleSidebar)
+    window.removeEventListener('showStudentCard',    this.showStudentCard)
+    window.removeEventListener('onCloseStudentCard', this.onCloseStudentCard)
+    window.removeEventListener('toggleSidebar',      this.toggleSidebar)
   }
 
   render() {
+    const { uiStore } = this.props
+
     return (
       <VJSContainer>
         <div className='container-fluid pt-4'>
           <div className='row'>
-            <CallingController />
+            <CallingController store={CallingStore} />
             <NavBar />
             <UserMenu />
             <AppContainer />
-            <ActionBar store={SMSInboxStore} />
-            <Sidebar hidden={this.state.hideSidebar} />
+            <ActionBar store={SMSInboxStore} callingStore={CallingStore}/>
+            <Sidebar />
+            <CallSidebar
+              store   = {callStore}
+              show    = {uiStore.showCallSidebar}
+              onClose = {this.toggleCallSidebar}
+            />
+            <CallInfo
+              store    = {callStore}
+              show     = {uiStore.showCallInfo}
+              onGoBack = {() => uiStore.setShowCallInfo(false)}
+            />
+            {_.map(uiStore.notifications, (n,i) => {
+              return (
+                <span key={i}>
+                  <Notification
+                    visible           = {true}
+                    loading           = {false}
+                    notificationTitle = {n.title}
+                    notificationText  = {n.body}
+                    dismissable       = {true}
+                    type              = 'alert-warning'
+                    style             = {{top: (i+1)*25+(i*80)}}
+                    onDismissed       = {() => uiStore.removeNotification(i)}
+                  />
+                </span>
+              )
+            })}
           </div>
         </div>
       </VJSContainer>

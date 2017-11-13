@@ -6,6 +6,7 @@ import _    from 'lodash'
 
 import SMSConversationStore from 'stores/SMSConversation'
 import SMSInboxStore from 'stores/SMSInbox'
+import uiStore from 'stores/UiStore'
 
 class WebSocketStore {
   constructor() {
@@ -19,9 +20,6 @@ class WebSocketStore {
   @action
   subscribeUser(id) {
     this.faye.subscribe(`/user/${id}`, (msg) => {
-      console.log('-- incoming ws msg')
-      console.log(msg)
-
       if (msg.stream_type === 'sms_log') {
         const _msg = _.pick(msg,
           'id', 'conversation_id', 'body',
@@ -31,6 +29,7 @@ class WebSocketStore {
 
         SMSConversationStore.addMessage(_msg)
         SMSInboxStore.fetchInbox()
+        uiStore.setShouldScrollToBottom(true)
       }
     })
   }

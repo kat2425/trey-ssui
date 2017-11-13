@@ -1,4 +1,5 @@
-import { configure } from '@storybook/react'
+import { configure, addDecorator } from '@storybook/react'
+import {withKnobs}                 from '@storybook/addon-knobs'
 
 import '../app/javascript/packs/theme/toolkit.css'
 import '../app/javascript/packs/theme/temp.css'
@@ -14,3 +15,4 @@ function loadStories() {
 }
 
 configure(loadStories, module)
+//addDecorator(withKnobs)

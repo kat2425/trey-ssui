@@ -13,15 +13,19 @@ const activeItem = {
   backgroundColor: '#f7fcff',
 }
 
-export default class UserMenuItem extends Component {
-  render() {
-    return (
-      <NavItem className='pr-1'>
-        <NavLink tag={RRNavLink} activeStyle={activeItem} className='pr-4 pl-4 p-1' to={(this.props.link || '/404')}>
-          <span className={`text-muted mr-3 icon ${this.props.iconClass}`} style={navIcon} />
-          {this.props.title}
-        </NavLink>
-      </NavItem>
-    )
-  }
-}
+const UserMenuItem = ({link, title, iconClass, ...rest}) => (
+  <NavItem className='pr-1'>
+    <NavLink 
+      tag={RRNavLink} 
+      activeStyle={activeItem} 
+      className='pr-4 pl-4 p-1' 
+      to={(link || '/404')}
+      {...rest}
+    >
+      <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />
+      {title}
+    </NavLink>
+  </NavItem>
+)
+
+export default UserMenuItem

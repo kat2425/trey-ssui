@@ -19,7 +19,7 @@ export default class Financials extends Component {
     this.setState({
       params: {
         ...this.state.params,
-        student_filter: [ jrsValue ]
+        student_id: [ jrsValue ]
       },
 
       selected: {
@@ -48,7 +48,7 @@ export default class Financials extends Component {
           <VJSChart
             id         = 'financials-demographics-breakdown'
             reportPath = '/public/VJS/ss_ui/financials/breakdown_by_demographics'
-            title      = 'Demographics Breakdown'
+            title      = 'Breakdown'
             className  = 'col-md-12'
           />
         </div>

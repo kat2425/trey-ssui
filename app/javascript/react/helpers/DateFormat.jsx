@@ -1,9 +1,15 @@
 import moment from 'moment'
 
-class DateFormat {
-  timeAgo(str) {
+export default class DateFormat {
+  static timeAgo(str) {
     return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').fromNow()
   }
-}
 
-export default DateFormat = new DateFormat()
+  static fullDate(str) {
+    return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('ddd, MMM D, YYYY')
+  }
+
+  static time12Hour(str) {
+    return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('h:mm A')
+  }
+}

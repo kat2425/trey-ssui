@@ -1,17 +1,36 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
-import StudentCardStore from 'stores/StudentCard'
-import StudentCard from 'ui/shell/StudentCard/StudentCard'
+import StudentCardStore   from 'stores/StudentCard'
+import NoteStore          from 'stores/NoteStore'
+import uiStore            from 'stores/UiStore'
+import StudentCard        from 'ui/shell/StudentCard/StudentCard'
 
 export default class StudentCardController extends Component {
-  componentDidMount () {
-    const { match } = this.props
-    const studentId = match.params.studentId
+  componentDidMount(){
+    uiStore.setIsStudentCardOpen(true)
+    this.fetchStudentInfo(this.props.match.params.studentId)
+  }
+  componentWillReceiveProps(nextProps){
+    const studentId     = this.props.match.params.studentId
+    const nextStudentId = nextProps.match.params.studentId
 
-    StudentCardStore.fetchStudent(studentId)
+    if(studentId === nextStudentId) return
+
+    this.fetchStudentInfo(nextStudentId)
   }
 
-  render () {
-    return <StudentCard store={StudentCardStore} />
+  componentWillUnmount(){
+    uiStore.setIsStudentCardOpen(false)
+  }
+
+  fetchStudentInfo = (studentId) => {
+    StudentCardStore.fetchStudent(studentId)
+    NoteStore.fetchStudentNotes(studentId)
+    NoteStore.fetchGroups()
+    NoteStore.fetchNoteTags()
+  }
+
+  render() {
+    return <StudentCard store={StudentCardStore} noteStore={NoteStore} />
   }
 }

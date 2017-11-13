@@ -1,21 +1,24 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React         from 'react'
+import { observer }  from 'mobx-react'
+import PropTypes     from 'prop-types'
 
-import VJSChart  from 'ui/vjs/VJSChart'
+import VJSChart      from 'ui/vjs/VJSChart'
 
 const FinancialAid = ({student}) => {
   return (
-    <VJSChart
-      id               = 'sc-financial-aid-types'
-      reportPath       = '/public/VJS/ss_ui/financials/student_card'
-      scale            = 'container'
-      title            = 'Financial Aid Types'
-      isTable          = {true}
-      ignorePagination = {true}
-      params           = {{
-        student_id: [ student.id ]
-      }}
-    />
+    <div className='mt-4'>
+      <VJSChart
+        id               = 'sc-financial-aid-types'
+        reportPath       = '/public/VJS/ss_ui/financials/student_card'
+        scale            = 'container'
+        title            = 'Financial Aid Types'
+        isTable          = {true}
+        ignorePagination = {true}
+        params           = {{
+          student_id: [ student.id ]
+        }}
+      />
+    </div>
   )
 }
 
@@ -23,4 +26,4 @@ FinancialAid.defaultProps = {}
 
 FinancialAid.propTypes = {}
 
-export default FinancialAid
+export default observer(FinancialAid)

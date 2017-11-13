@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 
 import {
-  Collapse,            Button,     Card,           CardBlock,
-  UncontrolledTooltip, Pagination, PaginationItem, PaginationLink
+  Collapse,            Button,         Card,           CardBlock,
+  UncontrolledTooltip, Pagination,     PaginationItem, PaginationLink,
+  ButtonDropdown,      DropdownToggle, DropdownMenu,   DropdownItem
 } from 'reactstrap'
 
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
@@ -23,6 +24,7 @@ export default class VJSChart extends Component {
       collapse:       false,
       totalPages:     0,
       currentPage:    1,
+      exportOpen:     false
     }
   }
 
@@ -56,10 +58,12 @@ export default class VJSChart extends Component {
   }
 
   // TODO: refactor into dynamic doc-type function
-  exportPDF() {
+  exportFile(format) {
+    const _ignorePagination = format === 'pdf' ? false : true
+
     this.report.export({
-      outputFormat:     'pdf',
-      ignorePagination: false
+      outputFormat:     format,
+      ignorePagination: _ignorePagination
     }, (link) => {
       window.location.href = (link.href || link)
     })
@@ -236,6 +240,12 @@ export default class VJSChart extends Component {
     }
   }
 
+  toggleExport() {
+    this.setState({
+      exportOpen: !this.state.exportOpen
+    })
+  }
+
   render() {
     // You're probably noticing a <center> tag down below.  VJS does some silly things with
     // it's element scaling by way of using <table> tags vs <div>.  I know, it's like 1998
@@ -259,15 +269,33 @@ export default class VJSChart extends Component {
               <span onClick = {() => this.toggleCollapse()}>{this.props.title}</span>
 
               <div className='float-right'>
-                <Button
-                  style    = {{padding: 0, width: 28, height: 28}}
-                  size     = 'sm'
-                  id       = {`${this.reportID}-export-pdf`}
-                  onClick  = {() => this.exportPDF()}
-                  disabled = {!this.state.resourceLoaded}
-                >
-                  <span className='icon icon-download text-muted'/>
-                </Button>
+                <ButtonDropdown isOpen={this.state.exportOpen} toggle={::this.toggleExport}>
+                  <DropdownToggle
+                    style = {{padding: 0, width: 44, height: 28}}
+                    size  = 'sm'
+                    id    = {`${this.reportID}-export-pdf`}
+                    caret
+                  >
+                    <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
+                  </DropdownToggle>
+
+                  <DropdownMenu right>
+                    <DropdownItem header>Export as</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem><span onClick={() => this.exportFile('csv')}>CSV</span></DropdownItem>
+                    <DropdownItem><span onClick={() => this.exportFile('pdf')}>PDF</span></DropdownItem>
+                  </DropdownMenu>
+                </ButtonDropdown>
+
+                {/* <Button */}
+                {/*   style    = {{padding: 0, width: 28, height: 28}} */}
+                {/*   size     = 'sm' */}
+                {/*   id       = {`${this.reportID}-export-pdf`} */}
+                {/*   onClick  = {() => this.exportPDF()} */}
+                {/*   disabled = {!this.state.resourceLoaded} */}
+                {/* > */}
+                {/*   <span className='icon icon-download text-muted'/> */}
+                {/* </Button> */}
 
                 <UncontrolledTooltip
                   placement = 'left'

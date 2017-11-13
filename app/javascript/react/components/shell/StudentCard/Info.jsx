@@ -9,7 +9,21 @@ import StudentAvatar   from 'ui/shell/StudentAvatar'
 
 const cardHeader = {
   backgroundImage: 'url(https://secure.schoolstatus.com/images/student-card-overview-bg.png)',
-  height: 80
+  height:          80
+}
+
+const iconStyle = { fontSize: '16px' }
+
+const renderItem = (item, label, icon) => {
+  if (item) {
+    return (
+      <li>
+        <span className={`mr-3 text-muted icon ${icon}`} style={iconStyle}/>
+        <span>{label}: </span>
+        <span className='text-info'>{ item }</span>
+      </li>
+    )
+  }
 }
 
 const Info = ({ student }) => {
@@ -42,6 +56,32 @@ const Info = ({ student }) => {
             <br/>
             <h6><Badge color='danger'>{ student.enrollment_status }</Badge></h6>
           </li>
+        </ul>
+      </CardBlock>
+
+      <CardBlock style={{marginTop: '-5px'}} className='pt-0 pb-0 mb-0'>
+        <ul className='list-unstyled list-spaced'>
+          <li>
+            <span className='mr-3 text-muted icon icon-cake' style={iconStyle}/>
+            <span>Birthdate: </span>
+            <span className='text-info'>{ student.dob }</span>
+          </li>
+
+          <li>
+            <span className='mr-3 text-muted icon icon-info-with-circle' style={iconStyle}/>
+            <span>Race: </span>
+            <span className='text-info'>{ student.race }</span>
+          </li>
+
+          <li>
+            <span className='mr-3 text-muted icon icon-v-card' style={iconStyle}/>
+            <span>Gender: </span>
+            <span className='text-info'>{ student.gender }</span>
+          </li>
+
+          {renderItem(student.advisor, 'Advisor', 'icon-compass')}
+          {renderItem(student.coach,   'Coach',   'icon-feather')}
+          {renderItem(student.major,   'Major',   'icon-trophy')}
         </ul>
       </CardBlock>
     </Card>

@@ -1,14 +1,48 @@
-import { observable, action, computed, runInAction, autorun } from 'mobx'
-
+import { observable, action, computed } from 'mobx'
 import _   from 'lodash'
 import xhr from 'helpers/XHR'
 
+import uiStore from 'stores/UiStore'
+import Conversation from 'stores/models/Conversation'
+import Pager        from  'stores/models/Pager'
+
 class SMSConversationStore {
-  @observable isLoading = false
-  @observable messages  = []
+  @observable limit         = 20
+  @observable isLoading     = false
+  @observable conversations = observable.map()
+  @observable pagers        = observable.map()
+
+  // Computed Values
+  
+  @computed
+  get descMessages() {
+    const conversation = this.getCurrentConversation()
+
+    return conversation ? _.sortBy(conversation.messages, m => m.created_at) : []
+  }
+
+  @computed
+  get shouldLoadMore(){
+    const pager = this.getCurrentPager()
+
+    if(this.isLoading || !pager || pager.isFilled) return false
+    return true
+  }
+
+  // Actions
+
+  @action 
+  addMessage = (msg) => {
+    const conversation = this.conversations.get(msg.conversation_id) 
+    
+    conversation && conversation.add(msg)
+  }
 
   @action
-  fetchConversation(id) {
+  fetchConversation = (id) => {
+    const pager = this.getCurrentPager()
+    const limit = pager ? pager.limit : this.limit
+
     this.isLoading = true
 
     xhr.get(`/commo/sms/conversation/${id}`, {
@@ -28,38 +62,115 @@ class SMSConversationStore {
             'contact.phone',
             'contact.relationship'
           ].join(','),
-        limit: 30,
+        limit: limit,
         page:  1
       }
-    }).then(::this.fetchConversationOK)
+    }).then(this.fetchConversationOK(id))
   }
 
-  @action.bound
-  fetchConversationOK(res) {
+
+  @action
+  fetchConversationOK = id => ({headers, data}) => {
     this.isLoading = false
-    this.messages  = res.data
+
+    this.updateConversation(id, data)
+    this.updatePager(id, headers)
+  }
+
+  getConversationParams = (id, data) => ({
+    id,
+    store:    this,
+    messages: data,
+  })  
+
+  @action
+  updateConversation = (id, data) => {
+    const params       = this.getConversationParams(id, data)
+    const conversation = this.conversations.get(id)
+
+    conversation ?  conversation.update(data) : this.conversations.set(id, new Conversation(params))
   }
 
   @action
-  sendMessage(msg, id) {
-    xhr.post('/commo/sms/send_message/contact', {
-      contact_id: id,
-      body:       msg
+  initiateConversation = (contact) => {
+    return xhr.post('/commo/conversations', {
+      number:     contact.phone,
+      contact_id: contact.id
     })
+      .then(res => res.data)
+      .then(this.initiateConversationOk(contact))
   }
 
-  @computed
-  get descMessages() {
-    return _.sortBy(this.messages, m => m.created_at)
+  @action
+  initiateConversationOk = contact => ({id}) => {
+    uiStore.setCurrentContact(contact)
+    uiStore.setCurrentConversation(id)
+    uiStore.setSidebarVisibility(true)
+    uiStore.setShowInbox(false)
+    uiStore.setSidebarMaxHeight(true)
   }
 
-  addMessage(msg) {
-    if (!_.find(this.messages, m => m.id === msg.id)) {
-      this.messages.push(msg)
+  @action
+  sendMessage(msg, id, attachment=null) {
+    if (attachment) {
+      let data = new FormData()
+      data.append('contact_id', id)
+      data.append('body',       msg)
+      data.append('attachment', attachment)
+
+      xhr.post('/commo/sms/send_message/contact', data, { 'Content-Type': 'multipart/form-data' })
+    } else {
+      xhr.post('/commo/sms/send_message/contact', {
+        contact_id: id,
+        body:       msg
+      })
+    }
+  }
+
+  @action
+  setRead(id) {
+    xhr.put(`/commo/sms_log/${id}/read`)
+  }
+
+  @action
+  delete = (id) => {
+    this.conversations.delete(id)
+    this.pagers.delete(id)
+  }  
+
+  getCurrentConversation = () => {
+    return this.conversations.get(uiStore.currentConversation)
+  }
+
+  loadMore = () => {
+    if(!this.shouldLoadMore) return
+
+    // retrieve pager for the current conversation
+    const pager = this.getCurrentPager()
+
+    // increase limit to fetch more data
+    pager.increment()
+
+    // fetch more data 
+    this.fetchConversation(uiStore.currentConversation) 
+
+    uiStore.setShouldScrollToBottom(false)
+  }
+
+  getCurrentPager = () => {
+    return this.pagers.get(uiStore.currentConversation)
+  }
+
+  updatePager = (id, headers) => {
+    const pager = this.pagers.get(id)
+    const total = parseInt(headers.total)
+
+    if(pager){
+      pager.setTotal(total)
+    } else {
+      this.pagers.set(id, new Pager(this.limit, total))
     }
   }
 }
 
 export default SMSConversationStore = new SMSConversationStore()
-
-// /commo/sms/conversation/4553dec9-9b09-4d33-a3af-a41746cc70fa?only=id,conversation_id,direction,sent_state,body,media_url,read_status,contact.id,contact.name

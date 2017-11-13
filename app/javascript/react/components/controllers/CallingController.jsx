@@ -1,42 +1,22 @@
-import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
+import React, { Component }    from 'react'
+import PropTypes               from 'prop-types'
+import { observer }            from 'mobx-react'
+import Dialpad                 from 'ui/shell/ActionBar/Calling/Dialpad'
+import CallDialog              from 'ui/shell/ActionBar/Calling/CallDialog'
 
-import {
-  Navbar
-} from 'reactstrap'
-
-const style = {
-  callBar: {
-    zIndex: 1040,
-    height: 57,
-    backgroundColor: 'rgba(217,83,79,0.95)'
-  }
-}
-
+@observer
 export default class CallingController extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children:  PropTypes.node,
     className: PropTypes.string,
   }
 
-  constructor(props) {
-    super(props)
-    this.state = { visible: false }
-  }
-
-  renderBar() {
-    const { callBar } = style
-
-    if (this.state.visible) {
-      return (
-        <Navbar style={callBar} fixed='top'>
-          hello
-        </Navbar>
-      )
-    }
-  }
-
   render() {
-    return <div>{this.renderBar()}</div>
+    return (
+      <div style={{ zIndex: 9999 }}>
+        <Dialpad callingStore={this.props.store} />
+        <CallDialog callingStore = {this.props.store} />
+      </div>
+    )
   }
 }

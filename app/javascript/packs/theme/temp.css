@@ -14,6 +14,20 @@ html, body {
   height: 57px;
 }
 
+#intercom-container .intercom-launcher-frame,
+.intercom-launcher-frame {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+#intercom-container .intercom-launcher {
+  display: none !important;
+}
+
+.intercom-launcher, .intercom-launcher-close-icon, .intercom-launcher-open-icon {
+  display: none !important;
+}
+
 .vjs-link {
   cursor: pointer;
 }
@@ -53,9 +67,10 @@ html, body {
   color: #282828
 }
 
-.student-search-container .active .typeahead-highlight {
+.student-search-container .active .typeahead-highlight, .dropdown-item:active .typeahead-highlight {
   color: white
 }
+
 
 .text-clear {
   color: white;
@@ -140,4 +155,36 @@ button.jive_button.over {
 
 .jive_form input {
   margin-right: 5px !important;
+}
+
+.callBar-enter {
+  opacity: 0.01;
+}
+
+.callBar-enter.callBar-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.callBar-leave {
+  opacity: 1;
+}
+
+.callBar-leave.callBar-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.alert-leave {
+  transform: translateX(-100%);
+  transition: transform 1000ms ease-out;
+}
+
+.alert-leave.alert-leave-active {
+  opacity: 0.01;
+  transition: 500ms;
+}
+
+.growl-alert {
+  padding: 5px !important;
 }

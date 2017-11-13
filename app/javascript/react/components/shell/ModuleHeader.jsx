@@ -10,7 +10,7 @@ const ModuleHeader = ({title, children}) => {
         </h2>
       </div>
 
-      <div className='ml-auto'>
+      <div className='ml-auto' style={{display: 'flex'}}>
         {children}
       </div>
     </div>

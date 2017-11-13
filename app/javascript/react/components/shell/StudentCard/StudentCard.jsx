@@ -1,6 +1,7 @@
-import React, { Component }  from 'react'
-import { observer }          from 'mobx-react'
-import Modal                 from 'react-modal'
+import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
+import Modal                from 'react-modal'
+import {scrollStyle}   from 'helpers/modal-style'
 
 import {
   Switch, withRouter, Route, Redirect, Link as RRNavLink
@@ -21,32 +22,46 @@ import LoadingSpinner  from 'ui/shell/LoadingSpinner'
 
 import Info            from './Info'
 import Overview        from './Overview'
-import Demographics    from './Demographics'
+import Assessment      from './Assessment'
 import FinancialAid    from './FinancialAid'
 import Contacts        from './Contacts'
+import Engagement      from './CommsHistory/'
+
+// FIXME: needs to be inside StudentCard dir
+import Notes           from '../Notes'
+
+import CallingStore    from 'stores/CallingStore'
 
 import fireEvent       from 'helpers/FireEvent'
 import _               from 'lodash'
 
 const cardStyle = {
   overlay: {
-    zIndex:          3000,
+    zIndex:          1027,
     backgroundColor: 'rgba(0,0,0,0.75)'
   },
 
   content: {
-    zIndex:          3050,
-    top:             20,
-    bottom:          20,
-    left:            55,
-    right:           55,
+    zIndex:          1028,
+    top:             75,
+    bottom:          70,
+    left:            17,
+    right:           17,
     borderRadius:    '0.25em',
     border:          'none',
-    backgroundColor: '#f7f9fb'
+    backgroundColor: '#f7f9fb',
+    paddingBottom:   35
   }
 }
 
+const CloseBtn = ({onClick}) => (
+  <div className='float-right h4 p-1 pr-0 mb-2'>
+    <span className='icon icon-cross' onClick={onClick} />
+  </div>
+)
+
 @withRouter
+@inject('uiStore')
 @observer
 export default class StudentCard extends Component {
   constructor(props) {
@@ -57,8 +72,9 @@ export default class StudentCard extends Component {
   }
 
   closeCard = () => {
-    const { store } = this.props
+    const { store, noteStore } = this.props
 
+    noteStore.resetNoteForm()
     store.hideCard()
     fireEvent('onCloseStudentCard', { student: store.student.id })
   }
@@ -85,55 +101,77 @@ export default class StudentCard extends Component {
     </Row>
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('-- will receive')
-  }
+  renderCard() {
+    const { store, match, location } = this.props
 
-  renderCard(){
-    const { store, match } = this.props
-    const { student, groupedContacts: contacts } = store
+    const {
+      student,
+      groupedContacts:      contacts,
+      sortedCommunications: communications
+    } = store
 
     return (
       <Row>
-        <Col sm='3'>
+        <Col sm='3' style={scrollStyle}>
           <Info student={student} />
-          <Demographics student={student} />
-          <FinancialAid student={student} />
 
-          {/* <Card> */}
-          {/*   <RRNavLink to={`${match.url}/overview`}>Overview</RRNavLink> */}
-          {/*   <RRNavLink to={`${match.url}/contacts`}>Contacts</RRNavLink> */}
-          {/*   {this.props.children} */}
-            {/* <h5 className='p-2 pb-0 mb-0'>Details</h5> */}
-            {/* <UserMenuSection title='Details'> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Overview' */}
-            {/*     iconClass='icon-list' */}
-            {/*     link={`${match.url}/overview`} */}
-            {/*   /> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Contacts' */}
-            {/*     iconClass='icon-calendar' */}
-            {/*     link={`${match.url}/contacts`} */}
-            {/*   /> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Discipline' */}
-            {/*     iconClass='icon-thermometer' */}
-            {/*     link={`${match.url}/discipline`} */}
-            {/*   /> */}
-            {/*   <UserMenuItem */}
-            {/*     title='Assessment' */}
-            {/*     iconClass='icon-bar-graph' */}
-            {/*     link={`${match.url}/assessment`} */}
-            {/*   /> */}
-            {/* </UserMenuSection> */}
-          {/* </Card> */}
+          <Card>
+            {this.props.children}
+
+            <UserMenuSection title='Details'>
+              <UserMenuItem
+                title     = 'Overview'
+                iconClass = 'icon-list'
+                link      = {`${match.url}/overview`}
+                location  = {location}
+              />
+
+              <UserMenuItem
+                title     = 'Contacts'
+                iconClass = 'icon-calendar'
+                link      = {`${match.url}/contacts`}
+                location  = {location}
+              />
+
+              {/* <UserMenuItem  */}
+              {/*   title     = 'Discipline' */}
+              {/*   iconClass = 'icon-thermometer' */}
+              {/*   link      = {`${match.url}/discipline`} */}
+              {/*   location  = {location} */}
+              {/* />  */}
+
+              <UserMenuItem
+                title     = 'Assessment'
+                iconClass = 'icon-bar-graph'
+                link      = {`${match.url}/assessment`}
+                location  = {location}
+              />
+
+              <UserMenuItem
+                title     = 'Engagement'
+                iconClass = 'icon-swap'
+                link      = {`${match.url}/engagement`}
+                location  = {location}
+              />
+
+              <UserMenuItem
+                title     = 'Notes'
+                iconClass = 'icon-pencil'
+                link      = {`${match.url}/notes`}
+                location  = {location}
+              />
+            </UserMenuSection>
+          </Card>
+
+          <FinancialAid student={student} />
         </Col>
 
         {/* Root Container */}
         <Col sm='9'>
-          <Switch>
-            <Redirect exact from={`${match.url}`} to={`${match.url}/overview`}/>
+          <CloseBtn onClick={this.closeCard} />
+
+          <Switch location={location}>
+            <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
 
             <Route
               path   = {`${match.url}/overview`}
@@ -142,30 +180,34 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() => <Contacts student={student} contacts={contacts}/> }
+              render = {() => <Contacts
+                store             = {CallingStore}
+                student           = {student}
+                contacts          = {contacts}
+                handleContactFave = {::this.props.store.toggleContactPrimary}
+                handleSendEmail   = {::this.props.store.triggerNativeMailTo}
+              /> }
             />
+
+            <Route
+              path   = {`${match.url}/assessment`}
+              render = {() => <Assessment student={student}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/engagement`}
+              render = {() => <Engagement student={student} /> }
+            />
+
+            <Route
+              path   = {`${match.url}/notes`}
+              render = {() => <Notes student={student} noteStore={this.props.noteStore}/> }
+            />
+
+            <Route render={() => <div>404</div>} />
           </Switch>
-
-          <Card>
-            <CardBlock>
-              <h5>Contacts</h5>
-
-              <Contacts contacts={contacts}/>
-            </CardBlock>
-          </Card>
         </Col>
       </Row>
-    )
-  }
-
-  renderSubComponents = page => {
-    return (
-      <Card>
-        <CardImg src={`http://via.placeholder.com/318x180?text=${page}`} />
-        <CardBlock>
-          <CardSubtitle className='text-center'>sub component</CardSubtitle>
-        </CardBlock>
-      </Card>
     )
   }
 }

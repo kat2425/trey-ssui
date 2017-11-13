@@ -10,17 +10,17 @@ import _                    from 'lodash'
 // import 'react-bootstrap-typeahead/css/Typeahead.css'
 
 const StudentSearchItem = ({ student, search }) => {
-  // Format results and highlight matched search string in menu list
   const formatResults = (search, value) => {
-    const regex = RegExp(`(${search})`, 'i')
+    const regexs   = _.forEach(search.split(' '), (v) => RegExp(`(${v})`, 'ig'))
+    let   newValue = value
 
-    return  _.flattenDeep(value.split(regex).map((str, i) => {
-      if (!!str.match(regex)) {
-        return [ <strong key={ i } className='typeahead-highlight'>{ str }</strong> ]
-      } else {
-        return str
-      }
-    }))
+    _.each(regexs, (regex) => {
+      _.each(value.match(regex), (m) => {
+        newValue = newValue.replace(m, '<strong class="typeahead-highlight">' + m + '</strong>')
+      })
+    })
+
+    return newValue
   }
 
   // Custom menu item for search results
@@ -31,9 +31,9 @@ const StudentSearchItem = ({ student, search }) => {
       </div>
 
       <div className='col-sm-9 ml-1'>
-        {formatResults(search, `${ student.last_name }, ${ student.first_name }`)}
+        <span dangerouslySetInnerHTML={{__html: formatResults(search, `${ student.last_name }, ${ student.first_name }`)}}></span>
         <br/>
-        <small>{ student.school.school_name }</small>
+        <small>{ student.school_name }</small>
         <br/>
         <small>{ student.state_id }</small>
       </div>
@@ -60,16 +60,18 @@ export default class StudentSearch extends Component {
   // least be moved into a top-level controller
   _lookupStudent(val) {
     if (val.length >= 3) {
-      xhr.get('/students', {
-        params: {
-          only:        'id,state_id,grade,first_name,last_name,school.school_name',
-          limit:       20,
-          text_filter: val
-        }
+      xhr.get('/typeahead/students', {
+        params: { text_filter: val }
       }).then((res) => {
         this.setState({ students: res.data })
       })
     }
+  }
+
+  // NOTE: we do this because we're guarenteed to only get good results back from
+  // the server, so any filtering we do here messes up those result.
+  filterByCallback(option, text) {
+    return true
   }
 
   renderResults(student, props, index) {
@@ -90,12 +92,13 @@ export default class StudentSearch extends Component {
           multiple               = {false}
           clearButton            = {true}
           maxHeight              = {435}
-          filterBy               = {['first_name', 'last_name', 'state_id']}
+          filterBy               = {::this.filterByCallback}
           options                = {this.state.students}
           onSearch               = {::this.lookupStudent}
           onChange               = {::this.selectStudent}
           renderMenuItemChildren = {::this.renderResults}
           placeholder            = 'Find a student...'
+          minLength              = {3}
         />
       </div>
     )
