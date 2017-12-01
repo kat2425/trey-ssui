@@ -15,17 +15,18 @@ import {
   ButtonGroup
 } from 'reactstrap'
 
-import UserMenuSection from 'ui/shell/UserMenu/UserMenuSection'
-import UserMenuItem    from 'ui/shell/UserMenu/UserMenuItem'
-import VJSChart        from 'ui/vjs/VJSChart'
-import LoadingSpinner  from 'ui/shell/LoadingSpinner'
+import UserMenuSection  from 'ui/shell/UserMenu/UserMenuSection'
+import UserMenuItem     from 'ui/shell/UserMenu/UserMenuItem'
+import VJSChart         from 'ui/vjs/VJSChart'
+import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 
-import Info            from './Info'
-import Overview        from './Overview'
-import Assessment      from './Assessment'
-import FinancialAid    from './FinancialAid'
-import Contacts        from './Contacts'
-import Engagement      from './CommsHistory/'
+import Info             from './Info'
+import Overview         from './Overview'
+import Assessment       from './Assessment'
+import FinancialAid     from './FinancialAid'
+import Contacts         from './Contacts'
+import CourseAttendance from './CourseAttendance'
+import Engagement       from './CommsHistory/'
 
 // FIXME: needs to be inside StudentCard dir
 import Notes           from '../Notes'
@@ -128,8 +129,15 @@ export default class StudentCard extends Component {
 
               <UserMenuItem
                 title     = 'Contacts'
-                iconClass = 'icon-calendar'
+                iconClass = 'icon-users'
                 link      = {`${match.url}/contacts`}
+                location  = {location}
+              />
+
+              <UserMenuItem
+                title     = 'Attendance'
+                iconClass = 'icon-calendar'
+                link      = {`${match.url}/attendance`}
                 location  = {location}
               />
 
@@ -187,6 +195,11 @@ export default class StudentCard extends Component {
                 handleContactFave = {::this.props.store.toggleContactPrimary}
                 handleSendEmail   = {::this.props.store.triggerNativeMailTo}
               /> }
+            />
+
+            <Route
+              path   = {`${match.url}/attendance`}
+              render = {() => <CourseAttendance student={student}/> }
             />
 
             <Route

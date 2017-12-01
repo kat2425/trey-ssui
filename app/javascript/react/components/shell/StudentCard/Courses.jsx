@@ -11,6 +11,7 @@ const Courses = ({ student }) => {
       scale      = 'container'
       title      = 'Schedule'
       isTable    = {true}
+      ignorePagination = {true}
       params     = {{
         student_id: [ student.id ]
       }}
