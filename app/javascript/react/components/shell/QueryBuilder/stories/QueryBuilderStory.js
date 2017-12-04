@@ -6,7 +6,7 @@ import Wrapper       from './Wrapper'
 import Playground    from './Playground'
 
 import QueryBuilder  from '../'
-import { tree }      from './tree'
+import schema        from './schema'
 
 
 const stories = storiesOf('QueryBuilder', module)
@@ -27,7 +27,7 @@ stories.add('with value', () => {
   return(  
     <Wrapper>
       <QueryBuilder 
-        tree     = {tree}
+        schema   = {schema}
         onChange = {action('onChange')}
         onTest   = {action('onTest')}
         onSave   = {action('onSave')}
@@ -39,7 +39,7 @@ stories.add('with value', () => {
 stories.add('playground', () => {
   return(  
     <Wrapper>
-      <Playground tree={tree} />
+      <Playground schema={schema} />
     </Wrapper>
   ) 
 }) 

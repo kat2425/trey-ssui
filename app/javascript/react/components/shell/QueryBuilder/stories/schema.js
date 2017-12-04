@@ -1,4 +1,4 @@
-export const tree = {
+export default {
   type: 'group',
   id: 'bb8ab999-0123-4456-b89a-b15f9864d7d9',
   children1: {
