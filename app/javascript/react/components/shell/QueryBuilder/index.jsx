@@ -5,36 +5,41 @@ import config              from './config'
 import Query               from './QueryWrapper'
 import Builder             from './BuilderWrapper'
 import {fromJS}            from 'immutable'
-import { Utils }           from 'react-awesome-query-builder'
+import {Utils}             from 'react-awesome-query-builder'
 import stringify           from 'json-stringify-safe'
 import ActionButtons       from './ActionButtons'
 
 class QueryBuilder extends Component {
   state = {
-    value: fromJS(this.props.tree)
+    value: fromJS(this.props.schema)
   }
 
   static propTypes = {
-    tree:     PropTypes.object,
-    onChange: PropTypes.func
+    schema:   PropTypes.object,
+    onChange: PropTypes.func,
+    disable:  PropTypes.bool
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({value: fromJS(nextProps.tree)})
+    if(this.props.disable !== nextProps.disable){
+      this.setState({
+        disable: nextProps.disable
+      })
+    }
   }
 
   handleChange = (tree) => {
     this.setState({value: tree})
 
-    const _tree = stringify(tree)
+    const treeFormat = stringify(tree)
     const builderFormat = stringify(Utils.queryBuilderFormat(tree, config))
 
-    this.props.onChange(_tree, builderFormat)
+    this.props.onChange(treeFormat, builderFormat)
   }
 
   render() {
     const { value } = this.state
-    const { onTest, onSave } = this.props
+    const { onTest, onSave, disable } = this.props
 
     return (
       <div>
@@ -44,7 +49,7 @@ class QueryBuilder extends Component {
           onChange={this.handleChange}
           getChildren={props => <Builder {...props} />}
         />
-        <ActionButtons disabled={!value} onTest={onTest} onSave={onSave} />
+        <ActionButtons disabled={disable} onTest={onTest} onSave={onSave} />
       </div>
     )
   }

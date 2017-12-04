@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 QueryWrapper.propTypes = {
   onChange:    PropTypes.func.isRequired,
   getChildren: PropTypes.func.isRequired,
-  value:       PropTypes.object.isRequired,
+  value:       PropTypes.object,
   config:      PropTypes.object.isRequired
 }
 export default function QueryWrapper({value, getChildren, onChange, config}){
