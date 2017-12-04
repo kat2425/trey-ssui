@@ -8,7 +8,7 @@ import { Alert }          from 'reactstrap'
 
 export default class Playground extends Component {
   state = { 
-    tree:          this.props.tree,
+    tree:          this.props.schema,
     builderFormat: null,
     error:         null
   }
@@ -39,7 +39,7 @@ export default class Playground extends Component {
       <div> 
         <TreeInput onChange={this.handleInputChange} error={error}/>
         <QueryBuilder 
-          tree     = {tree}
+          schema   = {tree}
           onChange = {this.handleChange}
           onTest   = {action('onTest')}
           onSave   = {action('onSave')}

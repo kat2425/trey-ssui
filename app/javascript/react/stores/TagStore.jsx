@@ -1,35 +1,64 @@
-import { observable, action } from 'mobx'
-import { setter, toggle }     from 'mobx-decorators'
-import xhr                    from 'helpers/XHR'
+import { 
+  observable, 
+  action, 
+  computed 
+} from 'mobx'
 
-import Tag                    from 'stores/models/Tag'
+import { setter, toggle } from 'mobx-decorators'
+import xhr                from 'helpers/XHR'
+
+import Tag                from 'stores/models/Tag'
 
 const API = '/commo/tags'
 
 export class TagStore {
-  @setter
-  @observable
-  isError = null
+  @setter 
+  @observable builderFormat = null
 
-  @setter
-  @observable
-  isLoading = false
+  @setter 
+  @observable treeFormat    = null
 
-  @setter
-  @observable
-  schema = null
+  @setter 
+  @observable isError       = null
 
-  @observable tags = observable.map()
+  @setter 
+  @observable isLoading     = false
+
+  @toggle 
+  @observable mapView       = false
+
+  @setter 
+  @observable schema        = null
+
+  @observable tags          = observable.map()
   
-  @toggle
-  @observable
-  mapView = false
-
   constructor() {
     this.fetchSchema()
   }
 
+  // Computed Values
+  @computed get isValidFormat() {
+    return !!this.builderFormat && !!this.treeFormat
+  }
+
+  @computed get tagData(){
+    return {
+      treeFormat:    this.treeFormat,
+      builderFormat: this.builderFormat
+    }
+  }
+
+  @computed get disable(){
+    return this.isLoading || !this.isValidFormat
+  }
+
   // Actions
+  @action
+  handleChange = (treeFormat, builderFormat) => {
+    this.treeFormat = treeFormat
+    this.builderFormat = builderFormat
+  }
+
   @action
   fetchTags = async() => {
     try {
@@ -62,12 +91,11 @@ export class TagStore {
 
   @action
   saveTag = async(treeFormat, builderFormat) => {
+    if(!this.isValidFormat) return
+
     try {
       this.setLoadingState()
-      const {data} = await xhr.post(`${API}/save`, {
-        treeFormat,
-        builderFormat
-      })
+      const {data} = await xhr.post(`${API}/save`, this.tagData)
 
       return data
     } catch (e) {
@@ -81,13 +109,12 @@ export class TagStore {
   }
 
   @action
-  testTag = async(treeFormat, builderFormat) => {
+  testTag = async() => {
+    if(!this.isValidFormat) return
+
     try {
       this.setLoadingState()
-      const {data} = await xhr.post(`${API}/test`, {
-        treeFormat,
-        builderFormat
-      })
+      const {data} = await xhr.post(`${API}/test`, this.tagData)
 
       return data
     } catch (e) {

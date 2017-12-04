@@ -1,7 +1,12 @@
-import React                   from 'react'
-import ModuleHeader            from 'ui/shell/ModuleHeader'
-import { TagList }             from 'ui/shell/SmartTags/'
-import StudentList             from 'ui/shell/StudentResults/StudentList'
+import React        from 'react'
+import ModuleHeader from 'ui/shell/ModuleHeader'
+import { TagList }  from 'ui/shell/SmartTags/'
+import StudentList  from 'ui/shell/StudentResults/StudentList'
+
+import {
+  TagActionBar,
+  ResultsHeader
+} from 'ui/shell/SmartTags'
 
 import {
   Row,
@@ -75,7 +80,16 @@ export default function SmartTags() {
           <TagList tags={tagPlaceholder} onClick={() => console.log('tag clicked')} />
         </Col>
         <Col xs="12" sm="7">
-          <StudentList onStudentClick={() => console.log('what')} students={studentPlaceholder} />
+          <Row className='mb-3'>
+            <Col xs='12' sm='6'>
+              <ResultsHeader title='Students' results='15' total='20' />
+              <p>Tag Name</p>
+            </Col>
+            <Col xs='12' sm='6'>
+              <TagActionBar />
+            </Col>
+          </Row>
+          <StudentList students={studentPlaceholder} />
         </Col>
       </Row>
     </div>
