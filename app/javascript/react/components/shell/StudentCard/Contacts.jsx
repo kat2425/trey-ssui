@@ -4,7 +4,8 @@ import _         from 'lodash'
 
 import {
   ButtonGroup, ButtonDropdown, Button, Card, Table, Alert,
-  DropdownToggle, DropdownMenu, DropdownItem
+  DropdownToggle, DropdownMenu, DropdownItem,
+  UncontrolledTooltip
 } from 'reactstrap'
 
 import fireEvent       from 'helpers/FireEvent'
@@ -30,6 +31,24 @@ const ContactFaveIcon = ({primary, id, handleClick}) => {
   )
 }
 
+const ContactNumber = ({phone, stopped}) => {
+  const _stopped_label = {
+    textDecoration: (stopped ? 'line-through' : 'inherit'),
+    color:          (stopped ? '#d24f4c' : 'inherit' )
+  }
+
+  const _stopped_icon = {
+    display: (stopped ? 'inline-block' : 'none'),
+  }
+
+  return (
+    <span style={_stopped_label}>
+      <span style={_stopped_icon} className='icon icon-circle-with-cross mr-2'/>
+      {phone}
+    </span>
+  )
+}
+
 const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
@@ -44,7 +63,7 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
         {/* TODO: extract to function */}
         {contact.refs.map(ref => {
           return (
-            <div key={ref.id} className='mb-1'>
+            <div key={ref.id} id={ref.id} className='mb-1'>
               <ContactFaveIcon handleClick={handleFave} id={ref.id} primary={ref.primary}/>
 
               <ButtonGroup className='mr-2'>
@@ -56,6 +75,7 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
                   }}
                   size    = 'sm'
                   color   = 'success'
+                  disabled = {(ref.stopped)}
                 >
                   <span className='icon icon-phone'/>
                 </Button>
@@ -63,14 +83,21 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
                 <Button
                   size     = 'sm'
                   color    = 'primary'
-                  disabled = {ref.number_type !== 'mobile'}
+                  disabled = {(ref.number_type !== 'mobile') || (ref.stopped)}
                   onClick  = {() => fireEvent('toggleSidebar', {contact: ref})}
                 >
                   <span className='icon icon-chat' />
                 </Button>
               </ButtonGroup>
 
-              {ref.phone}
+              <ContactNumber phone={ref.phone} stopped={ref.stopped}/>
+              <UncontrolledTooltip
+                placement = 'top'
+                target    = {ref.id}
+                hidden    = {!ref.stopped}
+              >
+                This number has requested no communication via SchoolStatus
+              </UncontrolledTooltip>
               <br />
             </div>
           )
