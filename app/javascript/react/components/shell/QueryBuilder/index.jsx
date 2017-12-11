@@ -11,10 +11,11 @@ import ActionButtons       from './ActionButtons'
 
 class QueryBuilder extends Component {
   state = {
-    value: fromJS(this.props.schema)
+    value: fromJS(this.props.tree)
   }
 
   static propTypes = {
+    tree:     PropTypes.object,
     schema:   PropTypes.object,
     onChange: PropTypes.func,
     disable:  PropTypes.bool
@@ -39,8 +40,9 @@ class QueryBuilder extends Component {
 
   render() {
     const { value } = this.state
-    const { onTest, onSave, disable } = this.props
+    const { onTest, onSave, disable, schema } = this.props
 
+    config.fields = schema
     return (
       <div>
         <Query 

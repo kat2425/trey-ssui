@@ -42,33 +42,32 @@ const tagPlaceholder = [
 
 const studentPlaceholder = [
   {
-    name:       'Student One',
-    last_first: 'One, Student',
-    grade:      'Grade 03',
-    school:     'Anytown Upper Elementary School',
-    id:         '51db4bd8e9c77f81290001ec'
+    'id':          '51db4e3fe9c77f81290015ab',
+    'first_name':  'Joan',
+    'last_name':   'Campbell',
+    'grade':       '03',
+    'school_name': 'Anytown Upper Elementary Sch',
+    'latitude':    '30.813846811652184',
+    'longitude':   '-89.42892752587795'
   },
   {
-    name:       'Student Two',
-    last_first: 'Two, Student',
-    grade:      'Grade 03',
-    school:     'Anytown Upper Elementary School',
-    id:         '51db4bd8e9c77f81290001ed'
+    'id':          '51db4db9e9c77f8129001148',
+    'first_name':  'Johnny',
+    'last_name':   'Stewart',
+    'grade':       '06',
+    'school_name': 'Middle School Of Anytown',
+    'latitude':    '30.81266261637211',
+    'longitude':   '-89.51103396713734'
   },
   {
-    name:       'Student Three',
-    last_first: 'Three, Student',
-    grade:      'Grade 03',
-    school:     'Anytown Upper Elementary School',
-    id:         '51db4bd8e9c77f81290001ee'
-  },
-  {
-    name:       'Student Four',
-    last_first: 'Four, Student',
-    grade:      'Grade 03',
-    school:     'Anytown Upper Elementary School',
-    id:         '51db4bd8e9c77f81290001ef'
-  },
+    'id':          '51db4e26e9c77f81290014ce',
+    'first_name':  'Benjamin',
+    'last_name':   'Gray',
+    'grade':       '05',
+    'school_name': 'Anytown Upper Elementary Sch',
+    'latitude':    '30.812476202845573',
+    'longitude':   '-89.41530995070934'
+  }
 ]
 
 export default function SmartTags() {
@@ -76,10 +75,10 @@ export default function SmartTags() {
     <div>
       <ModuleHeader title='Smart Tags'/>
       <Row>
-        <Col xs="12" sm="5">
+        <Col xs='12' sm='5'>
           <TagList tags={tagPlaceholder} onClick={() => console.log('tag clicked')} />
         </Col>
-        <Col xs="12" sm="7">
+        <Col xs='12' sm='7'>
           <Row className='mb-3'>
             <Col xs='12' sm='6'>
               <ResultsHeader title='Students' results='15' total='20' />

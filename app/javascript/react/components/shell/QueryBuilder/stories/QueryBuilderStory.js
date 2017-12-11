@@ -1,12 +1,12 @@
-import React         from 'react'
-import { storiesOf } from '@storybook/react'
-import { action }    from '@storybook/addon-actions'
+import React          from 'react'
+import { storiesOf }  from '@storybook/react'
+import { action }     from '@storybook/addon-actions'
 
-import Wrapper       from './Wrapper'
-import Playground    from './Playground'
+import Wrapper        from './Wrapper'
+import Playground     from './Playground'
 
-import QueryBuilder  from '../'
-import schema        from './schema'
+import QueryBuilder   from '../'
+import {schema, tree} from './data/'
 
 
 const stories = storiesOf('QueryBuilder', module)
@@ -28,6 +28,7 @@ stories.add('with value', () => {
     <Wrapper>
       <QueryBuilder 
         schema   = {schema}
+        tree     = {tree}
         onChange = {action('onChange')}
         onTest   = {action('onTest')}
         onSave   = {action('onSave')}
@@ -39,7 +40,10 @@ stories.add('with value', () => {
 stories.add('playground', () => {
   return(  
     <Wrapper>
-      <Playground schema={schema} />
+      <Playground 
+        tree   = {tree}
+        schema = {schema}
+      />
     </Wrapper>
   ) 
 }) 

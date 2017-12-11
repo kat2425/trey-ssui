@@ -6,16 +6,16 @@ import Wrapper       from './Wrapper'
 import Column        from './Column'
 import Row           from './Row'
 
-const StudentItem = ({ student, name, onStudentClick }) => {
+const StudentItem = ({ student, onStudentClick }) => {
   return (
     <Wrapper onClick={handleOnClick(onStudentClick, student)}>
       <StudentAvatar id={student.id} />
       <Column>
         <Row>
-          <p className='mb-0 font-weight-bold'>{name ? name : student.last_first}</p>
-          <p className='text-muted'> {student.grade != 'HE' && (', ' + student.grade)} </p>
+          <p className='mb-0 font-weight-bold'>{`${student.last_name} ${student.first_name}`}</p>
+          <p className='text-muted'> {`, Grade ${student.grade}`} </p>
         </Row>
-        <p className='mb-0 text-muted'>{student.school}</p>
+        <p className='mb-0 text-muted'>{student.school_name}</p>
       </Column>
     </Wrapper>
   )
