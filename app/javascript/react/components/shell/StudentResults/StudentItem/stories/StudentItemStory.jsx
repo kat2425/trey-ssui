@@ -6,12 +6,14 @@ import StudentItem   from '../'
 
 const stories = storiesOf('StudentItem', module)
 
-const studentData = {
-  name:       'John Brown',
-  last_first: 'Brown, John',
-  grade:      'Grade 03',
-  school:     'Anytown Upper Elementary School',
-  id:         '51db4bd8e9c77f81290001ec'
+const studentData =  {
+  'id':          '51db4e3fe9c77f81290015ab',
+  'first_name':  'Joan',
+  'last_name':   'Campbell',
+  'grade':       '03',
+  'school_name': 'Anytown Upper Elementary Sch',
+  'latitude':    '30.813846811652184',
+  'longitude':   '-89.42892752587795'
 }
 
 stories.addDecorator(withKnobs)
