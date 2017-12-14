@@ -56,7 +56,7 @@ export default class TagBuilder extends Component {
     return (
       <Wrapper>
         <div className="d-flex flex-column" style={{flex: 1}}>
-          <SideNav title="BullsEye" onNewQuery={() => console.log('NEW QUERY')}>
+          <SideNav title="Bullseye" onNewQuery={() => console.log('NEW QUERY')}>
             <TagList
               tags={tagPlaceholder}
               activeTagId={tagStore.activeTagId}
