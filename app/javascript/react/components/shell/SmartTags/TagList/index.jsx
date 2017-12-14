@@ -7,24 +7,25 @@ import Header     from './Header'
 import ScrollView from './ScrollView'
 
 TagList.propTypes = {
-  arrayWithShape: PropTypes.arrayOf(PropTypes.shape({
-    id:       PropTypes.string.isRequired,
-    name:     PropTypes.string.isRequired,
-    query:    PropTypes.object.isRequired,
-    isGlobal: PropTypes.bool.isRequired,
-    user:     PropTypes.bool.isRequired,
-    group:    PropTypes.bool.isRequired
-  }).isRequired
+  activeTagId:    PropTypes.string.isRequired,
+  arrayWithShape: PropTypes.arrayOf(
+    PropTypes.shape({
+      id:       PropTypes.string.isRequired,
+      name:     PropTypes.string.isRequired,
+      query:    PropTypes.object.isRequired,
+      isGlobal: PropTypes.bool.isRequired,
+      user:     PropTypes.bool.isRequired,
+      group:    PropTypes.bool.isRequired
+    }).isRequired
   ),
   onClick: PropTypes.func.isRequired
 }
 
-function TagList({tags, onClick}) {
+function TagList({activeTagId, tags, onClick}) {
   return (
-    <Wrapper show >
-      <Header title='Tags' />
+    <Wrapper>
       <ScrollView>
-        {tags.map(tag => <TagEntry key={tag.id} tag={tag} onClick={() => onClick(tag)} />)}
+        {tags.map(tag => <TagEntry active={activeTagId === tag.id} key={tag.id} tag={tag} onClick={() => onClick(tag)} />)}
       </ScrollView>
     </Wrapper>
   )

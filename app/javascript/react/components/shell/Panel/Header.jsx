@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import styled    from 'styled-components'
 
 const Wrapper = styled.div.attrs({
-  className: 'd-flex flex-row align-items-center justify-content-between p-0 pl-4 pr-3'
+  className: 'd-flex flex-row align-items-center justify-content-between'
 })`
-  height: 65px;
-  background-color: rgb(245, 245, 245);
+  padding: 15px 10px;
+  background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 `
 
@@ -17,7 +17,7 @@ Header.propTypes = {
 export default function Header({ title, titleRight }) {
   return (
     <Wrapper>
-      <h4 className='m-0'>{title}</h4>
+      <h5 className='m-0'>{title}</h5>
       {titleRight && titleRight()}
     </Wrapper>
   )
