@@ -5,12 +5,17 @@ import {
   autorun
 } from 'mobx'
 
-import { setter, toggle }                     from 'mobx-decorators'
-import {SCHEMA_XHR as sxhr, QUERY_XHR as xhr} from 'helpers/XHR'
+import {
+  SCHEMA_XHR as sxhr, 
+  QUERY_XHR as xhr
+} from 'helpers/XHR'
 
-import Tag                                    from 'stores/models/Tag'
-import UiStore                                from 'stores/UiStore'
-import _                                      from 'lodash'
+import { setter, toggle } from 'mobx-decorators'
+
+import userStore          from 'stores/UserStore'
+import Tag                from 'stores/models/Tag'
+import UiStore            from 'stores/UiStore'
+import _                  from 'lodash'
 
 
 
@@ -34,7 +39,7 @@ const studentData = [
     'longitude':   '-89.51103396713734'
   },
   {
-    'id': '51db4e26e9c77f81290014ce',
+    'id':          '51db4e26e9c77f81290014ce',
     'first_name':  'Benjamin',
     'last_name':   'Gray',
     'grade':       '05',
@@ -69,7 +74,7 @@ export class TagStore {
   @observable students      = observable.shallowArray()
 
   constructor(){
-    this.students.replace(studentData)
+    //this.students.replace(studentData)
 
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError){
@@ -85,8 +90,11 @@ export class TagStore {
 
   @computed get tagData(){
     return {
-      treeFormat:    this.treeFormat,
-      builderFormat: this.builderFormat
+      user_id:     userStore.user.id,
+      district_id: userStore.user.districtID,
+      tag_name:    'Test 1',
+      tree_query:  this.treeFormat,
+      query:       this.builderFormat
     }
   }
 
@@ -117,7 +125,7 @@ export class TagStore {
   fetchTags = async() => {
     try {
       this.setLoadingState()
-      const {data} = await xhr.get('/query/fetch')
+      const {data} = await sxhr.get('/smart_tags')
 
       this.updateTags(data)
     } catch (e) {
@@ -144,14 +152,15 @@ export class TagStore {
   }
 
   @action
-  saveTag = async(treeFormat, builderFormat) => {
+  saveTag = async() => {
     if(!this.isValidFormat) return
 
     try {
       this.setLoadingState()
-      const {data} = await xhr.post('/save', this.tagData)
+      const {data} = await sxhr.post('/smart_tags', this.tagData)
 
       UiStore.addNotification('Sucessfully Saved')
+      console.log('Saved Tag', data)
       return data
     } catch (e) {
       this.setIsError(e)

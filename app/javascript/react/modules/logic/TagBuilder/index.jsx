@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {observer}         from 'mobx-react'
-import { Button }         from 'reactstrap'
+import styled             from 'styled-components'
 
 import QueryBuilder       from 'ui/shell/QueryBuilder'
 import LoadingSpinner     from 'ui/shell/LoadingSpinner'
@@ -20,7 +20,8 @@ import {
 
 import {
   TagList, 
-  TagActionBar
+  TagActionBar,
+  MapModal
 } from 'ui/shell/SmartTags/'
 
 const tagPlaceholder = [
@@ -52,6 +53,12 @@ const tagPlaceholder = [
 
 @observer
 export default class TagBuilder extends Component {
+  state = { showMap: false }
+
+  toggleMap = () => {
+    this.setState({ showMap: !this.state.showMap })
+  }
+
   render() {
     return (
       <Wrapper>
@@ -105,7 +112,7 @@ export default class TagBuilder extends Component {
             </div>
             <div
               className="d-flex flex-column px-2 py-2"
-              style={{flex: 1, height: '100%', overflow: 'auto'}}
+              style={{flex: 1.5, height: '100%', overflow: 'auto'}}
             >
               <Panel 
                 contentStyle={{
@@ -131,12 +138,18 @@ export default class TagBuilder extends Component {
               <Panel
                 className    = "my-2 pt-4"
                 title        = "Map"
-                titleRight   = {() => <FaExpand style={{cursor: 'pointer'}} />}
+                titleRight   = {() => <FaExpand onClick={this.toggleMap} style={{cursor: 'pointer'}} />}
                 contentStyle = {{minHeight: 'auto'}}
               >
-                <img
+                <Img
                   src       = "https://d32ogoqmya1dw8.cloudfront.net/images/sp/library/google_earth/google_maps_hello_world.jpg"
                   className = "img-fluid"
+                  onClick={this.toggleMap}
+                />
+                <MapModal 
+                  toggle={this.toggleMap}
+                  isOpen={this.state.showMap} 
+                  src='https://developers.google.com/maps/documentation/urls/images/map-no-params.png' 
                 />
               </Panel>
 
@@ -167,3 +180,12 @@ export default class TagBuilder extends Component {
 const Result = ({results, total}) => (
   <p className="text-muted">{`${results} of ${total} results`}</p>
 )
+
+const Img = styled.img`
+  &:hover{
+    opacity: 0.5;
+    cursor: pointer;
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+  }
+`
