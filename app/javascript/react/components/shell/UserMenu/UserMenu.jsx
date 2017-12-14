@@ -30,8 +30,7 @@ const UserMenu = () => {
       </UserMenuSection>
 
       <UserMenuSection title='Utilities'>
-        <UserMenuItem title='Tag Builder' iconClass='icon-link' link='/r/tag_builder' />
-        <UserMenuItem title='Smart Tags' iconClass='icon-hair-cross' link='/r/smart_tags' />
+        <UserMenuItem title='Bullseye' iconClass='icon-hair-cross' link='/r/bullseye' />
       </UserMenuSection>
 
       <UserMenuSection title='Insights'>

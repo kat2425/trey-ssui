@@ -5,7 +5,7 @@ import { Button, ButtonGroup } from 'reactstrap'
 const TagActionBar = ({ onCSVClick, onMapClick, onDropdownSelect }) => {
   return (
     <ButtonGroup>
-      <Button onClick={onCSVClick} outline color="success">CSV Export</Button>
+      <Button onClick={onCSVClick} outline color="primary">CSV Export</Button>
       <Dropdown
         labelKey      = 'label'
         valueKey      = 'id'
@@ -13,7 +13,7 @@ const TagActionBar = ({ onCSVClick, onMapClick, onDropdownSelect }) => {
         options       = {[{label: 'Tier 2 Students', id: 1}]}
         dropdownLabel = 'Group into Export' 
       />
-      <Button onClick={onMapClick} outline color="primary">Show Results on Map</Button>
+      {/*<Button onClick={onMapClick} outline color="primary">Show Results on Map</Button>*/}
     </ButtonGroup>
   )
 }

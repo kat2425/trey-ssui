@@ -32,7 +32,7 @@ export default class Dropdown extends Component {
   render() {
     return (
       <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-        <DropdownToggle outline color="success" caret>
+        <DropdownToggle outline color="primary" caret>
           {this.props.dropdownLabel}
         </DropdownToggle>
         <DropdownMenu>
