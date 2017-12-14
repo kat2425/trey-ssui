@@ -1465,32 +1465,32 @@ export default {
   },
   operators: {
     equal: {
-      label: '==',
+      label: 'is',
       labelForFormat: '==',
       reversedOp: 'not_equal'
     },
     not_equal: {
-      label: '!=',
+      label: 'is not',
       labelForFormat: '!=',
       reversedOp: 'equal'
     },
     less: {
-      label: '<',
+      label: 'is less than',
       labelForFormat: '<',
       reversedOp: 'greater_or_equal'
     },
     less_or_equal: {
-      label: '<=',
+      label: 'is less than or equal to',
       labelForFormat: '<=',
       reversedOp: 'greater'
     },
     greater: {
-      label: '>',
+      label: 'is over',
       labelForFormat: '>',
       reversedOp: 'less_or_equal'
     },
     greater_or_equal: {
-      label: '>=',
+      label: 'is greater than or equal to',
       labelForFormat: '>=',
       reversedOp: 'less'
     },
@@ -1568,7 +1568,7 @@ export default {
       }
     },
     select_equals: {
-      label: '==',
+      label: 'is',
       labelForFormat: '==',
       formatOp: (
         field,
@@ -1585,7 +1585,7 @@ export default {
       reversedOp: 'select_not_equals'
     },
     select_not_equals: {
-      label: '!=',
+      label: 'is not',
       labelForFormat: '!=',
       formatOp: (
         field,
@@ -1602,7 +1602,7 @@ export default {
       reversedOp: 'select_equals'
     },
     select_any_in: {
-      label: 'Any in',
+      label: 'is any of',
       labelForFormat: 'IN',
       formatOp: (
         field,
@@ -1620,7 +1620,7 @@ export default {
       reversedOp: 'select_not_any_in'
     },
     select_not_any_in: {
-      label: 'Not in',
+      label: 'not any of',
       labelForFormat: 'NOT IN',
       formatOp: (
         field,
@@ -1638,7 +1638,7 @@ export default {
       reversedOp: 'select_any_in'
     },
     multiselect_equals: {
-      label: 'Equals',
+      label: 'is one of',
       labelForFormat: '==',
       formatOp: (
         field,
@@ -1656,7 +1656,7 @@ export default {
       reversedOp: 'multiselect_not_equals'
     },
     multiselect_not_equals: {
-      label: 'Not equals',
+      label: 'not one of',
       labelForFormat: '!=',
       formatOp: (
         field,
