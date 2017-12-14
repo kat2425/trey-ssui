@@ -1,12 +1,13 @@
-import React               from 'react'
-import PropTypes           from 'prop-types'
-import {observer}          from 'mobx-react'
-import {FaGlobe, FaGroup}  from 'react-icons/lib/fa'
+import React          from 'react'
+import PropTypes      from 'prop-types'
+import {observer}     from 'mobx-react'
 
-import Wrapper    from './Wrapper'
+import Wrapper        from './Wrapper'
+import SettingsButton from './SettingsButton'
 
 TagEntry.propTypes = {
-  tag: PropTypes.shape({
+  active: PropTypes.bool.isRequired,
+  tag:    PropTypes.shape({
     id:       PropTypes.string.isRequired,
     name:     PropTypes.string.isRequired,
     query:    PropTypes.object.isRequired,
@@ -17,18 +18,16 @@ TagEntry.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-function TagEntry({tag, onClick}){
-  const {name, isGlobal, group} = tag
+function TagEntry({tag, active, onClick, onSettingsClick}){
+  const {name} = tag
 
   return (
-    <Wrapper isGlobal={isGlobal} group={group} onClick={onClick}>
+    <Wrapper active={active} onClick={onClick}>
       <div>{name}</div>
-      <div>
-        {group && <small><FaGroup className="mr-2" /></small> }
-        {isGlobal && <small><FaGlobe className="mr-2" /></small> }
-      </div>
+      <SettingsButton className='text-muted' onClick={onSettingsClick} />
     </Wrapper>
   )
 }
+
 
 export default observer(TagEntry)

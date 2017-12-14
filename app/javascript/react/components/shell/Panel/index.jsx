@@ -8,8 +8,8 @@ import ScrollView from './ScrollView'
 export default function Panel({title, titleRight, children, footer, contentStyle}){
   return (
     <Wrapper>
-      <Header title={title} titleRight={titleRight} />
-      <ScrollView className='py-4' style={contentStyle}>{children}</ScrollView>
+      {title && <Header title={title} titleRight={titleRight} />}
+      <ScrollView style={contentStyle}>{children}</ScrollView>
       {footer && <footer className='mt-4'>{_.isFunction(footer) ? footer() : footer}</footer>}
     </Wrapper>
   )
