@@ -51,7 +51,7 @@ export default class TagBuilder extends Component {
         <div className="d-flex flex-column" style={{flex: 1}}>
           <SideNav title="Bullseye" onNewQuery={tagStore.toggleQueryForm}>
             {tagStore.isFetchingTags && <LoadingSpinner center />}
-            {tagStore.hasTags && <TagList tags={tagStore.orderedTags}/>}
+            <TagList tags={tagStore.orderedTags}/>
           </SideNav>
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
