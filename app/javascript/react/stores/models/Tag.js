@@ -147,7 +147,7 @@ export default class Tag {
 
       // update tag with new data
       this.update(data)
-      this.setActive()
+      this.tagStore.setSelectedTag(this)
       this.tagStore.addTag(this)
     } catch (e) {
       this.setIsError(new Error('Tag name already taken'))
