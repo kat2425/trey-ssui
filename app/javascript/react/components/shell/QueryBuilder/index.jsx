@@ -1,60 +1,27 @@
-import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
+import React         from 'react'
+import { observer }  from 'mobx-react'
 
-import config              from './config'
-import Query               from './QueryWrapper'
-import Builder             from './BuilderWrapper'
-import {fromJS}            from 'immutable'
-import {Utils}             from 'react-awesome-query-builder'
-import stringify           from 'json-stringify-safe'
-import ActionButtons       from './ActionButtons'
+import Query         from './QueryWrapper'
+import Builder       from './BuilderWrapper'
+import ActionButtons from './ActionButtons'
 
-class QueryBuilder extends Component {
-  state = {
-    value: fromJS(this.props.tree)
-  }
 
-  static propTypes = {
-    tree:     PropTypes.object,
-    schema:   PropTypes.object,
-    onChange: PropTypes.func,
-    disable:  PropTypes.bool
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(this.props.disable !== nextProps.disable){
-      this.setState({
-        disable: nextProps.disable
-      })
-    }
-  }
-
-  handleChange = (tree) => {
-    this.setState({value: tree})
-
-    const treeFormat = stringify(tree)
-    const builderFormat = stringify(Utils.queryBuilderFormat(tree, config))
-
-    this.props.onChange(treeFormat, builderFormat)
-  }
-
-  render() {
-    const { value } = this.state
-    const { onTest, onSave, disable, schema } = this.props
-
-    config.fields = schema
-    return (
-      <div>
-        <Query 
-          config={config}
-          value={value}
-          onChange={this.handleChange}
-          getChildren={props => <Builder {...props} />}
-        />
-        <ActionButtons disabled={disable} onTest={onTest} onSave={onSave} />
-      </div>
-    )
-  }
+function QueryBuilder({tag}){ 
+  return (
+    <div>
+      <Query 
+        config      = {tag.config}
+        value       = {tag.treeQuery}
+        onChange    = {tag.setTreeQuery}
+        getChildren = {props => <Builder {...props} />}
+      />
+      <ActionButtons 
+        disabled = {false}
+        onTest   = {tag.testTag}
+        onSave   = {tag.updateTag}
+      />
+    </div>
+  )
 }
 
-export default QueryBuilder
+export default observer(QueryBuilder)
