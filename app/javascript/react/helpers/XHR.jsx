@@ -14,7 +14,7 @@ const config = (port) => ({
   timeout: 30000,
   headers: {
     'x-ss-api-key': 'd706f43dab55f958e7926b7f7fe9c47cd351718f8f431fe3',
-    'x-ss-token':   '12df9f96d388580aed484e0dbe3ff827'
+    'x-ss-token':   window.SSUser && window.SSUser.accessToken
   }
 })
 
