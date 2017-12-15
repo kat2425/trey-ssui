@@ -1,31 +1,36 @@
 import React      from 'react'
 import PropTypes  from 'prop-types'
 import {observer} from 'mobx-react'
+import _          from 'lodash'
+
 import TagEntry   from '../TagEntry'
 import Wrapper    from './Wrapper'
-import Header     from './Header'
 import ScrollView from './ScrollView'
 
 TagList.propTypes = {
-  activeTagId:    PropTypes.string.isRequired,
   arrayWithShape: PropTypes.arrayOf(
     PropTypes.shape({
       id:       PropTypes.string.isRequired,
       name:     PropTypes.string.isRequired,
-      query:    PropTypes.object.isRequired,
-      isGlobal: PropTypes.bool.isRequired,
-      user:     PropTypes.bool.isRequired,
-      group:    PropTypes.bool.isRequired
+      isActive: PropTypes.bool.isRequired
     }).isRequired
-  ),
-  onClick: PropTypes.func.isRequired
+  )
 }
 
-function TagList({activeTagId, tags, onClick}) {
+function TagList({tags}) {
+  if(_.isEmpty(tags)) return <p className='mt-5 text-center text-muted'>No saved tags</p>
+
   return (
     <Wrapper>
       <ScrollView>
-        {tags.map(tag => <TagEntry active={activeTagId === tag.id} key={tag.id} tag={tag} onClick={() => onClick(tag)} />)}
+        {tags.map(tag => (
+          <TagEntry 
+            active={tag.isActive} 
+            key={tag.id} 
+            tag={tag} 
+            onClick={tag.setActive} 
+          />
+        ))}
       </ScrollView>
     </Wrapper>
   )

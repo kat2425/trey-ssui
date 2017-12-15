@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes          from 'prop-types'
+import uuid               from 'uuid'
+
 import {
   ButtonDropdown, DropdownToggle, 
   DropdownMenu, DropdownItem
@@ -39,7 +41,7 @@ export default class Dropdown extends Component {
           { this.props.options &&
             this.props.options.map((option) => {
               return (
-                <span onClick={() => this.props.onSelect(option[this.props.valueKey])}>
+                <span key={uuid()} onClick={() => this.props.onSelect(option[this.props.valueKey])}>
                   <DropdownItem key={option.id}>{option[this.props.labelKey]}</DropdownItem>
                 </span>
               )

@@ -7,6 +7,7 @@ import LoadingSpinner     from 'ui/shell/LoadingSpinner'
 import Panel              from 'ui/shell/Panel'
 import StudentList        from 'ui/shell/StudentResults/StudentList'
 import tagStore           from 'stores/TagStore'
+import uuid               from 'uuid'
 
 import SideNav            from './SideNav'
 import Wrapper            from './Wrapper'
@@ -21,35 +22,9 @@ import {
 import {
   TagList, 
   TagActionBar,
-  MapModal
+  MapModal,
+  NewQueryModal
 } from 'ui/shell/SmartTags/'
-
-const tagPlaceholder = [
-  {
-    id:       '0',
-    name:     'Tag One',
-    query:    {json: 'goes_here'},
-    isGlobal: true,
-    user:     true,
-    group:    true
-  },
-  {
-    id:       '1',
-    name:     'Tag Two',
-    query:    {json: 'goes here as well'},
-    isGlobal: false,
-    user:     true,
-    group:    false
-  },
-  {
-    id:       '3',
-    name:     'what is this test',
-    query:    {all: 'test'},
-    isGlobal: false,
-    user:     true,
-    group:    true
-  }
-]
 
 @observer
 export default class TagBuilder extends Component {
@@ -59,29 +34,55 @@ export default class TagBuilder extends Component {
     this.setState({ showMap: !this.state.showMap })
   }
 
+  componentDidMount(){
+    tagStore.fetchTags()
+  }
+
   render() {
+    const {selectedTag} = tagStore
+    const icStyle = {
+      cursor:   'pointer',
+      fontSize: 18,
+      color:    '#3f9fcf'
+    }
+
     return (
       <Wrapper>
         <div className="d-flex flex-column" style={{flex: 1}}>
-          <SideNav title="Bullseye" onNewQuery={() => console.log('NEW QUERY')}>
-            <TagList
-              tags={tagPlaceholder}
-              activeTagId={tagStore.activeTagId}
-              onClick={tagStore.handleOnTagChange}
-            />
+          <SideNav title="Bullseye" onNewQuery={tagStore.toggleQueryForm}>
+            {tagStore.isFetchingTags && <LoadingSpinner center />}
+            {tagStore.hasTags && <TagList tags={tagStore.orderedTags}/>}
           </SideNav>
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
           <ActionBar>
-            <div className='d-flex flex-row align-items-center'>
-              <h5>Tag One</h5>
-            </div>
-            <div className='d-flex flex-row align-items-center justify-content-end'>
-              <FaEdit className='mr-4' style={{cursor: 'pointer', fontSize: 18, color:'#3f9fcf'}}/>
-              <FaTrashO className='mr-4' style={{cursor: 'pointer', fontSize: 18, color:'#3f9fcf'}}/>              
-              <TagActionBar />
-            </div>
+            {selectedTag && [
+              <div 
+                key={uuid()}
+                className='d-flex flex-row align-items-center'
+              >
+                <h5>{selectedTag.name}</h5>
+              </div>
+              ,
+              <div key={uuid} 
+                className='d-flex flex-row align-items-center justify-content-end'
+              >
+                <FaEdit 
+                  className='mr-4' 
+                  style={icStyle}
+                />
+                <FaTrashO 
+                  className='mr-4' 
+                  style={icStyle}
+                  onClick={selectedTag.deleteTag}
+                />              
+                <TagActionBar />
+              </div>
+            ]}
           </ActionBar>
+
+          {!selectedTag && <p className='mt-5 text-muted text-center'>No Tag Selected</p>}
+
           <div
             className="d-flex flex-row px-2 py-4"
             style={{
@@ -95,83 +96,87 @@ export default class TagBuilder extends Component {
               className="d-flex flex-column px-4 py-2"
               style={{flex: 3, height: '100%'}}
             >
-              <Panel>
-                {tagStore.isFetchingSchema ? (
-                  <LoadingSpinner center />
-                ) : (
-                  <QueryBuilder
-                    tree     = {tagStore.tree}
-                    schema   = {tagStore.schema}
-                    onChange = {tagStore.handleChange}
-                    onTest   = {tagStore.testTag}
-                    onSave   = {tagStore.saveTag}
-                    disable  = {tagStore.disable}
-                  />
-                )}
-              </Panel>
+              {selectedTag && (
+                <Panel>
+                  {selectedTag.isFetchingSchema && <LoadingSpinner center />}
+                  {selectedTag.showQueryBuilder && <QueryBuilder tag={selectedTag}/>}
+                </Panel>
+              )}
             </div>
             <div
               className="d-flex flex-column px-2 py-2"
               style={{flex: 1.5, height: '100%', overflow: 'auto'}}
             >
-              <Panel 
-                contentStyle={{
-                  margin:    20,
-                  minHeight: 100,
-                  textAlign: 'center'
-                }}
-              >
-                {tagStore.isFetchingResults && <LoadingSpinner center />}
-
-                <h1 
-                  className='rounded-circle text-center d-inline-block mb-2 p-4' 
-                  style={{fontSize: 40, border: '1px solid transparent'}} 
+              {selectedTag && (
+                <Panel 
+                  contentStyle={{
+                    margin:    20,
+                    minHeight: 'auto',
+                    textAlign: 'center'
+                  }}
                 >
-                  {tagStore.students.length || 245}
-                </h1>
-
-                <p>of your students that are age <b>12-16</b> and living in <b>Jackson, Mississippi</b> passed with grade average above <b>60%</b></p>
-                
-              </Panel>
-
-
-              <Panel
-                className    = "my-2 pt-4"
-                title        = "Map"
-                titleRight   = {() => <FaExpand onClick={this.toggleMap} style={{cursor: 'pointer'}} />}
-                contentStyle = {{minHeight: 'auto'}}
-              >
-                <Img
-                  src       = "https://d32ogoqmya1dw8.cloudfront.net/images/sp/library/google_earth/google_maps_hello_world.jpg"
-                  className = "img-fluid"
-                  onClick={this.toggleMap}
-                />
-                <MapModal 
-                  toggle={this.toggleMap}
-                  isOpen={this.state.showMap} 
-                  src='https://developers.google.com/maps/documentation/urls/images/map-no-params.png' 
-                />
-              </Panel>
-
-              <Panel
-                className="pt-4"
-                title="Students"
-                titleRight={() => (
-                  <Result
-                    results = {tagStore.students.length}
-                    total   = {tagStore.students.length}
+                  {selectedTag.isFetchingStudents 
+                    ? <LoadingSpinner center />
+                    : selectedTag.hasStudents 
+                      ? (
+                        <h1 
+                          className='rounded-circle text-center d-inline-block mb-2 p-4' 
+                          style={{fontSize: 40, border: '1px solid transparent'}} 
+                        >
+                          {selectedTag.students.length}
+                        </h1>
+                      )
+                      : <p className='my-3 text-muted text-center'>.  .  .</p>
+                  }
+                  <p>{selectedTag.humanStringFormat}</p>
+                </Panel>
+              )}
+              {selectedTag && (
+                <Panel
+                  className    = "my-2 pt-4"
+                  title        = "Map"
+                  titleRight   = {() => <FaExpand onClick={tagStore.toggleMap} style={{cursor: 'pointer'}} />}
+                  contentStyle = {{minHeight: 'auto'}}
+                >
+                  <Img
+                    src       = "https://d32ogoqmya1dw8.cloudfront.net/images/sp/library/google_earth/google_maps_hello_world.jpg"
+                    className = "img-fluid"
+                    onClick={tagStore.toggleMap}
                   />
-                )}
-              >
-                {tagStore.isFetchingResults && <LoadingSpinner center />}
-
-                {tagStore.hasResults && (
-                  <StudentList students={tagStore.students} />
-                )}
-              </Panel>
+                  <MapModal 
+                    toggle={tagStore.toggleMap}
+                    isOpen={tagStore.showMap} 
+                    src='https://developers.google.com/maps/documentation/urls/images/map-no-params.png' 
+                  />
+                </Panel>
+              )}
+              {selectedTag && (
+                <Panel
+                  className="pt-4"
+                  title="Students"
+                  titleRight={() => (
+                    <Result
+                      results = {selectedTag.students.length}
+                      total   = {selectedTag.students.length}
+                    />
+                  )}
+                  contentStyle={{ minHeight: 'auto' }}
+                >
+                  {selectedTag.isFetchingStudents && <LoadingSpinner center />}
+                  {selectedTag.hasStudents 
+                    ? <StudentList students={selectedTag.students} />
+                    : <p className='my-5 text-muted text-center'>No Students</p>
+                  }
+                </Panel>
+              )}
             </div>
           </div>
         </div>
+        <NewQueryModal
+          toggle   = {tagStore.toggleQueryForm}
+          isOpen   = {tagStore.showQueryForm}
+          onCreate = {tagStore.createTagWithName}
+        />
       </Wrapper>
     )
   }
