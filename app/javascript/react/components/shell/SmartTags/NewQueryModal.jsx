@@ -24,41 +24,47 @@ export default class NewQueryModal extends Component{
     })
   }
 
-  render(){
-    const { isOpen, toggle, onCreate } = this.props
+  render() {
+    const {isOpen, toggle, onCreate} = this.props
 
     return (
-      <Modal 
-        isOpen={isOpen} 
-        toggle={toggle} 
-        size='sm' 
-        className='h-100 d-flex flex-column justify-content-center my-0'
+      <Modal
+        isOpen={isOpen}
+        toggle={toggle}
+        size="sm"
+        className="h-100 d-flex flex-column justify-content-center my-0"
       >
         <ModalBody>
-          <Form>
+          <Form
+            onSubmit={(e) => {
+              onCreate(this.state.name)
+              e.preventDefault()
+            }}
+          >
             <FormGroup>
-              <Input 
-                onChange    = {this.handleChange}
-                type        = 'text'
-                name        = 'name'
-                placeholder = 'Enter tag name'
-                valid       =  {this.state.valid}
-                size        = 'lg'
+              <Input
+                onChange={this.handleChange}
+                type="text"
+                name="name"
+                placeholder="Enter tag name"
+                valid={this.state.valid}
+                size="lg"
                 required
               />
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter style={{border: 0, padding: '10px 15px'}}>
-          <Button 
-            disabled={!this.state.valid} 
-            color="primary" 
+          <Button
+            disabled={!this.state.valid}
+            color="primary"
             onClick={() => onCreate(this.state.name)}
           >
             Create
           </Button>{' '}
-
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
         </ModalFooter>
       </Modal>
     )
