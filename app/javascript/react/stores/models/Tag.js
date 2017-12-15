@@ -180,6 +180,8 @@ export default class Tag {
       this.setIsError(false)
 
       await sxhr.put(`/smart_tags/${this.id}`, this.tagBody)
+
+      UiStore.addNotification('Tag', 'saved successfully')
     } catch (e) {
       this.setIsError(e)
       console.error(e)
