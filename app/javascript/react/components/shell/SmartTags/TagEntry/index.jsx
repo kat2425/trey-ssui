@@ -6,24 +6,20 @@ import Wrapper        from './Wrapper'
 import SettingsButton from './SettingsButton'
 
 TagEntry.propTypes = {
-  active: PropTypes.bool.isRequired,
+  active: PropTypes.bool,
   tag:    PropTypes.shape({
     id:       PropTypes.string.isRequired,
     name:     PropTypes.string.isRequired,
-    query:    PropTypes.object.isRequired,
-    isGlobal: PropTypes.bool.isRequired,
-    user:     PropTypes.bool.isRequired,
-    group:    PropTypes.bool.isRequired
+    isActive: PropTypes.bool.isRequired
   }).isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick:         PropTypes.func.isRequired,
+  onSettingsClick: PropTypes.func
 }
 
 function TagEntry({tag, active, onClick, onSettingsClick}){
-  const {name} = tag
-
   return (
     <Wrapper active={active} onClick={onClick}>
-      <div>{name}</div>
+      <div>{tag.name}</div>
       <SettingsButton className='text-muted' onClick={onSettingsClick} />
     </Wrapper>
   )
