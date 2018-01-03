@@ -10,7 +10,7 @@ const QueryView = ({tag}) => (
       <ReactJson json={tag.humanStringFormat}/>
     </Pre>
 
-    <h5 className='mt-4'>uilder Format </h5>
+    <h5 className='mt-4'>Builder Format </h5>
     <Pre>
       <ReactJson json={tag.queryFormat}/>
     </Pre>
