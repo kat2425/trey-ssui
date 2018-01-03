@@ -23,7 +23,7 @@ export default {
       label: 'And',
       formatConj: (children, conj, isForDisplay) => {
         return children.size > 1
-          ? '(' + children.join(' ' + (isForDisplay ? 'AND' : '&&') + ' ') + ')'
+          ? '(' + children.join(' ' + (isForDisplay ? 'and' : '&&') + ' ') + ')'
           : children.first()
       }
     },
@@ -31,7 +31,7 @@ export default {
       label: 'Or',
       formatConj: (children, conj, isForDisplay) => {
         return children.size > 1
-          ? '(' + children.join(' ' + (isForDisplay ? 'OR' : '||') + ' ') + ')'
+          ? '(' + children.join(' ' + (isForDisplay ? 'or' : '||') + ' ') + ')'
           : children.first()
       }
     }
@@ -1467,32 +1467,104 @@ export default {
     equal: {
       label: 'is',
       labelForFormat: '==',
-      reversedOp: 'not_equal'
+      reversedOp: 'not_equal',
+      formatOp: (
+        field,
+        op,
+        value,
+        valueSrc,
+        valueType,
+        opDef,
+        operatorOptions,
+        isForDisplay
+      ) => {
+        return `${field} is ${value}`
+      }
     },
     not_equal: {
       label: 'is not',
       labelForFormat: '!=',
-      reversedOp: 'equal'
+      reversedOp: 'equal',
+      formatOp: (
+        field,
+        op,
+        value,
+        valueSrc,
+        valueType,
+        opDef,
+        operatorOptions,
+        isForDisplay
+      ) => {
+        return `${field} is not ${value}`
+      }
     },
     less: {
       label: 'is less than',
       labelForFormat: '<',
-      reversedOp: 'greater_or_equal'
+      reversedOp: 'greater_or_equal',
+      formatOp: (
+        field,
+        op,
+        value,
+        valueSrc,
+        valueType,
+        opDef,
+        operatorOptions,
+        isForDisplay
+      ) => {
+        return `${field} is less than ${value}`
+      }
     },
     less_or_equal: {
       label: 'is less than or equal to',
       labelForFormat: '<=',
-      reversedOp: 'greater'
+      reversedOp: 'greater',
+      formatOp: (
+        field,
+        op,
+        value,
+        valueSrc,
+        valueType,
+        opDef,
+        operatorOptions,
+        isForDisplay
+      ) => {
+        return `${field} is less than or equal to ${value}`
+      }
     },
     greater: {
       label: 'is over',
       labelForFormat: '>',
-      reversedOp: 'less_or_equal'
+      reversedOp: 'less_or_equal',
+      formatOp: (
+        field,
+        op,
+        value,
+        valueSrc,
+        valueType,
+        opDef,
+        operatorOptions,
+        isForDisplay
+      ) => {
+        return `${field} is over ${value}`
+      }
     },
     greater_or_equal: {
       label: 'is greater than or equal to',
       labelForFormat: '>=',
-      reversedOp: 'less'
+      reversedOp: 'less',
+      formatOp: (
+        field,
+        op,
+        value,
+        valueSrc,
+        valueType,
+        opDef,
+        operatorOptions,
+        isForDisplay
+      ) => {
+        return `${field} is ${value}`
+      }
     },
 
     //between: {
@@ -1545,7 +1617,7 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        return isForDisplay ? `${field} IS EMPTY` : `!${field}`
+        return isForDisplay ? `${field} is empty` : `!${field}`
       }
     },
     is_not_empty: {
@@ -1564,7 +1636,7 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        return isForDisplay ? `${field} IS NOT EMPTY` : `!!${field}`
+        return isForDisplay ? `${field} is not empty` : `!!${field}`
       }
     },
     select_equals: {
@@ -1580,7 +1652,7 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        return `${field} == ${value}`
+        return `${field} is ${value}`
       },
       reversedOp: 'select_not_equals'
     },
@@ -1597,7 +1669,7 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        return `${field} != ${value}`
+        return `${field} is not ${value}`
       },
       reversedOp: 'select_equals'
     },
@@ -1614,8 +1686,8 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        if (valueSrc == 'value') return `${field} IN (${values.join(', ')})`
-        else return `${field} IN (${values})`
+        if (valueSrc == 'value') return `${field} in (${values.join(', ')})`
+        else return `${field} in (${values})`
       },
       reversedOp: 'select_not_any_in'
     },
@@ -1632,8 +1704,8 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        if (valueSrc == 'value') return `${field} NOT IN (${values.join(', ')})`
-        else return `${field} NOT IN (${values})`
+        if (valueSrc == 'value') return `${field} not in (${values.join(', ')})`
+        else return `${field} not in (${values})`
       },
       reversedOp: 'select_any_in'
     },
@@ -1650,8 +1722,8 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        if (valueSrc == 'value') return `${field} == [${values.join(', ')}]`
-        else return `${field} == ${values}`
+        if (valueSrc == 'value') return `${field} is equal to [${values.join(', or ')}]`
+        else return `${field} is equal to ${values}`
       },
       reversedOp: 'multiselect_not_equals'
     },
@@ -1668,8 +1740,8 @@ export default {
         operatorOptions,
         isForDisplay
       ) => {
-        if (valueSrc == 'value') return `${field} != [${values.join(', ')}]`
-        else return `${field} != ${values}`
+        if (valueSrc == 'value') return `${field} is not equal to [${values.join(', or ')}]`
+        else return `${field} not equal to ${values}`
       },
       reversedOp: 'multiselect_equals'
     },
@@ -1834,7 +1906,7 @@ export default {
     setDefaultFieldAndOp: false,
     maxNesting: 10,
     fieldSeparator: '.',
-    fieldSeparatorDisplay: '->',
+    fieldSeparatorDisplay: ', ',
     showLabels: false,
     valueLabel: 'Value',
     valuePlaceholder: 'Value',
