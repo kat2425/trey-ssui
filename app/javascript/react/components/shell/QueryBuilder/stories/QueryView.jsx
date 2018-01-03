@@ -1,19 +1,25 @@
-import React     from 'react'
-import Pre       from './Pre'
-import ReactJson from 'react-json-pretty'
+import React      from 'react'
+import Pre        from './Pre'
+import ReactJson  from 'react-json-pretty'
+import {observer} from 'mobx-react'
 
-const QueryView = ({tree, builderFormat}) => (
+const QueryView = ({tag}) => (
   <div className='my-4'> 
-    <h5>Builder Format </h5>
+    <h5>Human String Format</h5>
     <Pre>
-      <ReactJson json={builderFormat}/>
+      <ReactJson json={tag.humanStringFormat}/>
+    </Pre>
+
+    <h5 className='mt-4'>uilder Format </h5>
+    <Pre>
+      <ReactJson json={tag.queryFormat}/>
     </Pre>
 
     <h5 className='mt-4'>Tree Format</h5>
     <Pre>
-      <ReactJson json={tree}/>
+      <ReactJson json={tag.treeFormat}/>
     </Pre>
   </div>
 )
 
-export default QueryView
+export default observer(QueryView)
