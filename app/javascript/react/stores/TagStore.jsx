@@ -129,6 +129,8 @@ export class TagStore {
     this.selectedTag && this.selectedTag.createTag(name)
   }
   @action setSelectedTag = (tag) => {
+    if(this.selectedTag === tag) return 
+
     this.isSelectingTag = true
     this.selectedTag = null
 
