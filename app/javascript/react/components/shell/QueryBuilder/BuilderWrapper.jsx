@@ -1,12 +1,8 @@
-import React       from 'react'
-import PropTypes   from 'prop-types'
-import { Builder } from 'react-awesome-query-builder'
+import React        from 'react'
+import { Builder }  from 'react-awesome-query-builder'
+import { observer } from 'mobx-react'
 
-BuilderWrapper.propTypes = {
-  tree:   PropTypes.object,
-  config: PropTypes.object
-}
-export default function BuilderWrapper(props) {
+function BuilderWrapper(props) {
   return (
     <div className='query-builder' className='m-0'>
       <Builder {...props} />
@@ -14,3 +10,4 @@ export default function BuilderWrapper(props) {
   )
 }
 
+export default observer(BuilderWrapper)

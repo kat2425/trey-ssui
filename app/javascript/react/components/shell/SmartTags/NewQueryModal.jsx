@@ -1,4 +1,5 @@
 import React, {Component}   from 'react'
+import { observer } from 'mobx-react'
 import { 
   Modal, 
   ModalBody, 
@@ -6,9 +7,11 @@ import {
   Form,
   FormGroup,
   Button,
-  Input
+  Input,
+  FormFeedback
 } from 'reactstrap'
 
+@observer
 export default class NewQueryModal extends Component{
   state = { name: ''}
 
@@ -25,19 +28,19 @@ export default class NewQueryModal extends Component{
   }
 
   render() {
-    const {isOpen, toggle, onCreate} = this.props
+    const {store} = this.props
 
     return (
       <Modal
-        isOpen={isOpen}
-        toggle={toggle}
+        isOpen={store.showQueryForm}
+        toggle={store.toggleQueryForm}
         size="sm"
         className="h-100 d-flex flex-column justify-content-center my-0"
       >
         <ModalBody>
           <Form
             onSubmit={(e) => {
-              onCreate(this.state.name)
+              store.createTag(this.state.name)
               e.preventDefault()
             }}
           >
@@ -51,6 +54,9 @@ export default class NewQueryModal extends Component{
                 size="lg"
                 required
               />
+              {store.selectedTag && store.selectedTag.isError && (
+                <FormFeedback style={{color: '#D43545'}}>{store.selectedTag.isError.message}</FormFeedback>
+              )}
             </FormGroup>
           </Form>
         </ModalBody>
@@ -58,11 +64,11 @@ export default class NewQueryModal extends Component{
           <Button
             disabled={!this.state.valid}
             color="primary"
-            onClick={() => onCreate(this.state.name)}
+            onClick={() => store.createTag(this.state.name)}
           >
             Create
           </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
+          <Button color="secondary" onClick={store.toggleQueryForm}>
             Cancel
           </Button>
         </ModalFooter>
