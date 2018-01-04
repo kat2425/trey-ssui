@@ -28,7 +28,7 @@ function TagList({tags}) {
             active={tag.isActive} 
             key={tag.id} 
             tag={tag} 
-            onClick={tag.setActive} 
+            onClick={tag.handleOnTagClick} 
           />
         ))}
       </ScrollView>

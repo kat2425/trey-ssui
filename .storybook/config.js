@@ -3,6 +3,7 @@ import {withKnobs}                 from '@storybook/addon-knobs'
 
 import '../app/javascript/packs/theme/toolkit.css'
 import '../app/javascript/packs/theme/temp.css'
+import 'antd/dist/antd.css'
 
 window.jQuery = require('jquery')
 window.$      = window.jQuery

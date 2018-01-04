@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {observer}         from 'mobx-react'
 import styled             from 'styled-components'
+import { Popconfirm }     from 'antd'
 
 import QueryBuilder       from 'ui/shell/QueryBuilder'
 import LoadingSpinner     from 'ui/shell/LoadingSpinner'
@@ -23,8 +24,9 @@ import {
   TagList, 
   TagActionBar,
   MapModal,
-  NewQueryModal
-} from 'ui/shell/SmartTags/'
+  NewQueryModal,
+  ModifiedIndicator
+} from 'ui/shell/SmartTags'
 
 @observer
 export default class TagBuilder extends Component {
@@ -38,6 +40,15 @@ export default class TagBuilder extends Component {
     tagStore.fetchTags()
   }
 
+  nameStyle = (isNew) => {
+    if(!isNew) return
+
+    return {
+      color:     '#777',
+      fontStyle: 'italic'
+    }
+  }
+
   render() {
     const {selectedTag} = tagStore
     const icStyle = {
@@ -46,10 +57,11 @@ export default class TagBuilder extends Component {
       color:    '#3f9fcf'
     }
 
+
     return (
       <Wrapper>
         <div className="d-flex flex-column" style={{flex: 1}}>
-          <SideNav title="Bullseye" onNewQuery={tagStore.toggleQueryForm}>
+          <SideNav title="Bullseye" onNewQuery={tagStore.handleOnNewQuery}>
             {tagStore.isFetchingTags && <LoadingSpinner center />}
             <TagList tags={tagStore.orderedTags}/>
           </SideNav>
@@ -61,7 +73,9 @@ export default class TagBuilder extends Component {
                 key={uuid()}
                 className='d-flex flex-row align-items-center'
               >
-                <h5>{selectedTag.name}</h5>
+                <h5 style={this.nameStyle(selectedTag.isNew)}>
+                  <ModifiedIndicator tag={selectedTag}>{selectedTag.name}</ModifiedIndicator>
+                </h5>
               </div>
               ,
               <div key={uuid} 
@@ -71,11 +85,16 @@ export default class TagBuilder extends Component {
                   className='mr-4' 
                   style={icStyle}
                 />
-                <FaTrashO 
-                  className='mr-4' 
-                  style={icStyle}
-                  onClick={selectedTag.deleteTag}
-                />              
+
+                <Popconfirm 
+                  title="Are you sure delete this tag?" 
+                  onConfirm={selectedTag.deleteTag} 
+                >
+                  <FaTrashO 
+                    className='mr-4' 
+                    style={icStyle}
+                  />              
+                </Popconfirm>
                 <TagActionBar />
               </div>
             ]}
@@ -97,10 +116,10 @@ export default class TagBuilder extends Component {
               style={{flex: 3, height: '100%'}}
             >
               {selectedTag && (
-                <Panel>
+                <div>
                   {selectedTag.isFetchingSchema && <LoadingSpinner center />}
                   {selectedTag.showQueryBuilder && <QueryBuilder tag={selectedTag}/>}
-                </Panel>
+                </div>
               )}
             </div>
             <div
@@ -172,11 +191,7 @@ export default class TagBuilder extends Component {
             </div>
           </div>
         </div>
-        <NewQueryModal
-          toggle   = {tagStore.toggleQueryForm}
-          isOpen   = {tagStore.showQueryForm}
-          onCreate = {tagStore.createTagWithName}
-        />
+        <NewQueryModal store={tagStore} />
       </Wrapper>
     )
   }

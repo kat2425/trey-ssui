@@ -6,7 +6,7 @@ import {
 } from 'mobx'
 
 import { SCHEMA_XHR as sxhr } from 'helpers/XHR'
-import { setter, toggle }     from 'mobx-decorators'
+import { setter }             from 'mobx-decorators'
 import _                      from 'lodash'
 
 import Tag                    from 'stores/models/Tag'
@@ -52,9 +52,9 @@ export class TagStore {
       this.setIsFetchingTags(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.get('/smart_tags')
+      const {data:tags} = await sxhr.get('/smart_tags')
 
-      this.updateTags(data)
+      tags.forEach(this.updateTagFromServer)
     } catch (e) {
       this.setIsError(e)
       console.error(e)
@@ -79,30 +79,15 @@ export class TagStore {
     }
   }
 
-  @action updateTags(tags) {
-    tags.forEach(this.createTag)
-  }
-
-  @action createTag = tag => {
+  @action updateTagFromServer = tag => {
     if (this.tags.has(tag.id)) return
-    this.tags.set(tag.id, new Tag(null, this, tag))
+    this.tags.set(tag.id, new Tag(false, this, tag))
   }
 
+  @action handleOnNewQuery = () => {
+    const newTag = new Tag(true, this)
 
-  /*
-   * Creates a new Tag with name. Tag names have to be unique. 
-   *
-   * When a Tag is instantiated, it checks with the server to see if the name provided is valid. 
-   * If valid, it creates the tag else it throws an error.
-   */
-  @action createTagWithName = name => {
-    if(!name) {
-      this.setError(new Error('Tag name is required'))
-      return 
-    }
-
-    this.toggleQueryForm()
-    new Tag(name,this)
+    this.tags.set(newTag.id, newTag)
   }
 
   /*
@@ -132,6 +117,15 @@ export class TagStore {
 
   @action toggleQueryForm = () => {
     this.showQueryForm = !this.showQueryForm
+  }
+
+  @action createTag = (name) => {
+    if(!name) {
+      this.setError(new Error('Tag name required'))
+      return 
+    }
+
+    this.selectedTag && this.selectedTag.createTag(name)
   }
 }
 
