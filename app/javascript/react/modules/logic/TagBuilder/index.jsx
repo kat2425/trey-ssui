@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {observer}         from 'mobx-react'
 import styled             from 'styled-components'
 import { Popconfirm }     from 'antd'
+import _                  from 'lodash'
 
 import QueryBuilder       from 'ui/shell/QueryBuilder'
 import LoadingSpinner     from 'ui/shell/LoadingSpinner'
@@ -63,7 +64,10 @@ export default class TagBuilder extends Component {
         <div className="d-flex flex-column" style={{flex: 1}}>
           <SideNav title="Bullseye" onNewQuery={tagStore.handleOnNewQuery}>
             {tagStore.isFetchingTags && <LoadingSpinner center />}
-            <TagList tags={tagStore.orderedTags}/>
+            {!tagStore.isFetchingTags && _.isEmpty(tagStore.orderedTags) && 
+              <p className='mt-5 text-center text-muted'>No saved tags</p>
+            }
+            {!_.isEmpty(tagStore.orderedTags) && <TagList tags={tagStore.orderedTags}/>}
           </SideNav>
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
@@ -100,7 +104,10 @@ export default class TagBuilder extends Component {
             ]}
           </ActionBar>
 
-          {!selectedTag && <p className='mt-5 text-muted text-center'>No Tag Selected</p>}
+          {tagStore.isSelectingTag && <LoadingSpinner center /> }
+          {!selectedTag && !tagStore.isSelectingTag && 
+              <p className='mt-5 text-muted text-center'>No Tag Selected</p>
+          }
 
           <div
             className="d-flex flex-row px-2 py-4"
@@ -117,7 +124,6 @@ export default class TagBuilder extends Component {
             >
               {selectedTag && (
                 <div>
-                  {selectedTag.isFetchingSchema && <LoadingSpinner center />}
                   {selectedTag.showQueryBuilder && <QueryBuilder tag={selectedTag}/>}
                 </div>
               )}

@@ -1,7 +1,6 @@
 import React      from 'react'
 import PropTypes  from 'prop-types'
 import {observer} from 'mobx-react'
-import _          from 'lodash'
 
 import TagEntry   from '../TagEntry'
 import Wrapper    from './Wrapper'
@@ -18,8 +17,6 @@ TagList.propTypes = {
 }
 
 function TagList({tags}) {
-  if(_.isEmpty(tags)) return <p className='mt-5 text-center text-muted'>No saved tags</p>
-
   return (
     <Wrapper>
       <ScrollView>
