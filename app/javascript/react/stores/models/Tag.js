@@ -15,6 +15,7 @@ import userStore  from 'stores/UserStore'
 import UiStore    from 'stores/UiStore'
 import _          from 'lodash'
 import uuid       from 'uuid'
+import moment     from 'moment'
 
 
 import stringify from 'json-stringify-safe'
@@ -111,7 +112,7 @@ export default class Tag {
   // Actions
   @action init = (isNew, parentStore, json) => {
     this.id        = uuid()
-    this.createdAt = new Date()
+    this.createdAt = moment().format()
     this.isNew     = isNew
     this.tagStore  = parentStore
 
