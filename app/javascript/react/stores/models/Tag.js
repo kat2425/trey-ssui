@@ -168,6 +168,11 @@ export default class Tag {
 
   @action deleteTag = async() => {
     try {
+      if(this.isNew){
+        this.tagStore.deleteTag(this)
+        return
+      }
+
       await sxhr.delete(`/smart_tags/${this.id}`)
       this.tagStore.deleteTag(this)
 
