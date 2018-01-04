@@ -1432,7 +1432,11 @@ export default {
       widgets: {
         select: {
           operators: ['select_equals', 'select_not_equals'],
-          widgetProps: {}
+          widgetProps: {
+            customProps: {
+              showSearch: true
+            }
+          }
         },
         multiselect: {
           operators: ['select_any_in', 'select_not_any_in'],
@@ -1886,7 +1890,10 @@ export default {
         return isForDisplay ? valFieldDef.label || val : val
       },
       valueLabel: 'Field to compare',
-      valuePlaceholder: 'Select field to compare'
+      valuePlaceholder: 'Select field to compare',
+      customProps: {
+        showSearch: true
+      }
     }
   },
   settings: {
@@ -1900,6 +1907,9 @@ export default {
     renderSize: 'small',
     renderConjsAsRadios: false,
     renderFieldAndOpAsDropdown: false,
+    customFieldSelectProps: {
+      showSearch: true
+    },
     setOpOnChangeField: ['keep', 'default'], // 'default' (default if present), 'keep' (keep prev from last field), 'first', 'none'
     clearValueOnChangeField: false, //false - if prev & next fields have same type (widget), keep
     clearValueOnChangeOp: false,
