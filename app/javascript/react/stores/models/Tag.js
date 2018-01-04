@@ -2,8 +2,7 @@ import {
   observable, 
   action, 
   computed, 
-  autorun,
-  toJS
+  autorun
 } from 'mobx'
 import {
   SCHEMA_XHR as sxhr, 
@@ -15,12 +14,16 @@ import { setter } from 'mobx-decorators'
 import userStore  from 'stores/UserStore'
 import UiStore    from 'stores/UiStore'
 import _          from 'lodash'
+import uuid       from 'uuid'
+
 
 import stringify from 'json-stringify-safe'
 import {Utils}   from 'react-awesome-query-builder'
 import config    from 'ui/shell/QueryBuilder/config'
 
 const {queryBuilderFormat, queryString} = Utils
+
+const TAG_NAME_PLACEHOLDER = 'Untitled Tag'
 
 export default class Tag {
   id       = null
@@ -34,22 +37,18 @@ export default class Tag {
   @setter @observable isEditing          = false
   @setter @observable isError            = false
   @setter @observable isNew              = false
+  @setter @observable isModified         = false
 
 
   @setter @observable name               = null
+  @observable createdAt                  = null 
   @observable query                      = null
   @observable treeQuery                  = null
   @observable students                   = observable.shallowArray()
 
-  constructor(name, store, json = {}){
-    if(name) {
-      this.createTag(name)
-    }
-
-    this.tagStore = store
-    this.update(json)
-
-    this.autoErrorNotifier()
+  constructor(isNew = false, parentStore, json = {}){
+    this.init(isNew, parentStore, json)
+    this.initAutoruns()
   }
 
   // Autoruns
@@ -99,7 +98,7 @@ export default class Tag {
     return !this.isFetchingStudents && !_.isEmpty(this.students)
   }
 
-  @computed get tagBody(){
+  @computed get tagAsJson(){
     return {
       user_id:     userStore.user.id,
       district_id: userStore.user.districtID,
@@ -110,12 +109,25 @@ export default class Tag {
   }
 
   // Actions
-  @action testTag = async() => {
-    if(!this.isValid) {
-      this.setIsError(new Error('Not a valid tag. Missing query field'))
-      return
+  @action init = (isNew, parentStore, json) => {
+    this.id        = uuid()
+    this.createdAt = new Date()
+    this.isNew     = isNew
+    this.tagStore  = parentStore
+
+    if(isNew){
+      this.name = TAG_NAME_PLACEHOLDER
+      this.setActive()
     }
 
+    !_.isEmpty(json) && this.updateFromJson(json)
+  }
+
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action testTag = async() => {
     try {
       this.setIsFetchingStudents(true)
       this.setIsError(false)
@@ -134,21 +146,17 @@ export default class Tag {
   }
 
   @action createTag = async(name) => {
-    if(!name) return
-
     try {
-      this.setName(name)
       this.setIsCreating(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.post('/smart_tags', this.tagBody)
+      const {data} = await sxhr.post('/smart_tags', {...this.tagAsJson, tag_name: name})
 
-      console.log('Tag Created', data)
+      this.updateFromJson(data)
+      this.setIsNew(false)
+      this.setIsModified(false)
 
-      // update tag with new data
-      this.update(data)
-      this.tagStore.setSelectedTag(this)
-      this.tagStore.addTag(this)
+      this.tagStore.toggleQueryForm()
     } catch (e) {
       this.setIsError(new Error('Tag name already taken'))
       console.error(e)
@@ -179,9 +187,12 @@ export default class Tag {
       this.setIsUpdating(true)
       this.setIsError(false)
 
-      await sxhr.put(`/smart_tags/${this.id}`, this.tagBody)
+      await sxhr.put(`/smart_tags/${this.id}`, this.tagAsJson)
 
       UiStore.addNotification('Tag', 'saved successfully')
+
+      this.setIsNew(false)
+      this.setIsModified(false)
     } catch (e) {
       this.setIsError(e)
       console.error(e)
@@ -193,12 +204,12 @@ export default class Tag {
   /*
    * updates 'this' tag
   */
-  @action update = ({
+  @action updateFromJson = ({
     id,
     created_at: createdAt,
     tag_name: name,
     query,
-    tree_query: treeQuery,
+    tree_query: treeQuery
   }) => {
     this.id        = id
     this.createdAt = createdAt
@@ -209,7 +220,6 @@ export default class Tag {
 
   @action setActive = () => {
     this.tagStore.setSelectedTag(this)
-    this.testTag()
   }
 
   @action clear(){
@@ -217,6 +227,24 @@ export default class Tag {
   }
 
   @action setTreeQuery = tree => {
-    this.treeQuery = tree
+    this.isModified = true
+    this.treeQuery  = tree
+  }
+
+  @action handleOnTagClick = () => {
+    this.setActive()
+
+    if(this.isNew) return
+
+    this.testTag()
+  }
+
+  @action handleOnSave = () => {
+    if(this.isNew) { this.tagStore.toggleQueryForm() }
+    else { this.updateTag() }
+  }
+
+  @action dispose = () => {
+    this.autoErrorNotifier && this.autoErrorDisposer()
   }
 }
