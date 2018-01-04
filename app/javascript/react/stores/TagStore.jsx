@@ -17,11 +17,12 @@ export class TagStore {
   @setter @observable isFetchingSchema = false
   @setter @observable isFetchingTags   = false
   @setter @observable isError          = null
+  @setter @observable isSelectingTag   = false
 
   @observable showMap                  = false
   @observable showQueryForm            = false
 
-  @setter @observable selectedTag      = null
+  @observable selectedTag      = null
   @observable tags                     = observable.map()
 
   constructor(){
@@ -126,6 +127,15 @@ export class TagStore {
     }
 
     this.selectedTag && this.selectedTag.createTag(name)
+  }
+  @action setSelectedTag = (tag) => {
+    this.isSelectingTag = true
+    this.selectedTag = null
+
+    setTimeout(action(() => {
+      this.selectedTag = tag
+      this.isSelectingTag = false
+    }), 300)
   }
 }
 
