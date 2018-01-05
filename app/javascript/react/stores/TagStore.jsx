@@ -137,7 +137,7 @@ export class TagStore {
     setTimeout(action(() => {
       this.selectedTag = tag
       this.isSelectingTag = false
-    }), 300)
+    }), 100)
   }
 }
 
