@@ -88,7 +88,7 @@ export default class Tag {
 
   @computed get humanStringFormat(){
     try {
-      return queryString(this.treeQuery, config, true)
+      return ` of your students whose ${ queryString(this.treeQuery, config, true).split('(').join('').split(')').join('')}`
     } catch(e){
       console.error(e)
       return ''
