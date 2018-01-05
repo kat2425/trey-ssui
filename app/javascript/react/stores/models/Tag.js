@@ -39,6 +39,7 @@ export default class Tag {
   @setter @observable isError            = false
   @setter @observable isNew              = false
   @setter @observable isModified         = false
+  @setter @observable hasBeenTested           = true
 
 
   @setter @observable name               = null
@@ -55,7 +56,7 @@ export default class Tag {
   // Autoruns
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
-      if(this.isError){
+      if(this.isError && !this.isError.hideNotification){
         UiStore.addNotification('Error', this.isError.message)
       }
     })
@@ -90,7 +91,7 @@ export default class Tag {
     try {
       return ` of your students whose ${ queryString(this.treeQuery, config, true).split('(').join('').split(')').join('')}`
     } catch(e){
-      console.error(e)
+      console.warn(e)
       return ''
     }
   }
@@ -109,6 +110,12 @@ export default class Tag {
     }
   }
 
+  @computed get isEditable(){
+    return !this.isNew 
+  }
+  @computed get isNotSaved(){
+    return !this.isNew && this.isModified
+  }
   // Actions
   @action init = (isNew, parentStore, json) => {
     this.id        = uuid()
@@ -119,6 +126,7 @@ export default class Tag {
     if(isNew){
       this.name = TAG_NAME_PLACEHOLDER
       this.setActive()
+      this.hasBeenTested = false
     }
 
     !_.isEmpty(json) && this.updateFromJson(json)
@@ -138,6 +146,8 @@ export default class Tag {
       })
 
       this.students.replace(data)
+
+      if(!this.hasBeenTested) {this.hasBeenTested = true}
     } catch (e) {
       this.setIsError(e)
       console.error(e)
@@ -159,7 +169,10 @@ export default class Tag {
 
       this.tagStore.toggleQueryForm()
     } catch (e) {
-      this.setIsError(new Error('Tag name already taken'))
+      this.setIsError({
+        hideNotification: true,
+        message:          'Tag name already taken'
+      })
       console.error(e)
     } finally {
       this.setIsCreating(false)
@@ -186,22 +199,26 @@ export default class Tag {
   /*
    * updates tag on the server
    */
-  @action updateTag = async() => {
+  @action updateTag = async(name = '') => {
     if(!this.isValid) return
-
     try {
       this.setIsUpdating(true)
       this.setIsError(false)
 
-      await sxhr.put(`/smart_tags/${this.id}`, this.tagAsJson)
+      const tagBody = name ? {...this.tagAsJson, tag_name: name} : this.tagAsJson
+      const {data} = await sxhr.put(`/smart_tags/${this.id}`, tagBody)
 
+      this.updateFromJson(data)
       UiStore.addNotification('Tag', 'saved successfully')
 
       this.setIsNew(false)
       this.setIsModified(false)
     } catch (e) {
-      this.setIsError(e)
-      console.error(e)
+      this.setIsError({
+        hideNotification: !!name,
+        message:          name ? 'Tag name already taken' : e.message
+      })
+      console.warn(e)
     } finally {
       this.setIsUpdating(false)
     }
@@ -245,12 +262,18 @@ export default class Tag {
     this.testTag()
   }
 
-  @action handleOnSave = () => {
-    if(this.isNew) { this.tagStore.toggleQueryForm() }
-    else { this.updateTag() }
+  @action handleOnSave = (name) => {
+    if(this.isNew) { 
+      this.tagStore.showQueryForm ? this.createTag(name) : this.tagStore.toggleQueryForm() 
+    } 
+    else { this.updateTag(name) }
   }
 
   @action dispose = () => {
     this.autoErrorNotifier && this.autoErrorDisposer()
+  }
+
+  @action clearErrors = () => {
+    this.setIsError(null)
   }
 }
