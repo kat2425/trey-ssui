@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {observer}         from 'mobx-react'
 import styled             from 'styled-components'
-import { Popconfirm }     from 'antd'
 import _                  from 'lodash'
 
 import QueryBuilder       from 'ui/shell/QueryBuilder'
@@ -15,10 +14,15 @@ import SideNav            from './SideNav'
 import Wrapper            from './Wrapper'
 import ActionBar          from './ActionBar'
 
+import { 
+  Popconfirm,
+  Button,
+  Tooltip
+} from 'antd'
+
 import {
   FaExpand,
-  FaTrashO,
-  FaEdit
+  FaTrashO
 } from 'react-icons/lib/fa'
 
 import {
@@ -26,7 +30,7 @@ import {
   TagActionBar,
   MapModal,
   NewQueryModal,
-  ModifiedIndicator
+  TagNameFormPopover
 } from 'ui/shell/SmartTags'
 
 @observer
@@ -52,6 +56,10 @@ export default class TagBuilder extends Component {
 
   render() {
     const {selectedTag} = tagStore
+    const showEmptySelectionPlaceholder = 
+            !selectedTag               &&
+            !tagStore.isFetchingSchema &&
+            !tagStore.isSelectingTag
     const icStyle = {
       cursor:   'pointer',
       fontSize: 18,
@@ -78,36 +86,37 @@ export default class TagBuilder extends Component {
                 className='d-flex flex-row align-items-center'
               >
                 <h5 style={this.nameStyle(selectedTag.isNew)}>
-                  <ModifiedIndicator tag={selectedTag}>{selectedTag.name}</ModifiedIndicator>
+                  {selectedTag.name}
                 </h5>
+                {selectedTag.isEditable && (
+                  <TagNameFormPopover tag={selectedTag}>
+                    <Tooltip title='Edit Name'>
+                      <Button icon="edit" style={{border: 0}}/>
+                    </Tooltip>
+                  </TagNameFormPopover>
+                )}
               </div>
               ,
               <div key={uuid} 
                 className='d-flex flex-row align-items-center justify-content-end'
               >
-                <FaEdit 
-                  className='mr-4' 
-                  style={icStyle}
-                />
-
                 <Popconfirm 
-                  title="Are you sure delete this tag?" 
+                  title="Are you sure?" 
                   onConfirm={selectedTag.deleteTag} 
                 >
-                  <FaTrashO 
-                    className='mr-4' 
-                    style={icStyle}
-                  />              
+                  <Tooltip title='Delete Tag'>
+                    <FaTrashO 
+                      className='mr-4' 
+                      style={icStyle}
+                    />              
+                  </Tooltip>
                 </Popconfirm>
                 <TagActionBar />
               </div>
             ]}
           </ActionBar>
 
-          {tagStore.isSelectingTag && <LoadingSpinner center /> }
-          {!selectedTag && !tagStore.isSelectingTag && 
-              <p className='mt-5 text-muted text-center'>No Tag Selected</p>
-          }
+          { showEmptySelectionPlaceholder && <p className='mt-5 text-muted text-center'>No Tag Selected</p> }
 
           <div
             className="d-flex flex-row px-2 py-4"
@@ -124,6 +133,7 @@ export default class TagBuilder extends Component {
             >
               {selectedTag && (
                 <div>
+                  {tagStore.isFetchingSchema && <LoadingSpinner center /> }
                   {selectedTag.showQueryBuilder && <QueryBuilder tag={selectedTag}/>}
                 </div>
               )}
@@ -143,15 +153,11 @@ export default class TagBuilder extends Component {
                   {selectedTag.isFetchingStudents 
                     ? <LoadingSpinner center />
                     : selectedTag.hasStudents 
-                      ? (
-                        <h1 
-                          className='rounded-circle text-center d-inline-block mb-2 p-4' 
-                          style={{fontSize: 40, border: '1px solid transparent'}} 
-                        >
-                          {selectedTag.students.length}
-                        </h1>
-                      )
-                      : <p className='my-3 text-muted text-center'>.  .  .</p>
+                      ?  <NumStudents> {selectedTag.students.length}</NumStudents>
+                      : selectedTag.hasBeenTested 
+                        ? <NumStudents>0</NumStudents>
+                        : <p className='my-3 text-muted text-center'>.  .  .</p>
+                      
                   }
                   <p>{selectedTag.humanStringFormat}</p>
                 </Panel>
@@ -205,6 +211,15 @@ export default class TagBuilder extends Component {
 
 const Result = ({results, total}) => (
   <p className="text-muted">{`${results} of ${total} results`}</p>
+)
+
+const NumStudents = ({children}) => (
+  <h1 
+    className='rounded-circle text-center d-inline-block mb-2 p-4' 
+    style={{fontSize: 40, border: '1px solid transparent'}} 
+  >
+  {children}
+  </h1>
 )
 
 const Img = styled.img`
