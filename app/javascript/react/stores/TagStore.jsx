@@ -93,7 +93,7 @@ export class TagStore {
     this.tags.set(tag.id, new Tag(false, this, tag))
   }
 
-  @action handleOnNewQuery = () => {
+  @action handleAddTag = () => {
     const newTag = new Tag(true, this)
 
     this.tags.set(newTag.id, newTag)

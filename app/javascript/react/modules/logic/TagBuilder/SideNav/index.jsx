@@ -1,24 +1,30 @@
-import React, {PropTypes} from 'react'
+import React, {PropTypes}  from 'react'
+import { Button, Tooltip } from 'antd'
 
-import Header             from './Header'
-import Aside              from './Aside'
-import Content            from './Content'
-import ButtonWrapper      from './ButtonWrapper'
-import AddButton          from './AddButton'
+import Header              from './Header'
+import Aside               from './Aside'
+import Content             from './Content'
 
 SideNav.propTypes = {
-  title:      PropTypes.string.isRequired,
-  children:   PropTypes.any.isRequired,
-  onNewQuery: PropTypes.func.isRequired
+  title:    PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
+  onAddTag: PropTypes.func.isRequired
 }
 
-export default function SideNav({title, children, onNewQuery, ...props}) {
+export default function SideNav({title, children, onAddTag, ...props}) {
   return (
     <Aside {...props}>
-      <Header title={title} />
-      <ButtonWrapper>
-        <AddButton onClick={onNewQuery}> New Query</AddButton>
-      </ButtonWrapper>
+      <Header title={title}>
+        <Tooltip title='Create A Tag'>
+          <Button 
+            onClick={onAddTag} 
+            icon = 'plus'
+            type = 'primary'
+            ghost
+            shape='circle'
+          />
+        </Tooltip>
+      </Header>
       <Content>
         {children}
       </Content>
