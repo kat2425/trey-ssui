@@ -18,11 +18,12 @@ export class TagStore {
   @setter @observable isFetchingTags   = false
   @setter @observable isError          = null
   @setter @observable isSelectingTag   = false
+  @setter @observable tagFilter        = ''
 
   @observable showMap                  = false
   @observable showQueryForm            = false
 
-  @observable selectedTag      = null
+  @observable selectedTag              = null
   @observable tags                     = observable.map()
 
   constructor(){
@@ -40,11 +41,18 @@ export class TagStore {
 
   // Computed Values
   @computed get orderedTags() {
-    return _.orderBy(this.tags.values(), t => t.createdAt, 'desc')
+    const orderedTags = _.orderBy(this.tags.values(), t => t.createdAt, 'desc')
+
+    if(!this.tagFilter) return orderedTags
+    return orderedTags.filter(t => t.name.indexOf(this.tagFilter) > -1)
   }
 
-  @computed get hasTags(){
-    return !this.isFetchingTags && this.tags.size > 0
+  @computed get hasTags() {
+    return !this.isFetchingTags && !this.isEmpty
+  }
+
+  @computed get isEmpty() {
+    return !this.tags.size
   }
 
   // Actions
@@ -138,6 +146,10 @@ export class TagStore {
       this.selectedTag = tag
       this.isSelectingTag = false
     }), 100)
+  }
+
+  @action handleTagFilter = ({target}) => {
+    this.tagFilter = target.value
   }
 }
 

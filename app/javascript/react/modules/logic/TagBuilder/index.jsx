@@ -17,8 +17,10 @@ import ActionBar          from './ActionBar'
 import { 
   Popconfirm,
   Button,
-  Tooltip
+  Tooltip,
+  Input
 } from 'antd'
+const Search = Input.Search
 
 import {
   FaExpand,
@@ -71,11 +73,18 @@ export default class TagBuilder extends Component {
       <Wrapper>
         <div className="d-flex flex-column" style={{flex: 1}}>
           <SideNav title="Bullseye" onNewQuery={tagStore.handleOnNewQuery}>
+            <Search 
+              className   = 'my-3 px-2'
+              placeholder = 'Filter tags'
+              onChange    = {tagStore.handleTagFilter}
+            />
             {tagStore.isFetchingTags && <LoadingSpinner center />}
-            {!tagStore.isFetchingTags && _.isEmpty(tagStore.orderedTags) && 
+
+            {!tagStore.hasTags &&
               <p className='mt-5 text-center text-muted'>No saved tags</p>
             }
-            {!_.isEmpty(tagStore.orderedTags) && <TagList tags={tagStore.orderedTags}/>}
+
+            {tagStore.hasTags && <TagList tags={tagStore.orderedTags}/>}
           </SideNav>
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
@@ -218,7 +227,7 @@ const NumStudents = ({children}) => (
     className='rounded-circle text-center d-inline-block mb-2 p-4' 
     style={{fontSize: 40, border: '1px solid transparent'}} 
   >
-  {children}
+    {children}
   </h1>
 )
 
