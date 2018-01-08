@@ -64,8 +64,9 @@ export default class TagBuilder extends Component {
     return (
       <Wrapper>
         <div className="d-flex flex-column" style={{flex: 1}}>
-          <SideNav title="Bullseye" onNewQuery={tagStore.handleOnNewQuery}>
+          <SideNav title="Bullseye" onAddTag={tagStore.handleAddTag}>
             <Search 
+              size        = 'large'
               className   = 'my-3 px-2'
               placeholder = 'Filter tags'
               onChange    = {tagStore.handleTagFilter}
