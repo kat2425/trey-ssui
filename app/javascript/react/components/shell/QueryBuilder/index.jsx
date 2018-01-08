@@ -16,9 +16,11 @@ function QueryBuilder({tag}){
         getChildren = {props => <Builder {...props} />}
       />
       <ActionButtons 
-        disabled = {false}
-        onTest   = {tag.testTag}
-        onSave   = {() => tag.handleOnSave(null)}
+        loadingOnTest = {tag.isFetchingStudents}
+        loadingOnSave = {tag.isCreating || tag.isUpdating}
+        disabled      = {false}
+        onTest        = {tag.testTag}
+        onSave        = {tag.handleOnSave}
       />
     </div>
   )

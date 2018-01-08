@@ -1,18 +1,20 @@
-import React, {Component} from 'react'
-import {observer}         from 'mobx-react'
-import styled             from 'styled-components'
-import _                  from 'lodash'
+import React, {Component}    from 'react'
+import {observer}            from 'mobx-react'
+import styled                from 'styled-components'
+import { FaExpand }          from 'react-icons/lib/fa'
+import uuid                  from 'uuid'
 
-import QueryBuilder       from 'ui/shell/QueryBuilder'
-import LoadingSpinner     from 'ui/shell/LoadingSpinner'
-import Panel              from 'ui/shell/Panel'
-import StudentList        from 'ui/shell/StudentResults/StudentList'
-import tagStore           from 'stores/TagStore'
-import uuid               from 'uuid'
+import QueryBuilder          from 'ui/shell/QueryBuilder'
+import LoadingSpinner        from 'ui/shell/LoadingSpinner'
+import Panel                 from 'ui/shell/Panel'
+import StudentList           from 'ui/shell/StudentResults/StudentList'
+import { ModifiedIndicator } from 'ui/shell/SmartTags'
 
-import SideNav            from './SideNav'
-import Wrapper            from './Wrapper'
-import ActionBar          from './ActionBar'
+import tagStore              from 'stores/TagStore'
+
+import SideNav               from './SideNav'
+import Wrapper               from './Wrapper'
+import ActionBar             from './ActionBar'
 
 import { 
   Popconfirm,
@@ -22,10 +24,6 @@ import {
 } from 'antd'
 const Search = Input.Search
 
-import {
-  FaExpand,
-  FaTrashO
-} from 'react-icons/lib/fa'
 
 import {
   TagList, 
@@ -62,12 +60,6 @@ export default class TagBuilder extends Component {
             !selectedTag               &&
             !tagStore.isFetchingSchema &&
             !tagStore.isSelectingTag
-    const icStyle = {
-      cursor:   'pointer',
-      fontSize: 18,
-      color:    '#3f9fcf'
-    }
-
 
     return (
       <Wrapper>
@@ -80,7 +72,7 @@ export default class TagBuilder extends Component {
             />
             {tagStore.isFetchingTags && <LoadingSpinner center />}
 
-            {!tagStore.hasTags &&
+            {!tagStore.isFetchingTags && tagStore.isEmpty && 
               <p className='mt-5 text-center text-muted'>No saved tags</p>
             }
 
@@ -95,7 +87,7 @@ export default class TagBuilder extends Component {
                 className='d-flex flex-row align-items-center'
               >
                 <h5 style={this.nameStyle(selectedTag.isNew)}>
-                  {selectedTag.name}
+                  <ModifiedIndicator tag={selectedTag}>{selectedTag.name}</ModifiedIndicator>
                 </h5>
                 {selectedTag.isEditable && (
                   <TagNameFormPopover tag={selectedTag}>
@@ -114,9 +106,10 @@ export default class TagBuilder extends Component {
                   onConfirm={selectedTag.deleteTag} 
                 >
                   <Tooltip title='Delete Tag'>
-                    <FaTrashO 
-                      className='mr-4' 
-                      style={icStyle}
+                    <Button 
+                      icon      = 'delete'
+                      type      = 'danger'
+                      className = 'mr-4'
                     />              
                   </Tooltip>
                 </Popconfirm>
