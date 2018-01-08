@@ -39,11 +39,11 @@ export default class Tag {
   @setter @observable isError            = false
   @setter @observable isNew              = false
   @setter @observable isModified         = false
-  @setter @observable hasBeenTested           = true
+  @setter @observable hasBeenTested      = true
 
 
   @setter @observable name               = null
-  @observable createdAt                  = null 
+  @observable createdAt                  = null
   @observable query                      = null
   @observable treeQuery                  = null
   @observable students                   = observable.shallowArray()
