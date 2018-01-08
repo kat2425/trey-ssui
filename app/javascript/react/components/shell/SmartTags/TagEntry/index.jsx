@@ -7,13 +7,8 @@ import SettingsButton        from './SettingsButton'
 import { ModifiedIndicator } from 'ui/shell/SmartTags'
 
 TagEntry.propTypes = {
-  active: PropTypes.bool,
-  tag:    PropTypes.shape({
-    id:       PropTypes.string.isRequired,
-    name:     PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    isNew:    PropTypes.bool.isRequired
-  }).isRequired,
+  active:          PropTypes.bool,
+  tag:             PropTypes.object.isRequired,
   onClick:         PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func
 }
@@ -22,7 +17,7 @@ function TagEntry({tag, active, onClick, onSettingsClick}){
   return (
     <Wrapper active={active} onClick={onClick}>
       <div style={tagNameStyle(tag.isNew)}><ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator></div>
-      <SettingsButton className='text-muted' onClick={onSettingsClick} />
+      <SettingsButton tag={tag} className='text-muted' onClick={onSettingsClick} />
     </Wrapper>
   )
 }
