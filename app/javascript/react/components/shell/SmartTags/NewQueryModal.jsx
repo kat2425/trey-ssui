@@ -7,9 +7,10 @@ import { TagNameForm }      from 'ui/shell/SmartTags'
 export default class NewQueryModal extends Component{
   handleOnCancel = () => {
     const { store } = this.props
+    const { selectedTag } = store
 
     store.toggleQueryForm()
-    store.selectedTag.clearErrors(null)
+    selectedTag && selectedTag.clearErrors()
   }
 
   render() {

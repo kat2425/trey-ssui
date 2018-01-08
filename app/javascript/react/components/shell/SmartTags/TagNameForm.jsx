@@ -19,6 +19,7 @@ class TagForm extends Component {
   componentDidMount() {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
+    this.props.tag.clearErrors()
   }
 
   handleOnFocus = e => {

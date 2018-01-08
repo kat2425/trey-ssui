@@ -18,7 +18,7 @@ function QueryBuilder({tag}){
       <ActionButtons 
         disabled = {false}
         onTest   = {tag.testTag}
-        onSave   = {tag.handleOnSave}
+        onSave   = {() => tag.handleOnSave(null)}
       />
     </div>
   )

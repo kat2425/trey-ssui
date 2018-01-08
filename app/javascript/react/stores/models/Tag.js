@@ -201,6 +201,7 @@ export default class Tag {
    */
   @action updateTag = async(name = '') => {
     if(!this.isValid) return
+
     try {
       this.setIsUpdating(true)
       this.setIsError(false)
