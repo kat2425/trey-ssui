@@ -200,7 +200,7 @@ export default class Tag {
    * updates tag on the server
    */
   @action updateTag = async(name = '') => {
-    if(!this.isValid) return
+    if(!this.isValid || !this.isModified ) return
 
     try {
       this.setIsUpdating(true)
