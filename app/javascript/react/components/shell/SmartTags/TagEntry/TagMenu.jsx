@@ -31,7 +31,7 @@ const menu = (tag = {}) => (
     <Menu.Divider />
     <MenuItem>
       <div onClick={() => tag.handleOnSave()}>
-        <ActionIcon type='cloud-upload-o' />
+        <ActionIcon type='save' />
         Save Tag
       </div>
     </MenuItem>

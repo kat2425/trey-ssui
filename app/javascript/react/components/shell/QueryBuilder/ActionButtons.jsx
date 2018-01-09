@@ -23,7 +23,7 @@ export default function ActionButtons({
         <Button 
           onClick  = {() => onSave()}
           disabled = {disabled}
-          icon     = 'cloud-upload-o'
+          icon     = 'save'
           loading  = {loadingOnSave}
           type     = 'primary'
         >
