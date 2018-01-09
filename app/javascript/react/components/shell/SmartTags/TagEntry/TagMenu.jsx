@@ -38,8 +38,10 @@ const menu = (tag = {}) => (
     <Menu.Divider />
     <MenuItem delete>
       <Popconfirm 
-        title="Are you sure?" 
-        onConfirm={tag.deleteTag} 
+        title      = "Are you sure?"
+        onConfirm  = {tag.deleteTag}
+        okText     = 'OK'
+        cancelText = 'Cancel'
       >
         <ActionIcon type='delete' />
         Delete Tag
