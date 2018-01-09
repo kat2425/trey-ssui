@@ -78,16 +78,11 @@ export default class StudentSearch extends Component {
     return <StudentSearchItem student={student} search={props.text}/>
   }
 
-  selectStudent(e) {
-    if (e.length) {
-      fireEvent('showStudentCard', { student: e[0].id })
-    }
-  }
-
   render() {
     return (
-      <div style={{width:'300px'}} className='student-search-container'>
+      <div style={this.props.style} className='student-search-container'>
         <AsyncTypeahead
+          dropup                 = {this.props.dropup}
           labelKey               = {student => `${ student.last_name }, ${ student.first_name }`}
           multiple               = {false}
           clearButton            = {true}
@@ -95,7 +90,7 @@ export default class StudentSearch extends Component {
           filterBy               = {::this.filterByCallback}
           options                = {this.state.students}
           onSearch               = {::this.lookupStudent}
-          onChange               = {::this.selectStudent}
+          onChange               = {this.props.onChange}
           renderMenuItemChildren = {::this.renderResults}
           placeholder            = 'Find a student...'
           minLength              = {3}

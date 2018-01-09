@@ -6,10 +6,10 @@ import {
 } from 'reactstrap'
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import fireEvent               from 'helpers/FireEvent'
 import CallBar                 from 'ui/shell/ActionBar/Calling/CallBar'
 
 import intercomIcon from 'images/intercom-icon.svg'
+import { SIDEBAR }              from 'stores/UiStore'
 
 const actionBarNotification = {
   fontSize:      '70%',
@@ -23,17 +23,9 @@ export default class ActionBar extends Component {
     super(props)
   }
 
-  showSidebar() {
-    fireEvent('toggleSidebar')
-  }
-
-  showCallSidebar() {
-    fireEvent('toggleCallSidebar')
-  }
-
-
   render() {
     const { isCalling, isConferenceCalling, callBarVisible } = this.props.callingStore
+    const { setSelectedSidebar } = this.props.uiStore
 
     const actionBarStyle = {
       backgroundColor: ((isCalling || isConferenceCalling) ? '#5cb85c' : ((!isCalling && callBarVisible) ? '#d9534f' : '#e8e8e8')),
@@ -78,12 +70,17 @@ export default class ActionBar extends Component {
           {/*   <span>Tasks</span> */}
           {/* </NavItem> */}
 
-          <NavItem className='ml-4' onClick={this.showCallSidebar}>
+          <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.REMINDER)}>
+            <span className='icon icon-clock mr-2' style={{opacity: '0.6'}}/>
+            <span>Reminders</span>
+          </NavItem>
+
+          <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.CALL)}>
             <span className='icon icon-voicemail mr-2' style={{opacity: '0.6'}}/>
             <span>Calls</span>
           </NavItem>
 
-          <NavItem className='ml-4' onClick={::this.showSidebar}>
+          <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.SMS)}>
             <span className='icon icon-chat mr-2' style={{opacity: '0.6'}}/>
             <span>Messages</span>
 
