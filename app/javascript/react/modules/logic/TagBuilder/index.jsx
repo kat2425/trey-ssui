@@ -3,6 +3,7 @@ import {observer}            from 'mobx-react'
 import styled                from 'styled-components'
 import { FaExpand }          from 'react-icons/lib/fa'
 import uuid                  from 'uuid'
+import { Prompt }            from 'react-router-dom'
 
 import QueryBuilder          from 'ui/shell/QueryBuilder'
 import LoadingSpinner        from 'ui/shell/LoadingSpinner'
@@ -63,6 +64,12 @@ export default class TagBuilder extends Component {
 
     return (
       <Wrapper>
+        {selectedTag && (
+          <Prompt
+            when    = {selectedTag.isModified}
+            message = 'You have unsaved information, are you sure you want to leave this page?'
+          />
+        )}
         <div className="d-flex flex-column" style={{flex: 1}}>
           <SideNav title="Bullseye" onAddTag={tagStore.handleAddTag}>
             <Search 
@@ -77,7 +84,7 @@ export default class TagBuilder extends Component {
               <p className='mt-5 text-center text-muted'>No saved tags</p>
             }
 
-            {tagStore.hasTags && <TagList tags={tagStore.orderedTags}/>}
+            {!tagStore.isEmpty && <TagList tags={tagStore.orderedTags}/>}
           </SideNav>
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
