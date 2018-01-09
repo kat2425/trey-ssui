@@ -74,7 +74,7 @@ export default class Tag {
   }
 
   @computed get isValid() {
-    return (!!this.query || !!this.treeQuery) && !!this.name
+    return !!this.queryFormat && this.name
   }
 
   @computed get queryFormat(){

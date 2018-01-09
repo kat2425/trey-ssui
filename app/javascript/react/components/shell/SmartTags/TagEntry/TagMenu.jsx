@@ -13,28 +13,32 @@ import {
 
 const menu = (tag = {}) => (
   <Menu>
-    <MenuItem>
-      <TagNameFormPopover 
-        tag={tag}
-      >
-        <ActionIcon type='edit' />
-        Edit Tag
-      </TagNameFormPopover>
-    </MenuItem>
-    <Menu.Divider />
-    <MenuItem>
-      <div onClick={tag.handleOnTagClick}>
-        <ActionIcon type='play-circle-o' />
-        Test Tag
-      </div>
-    </MenuItem>
-    <Menu.Divider />
-    <MenuItem>
-      <div onClick={() => tag.handleOnSave()}>
-        <ActionIcon type='save' />
-        Save Tag
-      </div>
-    </MenuItem>
+    {!tag.isNew && [
+      <MenuItem>
+        <TagNameFormPopover 
+          tag={tag}
+        >
+          <ActionIcon type='edit' />
+          Edit Tag
+        </TagNameFormPopover>
+      </MenuItem>,
+      <Menu.Divider />
+    ]}
+    {tag.isValid && [
+      <MenuItem>
+        <div onClick={tag.handleOnTagClick}>
+          <ActionIcon type='play-circle-o' />
+          Test Tag
+        </div>
+      </MenuItem>,
+      <Menu.Divider />,
+      <MenuItem>
+        <div onClick={() => tag.handleOnSave()}>
+          <ActionIcon type='save' />
+          Save Tag
+        </div>
+      </MenuItem>
+    ]}
     <Menu.Divider />
     <MenuItem delete>
       <Popconfirm 
