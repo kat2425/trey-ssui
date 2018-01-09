@@ -103,8 +103,10 @@ export default class TagBuilder extends Component {
                 className='d-flex flex-row align-items-center justify-content-end'
               >
                 <Popconfirm 
-                  title="Are you sure?" 
-                  onConfirm={selectedTag.deleteTag} 
+                  title      = "Are you sure?"
+                  onConfirm  = {selectedTag.deleteTag}
+                  okText     = 'OK'
+                  cancelText = 'Cancel'
                 >
                   <Tooltip title='Delete Tag'>
                     <Button 
