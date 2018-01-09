@@ -18,7 +18,7 @@ function QueryBuilder({tag}){
       <ActionButtons 
         loadingOnTest = {tag.isFetchingStudents}
         loadingOnSave = {tag.isCreating || tag.isUpdating}
-        disabled      = {false}
+        disabled      = {!tag.isValid}
         onTest        = {tag.testTag}
         onSave        = {tag.handleOnSave}
       />

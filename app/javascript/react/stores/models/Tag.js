@@ -27,6 +27,8 @@ const {queryBuilderFormat, queryString} = Utils
 const TAG_NAME_PLACEHOLDER = 'Untitled Tag'
 
 export default class Tag {
+  static untitledTagsCounter = 0
+
   id       = null
   tagStore = null
   config   = config
@@ -124,7 +126,7 @@ export default class Tag {
     this.tagStore  = parentStore
 
     if(isNew){
-      this.name = TAG_NAME_PLACEHOLDER
+      this.name = `${TAG_NAME_PLACEHOLDER} ${++Tag.untitledTagsCounter}`
       this.setActive()
       this.hasBeenTested = false
     }
@@ -200,7 +202,7 @@ export default class Tag {
    * updates tag on the server
    */
   @action updateTag = async(name = '') => {
-    if(!this.isValid) return
+    if(!this.isValid || !this.isModified ) return
 
     try {
       this.setIsUpdating(true)

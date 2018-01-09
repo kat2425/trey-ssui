@@ -3,26 +3,20 @@ import PropTypes             from 'prop-types'
 import {observer}            from 'mobx-react'
 
 import Wrapper               from './Wrapper'
-import SettingsButton        from './SettingsButton'
+import TagMenu               from './TagMenu'
 import { ModifiedIndicator } from 'ui/shell/SmartTags'
 
 TagEntry.propTypes = {
-  active: PropTypes.bool,
-  tag:    PropTypes.shape({
-    id:       PropTypes.string.isRequired,
-    name:     PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    isNew:    PropTypes.bool.isRequired
-  }).isRequired,
-  onClick:         PropTypes.func.isRequired,
-  onSettingsClick: PropTypes.func
+  active:  PropTypes.bool,
+  tag:     PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
-function TagEntry({tag, active, onClick, onSettingsClick}){
+function TagEntry({tag, active, onClick}){
   return (
     <Wrapper active={active} onClick={onClick}>
       <div style={tagNameStyle(tag.isNew)}><ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator></div>
-      <SettingsButton className='text-muted' onClick={onSettingsClick} />
+      <TagMenu tag={tag} className='text-muted' />
     </Wrapper>
   )
 }
