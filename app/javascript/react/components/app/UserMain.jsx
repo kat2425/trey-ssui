@@ -7,8 +7,7 @@ import UserMenu                from 'ui/shell/UserMenu/UserMenu'
 import ActionBar               from 'ui/shell/ActionBar'
 import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
-import Sidebar                 from 'ui/shell/SMS/Sidebar'
-import {CallSidebar, CallInfo} from 'ui/shell/Call'
+import {CallInfo}              from 'ui/shell/Call'
 import Notification            from 'ui/shell/Notification/Notification'
 
 import CallingController       from 'ui/controllers/CallingController'
@@ -16,8 +15,8 @@ import CallingController       from 'ui/controllers/CallingController'
 import SMSInboxStore           from 'stores/SMSInbox'
 import CallingStore            from 'stores/CallingStore'
 import WebSocketStore          from 'stores/WebSocket'
-import SMSConversationStore    from 'stores/SMSConversation'
 import callStore               from 'stores/CallStore'
+import SidebarController       from 'ui/controllers/SidebarController'
 
 import VJSContainer            from 'ui/vjs/VJSContainer'
 
@@ -65,31 +64,11 @@ class UserMain extends Component {
     uiStore.setIsStudentCardOpen(false)
   }
 
-  toggleCallSidebar = () => {
-    this.props.uiStore.toggleCallSidebar()
-  }
-
-  toggleSidebar = (e) => {
-    const { uiStore }  = this.props
-    const contact = _.get(e, 'detail.contact')
-
-    if(contact){
-      SMSConversationStore
-        .initiateConversation(contact)
-      return
-    }
-
-    uiStore.setSidebarMaxHeight(false)
-    uiStore.toggleSidebar()
-  }
-
   componentDidMount() {
     WebSocketStore.subscribeUser(window.SSUser.id)
 
     window.addEventListener('showStudentCard',    this.showStudentCard)
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
-    window.addEventListener('toggleSidebar',      this.toggleSidebar)
-    window.addEventListener('toggleCallSidebar',  this.toggleCallSidebar)
 
     window.intercomSettings = {
       app_id:     'c443b08a556eb87a1f39f088cda1b1f93e3a6631',
@@ -114,7 +93,6 @@ class UserMain extends Component {
   componentWillUnmount() {
     window.removeEventListener('showStudentCard',    this.showStudentCard)
     window.removeEventListener('onCloseStudentCard', this.onCloseStudentCard)
-    window.removeEventListener('toggleSidebar',      this.toggleSidebar)
   }
 
   render() {
@@ -128,13 +106,8 @@ class UserMain extends Component {
             <NavBar />
             <UserMenu />
             <AppContainer />
-            <ActionBar store={SMSInboxStore} callingStore={CallingStore}/>
-            <Sidebar />
-            <CallSidebar
-              store   = {callStore}
-              show    = {uiStore.showCallSidebar}
-              onClose = {this.toggleCallSidebar}
-            />
+            <ActionBar store={SMSInboxStore} uiStore={this.props.uiStore} callingStore={CallingStore}/>
+            <SidebarController callStore={callStore} />
             <CallInfo
               store    = {callStore}
               show     = {uiStore.showCallInfo}

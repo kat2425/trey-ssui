@@ -3,19 +3,24 @@ import { setter, toggle }                        from 'mobx-decorators'
 
 import SMSConversationStore                      from 'stores/SMSConversation'
 import callStore                                 from 'stores/CallStore'
+import ReminderStore                             from 'stores/ReminderStore'
+import fireEvent                                 from 'helpers/FireEvent'
+
+export const SIDEBAR = {
+  SMS:      'SMS',
+  CALL:     'CALL',
+  REMINDER: 'REMINDER'
+}
 
 export class UiStore {
+  @observable
+  selectedSidebar = null
+
   @setter @observable 
   currentContact = null
 
   @setter @observable 
   currentConversation = null
-
-  @toggle('toggleSidebar') @observable 
-  hideSidebar = true
-  
-  @toggle('toggleCallSidebar') @observable 
-  showCallSidebar = false
 
   @setter @observable 
   showInbox = true
@@ -36,10 +41,6 @@ export class UiStore {
 
   constructor() {
     this.autoFetchSMSConversation() 
-    this.autoFetchCallLogs()
-    this.autoHideSMSSidebar()
-    this.autoHideCallSidebar()
-    this.autoHideCallInfo()
   }
 
   @action addNotification(title, body) {
@@ -48,11 +49,6 @@ export class UiStore {
 
   @action removeNotification(index) {
     this.notifications.splice(index, 1)
-  }
-
-  // Actions
-  @action setSidebarVisibility(show){
-    this.hideSidebar = !show 
   }
 
   // Auto Actions
@@ -65,32 +61,12 @@ export class UiStore {
     })
   }
 
-  @action autoFetchCallLogs(){
-    reaction(
-      ()     => this.showCallSidebar,
-      (show) => show && callStore.fetchCallLogs()
-    ) 
+  @action handleCallSidebar(){
+    callStore.fetchCallLogs()
   }
 
-  @action autoHideSMSSidebar = () => {
-    reaction(
-      ()     => this.showCallSidebar === true,
-      (show) => show && !this.hideSidebar && (this.hideSidebar = true),
-      true
-    )
-  }
-
-  @action autoHideCallSidebar = () => {
-    reaction(
-      ()            => !this.hideSidebar,
-      (showSidebar) => {
-        if(showSidebar && this.showCallSidebar){ 
-          this.showCallSidebar = false
-          this.showCallInfo    = false
-        }
-      },
-      true
-    )
+  @action handleReminderSidebar(){
+    ReminderStore.fetchReminders()
   }
 
   @action autoHideCallInfo = () => {
@@ -99,6 +75,11 @@ export class UiStore {
       (hide) => hide && this.showCallInfo && (this.showCallInfo = false),
       true
     )
+  }
+
+  @action
+  setSelectedSidebar = (sidebar) => {
+    this.selectedSidebar = sidebar
   }
 }
 

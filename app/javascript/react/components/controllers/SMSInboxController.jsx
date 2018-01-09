@@ -48,12 +48,10 @@ export default class SMSInboxController extends Component {
     SMSInboxStore.fetchInbox()
   }
 
-  hideSidebar = () => {
-    fireEvent('toggleSidebar')
-  }
-
   render() {
     const {uiStore} = this.props
+    const {setSelectedSidebar} = uiStore
+
     const isSecondary = uiStore.sidebarMaxHeight ? true : false
 
     return (
@@ -68,7 +66,7 @@ export default class SMSInboxController extends Component {
             <span
               className = 'icon icon-cross text-muted'
               style     = {{lineHeight:'22px'}}
-              onClick   = {this.hideSidebar}
+              onClick   = {() => setSelectedSidebar(null)}
             />
           </div>
         </div>
