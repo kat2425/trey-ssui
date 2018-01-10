@@ -1,8 +1,9 @@
-import React                  from 'react'
-import { observer }           from 'mobx-react'
-import styled                 from 'styled-components'
-import {ifProp}               from 'styled-tools'
-import { TagNameFormPopover } from 'ui/shell/SmartTags'
+import React                  from  'react'
+import { observer }           from  'mobx-react'
+import styled                 from  'styled-components'
+import {ifProp}               from  'styled-tools'
+import { TagNameFormPopover } from  'ui/shell/SmartTags'
+import shortid                from  'shortid'
 
 import { 
   Icon,
@@ -14,7 +15,7 @@ import {
 const menu = (tag = {}) => (
   <Menu>
     {!tag.isNew && [
-      <MenuItem>
+      <MenuItem key={shortid()}>
         <TagNameFormPopover 
           tag={tag}
         >
@@ -22,17 +23,17 @@ const menu = (tag = {}) => (
           Edit Tag
         </TagNameFormPopover>
       </MenuItem>,
-      <Menu.Divider />
+      <Menu.Divider key={shortid()} />
     ]}
     {tag.isValid && [
-      <MenuItem>
+      <MenuItem key={shortid()}>
         <div onClick={tag.handleOnTagClick}>
           <ActionIcon type='play-circle-o' />
           Test Tag
         </div>
       </MenuItem>,
-      <Menu.Divider />,
-      <MenuItem>
+      <Menu.Divider key={shortid()} />,
+      <MenuItem key={shortid()}>
         <div onClick={() => tag.handleOnSave()}>
           <ActionIcon type='save' />
           Save Tag

@@ -1,7 +1,6 @@
 import React      from 'react'
 import PropTypes  from 'prop-types'
 import { Button } from 'antd'
-import 'antd/lib/button/style/css'
 
 ActionButtons.propTypes = {
   disabled:      PropTypes.bool,

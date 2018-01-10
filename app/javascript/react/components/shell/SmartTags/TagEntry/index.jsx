@@ -7,14 +7,12 @@ import TagMenu               from './TagMenu'
 import { ModifiedIndicator } from 'ui/shell/SmartTags'
 
 TagEntry.propTypes = {
-  active:  PropTypes.bool,
-  tag:     PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  tag: PropTypes.object.isRequired,
 }
 
-function TagEntry({tag, active, onClick}){
+function TagEntry({tag}){
   return (
-    <Wrapper active={active} onClick={onClick}>
+    <Wrapper active={tag.isActive} onClick={tag.handleOnTagClick}>
       <div style={tagNameStyle(tag.isNew)}><ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator></div>
       <TagMenu tag={tag} className='text-muted' />
     </Wrapper>

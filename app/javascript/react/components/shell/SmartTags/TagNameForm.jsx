@@ -2,9 +2,6 @@ import React, { Component }   from 'react'
 import PropTypes              from 'prop-types'
 import { observer }           from 'mobx-react'
 import {Form, Input, Button } from 'antd'
-import 'antd/lib/button/style/css'
-import 'antd/lib/form/style/css'
-import 'antd/lib/input/style/css'
 
 const FormItem = Form.Item
 

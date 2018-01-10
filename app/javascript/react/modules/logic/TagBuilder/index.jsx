@@ -4,6 +4,7 @@ import styled                from 'styled-components'
 import { FaExpand }          from 'react-icons/lib/fa'
 import uuid                  from 'uuid'
 import { Prompt }            from 'react-router-dom'
+import _                     from 'lodash'
 
 import QueryBuilder          from 'ui/shell/QueryBuilder'
 import LoadingSpinner        from 'ui/shell/LoadingSpinner'
@@ -78,13 +79,13 @@ export default class TagBuilder extends Component {
               placeholder = 'Filter tags'
               onChange    = {tagStore.handleTagFilter}
             />
-            {tagStore.isFetchingTags && <LoadingSpinner center />}
-
             {!tagStore.isFetchingTags && tagStore.isEmpty && 
               <p className='mt-5 text-center text-muted'>No saved tags</p>
             }
 
-            {!tagStore.isEmpty && <TagList tags={tagStore.orderedTags}/>}
+            {tagStore.isFetchingTags && tagStore.isEmpty && <LoadingSpinner center />}
+
+            {!tagStore.isEmpty && <TagList store={tagStore}/>}
           </SideNav>
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
@@ -165,7 +166,7 @@ export default class TagBuilder extends Component {
                   {selectedTag.isFetchingStudents 
                     ? <LoadingSpinner center />
                     : selectedTag.hasStudents 
-                      ?  <NumStudents> {selectedTag.students.length}</NumStudents>
+                      ?  <NumStudents> {selectedTag.pagination.total}</NumStudents>
                       : selectedTag.hasBeenTested 
                         ? <NumStudents>0</NumStudents>
                         : <p className='my-3 text-muted text-center'>.  .  .</p>
@@ -197,19 +198,19 @@ export default class TagBuilder extends Component {
                 <Panel
                   className="pt-4"
                   title="Students"
+                  contentStyle={{ minHeight: 'auto' }}
                   titleRight={() => (
                     <Result
                       results = {selectedTag.students.length}
-                      total   = {selectedTag.students.length}
+                      total   = {selectedTag.pagination.total}
                     />
                   )}
-                  contentStyle={{ minHeight: 'auto' }}
                 >
-                  {selectedTag.isFetchingStudents && <LoadingSpinner center />}
-                  {selectedTag.hasStudents 
-                    ? <StudentList students={selectedTag.students} />
-                    : <p className='my-5 text-muted text-center'>No Students</p>
-                  }
+                  {selectedTag.isFetchingStudents && _.isEmpty(selectedTag.students) && <LoadingSpinner center />}
+                  {!_.isEmpty(selectedTag.students) && <StudentList tag={selectedTag} />}
+                  {!selectedTag.isFetchingStudents && _.isEmpty(selectedTag.students) && (
+                    <p className='my-5 text-muted text-center'>No Students</p> 
+                  )}
                 </Panel>
               )}
             </div>
@@ -221,10 +222,6 @@ export default class TagBuilder extends Component {
   }
 }
 
-const Result = ({results, total}) => (
-  <p className="text-muted">{`${results} of ${total} results`}</p>
-)
-
 const NumStudents = ({children}) => (
   <h1 
     className='rounded-circle text-center d-inline-block mb-2 p-4' 
@@ -233,7 +230,9 @@ const NumStudents = ({children}) => (
     {children}
   </h1>
 )
-
+const Result = ({results, total}) => (
+  <p className="text-muted">{`shown ${results} of ${total}`}</p>
+)
 const Img = styled.img`
   &:hover{
     opacity: 0.5;

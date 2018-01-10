@@ -2,16 +2,18 @@ import {
   observable, 
   action, 
   computed,
-  autorun
+  autorun,
+  runInAction
 } from 'mobx'
 
-import { SCHEMA_XHR as sxhr } from 'helpers/XHR'
-import { setter }             from 'mobx-decorators'
-import _                      from 'lodash'
+import { SCHEMA_XHR as sxhr } from  'helpers/XHR'
+import { setter }             from  'mobx-decorators'
+import _                      from  'lodash'
 
-import Tag                    from 'stores/models/Tag'
-import UiStore                from 'stores/UiStore'
-import config                 from 'ui/shell/QueryBuilder/config'
+import Tag                    from  'stores/models/Tag'
+import Pagination             from  'stores/models/Pagination'
+import UiStore                from  'stores/UiStore'
+import config                 from  'ui/shell/QueryBuilder/config'
 
 export class TagStore {
   @setter @observable isFetchingSchema = false
@@ -22,6 +24,7 @@ export class TagStore {
 
   @observable showMap                  = false
   @observable showQueryForm            = false
+  @observable pagination               = new Pagination(this)
 
   @observable selectedTag              = null
   @observable tags                     = observable.map()
@@ -55,15 +58,26 @@ export class TagStore {
     return !this.tags.size
   }
 
+  @computed get smartTagsParams(){
+    return {
+      page:  this.pagination.current,
+      limit: this.pagination.pageSize
+    }
+  }
+
   // Actions
   @action fetchTags = async() => {
     try {
       this.setIsFetchingTags(true)
       this.setIsError(false)
 
-      const {data:tags} = await sxhr.get('/smart_tags')
+      const {headers, data:tags} = await sxhr.get('/smart_tags', {params: this.smartTagsParams})
 
-      tags.forEach(this.updateTagFromServer)
+      runInAction(() => {
+        this.setPagination(headers)
+        tags.forEach(this.updateTagFromServer)
+        this.pagination.calculateTotalResults()
+      })
     } catch (e) {
       this.setIsError(e)
       console.error(e)
@@ -150,6 +164,14 @@ export class TagStore {
 
   @action handleTagFilter = ({target}) => {
     this.tagFilter = target.value
+  }
+
+  @action setPagination = ({total}) => {
+    this.pagination.setTotal(parseInt(total))
+  }
+
+  @action onPageChange = () => {
+    this.fetchTags()
   }
 }
 
