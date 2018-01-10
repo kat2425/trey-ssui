@@ -2,25 +2,28 @@ import {
   observable, 
   action, 
   computed, 
-  autorun
+  autorun,
+  runInAction
 } from 'mobx'
+
 import {
   SCHEMA_XHR as sxhr, 
   QUERY_XHR as xhr
 } from 'helpers/XHR'
 
-import {fromJS}   from 'immutable'
-import { setter } from 'mobx-decorators'
-import userStore  from 'stores/UserStore'
-import UiStore    from 'stores/UiStore'
-import _          from 'lodash'
-import uuid       from 'uuid'
-import moment     from 'moment'
+import { fromJS } from  'immutable'
+import { setter } from  'mobx-decorators'
+import userStore  from  'stores/UserStore'
+import UiStore    from  'stores/UiStore'
+import _          from  'lodash'
+import uuid       from  'uuid'
+import moment     from  'moment'
 
 
-import stringify from 'json-stringify-safe'
-import {Utils}   from 'react-awesome-query-builder'
-import config    from 'ui/shell/QueryBuilder/config'
+import stringify  from  'json-stringify-safe'
+import {Utils}    from  'react-awesome-query-builder'
+import config     from  'ui/shell/QueryBuilder/config'
+import Pagination from  'stores/models/Pagination'
 
 const {queryBuilderFormat, queryString} = Utils
 
@@ -48,7 +51,8 @@ export default class Tag {
   @observable createdAt                  = null
   @observable query                      = null
   @observable treeQuery                  = null
-  @observable students                   = observable.shallowArray()
+  @observable students                   = observable.array()
+  @observable pagination                 = new Pagination(this) 
 
   constructor(isNew = false, parentStore, json = {}){
     this.init(isNew, parentStore, json)
@@ -112,6 +116,13 @@ export default class Tag {
     }
   }
 
+  @computed get tagParams(){
+    return {
+      page:  this.pagination.current,
+      limit: this.pagination.pageSize
+    }
+  }
+
   @computed get isEditable(){
     return !this.isNew 
   }
@@ -143,13 +154,18 @@ export default class Tag {
       this.setIsFetchingStudents(true)
       this.setIsError(false)
 
-      const {data} = await xhr.post('/query/fetch', {
-        query: this.queryFormat
+      const {headers, data} = await xhr.post('/query/fetch', 
+        { query: this.queryFormat },
+        { params: this.tagParams }
+      )
+
+      runInAction(() => {
+        this.setPagination(headers)
+        this.students.push(...data)
+        this.pagination.calculateTotalResults()
+
+        if(!this.hasBeenTested) {this.hasBeenTested = true}
       })
-
-      this.students.replace(data)
-
-      if(!this.hasBeenTested) {this.hasBeenTested = true}
     } catch (e) {
       this.setIsError(e)
       console.error(e)
@@ -163,13 +179,16 @@ export default class Tag {
       this.setIsCreating(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.post('/smart_tags', {...this.tagAsJson, tag_name: name})
+      const {headers, data} = await sxhr.post('/smart_tags', {...this.tagAsJson, tag_name: name})
 
-      this.updateFromJson(data)
-      this.setIsNew(false)
-      this.setIsModified(false)
+      runInAction(() => {
+        this.setPagination(headers)
+        this.updateFromJson(data)
+        this.setIsNew(false)
+        this.setIsModified(false)
 
-      this.tagStore.toggleQueryForm()
+        this.tagStore.toggleQueryForm()
+      })
     } catch (e) {
       this.setIsError({
         hideNotification: true,
@@ -190,9 +209,11 @@ export default class Tag {
       }
 
       await sxhr.delete(`/smart_tags/${this.id}`)
-      this.tagStore.deleteTag(this)
+      runInAction(() => {
+        this.tagStore.deleteTag(this)
 
-      UiStore.addNotification('Tag', 'deleted successfully')
+        UiStore.addNotification('Tag', 'deleted successfully')
+      })
     } catch(e) {
       this.setIsError(e)
     }   
@@ -202,7 +223,7 @@ export default class Tag {
    * updates tag on the server
    */
   @action updateTag = async(name = '') => {
-    if(!this.isValid || !this.isModified ) return
+    if(!this.isValid) return
 
     try {
       this.setIsUpdating(true)
@@ -211,11 +232,13 @@ export default class Tag {
       const tagBody = name ? {...this.tagAsJson, tag_name: name} : this.tagAsJson
       const {data} = await sxhr.put(`/smart_tags/${this.id}`, tagBody)
 
-      this.updateFromJson(data)
-      UiStore.addNotification('Tag', 'saved successfully')
+      runInAction(() => {
+        this.updateFromJson(data)
+        UiStore.addNotification('Tag', 'saved successfully')
 
-      this.setIsNew(false)
-      this.setIsModified(false)
+        this.setIsNew(false)
+        this.setIsModified(false)
+      })
     } catch (e) {
       this.setIsError({
         hideNotification: !!name,
@@ -253,7 +276,7 @@ export default class Tag {
   }
 
   @action setTreeQuery = tree => {
-    this.isModified = true
+    //this.isModified = true
     this.treeQuery  = tree
   }
 
@@ -278,5 +301,13 @@ export default class Tag {
 
   @action clearErrors = () => {
     this.setIsError(null)
+  }
+
+  @action setPagination = ({total}) => {
+    this.pagination.setTotal(parseInt(total))
+  }
+
+  @action onPageChange = () => {
+    this.testTag()
   }
 }
