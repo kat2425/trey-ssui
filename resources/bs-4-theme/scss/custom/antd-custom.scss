@@ -1,7 +1,19 @@
 /*
- * Overriding antd classes
+ * Override antd classes
  */
 
 .ant-popover-arrow {
    display: none;
+}
+
+.ant-select-arrow {
+  margin-top: 0 !important;
+}
+
+.ant-list, 
+.ant-select, 
+.ant-select-dropdown,
+.ant-btn {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
 }

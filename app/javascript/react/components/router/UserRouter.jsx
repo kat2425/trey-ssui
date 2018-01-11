@@ -3,7 +3,7 @@ import { BrowserRouter }            from 'react-router-dom'
 import { LastLocationProvider }     from 'react-router-last-location'
 import { Provider as MobxProvider } from 'mobx-react'
 
-//import 'antd/dist/antd.css'
+import 'antd/dist/antd.css'
 
 import UserMain  from 'ui/app/UserMain'
 import uiStore   from 'stores/UiStore'
