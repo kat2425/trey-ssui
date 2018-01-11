@@ -75,7 +75,6 @@
     "reactstrap": "^4.8.0",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
-    "shortid": "^2.2.8",
     "style-loader": "^0.18.2",
     "styled-components": "^2.1.2",
     "styled-tools": "^0.2.2",

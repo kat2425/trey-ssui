@@ -8683,7 +8683,8 @@ img.zoom-img {
 .ant-btn,
 .ant-list-item-meta-title,
 .ant-list-item-meta-description,
-.ant-tooltip {
+.ant-tooltip,
+.ant-input-number {
   font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px; }
 
