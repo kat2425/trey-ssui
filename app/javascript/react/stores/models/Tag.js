@@ -47,12 +47,19 @@ export default class Tag {
   @setter @observable hasBeenTested      = true
 
 
-  @setter @observable name               = null
-  @observable createdAt                  = null
-  @observable query                      = null
-  @observable treeQuery                  = null
-  @observable students                   = observable.array()
-  @observable pagination                 = new Pagination(this) 
+  @setter @observable name = null
+  @observable createdAt    = null
+
+  @observable query        = null
+  @observable treeQuery    = null
+
+  @observable students     = []
+  @observable pagination   = new Pagination(this)
+
+  @observable groups       = []
+  @observable global       = false
+  @observable system       = false
+  @observable modifiable   = null
 
   constructor(isNew = false, parentStore, json = {}){
     this.init(isNew, parentStore, json)
@@ -114,6 +121,18 @@ export default class Tag {
       query:       this.queryFormat,
       tree_query:  this.treeFormat
     }
+  }
+
+  @computed get isGlobal(){
+    return !!this.global || !!this.system
+  }
+
+  @computed get isShared(){
+    return !_.isEmpty(this.groups)
+  }
+
+  @computed get isPrivate(){
+    return !this.isGlobal && !this.isShared
   }
 
   @computed get tagParams(){
@@ -258,13 +277,21 @@ export default class Tag {
     created_at: createdAt,
     tag_name: name,
     query,
-    tree_query: treeQuery
+    tree_query: treeQuery,
+    modifiable,
+    system,
+    global,
+    groups
   }) => {
-    this.id        = id
-    this.createdAt = createdAt
-    this.name      = name
-    this.query     = query
-    this.treeQuery = fromJS(treeQuery)
+    this.id         = id
+    this.createdAt  = createdAt
+    this.name       = name
+    this.query      = query
+    this.treeQuery  = fromJS(treeQuery)
+    this.modifiable = modifiable
+    this.system     = system
+    this.global     = global
+    this.groups     = groups
   }
 
   @action setActive = () => {
