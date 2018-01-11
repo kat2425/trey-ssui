@@ -13,7 +13,12 @@
 .ant-list, 
 .ant-select, 
 .ant-select-dropdown,
-.ant-btn {
+.ant-dropdown-menu-item,
+.ant-btn,
+.ant-list-item-meta-title,
+.ant-list-item-meta-description,
+.ant-tooltip
+{
   font-family: $font-family-base;
-  font-size: $font-size-base;
+  font-size: 12px/*$font-size-base*/;
 }

@@ -9,7 +9,8 @@ import {
   Icon,
   Popconfirm,
   Menu,
-  Dropdown
+  Dropdown,
+  Button
 } from 'antd'
 
 const menu = (tag = {}) => (
@@ -57,8 +58,8 @@ const menu = (tag = {}) => (
 
 function TagMenu({tag}){
   return (
-    <Dropdown overlay={menu(tag)}>
-      <MenuIcon type='ellipsis' />
+    <Dropdown onClick={e => e.preventDefault()}trigger={['click']} overlay={menu(tag)}>
+      <MenuBtn icon='ellipsis' size='small'/>
     </Dropdown>
   )
 }
@@ -69,12 +70,13 @@ const MenuItem = styled(Menu.Item)`
     color: #f5222d;
   `)}
 `
-const MenuIcon = styled(Icon)`
-  cursor: pointer;
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.5);
+const MenuBtn = styled(Button)`
+  margin-left: 10px;
+  border-color: transparent;
+  background-color: transparent;
   &:hover{
-    color: #636c72;
+    border-color: #40a9ff;
+    background-color: white;
   }
 `
 const ActionIcon = styled(Icon)`
