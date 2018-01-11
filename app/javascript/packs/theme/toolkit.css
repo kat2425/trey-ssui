@@ -8679,9 +8679,13 @@ img.zoom-img {
 .ant-list,
 .ant-select,
 .ant-select-dropdown,
-.ant-btn {
+.ant-dropdown-menu-item,
+.ant-btn,
+.ant-list-item-meta-title,
+.ant-list-item-meta-description,
+.ant-tooltip {
   font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1rem; }
+  font-size: 12px; }
 
 @-webkit-keyframes spin {
   0% {

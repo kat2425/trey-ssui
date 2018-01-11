@@ -7,7 +7,6 @@ const Wrapper = styled.div.attrs({ className: 'p-3 pl-3' })`
  justify-content: space-between;
  align-items: center;
  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
- cursor: pointer;
 
  ${ifProp('active', `
   background-color: rgb(247, 252, 255);
