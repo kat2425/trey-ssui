@@ -30,26 +30,33 @@ function TagEntry({tag}){
         <ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator>
       </Title>
       <Aside>
-        {tag.isGlobal  && <GlobalIcon type='global' title='This tag is shared with other users.'/>}
-        {tag.isShared  && <GlobalIcon type='group' title='This tag is shared with groups.'/>}
-        {tag.isPrivate && <GlobalIcon type='private' title='This tag is not shared with other users.'/>}
+        {!tag.isNew && (
+          <div>
+            {tag.isGlobal  && <GlobalIcon type='global' title='This tag is shared with other users.'/>}
+            {tag.isShared  && <GlobalIcon type='group' title='This tag is shared with groups.'/>}
+            {tag.isPrivate && <GlobalIcon type='private' title='This tag is not shared with other users.'/>}
+          </div>
+        )}
         <TagMenu tag={tag} className='text-muted' />
       </Aside>
     </Wrapper>
   )
 }
 
+const icStyle = {
+  fontSize: 14
+}
 const GlobalIcon = ({type, title}) => ( 
   <Tooltip title={title}>
     {
       (() => {
         switch(type){
         case 'global':
-          return <FaEye />
+          return <FaEye style={icStyle} />
         case 'shared':
-          return <FaGroup />
+          return <FaGroup style={icStyle} />
         case 'private':
-          return <FaEyeSlash />
+          return <FaEyeSlash style={icStyle} />
         default:
           return null
         }

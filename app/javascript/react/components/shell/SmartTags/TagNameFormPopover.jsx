@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import { Popover }          from 'antd'
+import { observer }         from 'mobx-react'
 
 import TagNameForm          from './TagNameForm'
 
+@observer
 export default class TagNameFormPopover extends Component {
   static propTypes = {
     title:     PropTypes.string,

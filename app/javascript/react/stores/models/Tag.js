@@ -43,6 +43,7 @@ export default class Tag {
   @setter @observable isEditing          = false
   @setter @observable isError            = false
   @setter @observable isNew              = false
+  @setter @observable isCloned           = false
   @setter @observable isModified         = false
   @setter @observable hasBeenTested      = true
 
@@ -61,8 +62,8 @@ export default class Tag {
   @observable system       = false
   @observable modifiable   = null
 
-  constructor(isNew = false, parentStore, json = {}){
-    this.init(isNew, parentStore, json)
+  constructor(conf = {}, parentStore, json = {}){
+    this.init(conf, parentStore, json)
     this.initAutoruns()
   }
 
@@ -102,7 +103,8 @@ export default class Tag {
 
   @computed get humanStringFormat(){
     try {
-      return ` of your students whose ${ queryString(this.treeQuery, config, true).split('(').join('').split(')').join('')}`
+      return ` of your students whose 
+      ${queryString(this.treeQuery, config, true).split('(').join('').split(')').join('')}`
     } catch(e){
       console.warn(e)
       return ''
@@ -149,19 +151,32 @@ export default class Tag {
     return !this.isNew && this.isModified
   }
   // Actions
-  @action init = (isNew, parentStore, json) => {
-    this.id        = uuid()
-    this.createdAt = moment().format()
+  @action init = (
+    {isNew = false, isCloned = false} = {}, 
+    parentStore, 
+    json
+  ) => {
     this.isNew     = isNew
+    this.isCloned  = isCloned
     this.tagStore  = parentStore
 
+    !_.isEmpty(json) && this.updateFromJson({...json})
+
+    this.initNewTag({isNew, isCloned, ...json})
+  }
+
+  @action initNewTag = ({isNew, isCloned, name} = {}) => {
     if(isNew){
-      this.name = `${TAG_NAME_PLACEHOLDER} ${++Tag.untitledTagsCounter}`
-      this.setActive()
+      this.id            = uuid()
+      this.name          = `${TAG_NAME_PLACEHOLDER} ${++Tag.untitledTagsCounter}`
+      this.createdAt     = moment().format()
       this.hasBeenTested = false
+      this.setActive()
     }
 
-    !_.isEmpty(json) && this.updateFromJson(json)
+    if(isNew && isCloned){
+      this.name = `${name} (cloned)`
+    }
   }
 
   @action initAutoruns = () => {
@@ -198,20 +213,18 @@ export default class Tag {
       this.setIsCreating(true)
       this.setIsError(false)
 
-      const {headers, data} = await sxhr.post('/smart_tags', {...this.tagAsJson, tag_name: name})
+      const {data} = await sxhr.post('/smart_tags', {...this.tagAsJson, tag_name: name})
 
       runInAction(() => {
-        this.setPagination(headers)
+        this.resetStatus()
         this.updateFromJson(data)
-        this.setIsNew(false)
-        this.setIsModified(false)
 
         this.tagStore.toggleQueryForm()
       })
     } catch (e) {
       this.setIsError({
         hideNotification: true,
-        message:          'Tag name already taken'
+        message:          e.message
       })
       console.error(e)
     } finally {
@@ -252,17 +265,19 @@ export default class Tag {
       const {data} = await sxhr.put(`/smart_tags/${this.id}`, tagBody)
 
       runInAction(() => {
+        this.resetStatus()
         this.updateFromJson(data)
         UiStore.addNotification('Tag', 'saved successfully')
 
-        this.setIsNew(false)
-        this.setIsModified(false)
       })
     } catch (e) {
+      /*
       this.setIsError({
         hideNotification: !!name,
         message:          name ? 'Tag name already taken' : e.message
       })
+      */
+      this.setIsError(e)
       console.warn(e)
     } finally {
       this.setIsUpdating(false)
@@ -284,8 +299,8 @@ export default class Tag {
     groups
   }) => {
     this.id         = id
-    this.createdAt  = createdAt
     this.name       = name
+    this.createdAt  = createdAt
     this.query      = query
     this.treeQuery  = fromJS(treeQuery)
     this.modifiable = modifiable
@@ -303,7 +318,7 @@ export default class Tag {
   }
 
   @action setTreeQuery = tree => {
-    //this.isModified = true
+    this.isModified = true
     this.treeQuery  = tree
   }
 
@@ -336,5 +351,11 @@ export default class Tag {
 
   @action onPageChange = () => {
     this.testTag()
+  }
+
+  @action resetStatus = () => {
+    this.setIsNew(false)
+    this.setIsCloned(false)
+    this.setIsModified(false)
   }
 }

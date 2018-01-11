@@ -3,7 +3,8 @@ import {
   action, 
   computed,
   autorun,
-  runInAction
+  runInAction,
+  toJS
 } from 'mobx'
 
 import { SCHEMA_XHR as sxhr } from  'helpers/XHR'
@@ -104,11 +105,11 @@ export class TagStore {
 
   @action updateTagFromServer = tag => {
     if (this.tags.has(tag.id)) return
-    this.tags.set(tag.id, new Tag(false, this, tag))
+    this.tags.set(tag.id, new Tag({}, this, tag))
   }
 
   @action handleAddTag = () => {
-    const newTag = new Tag(true, this)
+    const newTag = new Tag({isNew: true}, this)
 
     this.tags.set(newTag.id, newTag)
   }
@@ -172,6 +173,23 @@ export class TagStore {
 
   @action onPageChange = () => {
     this.fetchTags()
+  }
+
+  @action cloneTag = (tag) => {
+    const picked = [
+      'name',
+      'query',
+      'treeQuery',
+      'system',
+      'modifiable',
+      'global',
+      'groups',
+      'students'
+    ]
+    const clonedTag = _.pick(toJS(tag), picked)
+    const newTag = new Tag({isNew: true, isCloned: true}, this, {...clonedTag, 'tree_query': clonedTag.treeQuery})
+
+    this.tags.set(newTag.id, newTag)
   }
 }
 
