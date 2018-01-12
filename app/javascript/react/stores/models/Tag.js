@@ -129,12 +129,12 @@ export default class Tag {
     return !!this.global || !!this.system
   }
 
-  @computed get isShared(){
+  @computed get isGroup(){
     return !_.isEmpty(this.groups)
   }
 
   @computed get isPrivate(){
-    return !this.isGlobal && !this.isShared
+    return !this.isGlobal && !this.isGroup
   }
 
   @computed get tagParams(){
@@ -208,12 +208,18 @@ export default class Tag {
     }
   }
 
-  @action createTag = async(name) => {
+  @action createTag = async(params) => {
+    const {name} = params
+
     try {
       this.setIsCreating(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.post('/smart_tags', {...this.tagAsJson, tag_name: name})
+      const {data} = await sxhr.post('/smart_tags', {
+        ...this.tagAsJson, 
+        tag_name: name,
+        ...this.getScopeParams(params)
+      })
 
       runInAction(() => {
         this.resetStatus()
@@ -254,21 +260,28 @@ export default class Tag {
   /*
    * updates tag on the server
    */
-  @action updateTag = async(name = '') => {
+  @action updateTag = async(params = {}) => {
     if(!this.isValid) return
+
+    const {name} = params
 
     try {
       this.setIsUpdating(true)
       this.setIsError(false)
 
-      const tagBody = name ? {...this.tagAsJson, tag_name: name} : this.tagAsJson
+      const tagBody = name ? {
+        ...this.tagAsJson, 
+        tag_name: name,
+        ...this.getScopeParams(params)
+      } : this.tagAsJson
+
       const {data} = await sxhr.put(`/smart_tags/${this.id}`, tagBody)
 
       runInAction(() => {
         this.resetStatus()
         this.updateFromJson(data)
+        this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
         UiStore.addNotification('Tag', 'saved successfully')
-
       })
     } catch (e) {
       /*
@@ -330,11 +343,20 @@ export default class Tag {
     this.testTag()
   }
 
-  @action handleOnSave = (name) => {
+  @action handleOnSave = (data) => {
     if(this.isNew) { 
-      this.tagStore.showQueryForm ? this.createTag(name) : this.tagStore.toggleQueryForm() 
+      this.tagStore.showQueryForm ? this.createTag(data) : this.tagStore.toggleQueryForm() 
     } 
-    else { this.updateTag(name) }
+    else { this.updateTag(data) }
+  }
+
+  // temporary variables
+  @action getScopeParams = ({scope, groups}) => {
+    return {
+      global: scope === 'global',
+      system: scope === 'system',
+      groups: _.isEmpty(groups) ? null : groups.join(',')
+    }
   }
 
   @action dispose = () => {
