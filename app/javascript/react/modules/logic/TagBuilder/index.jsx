@@ -26,24 +26,22 @@ import {
 } from 'antd'
 const Search = Input.Search
 
-
 import {
   TagList, 
   MapModal,
-  NewQueryModal,
-  TagNameFormPopover
+  NewQueryModal
 } from 'ui/shell/SmartTags'
 
 @observer
 export default class TagBuilder extends Component {
   state = { showMap: false }
 
-  toggleMap = () => {
-    this.setState({ showMap: !this.state.showMap })
-  }
-
   componentDidMount(){
     tagStore.fetchTags()
+  }
+
+  toggleMap = () => {
+    this.setState({ showMap: !this.state.showMap })
   }
 
   nameStyle = (isNew) => {
@@ -93,18 +91,20 @@ export default class TagBuilder extends Component {
           <ActionBar>
             {showContent && [
               <div 
-                key={uuid()}
-                className='d-flex flex-row align-items-center'
+                key       = {uuid()}
+                className = 'd-flex flex-row align-items-center'
               >
-                <h5 style={this.nameStyle(selectedTag.isNew)}>
+                <h5 style={this.nameStyle(selectedTag.isNew)} title={selectedTag.name}>
                   <ModifiedIndicator tag={selectedTag}>{selectedTag.name}</ModifiedIndicator>
                 </h5>
                 {selectedTag.isEditable && (
-                  <TagNameFormPopover tag={selectedTag}>
-                    <Tooltip title='Edit Name'>
-                      <Button icon="edit" style={{border: 0}}/>
-                    </Tooltip>
-                  </TagNameFormPopover>
+                  <Tooltip title='Edit Tag'>
+                    <Button 
+                      onClick = {() => tagStore.editTag(selectedTag)}
+                      icon    = "edit"
+                      style   = {{border: 0}}
+                    />
+                  </Tooltip>
                 )}
               </div>
               ,

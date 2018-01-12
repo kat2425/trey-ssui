@@ -18,7 +18,10 @@
 .ant-list-item-meta-title,
 .ant-list-item-meta-description,
 .ant-tooltip,
-.ant-input-number
+.ant-input-number,
+.ant-form *,
+.ant-form label,
+.ant-menu,
 {
   font-family: $font-family-base;
   font-size: 12px/*$font-size-base*/;
