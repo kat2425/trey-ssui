@@ -2,7 +2,6 @@ import React                  from 'react'
 import { observer }           from 'mobx-react'
 import styled                 from 'styled-components'
 import {ifProp}               from 'styled-tools'
-import { TagNameFormPopover } from 'ui/shell/SmartTags'
 import uuid                   from 'uuid'
 import store                  from 'stores/TagStore'
 
@@ -15,15 +14,13 @@ import {
 } from 'antd'
 
 const menu = (tag = {}, store = {}) => (
-  <Menu>
+  <Menu style={{minWidth: 100}}>
     {!tag.isNew && [
       <MenuItem key={uuid()}>
-        <TagNameFormPopover 
-          tag={tag}
-        >
+        <div onClick={() => store.editTag(tag)}>
           <ActionIcon type='edit' />
           Edit
-        </TagNameFormPopover>
+        </div>
       </MenuItem>,
       <Menu.Divider key={uuid()} />
     ]}

@@ -28,6 +28,7 @@ export class TagStore {
   @observable pagination               = new Pagination(this)
 
   @observable selectedTag              = null
+  @observable editedTag                = null
   @observable tags                     = observable.map()
 
   constructor(){
@@ -143,14 +144,6 @@ export class TagStore {
     this.showQueryForm = !this.showQueryForm
   }
 
-  @action createTag = (name) => {
-    if(!name) {
-      this.setError(new Error('Tag name required'))
-      return 
-    }
-
-    this.selectedTag && this.selectedTag.createTag(name)
-  }
   @action setSelectedTag = (tag) => {
     if(this.selectedTag === tag) return 
 
@@ -184,12 +177,23 @@ export class TagStore {
       'modifiable',
       'global',
       'groups',
-      'students'
     ]
     const clonedTag = _.pick(toJS(tag), picked)
-    const newTag = new Tag({isNew: true, isCloned: true}, this, {...clonedTag, 'tree_query': clonedTag.treeQuery})
+    const newTag = new Tag(
+      {isNew: true, isCloned: true}, 
+      this, 
+      {...clonedTag, 'tree_query': clonedTag.treeQuery}
+    )
 
     this.tags.set(newTag.id, newTag)
+  }
+
+  @action editTag = tag => {
+    if(!tag || !this.tags.has(tag.id)) return
+
+    this.editedTag = tag
+
+    this.toggleQueryForm()
   }
 }
 

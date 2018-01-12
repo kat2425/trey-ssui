@@ -25,16 +25,16 @@ TagEntry.propTypes = {
 function TagEntry({tag}){
   return (
     <Wrapper active={tag.isActive}>
-      <Title isNew={tag.isNew} onClick={tag.handleOnTagClick}>
+      <Title title={tag.name} isNew={tag.isNew} onClick={tag.handleOnTagClick}>
         <Icon type='tag-o' className='mr-2'/>
         <ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator>
       </Title>
       <Aside>
         {!tag.isNew && (
           <div>
-            {tag.isGlobal  && <GlobalIcon type='global' title='This tag is shared with other users.'/>}
-            {tag.isShared  && <GlobalIcon type='group' title='This tag is shared with groups.'/>}
-            {tag.isPrivate && <GlobalIcon type='private' title='This tag is not shared with other users.'/>}
+            {tag.isGlobal  && <ScopeIcon type='global' title='This tag is shared with other users.'/>}
+            {tag.isGroup   && <ScopeIcon type='group' title='This tag is shared with groups.'/>}
+            {tag.isPrivate && <ScopeIcon type='private' title='This tag is not shared with other users.'/>}
           </div>
         )}
         <TagMenu tag={tag} className='text-muted' />
@@ -46,14 +46,14 @@ function TagEntry({tag}){
 const icStyle = {
   fontSize: 14
 }
-const GlobalIcon = ({type, title}) => ( 
+const ScopeIcon = ({type, title}) => ( 
   <Tooltip title={title}>
     {
       (() => {
         switch(type){
         case 'global':
           return <FaEye style={icStyle} />
-        case 'shared':
+        case 'group':
           return <FaGroup style={icStyle} />
         case 'private':
           return <FaEyeSlash style={icStyle} />
