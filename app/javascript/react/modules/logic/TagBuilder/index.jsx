@@ -29,7 +29,6 @@ const Search = Input.Search
 
 import {
   TagList, 
-  TagActionBar,
   MapModal,
   NewQueryModal,
   TagNameFormPopover
@@ -63,6 +62,8 @@ export default class TagBuilder extends Component {
             !tagStore.isFetchingSchema &&
             !tagStore.isSelectingTag
 
+    const showContent = selectedTag && !tagStore.isFetchingSchema
+
     return (
       <Wrapper>
         {selectedTag && (
@@ -90,7 +91,7 @@ export default class TagBuilder extends Component {
         </div>
         <div className="d-flex flex-column" style={{flex: 4}}>
           <ActionBar>
-            {selectedTag && [
+            {showContent && [
               <div 
                 key={uuid()}
                 className='d-flex flex-row align-items-center'
@@ -110,6 +111,17 @@ export default class TagBuilder extends Component {
               <div key={uuid} 
                 className='d-flex flex-row align-items-center justify-content-end'
               >
+                <Tooltip title='Clone Tag'>
+                  <Button 
+                    icon      = 'copy'
+                    type      = 'primary'
+                    ghost
+                    className = 'mr-2'
+                    onClick   = {() => tagStore.cloneTag(selectedTag)}
+                  >              
+                    Clone 
+                  </Button>
+                </Tooltip>
                 <Popconfirm 
                   title      = "Are you sure?"
                   onConfirm  = {selectedTag.deleteTag}
@@ -120,16 +132,18 @@ export default class TagBuilder extends Component {
                     <Button 
                       icon      = 'delete'
                       type      = 'danger'
-                      className = 'mr-4'
-                    />              
+                      ghost
+                    >              
+                      Delete
+                    </Button>
                   </Tooltip>
                 </Popconfirm>
-                <TagActionBar />
               </div>
             ]}
           </ActionBar>
 
           { showEmptySelectionPlaceholder && <p className='mt-5 text-muted text-center'>No Tag Selected</p> }
+          { tagStore.isFetchingSchema && <LoadingSpinner center /> }
 
           <div
             className="d-flex flex-row px-2 py-4"
@@ -144,18 +158,17 @@ export default class TagBuilder extends Component {
               className="d-flex flex-column px-4 py-2"
               style={{flex: 3, height: '100%'}}
             >
-              {selectedTag && (
+              { showContent && (
                 <div>
-                  {tagStore.isFetchingSchema && <LoadingSpinner center /> }
                   {selectedTag.showQueryBuilder && <QueryBuilder tag={selectedTag}/>}
                 </div>
               )}
             </div>
-            <div
-              className="d-flex flex-column px-2 py-2"
-              style={{flex: 1.5, height: '100%', overflow: 'auto'}}
-            >
-              {selectedTag && (
+            {showContent && (
+              <div
+                className="d-flex flex-column px-2 py-2"
+                style={{flex: 1.5, height: '100%', overflow: 'auto'}}
+              >
                 <Panel 
                   contentStyle={{
                     margin:    20,
@@ -170,16 +183,19 @@ export default class TagBuilder extends Component {
                       : selectedTag.hasBeenTested 
                         ? <NumStudents>0</NumStudents>
                         : <p className='my-3 text-muted text-center'>.  .  .</p>
-                      
+
                   }
                   <p>{selectedTag.humanStringFormat}</p>
                 </Panel>
-              )}
-              {selectedTag && (
                 <Panel
                   className    = "my-2 pt-4"
                   title        = "Map"
-                  titleRight   = {() => <FaExpand onClick={tagStore.toggleMap} style={{cursor: 'pointer'}} />}
+                  titleRight   = {() => 
+                    <FaExpand 
+                      onClick={tagStore.toggleMap} 
+                      style={{cursor: 'pointer'}} 
+                    />
+                  }
                   contentStyle = {{minHeight: 'auto'}}
                 >
                   <Img
@@ -193,8 +209,6 @@ export default class TagBuilder extends Component {
                     src='https://developers.google.com/maps/documentation/urls/images/map-no-params.png' 
                   />
                 </Panel>
-              )}
-              {selectedTag && (
                 <Panel
                   className="pt-4"
                   title="Students"
@@ -212,8 +226,8 @@ export default class TagBuilder extends Component {
                     <p className='my-5 text-muted text-center'>No Students</p> 
                   )}
                 </Panel>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
         <NewQueryModal store={tagStore} />
