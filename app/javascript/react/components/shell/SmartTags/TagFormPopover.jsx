@@ -3,10 +3,10 @@ import PropTypes            from 'prop-types'
 import { Popover }          from 'antd'
 import { observer }         from 'mobx-react'
 
-import TagNameForm          from './TagNameForm'
+import TagForm              from './TagForm'
 
 @observer
-export default class TagNameFormPopover extends Component {
+export default class TagFormPopover extends Component {
   static propTypes = {
     title:     PropTypes.string,
     trigger:   PropTypes.oneOf(['hover', 'focus', 'click']),
@@ -38,7 +38,7 @@ export default class TagNameFormPopover extends Component {
   render() {
     return (
       <Popover
-        content         = {<TagNameForm tag={this.props.tag} onCancel={this.hide} />}
+        content         = {<TagForm tag={this.props.tag} onCancel={this.hide} />}
         title           = {this.props.title}
         trigger         = {this.props.trigger}
         placement       = {this.props.placement}

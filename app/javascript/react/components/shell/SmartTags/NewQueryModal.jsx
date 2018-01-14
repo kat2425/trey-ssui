@@ -1,7 +1,7 @@
 import React, {Component}   from 'react'
 import { observer }         from 'mobx-react'
 import { Modal, ModalBody } from 'reactstrap'
-import { TagNameForm }      from 'ui/shell/SmartTags'
+import { TagForm }          from 'ui/shell/SmartTags'
 
 @observer
 export default class NewQueryModal extends Component{
@@ -24,7 +24,7 @@ export default class NewQueryModal extends Component{
         className="h-100 d-flex flex-column justify-content-center my-0"
       >
         <ModalBody>
-          <TagNameForm tag={store.editedTag} onCancel={this.handleOnCancel} />
+          <TagForm tag={store.editedTag} onCancel={this.handleOnCancel} />
         </ModalBody>
       </Modal>
     )

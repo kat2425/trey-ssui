@@ -13,7 +13,7 @@ const Option = Select.Option
 import {GroupSelect} from 'ui/shell/SmartTags'
 
 @observer
-class TagForm extends Component {
+class FormWrapper extends Component {
   static propTypes = {
     tag:      PropTypes.object.isRequired,
     onCancel: PropTypes.func
@@ -168,7 +168,7 @@ function getScopeValue(tag){
     return null
   }
 }
-const TagNameForm = Form.create()(TagForm)
+const TagForm = Form.create()(FormWrapper)
 
-export default TagNameForm
+export default TagForm
 
