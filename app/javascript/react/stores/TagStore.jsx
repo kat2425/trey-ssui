@@ -38,7 +38,7 @@ export class TagStore {
   // Autoruns
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
-      if(this.isError){
+      if(this.isError && !this.isError.hideNotification){
         UiStore.addNotification('Error', this.isError.message)
       }
     })
@@ -105,21 +105,15 @@ export class TagStore {
   }
 
   @action updateTagFromServer = tag => {
-    if (this.tags.has(tag.id)) return
-    this.tags.set(tag.id, new Tag({}, this, tag))
+    this.addTag(new Tag({}, this, tag))
   }
 
   @action handleAddTag = () => {
-    const newTag = new Tag({isNew: true}, this)
-
-    this.tags.set(newTag.id, newTag)
+    this.addTag(new Tag({isNew: true}, this))
   }
 
-  /*
-   * Used by Tag Model to add itself to the tag list. 
-   * A tag is added to the list only after it has been validated (unique name).
-   */
   @action addTag = tag => {
+    if(this.tags.has(tag.id)) return
     this.tags.set(tag.id, tag)
   }
 
@@ -128,11 +122,12 @@ export class TagStore {
     this.setIsError(false)
   }
 
-  @action deleteTag(tag){
+  @action deleteTag(tag = {}){
     if(this.selectedTag === tag) {
       this.selectedTag = null
     }
 
+    if(!this.tags.has(tag.id)) return
     this.tags.delete(tag.id)
   }
 
@@ -179,20 +174,17 @@ export class TagStore {
       'groups',
     ]
     const clonedTag = _.pick(toJS(tag), picked)
-    const newTag = new Tag(
-      {isNew: true, isCloned: true}, 
-      this, 
-      {...clonedTag, 'tree_query': clonedTag.treeQuery}
-    )
+    const json      = { ...clonedTag, 'tree_query': clonedTag.treeQuery}
+    const conf      = {isNew: true, isCloned: true}
+    const newTag    = new Tag(conf,this,json)
 
-    this.tags.set(newTag.id, newTag)
+    this.addTag(newTag)
   }
 
-  @action editTag = tag => {
-    if(!tag || !this.tags.has(tag.id)) return
+  @action editTag = (tag = {}) => {
+    if(!this.tags.has(tag.id)) return
 
     this.editedTag = tag
-
     this.toggleQueryForm()
   }
 }

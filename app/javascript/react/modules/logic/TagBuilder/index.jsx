@@ -111,17 +111,19 @@ export default class TagBuilder extends Component {
               <div key={uuid} 
                 className='d-flex flex-row align-items-center justify-content-end'
               >
-                <Tooltip title='Clone Tag'>
-                  <Button 
-                    icon      = 'copy'
-                    type      = 'primary'
-                    ghost
-                    className = 'mr-2'
-                    onClick   = {() => tagStore.cloneTag(selectedTag)}
-                  >              
-                    Clone 
-                  </Button>
-                </Tooltip>
+                {selectedTag.modifiable && (
+                  <Tooltip title='Clone Tag'>
+                    <Button 
+                      icon      = 'copy'
+                      type      = 'primary'
+                      ghost
+                      className = 'mr-2'
+                      onClick   = {() => tagStore.cloneTag(selectedTag)}
+                    >              
+                      Clone 
+                    </Button>
+                  </Tooltip>
+                )}
                 <Popconfirm 
                   title      = "Are you sure?"
                   onConfirm  = {selectedTag.deleteTag}

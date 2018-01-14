@@ -10,6 +10,8 @@ import {
 } from 'antd'
 const Option = Select.Option
 
+import {GroupSelect} from 'ui/shell/SmartTags'
+
 @observer
 class TagForm extends Component {
   static propTypes = {
@@ -17,10 +19,23 @@ class TagForm extends Component {
     onCancel: PropTypes.func
   }
 
+  constructor(props){
+    super(props)
+
+    const { tag } = this.props
+
+    this.state = {
+      showSelectGroup: tag.isGroup,
+      selectedGroups:  tag.groupIds.join(',')
+    }
+  }
+
   componentDidMount() {
-    // To disabled submit button at the beginning.
-    this.props.form.validateFields()
-    this.props.tag.clearErrors()
+    const { form, tag } = this.props
+
+    // To disable submit button at the beginning.
+    form.validateFields()
+    tag.clearErrors()
   }
 
   handleOnFocus = e => {
@@ -28,16 +43,33 @@ class TagForm extends Component {
   }
 
   handleSubmit = e => {
+    const { form, tag } = this.props
+
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+    form.validateFields((err, values) => {
       if (!err) {
-        this.props.tag.handleOnSave({...values})
+        tag.handleOnSave({...values, groupIds: this.state.selectedGroups})
       }
     })
   }
 
+  handleOnGroupChange = (groups) => {
+    this.setState({selectedGroups: groups.join(',')})
+  }
+
+  handleOnSelectScopeChange = (value) => {
+    if(value !== 'group'){
+      this.setState({
+        showSelectGroup: false,
+        selectedGroups:  ''
+      })
+    } else {
+      this.setState({showSelectGroup: true})
+    }
+  }
+
   render() {
-    const { tag, form } = this.props
+    const { form, tag } = this.props
     const {
       getFieldDecorator, 
       getFieldsError, 
@@ -54,7 +86,6 @@ class TagForm extends Component {
       <Form onSubmit={this.handleSubmit} style={{minWidth: 250}}>
         <FormItem
           className      = 'mb-1'
-          label          = 'Scope'
         >
           {getFieldDecorator('scope', {
             initialValue: getScopeValue(tag),
@@ -62,27 +93,30 @@ class TagForm extends Component {
               {required: true, message: 'Please select the scope of this tag'}
             ]
           })(
-            <Select size='large'>
+            <Select onChange={this.handleOnSelectScopeChange}>
               <Option value='private'>Just Me</Option>
               <Option value='global'>Everyone</Option>
-              <Option value='group' disabled>Select Group</Option>
+              <Option value='group'>Select Group</Option>
             </Select>
           )}
         </FormItem>
+        { this.state.showSelectGroup && (
+          <FormItem className='mb-2'>
+            <GroupSelect tag={tag} onChange={this.handleOnGroupChange} />
+          </FormItem>
+        )}
         <FormItem
-          className      = 'mb-1'
+          className      = 'mb-2'
           validateStatus = {validateStatusName}
           help           = {helpName || ''}
-          label          = 'Tag Name'
         >
           {getFieldDecorator('name', {
-            initialValue: tag.name,
+            initialValue: tag.name || '',
             rules:        [
               {required: true, message: 'Please enter tag name'}
             ]
           })(
             <Input 
-              size='large' 
               placeholder="Enter Tag Name" 
               ref={(input) => {input && window.requestAnimationFrame(()=>{input.focus()})}}
               onFocus={this.handleOnFocus}
@@ -91,7 +125,7 @@ class TagForm extends Component {
         </FormItem>
         <FormItem 
           tail 
-          className='mb-1'
+          className='mb-2 text-center'
         >
           <Button 
             size     = 'large'
@@ -104,7 +138,7 @@ class TagForm extends Component {
           </Button>
           <Button 
             size     = 'large'
-            className = 'ml-1'
+            className = 'ml-2'
             onClick   = {this.props.onCancel}
           >
             Cancel
@@ -115,31 +149,9 @@ class TagForm extends Component {
   }
 }
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-}
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span:   24,
-      offset: 0,
-    },
-    sm: {
-      span:   16,
-      offset: 8,
-    },
-  },
-}
 const FormItem = ({tail, ...props}) => tail 
-  ? <Form.Item {...props} {...tailFormItemLayout}/> 
-  : <Form.Item {...props} {...formItemLayout}/>
+  ? <Form.Item {...props} /> 
+  : <Form.Item {...props} />
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
