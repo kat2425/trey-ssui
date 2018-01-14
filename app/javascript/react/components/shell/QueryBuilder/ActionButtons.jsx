@@ -18,7 +18,7 @@ export default function ActionButtons({
 }) {
   return (
     <div className='d-flex my-4 justify-content-end'>
-      <Button.Group size='large'>
+      <Button.Group>
         <Button 
           onClick  = {() => onSave()}
           disabled = {disabled}

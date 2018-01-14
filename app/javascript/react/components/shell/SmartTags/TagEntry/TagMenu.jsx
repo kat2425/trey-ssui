@@ -39,13 +39,15 @@ const menu = (tag = {}, store = {}) => (
         </div>
       </MenuItem>
     ]}
-    <Menu.Divider />
-    <MenuItem>
-      <div onClick={() => store.cloneTag(tag)}>
-        <ActionIcon type='copy' />
-        Clone
-      </div>
-    </MenuItem>
+    {tag.modifiable && [
+      <Menu.Divider key={uuid()}/>,
+      <MenuItem key={uuid()}>
+        <div onClick={() => store.cloneTag(tag)}>
+          <ActionIcon type='copy' />
+          Clone
+        </div>
+      </MenuItem>
+    ]}
     <Menu.Divider />
     <MenuItem delete>
       <Popconfirm 

@@ -2,6 +2,21 @@
 # yarn lockfile v1
 
 
+"@babel/helper-module-imports@^7.0.0-beta.34":
+  version "7.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.37.tgz#e0f34cfbe7eb0d70dc02e1481a236e26d127fb43"
+  dependencies:
+    "@babel/types" "7.0.0-beta.37"
+    lodash "^4.2.0"
+
+"@babel/types@7.0.0-beta.37":
+  version "7.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.37.tgz#fa93af9aa9d85c331729bb923495af04d9b0617d"
+  dependencies:
+    esutils "^2.0.2"
+    lodash "^4.2.0"
+    to-fast-properties "^2.0.0"
+
 "@hypnosphi/fuse.js@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@hypnosphi/fuse.js/-/fuse.js-3.0.9.tgz#ea99f6121b4a8f065b4c71f85595db2714498807"
@@ -849,6 +864,12 @@ babel-plugin-dynamic-import-node@1.0.2:
     babel-plugin-syntax-dynamic-import "^6.18.0"
     babel-template "^6.24.1"
     babel-types "^6.24.1"
+
+babel-plugin-import@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-import/-/babel-plugin-import-1.6.3.tgz#f4deeac51ff9f997c9cf38e8d7d7b9142504eaf5"
+  dependencies:
+    "@babel/helper-module-imports" "^7.0.0-beta.34"
 
 babel-plugin-minify-builtins@^0.2.0:
   version "0.2.0"
@@ -8382,6 +8403,10 @@ to-arraybuffer@^1.0.0:
 to-fast-properties@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
+
+to-fast-properties@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
 
 tough-cookie@*, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.3"
