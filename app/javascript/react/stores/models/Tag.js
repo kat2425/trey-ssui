@@ -54,7 +54,7 @@ export default class Tag {
   @observable query        = null
   @observable treeQuery    = null
 
-  @observable students     = []
+  @observable studentMap   = observable.map()
   @observable pagination   = new Pagination(this)
 
   @observable groups       = []
@@ -77,6 +77,10 @@ export default class Tag {
   }
 
   // Computed 
+  @computed get students(){
+    return this.studentMap.values()
+  }
+
   @computed get isActive(){
     return this.tagStore.selectedTag === this
   }
@@ -111,8 +115,12 @@ export default class Tag {
     }
   }
 
+  @computed get groupIds(){
+    return this.groups.map(g => g.id)
+  }
+
   @computed get hasStudents(){
-    return !this.isFetchingStudents && !_.isEmpty(this.students)
+    return !this.isFetchingStudents && !_.isEmpty(this.studentMap)
   }
 
   @computed get tagAsJson(){
@@ -166,15 +174,21 @@ export default class Tag {
   }
 
   @action initNewTag = ({isNew, isCloned, name} = {}) => {
+    const isOnlyNew      = isNew && !isCloned
+    const isNewAndCloned = isNew && isCloned
+
     if(isNew){
       this.id            = uuid()
-      this.name          = `${TAG_NAME_PLACEHOLDER} ${++Tag.untitledTagsCounter}`
       this.createdAt     = moment().format()
       this.hasBeenTested = false
       this.setActive()
     }
 
-    if(isNew && isCloned){
+    if(isOnlyNew){
+      this.name = `${TAG_NAME_PLACEHOLDER} ${++Tag.untitledTagsCounter}`
+    }
+
+    if(isNewAndCloned){
       this.name = `${name} (cloned)`
     }
   }
@@ -188,16 +202,14 @@ export default class Tag {
       this.setIsFetchingStudents(true)
       this.setIsError(false)
 
-      const {headers, data} = await xhr.post('/query/fetch', 
+      const {headers, data: students} = await xhr.post('/query/fetch', 
         { query: this.queryFormat },
         { params: this.tagParams }
       )
 
       runInAction(() => {
+        students.forEach(this.addStudent)
         this.setPagination(headers)
-        this.students.push(...data)
-        this.pagination.calculateTotalResults()
-
         if(!this.hasBeenTested) {this.hasBeenTested = true}
       })
     } catch (e) {
@@ -208,8 +220,13 @@ export default class Tag {
     }
   }
 
+  @action addStudent = student => {
+    if(this.studentMap.has(student.id)) return
+    this.studentMap.set(student.id, student)
+  }
+
   @action createTag = async(params) => {
-    const {name} = params
+    const wasActive = this.isActive
 
     try {
       this.setIsCreating(true)
@@ -217,13 +234,22 @@ export default class Tag {
 
       const {data} = await sxhr.post('/smart_tags', {
         ...this.tagAsJson, 
-        tag_name: name,
+        tag_name: params.name,
         ...this.getScopeParams(params)
       })
 
       runInAction(() => {
         this.resetStatus()
+
+
+        // delete the old tag with random id
+        this.tagStore.deleteTag(this)
+
         this.updateFromJson(data)
+
+        // add this tag with updated data from server
+        this.tagStore.addTag(this)
+        wasActive && this.tagStore.setSelectedTag(this)
 
         this.tagStore.toggleQueryForm()
       })
@@ -284,14 +310,10 @@ export default class Tag {
         UiStore.addNotification('Tag', 'saved successfully')
       })
     } catch (e) {
-      /*
-      this.setIsError({
-        hideNotification: !!name,
-        message:          name ? 'Tag name already taken' : e.message
-      })
-      */
-      this.setIsError(e)
-      console.warn(e)
+      const message = name ? 'Tag name already taken' : e.message
+
+      this.setIsError({message})
+      console.error(e)
     } finally {
       this.setIsUpdating(false)
     }
@@ -336,26 +358,26 @@ export default class Tag {
   }
 
   @action handleOnTagClick = () => {
+    if(!this.isValid) return
+
     this.setActive()
-
-    if(this.isNew) return
-
     this.testTag()
   }
 
   @action handleOnSave = (data) => {
+    this.tagStore.editedTag = this
+
     if(this.isNew) { 
       this.tagStore.showQueryForm ? this.createTag(data) : this.tagStore.toggleQueryForm() 
     } 
     else { this.updateTag(data) }
   }
 
-  // temporary variables
-  @action getScopeParams = ({scope, groups}) => {
+  @action getScopeParams = ({scope, groupIds}) => {
     return {
-      global: scope === 'global',
-      system: scope === 'system',
-      groups: _.isEmpty(groups) ? null : groups.join(',')
+      global:    scope === 'global',
+      system:    scope === 'system',
+      group_ids: _.isEmpty(groupIds) ? null : groupIds
     }
   }
 
@@ -369,6 +391,7 @@ export default class Tag {
 
   @action setPagination = ({total}) => {
     this.pagination.setTotal(parseInt(total))
+    this.pagination.calculateTotalResults()
   }
 
   @action onPageChange = () => {

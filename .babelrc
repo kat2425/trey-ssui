@@ -16,6 +16,10 @@
     "react"
   ],
   "plugins": [
+    ["import", {
+      "libraryName": "antd",
+      "style": "css"
+    }],
     "transform-regenerator",
     "transform-decorators-legacy",
     ["transform-runtime", {

@@ -90,6 +90,7 @@
     "@storybook/addon-knobs": "^3.2.10",
     "@storybook/addon-links": "^3.2.10",
     "@storybook/addon-notes": "^3.2.10",
+    "babel-plugin-import": "^1.6.3",
     "babel-plugin-mobx-deep-action": "^1.6.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "eslint": "^4.4.1",
