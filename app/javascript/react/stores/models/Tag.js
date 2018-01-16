@@ -120,7 +120,7 @@ export default class Tag {
   }
 
   @computed get hasStudents(){
-    return !this.isFetchingStudents && !_.isEmpty(this.studentMap)
+    return !this.isFetchingStudents && !_.isEmpty(this.students)
   }
 
   @computed get tagAsJson(){
@@ -250,6 +250,8 @@ export default class Tag {
         // add this tag with updated data from server
         this.tagStore.addTag(this)
         wasActive && this.tagStore.setSelectedTag(this)
+
+        UiStore.addNotification('Tag', 'created successfully')
 
         this.tagStore.toggleQueryForm()
       })
