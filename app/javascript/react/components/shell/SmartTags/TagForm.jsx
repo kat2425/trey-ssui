@@ -128,7 +128,6 @@ class FormWrapper extends Component {
           className='mb-2 text-center'
         >
           <Button 
-            size     = 'large'
             type     = 'primary'
             htmlType = 'submit'
             disabled = {hasErrors(getFieldsError())}
@@ -137,7 +136,6 @@ class FormWrapper extends Component {
             Save
           </Button>
           <Button 
-            size     = 'large'
             className = 'ml-2'
             onClick   = {this.props.onCancel}
           >
