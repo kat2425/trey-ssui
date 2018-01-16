@@ -1,9 +1,7 @@
-import styled from 'styled-components'
+import styled  from 'styled-components'
+import { Row } from 'antd'
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const Wrapper = styled(Row)`
   padding: 20px 10px;
   height: 65px;
 

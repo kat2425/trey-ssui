@@ -22,7 +22,7 @@ function NaturalLanguageSection({tagStore}) {
       {renderIfStudents(<Title>{selectedTag.pagination.total}</Title>)}
       {renderIfNoStudentsAndTested(<Title>0</Title>)}
       {renderIfNoStudentsNotTested(<p className='my-3 text-muted text-center'>.  .  .</p>)}
-      <p>{selectedTag.humanStringFormat}</p>
+      <p className='pb-2'>{selectedTag.humanStringFormat}</p>
     </Panel>
   )
 }

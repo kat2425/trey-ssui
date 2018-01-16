@@ -1,9 +1,9 @@
-import React                  from 'react'
-import { observer }           from 'mobx-react'
-import styled                 from 'styled-components'
-import {ifProp}               from 'styled-tools'
-import uuid                   from 'uuid'
-import store                  from 'stores/TagStore'
+import React        from 'react'
+import { observer } from 'mobx-react'
+import styled       from 'styled-components'
+import {ifProp}     from 'styled-tools'
+import uuid         from 'uuid'
+import store        from 'stores/TagStore'
 
 import { 
   Icon,
