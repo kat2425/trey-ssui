@@ -97,7 +97,7 @@ export default class Tag {
     try {
       return stringify(queryBuilderFormat(this.treeQuery, config))
     } catch(e){
-      return this.query
+      return stringify(this.query)
     }
   }
 
@@ -123,16 +123,6 @@ export default class Tag {
     return !this.isFetchingStudents && !_.isEmpty(this.students)
   }
 
-  @computed get tagAsJson(){
-    return {
-      user_id:     userStore.user.id,
-      district_id: userStore.user.districtID,
-      tag_name:    this.name,
-      query:       this.queryFormat,
-      tree_query:  this.treeFormat
-    }
-  }
-
   @computed get isGlobal(){
     return !!this.global || !!this.system
   }
@@ -145,7 +135,7 @@ export default class Tag {
     return !this.isGlobal && !this.isGroup
   }
 
-  @computed get tagParams(){
+  @computed get paginationParams(){
     return {
       page:  this.pagination.current,
       limit: this.pagination.pageSize
@@ -204,7 +194,7 @@ export default class Tag {
 
       const {headers, data: students} = await xhr.post('/query/fetch', 
         { query: this.queryFormat },
-        { params: this.tagParams }
+        { params: this.paginationParams }
       )
 
       runInAction(() => {
@@ -225,18 +215,14 @@ export default class Tag {
     this.studentMap.set(student.id, student)
   }
 
-  @action createTag = async(params) => {
+  @action createTag = async(params = {}) => {
     const wasActive = this.isActive
 
     try {
       this.setIsCreating(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.post('/smart_tags', {
-        ...this.tagAsJson, 
-        tag_name: params.name,
-        ...this.getScopeParams(params)
-      })
+      const {data} = await sxhr.post('/smart_tags', {...this.getTagParams(params)})
 
       runInAction(() => {
         this.resetStatus()
@@ -291,19 +277,11 @@ export default class Tag {
   @action updateTag = async(params = {}) => {
     if(!this.isValid) return
 
-    const {name} = params
-
     try {
       this.setIsUpdating(true)
       this.setIsError(false)
 
-      const tagBody = name ? {
-        ...this.tagAsJson, 
-        tag_name: name,
-        ...this.getScopeParams(params)
-      } : this.tagAsJson
-
-      const {data} = await sxhr.put(`/smart_tags/${this.id}`, tagBody)
+      const {data} = await sxhr.put(`/smart_tags/${this.id}`, {...this.getTagParams(params)})
 
       runInAction(() => {
         this.resetStatus()
@@ -357,6 +335,7 @@ export default class Tag {
   @action setTreeQuery = tree => {
     this.isModified = true
     this.treeQuery  = tree
+    this.clearStudents()
   }
 
   @action handleOnTagClick = () => {
@@ -375,11 +354,16 @@ export default class Tag {
     else { this.updateTag(data) }
   }
 
-  @action getScopeParams = ({scope, groupIds}) => {
+  @action getTagParams = ({name, scope, groupIds}) => {
     return {
-      global:    scope === 'global',
-      system:    scope === 'system',
-      group_ids: _.isEmpty(groupIds) ? null : groupIds
+      user_id:     userStore.user.id,
+      district_id: userStore.user.districtID,
+      query:       this.queryFormat,
+      tree_query:  this.treeFormat,
+      tag_name:    name ? name : this.name,
+      global:      scope ? scope === 'global' : this.global,
+      system:      scope ? scope === 'system' : this.system,
+      group_ids:   groupIds ? groupIds : this.groupIds.join(',')
     }
   }
 
@@ -404,5 +388,9 @@ export default class Tag {
     this.setIsNew(false)
     this.setIsCloned(false)
     this.setIsModified(false)
+  }
+
+  @action clearStudents = () => {
+    this.studentMap.clear()
   }
 }
