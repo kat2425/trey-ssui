@@ -6,8 +6,9 @@
 import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
-import { Col } from 'reactstrap'
-import _    from 'lodash'
+import { Col }             from 'reactstrap'
+import fireEvent           from 'helpers/FireEvent'
+import _                   from 'lodash'
 
 const headerStyle = {
   position: 'absolute',
@@ -29,7 +30,12 @@ export default class ConversationHeader extends Component {
     const {contact} = this.props
 
     return (
-      <div key={ contact.id } className='text-right'>
+      <div
+        onClick   = {() => fireEvent('showStudentCard', { student: contact.student_id }) }
+        style     = {{ cursor: 'pointer' }}
+        key       = { contact.id }
+        className = 'text-right'
+      >
         <h4>{ contact.name }</h4>
         <h5 className='font-weight-normal m-0'>&nbsp;{ contact.relationship }</h5>
         <span className='text-muted m-0'>{ contact.phone }</span>
@@ -41,9 +47,9 @@ export default class ConversationHeader extends Component {
     return (
       <div>
         <Col className='float-left col-sm-1' style={headerStyle}>
-          <span 
+          <span
             onClick   = {this.props.handleBack}
-            style     = {{lineHeight:'20px'}}
+            style     = {{lineHeight: '20px'}}
             className = 'icon icon-chevron-thin-left'
           />
         </Col>

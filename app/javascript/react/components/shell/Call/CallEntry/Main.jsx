@@ -27,7 +27,7 @@ function Main({call}){
         <small className='text-muted'>
           {(() => {
             if(isVoicemail) return 'voicemail'
-            if(isMissedCall) return 'missed'
+            if(isMissedCall) return 'returned'
             return isIncoming ? 'incoming' : 'outgoing'
           })()}
         </small>

@@ -23,13 +23,14 @@ export class CommsStore {
       only: [
         'id', 'action', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
         'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
-        'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'call_status', 'voicemail_url'
+        'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'contact.phone',
+        'call_status', 'voicemail_url'
       ].join(',')
     }
   })
 
   isCommEqualToSelectedComm = (communication) => (
-    communication.contact.id === this.selectedComm.contact.id && 
+    communication.contact.id === this.selectedComm.contact.id &&
     communication.user.id === this.selectedComm.user.id
   )
 

@@ -41,7 +41,7 @@ export default class CommsHistory extends Component {
     const {  sortedCommunications } = commsStore
 
     return sortedCommunications.map((c, i) => {
-      if(i === 0) this.setDefaultSelectedComm(c) 
+      if(i === 0) this.setDefaultSelectedComm(c)
       return <CommsItem first={i === 0} key={c.id} comm={c}/>
     })
   }

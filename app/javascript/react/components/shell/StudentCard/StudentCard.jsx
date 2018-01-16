@@ -27,6 +27,7 @@ import FinancialAid     from './FinancialAid'
 import Contacts         from './Contacts'
 import CourseAttendance from './CourseAttendance'
 import Engagement       from './CommsHistory/'
+import SurveyMonkey     from './SurveyMonkey'
 
 // FIXME: needs to be inside StudentCard dir
 import Notes           from '../Notes'
@@ -163,6 +164,13 @@ export default class StudentCard extends Component {
               />
 
               <UserMenuItem
+                title     = 'Student Surveys'
+                iconClass = 'icon-help-with-circle'
+                link      = {`${match.url}/student_surveys`}
+                location  = {location}
+              />
+
+              <UserMenuItem
                 title     = 'Notes'
                 iconClass = 'icon-pencil'
                 link      = {`${match.url}/notes`}
@@ -210,6 +218,11 @@ export default class StudentCard extends Component {
             <Route
               path   = {`${match.url}/engagement`}
               render = {() => <Engagement student={student} /> }
+            />
+
+            <Route
+              path   = {`${match.url}/student_surveys`}
+              render = {() => <SurveyMonkey student={student} /> }
             />
 
             <Route
