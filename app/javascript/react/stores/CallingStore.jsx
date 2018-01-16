@@ -4,6 +4,7 @@ import xhr                             from 'helpers/XHR'
 import moment                          from 'moment'
 import { padCharsStart }               from 'lodash/fp'
 import UiStore                         from 'stores/UiStore'
+import intercomEvent                   from 'helpers/Intercom'
 
 class CallingStore {
   // Observables
@@ -98,6 +99,8 @@ class CallingStore {
       user_id:    this.userId
     }
 
+    intercomEvent('web:calling:web', params)
+
     this.connection = Twilio.Device.connect(params)
 
     this.connection.accept((conn) => {
@@ -142,6 +145,8 @@ class CallingStore {
   // Cell-to-Cell Calling
   @action
   conferenceCall = () => {
+    intercomEvent('web:calling:cell', {contact: this.contactID})
+
     xhr.post('/commo/voice/mobile_call', {
       contact_id: this.contactID
     })
@@ -168,6 +173,8 @@ class CallingStore {
           message: errorMessage,
           type:    'error'
         })
+
+        intercomEvent('web:call:cell_call_error', {message: errorMessage})
         console.error('Calling Error:', error)
       })
   }
@@ -240,6 +247,9 @@ class CallingStore {
 
     this.device.error((error) => {
       const message = returnError(error.code)
+
+      intercomEvent('web:call:web_call_error', {message: message, code: error.code})
+      console.error('Calling Error:', error)
 
       this.setIsError({
         message,
