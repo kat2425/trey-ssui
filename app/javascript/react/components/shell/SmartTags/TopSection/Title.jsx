@@ -10,6 +10,8 @@ import {
 function Title({tagStore}){
   const { selectedTag } = tagStore
 
+  if(!selectedTag) return null
+
   return (
     <div className = 'd-flex flex-row align-items-center' >
       <h5 style={nameStyle(selectedTag.isNew)} title={selectedTag.name}>

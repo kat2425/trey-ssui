@@ -3,7 +3,8 @@ import {
   action, 
   computed, 
   autorun,
-  runInAction
+  runInAction,
+  toJS
 } from 'mobx'
 
 import {
@@ -45,7 +46,6 @@ export default class Tag {
   @setter @observable isNew              = false
   @setter @observable isCloned           = false
   @setter @observable isModified         = false
-  @setter @observable hasBeenTested      = true
 
 
   @setter @observable name = null
@@ -78,7 +78,11 @@ export default class Tag {
 
   // Computed 
   @computed get students(){
-    return this.studentMap.values()
+    return this.studentMap.values().map(this.mapStudent)
+  }
+
+  @computed get studentsCoordinates(){
+    return this.students.filter(this.filterValidCoordinates)
   }
 
   @computed get isActive(){
@@ -170,7 +174,6 @@ export default class Tag {
     if(isNew){
       this.id            = uuid()
       this.createdAt     = moment().format()
-      this.hasBeenTested = false
       this.setActive()
     }
 
@@ -200,7 +203,6 @@ export default class Tag {
       runInAction(() => {
         students.forEach(this.addStudent)
         this.setPagination(headers)
-        if(!this.hasBeenTested) {this.hasBeenTested = true}
       })
     } catch (e) {
       this.setIsError(e)
@@ -392,5 +394,18 @@ export default class Tag {
 
   @action clearStudents = () => {
     this.studentMap.clear()
+    this.hasBeenTested = false
   }
+
+  @action mapStudent = student => ({
+    ...student, 
+    latitude:  parseFloat(student.latitude),
+    longitude: parseFloat(student.longitude)
+  })
+
+  @action filterValidCoordinates = s => (
+    _.isFinite(s.longitude) && 
+    _.isFinite(s.latitude)
+  )
 }
+

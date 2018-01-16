@@ -5,6 +5,7 @@ import { Button, Tooltip, Popconfirm } from 'antd'
 function DeleteButton({tagStore}){
   const { selectedTag } = tagStore
 
+  if(!selectedTag) return null
   return (
     <Popconfirm 
       title      = "Are you sure?"
