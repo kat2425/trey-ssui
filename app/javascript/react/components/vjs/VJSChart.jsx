@@ -260,18 +260,26 @@ export default class VJSChart extends Component {
       <div className={this.props.className}>
         <Card className='mb-4'>
           <CardBlock>
-            <h5>
-              <span
-                className = {`icon ${this.collapseIcon()} mr-3`}
-                onClick   = {() => this.toggleCollapse()}
-              />
+            <div className='row mr-2 ml-1'>
+              <div>
+                <h5 className='mt-2'>
+                  <span
+                    className = {`icon ${this.collapseIcon()} mr-3`}
+                    onClick   = {() => this.toggleCollapse()}
+                  />
 
-              <span onClick = {() => this.toggleCollapse()}>{this.props.title}</span>
+                  <span onClick = {() => this.toggleCollapse()}>{this.props.title}</span>
+                </h5>
+              </div>
 
-              <div className='float-right'>
+              <div className='ml-auto' style={{display: 'flex'}}>
+                <div className='mr-2'>
+                  { this.props.children }
+                </div>
+
                 <ButtonDropdown isOpen={this.state.exportOpen} toggle={::this.toggleExport}>
                   <DropdownToggle
-                    style = {{padding: 0, width: 44, height: 28}}
+                    style = {{padding: 0, width: 44, height: 36}}
                     size  = 'sm'
                     id    = {`${this.reportID}-export-pdf`}
                     caret
@@ -287,16 +295,6 @@ export default class VJSChart extends Component {
                   </DropdownMenu>
                 </ButtonDropdown>
 
-                {/* <Button */}
-                {/*   style    = {{padding: 0, width: 28, height: 28}} */}
-                {/*   size     = 'sm' */}
-                {/*   id       = {`${this.reportID}-export-pdf`} */}
-                {/*   onClick  = {() => this.exportPDF()} */}
-                {/*   disabled = {!this.state.resourceLoaded} */}
-                {/* > */}
-                {/*   <span className='icon icon-download text-muted'/> */}
-                {/* </Button> */}
-
                 <UncontrolledTooltip
                   placement = 'left'
                   target    = {`${this.reportID}-export-pdf`}
@@ -304,7 +302,7 @@ export default class VJSChart extends Component {
                   Save this chart as PDF
                 </UncontrolledTooltip>
               </div>
-            </h5>
+            </div>
           </CardBlock>
 
           <Collapse isOpen={!this.state.collapse}>
