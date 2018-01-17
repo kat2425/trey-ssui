@@ -2,18 +2,19 @@ import React       from 'react'
 import PropTypes   from 'prop-types'
 import styled      from 'styled-components'
 import ChevronLeft from 'react-icons/lib/md/chevron-left'
+import ContactLink from 'ui/shell/ContactLink'
 
 Header.propTypes = {
   onGoBack: PropTypes.func.isRequired
 }
 export default function Header({ onGoBack, call }) {
-  const {contact} = call
+  const {contact, studentId} = call
 
   return (
     <Wrapper>
       <MdChevronLeft onClick={onGoBack} />
       <div className='d-flex flex-column ml-auto align-items-end'>
-        <h4>{contact.name}</h4>
+        <ContactLink tag='h4' name={contact.name} studentId={studentId} />
         <h5 className='font-weight-normal m-0 text-capitalize'>{contact.relationship}</h5>
         <p className='text-muted m-0'>{contact.phone}</p>
       </div>

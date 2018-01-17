@@ -1,10 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-
-import { Media } from 'reactstrap'
-
-import DateFormat from 'helpers/DateFormat'
-import _ from 'lodash'
+import React       from 'react'
+import PropTypes   from 'prop-types'
+import { Media }   from 'reactstrap'
+import DateFormat  from 'helpers/DateFormat'
+import _           from 'lodash'
+import ContactLink from 'ui/shell/ContactLink'
 
 const itemStyle = {
   borderLeft:   'none',
@@ -44,7 +43,7 @@ const InboxItem = (props) => {
       </Media>
 
       <Media body>
-        <h6>{props.name}</h6>
+        <ContactLink tag='h6' name={props.name} studentId={props.studentId} />
         <p>{ !!props.media ? <InboxMMS src={props.media}/> : _.truncate(props.message, {'length': 45}) }</p>
       </Media>
 
