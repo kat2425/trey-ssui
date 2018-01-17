@@ -9,18 +9,20 @@ const XHR = axios.create({
   }
 })
 
-const config = (port) => ({
+const config = (port, csv = false) => ({
   baseURL: `http://25.83.82.65:${port}`,
   timeout: 30000,
   headers: {
     'x-ss-api-key': 'd706f43dab55f958e7926b7f7fe9c47cd351718f8f431fe3',
-    'x-ss-token':   window.SSUser && window.SSUser.accessToken
+    'x-ss-token':   window.SSUser && window.SSUser.accessToken,
+    'Content-Type': csv ? 'application/csv' : undefined
   }
 })
 
 // For Tag Builder
 export const SCHEMA_XHR = axios.create(config(9393))
 export const QUERY_XHR = axios.create(config(5000))
+export const QUERYCSV_XHR = axios.create(config(5000, true))
 
 export default XHR
 
