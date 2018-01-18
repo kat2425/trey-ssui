@@ -10,6 +10,7 @@ import {
   SCHEMA_XHR as sxhr, 
   QUERY_XHR as xhr
 } from 'helpers/XHR'
+import getError from 'helpers/ErrorParser'
 
 import { fromJS } from  'immutable'
 import { setter } from  'mobx-decorators'
@@ -71,7 +72,7 @@ export default class Tag {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification('Error', this.isError.message)
+        UiStore.addNotification(this.isError.title || 'Error', this.isError.message)
       }
     })
   }
@@ -208,7 +209,12 @@ export default class Tag {
         this.hasBeenTested = true
       })
     } catch (e) {
-      this.setIsError(e)
+      const error = getError(e)
+
+      this.setIsError({
+        message: error.message,
+        title:   error.title
+      })
       console.error(e)
     } finally {
       this.setIsFetchingStudents(false)
@@ -247,9 +253,11 @@ export default class Tag {
         this.tagStore.toggleQueryForm()
       })
     } catch (e) {
+      const error = getError(e)
+
       this.setIsError({
-        hideNotification: true,
-        message:          e.message
+        message: error.message,
+        title:   error.title
       })
       console.error(e)
     } finally {
@@ -272,7 +280,12 @@ export default class Tag {
         UiStore.addNotification('Tag', 'deleted successfully')
       })
     } catch(e) {
-      this.setIsError(e)
+      const error = getError(e)
+
+      this.setIsError({
+        message: error.message,
+        title:   error.title
+      })
     }   
   }
 
@@ -295,7 +308,12 @@ export default class Tag {
         UiStore.addNotification('Tag', 'saved successfully')
       })
     } catch (e) {
-      this.setIsError(e)
+      const error = getError(e)
+
+      this.setIsError({
+        message: error.message,
+        title:   error.title
+      })
       console.error(e)
     } finally {
       this.setIsUpdating(false)
