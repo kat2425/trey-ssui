@@ -8,13 +8,14 @@ import {
 } from 'mobx'
 
 import { SCHEMA_XHR as sxhr, QUERYCSV_XHR as qxhr} from  'helpers/XHR'
-import { setter }             from  'mobx-decorators'
-import _                      from  'lodash'
+import { setter } from 'mobx-decorators'
+import _          from 'lodash'
 
-import Tag                    from  'stores/models/Tag'
-import Pagination             from  'stores/models/Pagination'
-import UiStore                from  'stores/UiStore'
-import config                 from  'ui/shell/QueryBuilder/config'
+import Tag        from 'stores/models/Tag'
+import Pagination from 'stores/models/Pagination'
+import UiStore    from 'stores/UiStore'
+import config     from 'ui/shell/QueryBuilder/config'
+import getError   from 'helpers/ErrorParser'
 
 export class TagStore {
   @setter @observable isFetchingSchema = false
@@ -82,7 +83,12 @@ export class TagStore {
         this.pagination.calculateTotalResults()
       })
     } catch (e) {
-      this.setIsError(e)
+      const error = getError(e)
+
+      this.setIsError({
+        message: error.message,
+        title:   error.title
+      })
       console.error(e)
     } finally {
       this.setIsFetchingTags(false)
@@ -97,7 +103,12 @@ export class TagStore {
 
       this.downloadCSV(tag.name, data)
     } catch (e) {
-      this.setIsError(e)
+      const error = getError(e)
+
+      this.setIsError({
+        message: error.message,
+        title:   error.title
+      })
       console.error(e)
     } finally {
       this.setIsFetchingTagCSV(false)
@@ -124,7 +135,12 @@ export class TagStore {
 
       config.fields = data
     } catch (e) {
-      this.setIsError(new Error('Fetching schema'))
+      const error = getError(e)
+
+      this.setIsError({
+        message: error.message,
+        title:   error.title
+      })
       console.error(e)
     } finally {
       this.setIsFetchingSchema(false)
