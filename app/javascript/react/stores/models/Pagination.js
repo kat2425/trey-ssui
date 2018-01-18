@@ -21,7 +21,7 @@ export default class Pagination {
 
   
   @computed get showLoadingMore() {
-    return this.currentTotalResults < this.total 
+    return this.currentTotalResults > 0 && this.currentTotalResults < this.total 
   }
 
   constructor(store, size = LIMIT, current = 1, total = 0){

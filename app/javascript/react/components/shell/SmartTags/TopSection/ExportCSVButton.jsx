@@ -10,11 +10,12 @@ function ExportCSVButton({tagStore}){
   return (
     <Tooltip title='Export CSV'>
       <Button
-        icon='download'
-        type='primary'
+        loading   = {tagStore.isFetchingTagCSV}
+        icon      = 'download'
+        type      = 'primary'
         ghost
-        className='mr-2'
-        onClick={() => tagStore.fetchTagCSV(selectedTag)}
+        className = 'mr-2'
+        onClick   = {() => tagStore.fetchTagCSV(selectedTag)}
       >
         Export CSV
       </Button>
