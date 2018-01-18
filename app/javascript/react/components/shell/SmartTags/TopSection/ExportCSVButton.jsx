@@ -3,6 +3,10 @@ import { observer }        from 'mobx-react'
 import { Button, Tooltip } from 'antd'
 
 function ExportCSVButton({tagStore}){
+  const { selectedTag } = tagStore
+
+  if(!selectedTag) return null
+
   return (
     <Tooltip title='Export CSV'>
       <Button
@@ -10,7 +14,7 @@ function ExportCSVButton({tagStore}){
         type='primary'
         ghost
         className='mr-2'
-        onClick={() => tagStore.fetchTagCSV(tagStore.selectedTag)}
+        onClick={() => tagStore.fetchTagCSV(selectedTag)}
       >
         Export CSV
       </Button>

@@ -8691,6 +8691,13 @@ img.zoom-img {
   font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px; }
 
+.mapboxgl-popup-close-button {
+  right: 5px;
+  font-size: 14px; }
+
+.mapboxgl-popup-content {
+  padding-top: 18px; }
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);

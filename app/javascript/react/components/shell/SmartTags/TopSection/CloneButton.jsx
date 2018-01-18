@@ -3,6 +3,10 @@ import { observer }        from 'mobx-react'
 import { Button, Tooltip } from 'antd'
 
 function CloneButton({tagStore}){
+  const { selectedTag } = tagStore
+
+  if(!selectedTag || !selectedTag.modifiable) return null
+
   return (
     <Tooltip title='Clone Tag'>
       <Button 
@@ -10,7 +14,7 @@ function CloneButton({tagStore}){
         type      = 'primary'
         ghost
         className = 'mr-2'
-        onClick   = {() => tagStore.cloneTag(tagStore.selectedTag)}
+        onClick   = {() => tagStore.cloneTag(selectedTag)}
       >              
         Clone 
       </Button>
