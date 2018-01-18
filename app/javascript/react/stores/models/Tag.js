@@ -295,9 +295,7 @@ export default class Tag {
         UiStore.addNotification('Tag', 'saved successfully')
       })
     } catch (e) {
-      const message = name ? 'Tag name already taken' : e.message
-
-      this.setIsError({message})
+      this.setIsError(e)
       console.error(e)
     } finally {
       this.setIsUpdating(false)

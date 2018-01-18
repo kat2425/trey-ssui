@@ -1,8 +1,17 @@
-import { observable, autorun, reaction, action } from 'mobx'
-import { setter, toggle }                        from 'mobx-decorators'
+import { setter, toggle }   from 'mobx-decorators'
 
-import SMSConversationStore                      from 'stores/SMSConversation'
-import callStore                                 from 'stores/CallStore'
+import SMSConversationStore from 'stores/SMSConversation'
+import callStore            from 'stores/CallStore'
+import { notification }     from 'antd'
+import _                    from 'lodash'
+
+import { 
+  observable, 
+  autorun, 
+  reaction, 
+  action,
+  computed
+} from 'mobx'
 
 export class UiStore {
   @setter @observable 
@@ -40,8 +49,15 @@ export class UiStore {
     this.autoHideSMSSidebar()
     this.autoHideCallSidebar()
     this.autoHideCallInfo()
+    this.autoNotify()
   }
 
+  // Computed
+  @computed get uniqueNotifications(){
+    return _.uniqWith(this.notifications, _.isEqual)
+  }
+
+  // Actions
   @action addNotification(title, body) {
     this.notifications.push({title, body})
   }
@@ -50,7 +66,6 @@ export class UiStore {
     this.notifications.splice(index, 1)
   }
 
-  // Actions
   @action setSidebarVisibility(show){
     this.hideSidebar = !show 
   }
@@ -62,6 +77,24 @@ export class UiStore {
 
       this.shouldScrollToBottom = true
       SMSConversationStore.fetchConversation(this.currentConversation)
+    })
+  }
+
+  @action autoNotify(){
+    autorun('notifications', () => {
+      if(_.isEmpty(this.uniqueNotifications)) return
+
+      this.uniqueNotifications.forEach(({type = 'warning', title, body}, i) => {
+        notification[type]({
+          key:         i,
+          message:     title,
+          description: body,
+          onClose:     () => this.removeNotification(i),
+          style:       {
+            marginTop: 40
+          }
+        })
+      })
     })
   }
 
