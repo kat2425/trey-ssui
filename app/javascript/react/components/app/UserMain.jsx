@@ -9,7 +9,6 @@ import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
 import Sidebar                 from 'ui/shell/SMS/Sidebar'
 import {CallSidebar, CallInfo} from 'ui/shell/Call'
-import Notification            from 'ui/shell/Notification/Notification'
 
 import CallingController       from 'ui/controllers/CallingController'
 
@@ -136,22 +135,6 @@ class UserMain extends Component {
               show     = {uiStore.showCallInfo}
               onGoBack = {() => uiStore.setShowCallInfo(false)}
             />
-            {_.map(uiStore.notifications, (n,i) => {
-              return (
-                <span key={i}>
-                  <Notification
-                    visible           = {true}
-                    loading           = {false}
-                    notificationTitle = {n.title}
-                    notificationText  = {n.body}
-                    dismissable       = {true}
-                    type              = 'alert-warning'
-                    style             = {{top: (i+1)*25+(i*80)}}
-                    onDismissed       = {() => uiStore.removeNotification(i)}
-                  />
-                </span>
-              )
-            })}
           </div>
         </div>
       </VJSContainer>
