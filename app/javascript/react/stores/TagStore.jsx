@@ -7,7 +7,7 @@ import {
   toJS
 } from 'mobx'
 
-import { SCHEMA_XHR as sxhr } from  'helpers/XHR'
+import { SCHEMA_XHR as sxhr, QUERYCSV_XHR as qxhr} from  'helpers/XHR'
 import { setter }             from  'mobx-decorators'
 import _                      from  'lodash'
 
@@ -19,6 +19,7 @@ import config                 from  'ui/shell/QueryBuilder/config'
 export class TagStore {
   @setter @observable isFetchingSchema = false
   @setter @observable isFetchingTags   = false
+  @setter @observable isFetchingTagCSV = false
   @setter @observable isError          = null
   @setter @observable isSelectingTag   = false
   @setter @observable tagFilter        = ''
@@ -86,6 +87,32 @@ export class TagStore {
     } finally {
       this.setIsFetchingTags(false)
     }
+  }
+
+  @action fetchTagCSV = async(tag) => {
+    try {
+      this.setIsFetchingTagCSV(true)
+      this.setIsError(false)
+      const {data} = await qxhr.get(`/query/fetch/${tag.id}/csv`)
+
+      this.downloadCSV(tag.name, data)
+    } catch (e) {
+      this.setIsError(e)
+      console.error(e)
+    } finally {
+      this.setIsFetchingTagCSV(false)
+    }
+  }
+
+  @action downloadCSV = (name, csv) => {
+    const csvContent = `data:text/csv;charset=utf-8,${csv}`
+    const targetURI = encodeURI(csvContent)
+
+    const link = document.createElement('a')
+    link.setAttribute('href', targetURI)
+    link.setAttribute('download', `${name}.csv`)
+    document.body.appendChild(link)
+    link.click()
   }
 
   @action fetchSchema = async() => {
