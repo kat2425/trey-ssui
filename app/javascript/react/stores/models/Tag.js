@@ -3,8 +3,7 @@ import {
   action, 
   computed, 
   autorun,
-  runInAction,
-  toJS
+  runInAction
 } from 'mobx'
 
 import {

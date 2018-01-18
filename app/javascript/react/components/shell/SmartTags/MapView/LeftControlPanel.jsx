@@ -10,14 +10,17 @@ function LeftControlPanel(){
 
   if(!selectedTag) return null
 
-  const results = selectedTag.students.length
+  const results = selectedTag.studentsCoordinates.length
   const total   = selectedTag.pagination.total
+  const show    = results > 0 && results < total
+
+  if(!show) return null
 
   return (
     <Wrapper>
       <Row type='flex' align='middle'>
         <Col>
-          <p className='text-muted' >{`Shown ${results} of ${total}`}</p>
+          <p className='text-muted' >{`Shown ${results} of ${total} Students`}</p>
         </Col>
         <Col>
           <Button 
