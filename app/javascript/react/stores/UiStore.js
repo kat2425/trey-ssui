@@ -49,8 +49,6 @@ export class UiStore {
   constructor() {
     this.autoFetchSMSConversation() 
     this.autoFetchCallLogs()
-    this.autoHideSMSSidebar()
-    this.autoHideCallSidebar()
     this.autoHideCallInfo()
     this.autoNotify()
   }
