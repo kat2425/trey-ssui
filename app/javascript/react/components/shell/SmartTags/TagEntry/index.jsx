@@ -9,7 +9,7 @@ import Aside                 from './Aside'
 import { ModifiedIndicator } from 'ui/shell/SmartTags'
 import {
   FaEyeSlash,
-  FaEye,
+  FaGlobe,
   FaGroup
 } from 'react-icons/lib/fa'
 
@@ -32,9 +32,9 @@ function TagEntry({tag}){
       <Aside>
         {!tag.isNew && (
           <div>
-            {tag.isGlobal  && <ScopeIcon type='global' title='This tag is shared with other users.'/>}
+            {tag.isGlobal  && <ScopeIcon type='global' title='This tag is public to the whole district.'/>}
             {tag.isGroup   && <ScopeIcon type='group' title='This tag is shared with groups.'/>}
-            {tag.isPrivate && <ScopeIcon type='private' title='This tag is not shared with other users.'/>}
+            {tag.isPrivate && <ScopeIcon type='private' title='This tag is visible only to me.'/>}
           </div>
         )}
         <TagMenu tag={tag} className='text-muted' />
@@ -52,7 +52,7 @@ const ScopeIcon = ({type, title}) => (
       (() => {
         switch(type){
         case 'global':
-          return <FaEye style={icStyle} />
+          return <FaGlobe style={icStyle} />
         case 'group':
           return <FaGroup style={icStyle} />
         case 'private':
