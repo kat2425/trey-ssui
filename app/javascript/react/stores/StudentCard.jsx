@@ -42,7 +42,8 @@ class StudentCardStore {
       params: {
         only: [
           'id', 'student_id', 'name', 'phone', 'email', 'primary',
-          'relationship', 'resides_with', 'checkout', 'emergency', 'no_contact'
+          'relationship', 'resides_with', 'checkout', 'emergency', 'no_contact',
+          'stopped'
         ].join(',')
       }
     }).then(this.fetchStudentContactsOK)

@@ -7,11 +7,17 @@ import {
   Form, Input
 } from 'reactstrap'
 
-import StudentSearch from './StudentSearch'
+import StudentSearch        from './StudentSearch'
+import fireEvent            from '../../helpers/FireEvent'
 
 const brandLogo = { height: '35px' }
 
 export default class NavBar extends Component {
+
+  onStudentChange = (e) => {
+    e.length && fireEvent('showStudentCard', { student: e[0].id })
+  }
+
   render() {
     return (
       <Navbar
@@ -38,7 +44,7 @@ export default class NavBar extends Component {
 
         <Nav className='navbar-nav ml-auto'>
           <NavItem className='mr-3'>
-            <StudentSearch/>
+            <StudentSearch style={{width: '300px'}} onChange={this.onStudentChange}/>
           </NavItem>
 
           <NavItem>

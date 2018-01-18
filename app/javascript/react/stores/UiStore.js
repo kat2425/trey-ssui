@@ -1,7 +1,7 @@
-import { setter, toggle }   from 'mobx-decorators'
-
+import { setter }           from 'mobx-decorators'
 import SMSConversationStore from 'stores/SMSConversation'
 import callStore            from 'stores/CallStore'
+import ReminderStore        from 'stores/ReminderStore'
 import { notification }     from 'antd'
 import _                    from 'lodash'
 
@@ -13,18 +13,21 @@ import {
   computed
 } from 'mobx'
 
+export const SIDEBAR = {
+  SMS:      'SMS',
+  CALL:     'CALL',
+  REMINDER: 'REMINDER'
+}
+
 export class UiStore {
+  @observable
+  selectedSidebar = null
+
   @setter @observable 
   currentContact = null
 
   @setter @observable 
   currentConversation = null
-
-  @toggle('toggleSidebar') @observable 
-  hideSidebar = true
-  
-  @toggle('toggleCallSidebar') @observable 
-  showCallSidebar = false
 
   @setter @observable 
   showInbox = true
@@ -46,8 +49,6 @@ export class UiStore {
   constructor() {
     this.autoFetchSMSConversation() 
     this.autoFetchCallLogs()
-    this.autoHideSMSSidebar()
-    this.autoHideCallSidebar()
     this.autoHideCallInfo()
     this.autoNotify()
   }
@@ -80,22 +81,8 @@ export class UiStore {
     })
   }
 
-  @action autoNotify(){
-    autorun('notifications', () => {
-      if(_.isEmpty(this.uniqueNotifications)) return
-
-      this.uniqueNotifications.forEach(({type = 'warning', title, body}, i) => {
-        notification[type]({
-          key:         i,
-          message:     title,
-          description: body,
-          onClose:     () => this.removeNotification(i),
-          style:       {
-            marginTop: 40
-          }
-        })
-      })
-    })
+  @action handleCallSidebar(){
+    callStore.fetchCallLogs()
   }
 
   @action autoFetchCallLogs(){
@@ -105,25 +92,27 @@ export class UiStore {
     ) 
   }
 
-  @action autoHideSMSSidebar = () => {
-    reaction(
-      ()     => this.showCallSidebar === true,
-      (show) => show && !this.hideSidebar && (this.hideSidebar = true),
-      true
-    )
+  @action autoNotify = () => {
+    autorun('notifications', () => {
+      if(_.isEmpty(this.uniqueNotifications)) return
+      this.uniqueNotifications.forEach(this.notify)
+    })
   }
 
-  @action autoHideCallSidebar = () => {
-    reaction(
-      ()            => !this.hideSidebar,
-      (showSidebar) => {
-        if(showSidebar && this.showCallSidebar){ 
-          this.showCallSidebar = false
-          this.showCallInfo    = false
-        }
-      },
-      true
-    )
+  @action notify = ({type = 'warning', title, body}, i) => {
+    notification[type]({
+      key:         i,
+      message:     title,
+      description: body,
+      onClose:     () => this.removeNotification(i),
+      style:       {
+        marginTop: 40
+      }
+    })
+  }
+
+  @action handleReminderSidebar(){
+    ReminderStore.fetchReminders()
   }
 
   @action autoHideCallInfo = () => {
@@ -132,6 +121,11 @@ export class UiStore {
       (hide) => hide && this.showCallInfo && (this.showCallInfo = false),
       true
     )
+  }
+
+  @action
+  setSelectedSidebar = (sidebar) => {
+    this.selectedSidebar = sidebar
   }
 }
 

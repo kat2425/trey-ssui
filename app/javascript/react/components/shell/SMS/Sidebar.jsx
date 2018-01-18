@@ -80,7 +80,7 @@ export default class Sidebar extends Component {
     // const isSecondary = uiStore.sidebarMaxHeight ?  true : false
 
     return (
-      <div className='col-md-3' style={containerStyle(isSecondary)} hidden={uiStore.hideSidebar}>
+      <div className='col-md-3' style={containerStyle(isSecondary)}>
         <div style={barStyle(isSecondary)}>
           { uiStore.showInbox ? this.renderInbox() : this.renderConversation() }
         </div>
