@@ -45,6 +45,7 @@ export default class Tag {
   @setter @observable isNew              = false
   @setter @observable isCloned           = false
   @setter @observable isModified         = false
+  @setter @observable hasBeenTested      = true
 
 
   @setter @observable name = null
@@ -173,6 +174,7 @@ export default class Tag {
     if(isNew){
       this.id            = uuid()
       this.createdAt     = moment().format()
+      this.hasBeenTested = false
       this.setActive()
     }
 
@@ -202,6 +204,7 @@ export default class Tag {
       runInAction(() => {
         students.forEach(this.addStudent)
         this.setPagination(headers)
+        this.hasBeenTested = true
       })
     } catch (e) {
       this.setIsError(e)

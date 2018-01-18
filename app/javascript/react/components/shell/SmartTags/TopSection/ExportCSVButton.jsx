@@ -5,7 +5,7 @@ import { Button, Tooltip } from 'antd'
 function ExportCSVButton({tagStore}){
   const { selectedTag } = tagStore
 
-  if(!selectedTag) return null
+  if(!selectedTag || selectedTag.isNew) return null
 
   return (
     <Tooltip title='Export CSV'>
