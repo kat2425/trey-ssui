@@ -111,8 +111,9 @@ export default class Tag {
 
   @computed get humanStringFormat(){
     try {
-      return ` of your students whose 
-      ${queryString(this.treeQuery, config, true).split('(').join('').split(')').join('')}`
+      const output = queryString(this.treeQuery, config, true)
+
+      return output ? ` of your students whose ${output.split('(').join('').split(')').join('')}` : ''
     } catch(e){
       console.warn(e)
       return ''
