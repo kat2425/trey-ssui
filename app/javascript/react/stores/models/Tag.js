@@ -101,7 +101,7 @@ export default class Tag {
     try {
       return stringify(queryBuilderFormat(this.treeQuery, config))
     } catch(e){
-      return stringify(this.query)
+      return this.query ? stringify(this.query) : ''
     }
   }
 
