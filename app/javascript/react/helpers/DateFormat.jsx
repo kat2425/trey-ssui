@@ -9,7 +9,15 @@ export default class DateFormat {
     return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('ddd, MMM D, YYYY')
   }
 
+  static shortDate(str) {
+    return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM D, YYYY')
+  }
+
   static time12Hour(str) {
     return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('h:mm A')
+  }
+
+  static slashDate(str) {
+    return moment(str, 'YYYY-MM-DD').format('MM/DD/YYYY')
   }
 }

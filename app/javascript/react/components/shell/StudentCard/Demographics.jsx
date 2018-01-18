@@ -1,5 +1,6 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React      from 'react'
+import PropTypes  from 'prop-types'
+import DateFormat from 'helpers/DateFormat'
 
 import {
   Card, CardBlock
@@ -19,6 +20,10 @@ const renderItem = (item, label, icon) => {
   }
 }
 
+const renderDOB = (dob) => {
+  return DateFormat.shortDate(dob)
+}
+
 const Demographics = ({ student }) => {
   return (
     <Card className='mb-4'>
@@ -29,7 +34,7 @@ const Demographics = ({ student }) => {
           <li>
             <span className='mr-3 text-muted icon icon-cake' style={iconStyle}/>
             <span>Birthdate: </span>
-            <span className='text-info'>{ student.dob }</span>
+            <span className='text-info'>{ renderDOB(student.dob) }</span>
           </li>
 
           <li>

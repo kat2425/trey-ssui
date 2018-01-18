@@ -8,9 +8,6 @@ const SurveyMonkey = ({ student }) => {
     <div>
       <h4 className='m-1 mb-3'>
         Student Surveys
-        <div className='pull-right'>
-          foo
-        </div>
       </h4>
 
       <VJSChart
