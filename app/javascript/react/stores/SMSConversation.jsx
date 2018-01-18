@@ -1,10 +1,12 @@
 import { observable, action, computed } from 'mobx'
-import _   from 'lodash'
-import xhr from 'helpers/XHR'
 
-import uiStore from 'stores/UiStore'
+import _            from 'lodash'
+import xhr          from 'helpers/XHR'
+
+import { SIDEBAR }  from 'stores/UiStore'
+import uiStore      from 'stores/UiStore'
 import Conversation from 'stores/models/Conversation'
-import Pager        from  'stores/models/Pager'
+import Pager        from 'stores/models/Pager'
 
 class SMSConversationStore {
   @observable limit         = 20
@@ -13,7 +15,7 @@ class SMSConversationStore {
   @observable pagers        = observable.map()
 
   // Computed Values
-  
+
   @computed
   get descMessages() {
     const conversation = this.getCurrentConversation()
@@ -31,10 +33,10 @@ class SMSConversationStore {
 
   // Actions
 
-  @action 
+  @action
   addMessage = (msg) => {
-    const conversation = this.conversations.get(msg.conversation_id) 
-    
+    const conversation = this.conversations.get(msg.conversation_id)
+
     conversation && conversation.add(msg)
   }
 
@@ -81,7 +83,7 @@ class SMSConversationStore {
     id,
     store:    this,
     messages: data,
-  })  
+  })
 
   @action
   updateConversation = (id, data) => {
@@ -105,7 +107,8 @@ class SMSConversationStore {
   initiateConversationOk = contact => ({id}) => {
     uiStore.setCurrentContact(contact)
     uiStore.setCurrentConversation(id)
-    uiStore.setSidebarVisibility(true)
+    // uiStore.setSidebarVisibility(true)
+    uiStore.setSelectedSidebar(SIDEBAR.SMS)
     uiStore.setShowInbox(false)
     uiStore.setSidebarMaxHeight(true)
   }
@@ -136,7 +139,7 @@ class SMSConversationStore {
   delete = (id) => {
     this.conversations.delete(id)
     this.pagers.delete(id)
-  }  
+  }
 
   getCurrentConversation = () => {
     return this.conversations.get(uiStore.currentConversation)
@@ -151,8 +154,8 @@ class SMSConversationStore {
     // increase limit to fetch more data
     pager.increment()
 
-    // fetch more data 
-    this.fetchConversation(uiStore.currentConversation) 
+    // fetch more data
+    this.fetchConversation(uiStore.currentConversation)
 
     uiStore.setShouldScrollToBottom(false)
   }

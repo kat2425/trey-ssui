@@ -17,6 +17,7 @@ import CallingStore            from 'stores/CallingStore'
 import WebSocketStore          from 'stores/WebSocket'
 import SMSConversationStore    from 'stores/SMSConversation'
 import callStore               from 'stores/CallStore'
+import SidebarController       from 'ui/controllers/SidebarController'
 
 import VJSContainer            from 'ui/vjs/VJSContainer'
 
@@ -73,14 +74,14 @@ class UserMain extends Component {
     const contact = _.get(e, 'detail.contact')
 
     if(contact){
-      SMSConversationStore
-        .initiateConversation(contact)
+      SMSConversationStore.initiateConversation(contact)
       return
     }
 
     uiStore.setSidebarMaxHeight(false)
     uiStore.toggleSidebar()
   }
+
 
   componentDidMount() {
     WebSocketStore.subscribeUser(window.SSUser.id)
@@ -127,13 +128,8 @@ class UserMain extends Component {
             <NavBar />
             <UserMenu />
             <AppContainer />
-            <ActionBar store={SMSInboxStore} callingStore={CallingStore}/>
-            <Sidebar />
-            <CallSidebar
-              store   = {callStore}
-              show    = {uiStore.showCallSidebar}
-              onClose = {this.toggleCallSidebar}
-            />
+            <ActionBar store={SMSInboxStore} uiStore={this.props.uiStore} callingStore={CallingStore}/>
+            <SidebarController callStore={callStore} />
             <CallInfo
               store    = {callStore}
               show     = {uiStore.showCallInfo}

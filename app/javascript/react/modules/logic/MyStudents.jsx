@@ -57,6 +57,22 @@ export default class MyStudents extends Component {
     })
   }
 
+  setTermFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params: {
+        ...this.state.params,
+        term: [ jrsValue ]
+      },
+
+      selected: {
+        ...this.state.selected,
+        term: val
+      }
+    })
+  }
+
   courseOptionRenderer = ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray }) => {
     if (option.label !== '---') {
       const _label = option.label.split(' | ').map(l => l.trim())
@@ -119,6 +135,15 @@ export default class MyStudents extends Component {
             handleChange  = {::this.setTeacherFilter}
             placeholder   = 'Instructor'
             width         = {250}
+          />
+
+          <VJSICSelect
+            id            = 'user_course_terms'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/user_course_terms'
+            selectedValue = {this.state.selected.term}
+            handleChange  = {::this.setTermFilter}
+            placeholder   = 'Term'
+            width         = {150}
           />
         </ModuleHeader>
 

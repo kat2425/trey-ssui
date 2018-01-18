@@ -117,7 +117,8 @@ export default class Call {
     recording_path:     recordingPath,
     direction,
     call_transcripts:   callTranscripts,
-    voicemails = []
+    voicemails = [],
+    student_id:         studentId
   }) => {
     this.id                = id
     this.action            = action
@@ -130,6 +131,7 @@ export default class Call {
     this.callStatus        = callStatus
     this.callTranscript    = callTranscripts.length ? callTranscripts[0].call_transcript : []
     this.voicemails        = voicemails 
+    this.studentId         = studentId
   }
 
   @action handleSelect = () => {

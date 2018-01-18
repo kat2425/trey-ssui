@@ -31,6 +31,7 @@ export default class Inbox extends Component {
           time      = {msg.created_at}
           message   = {msg.body}
           media     = {msg.media_url}
+          studentId = {msg.broker.contact.student_id}
         />
       </li>
     )
