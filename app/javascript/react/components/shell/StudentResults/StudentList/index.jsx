@@ -3,9 +3,9 @@ import { observer }   from 'mobx-react'
 import fireEvent      from 'helpers/FireEvent'
 import styled         from 'styled-components'
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
+import StudentAvatar  from 'ui/shell/StudentAvatar'
 
 import {
-  Avatar as Avtr,
   List,
   Button
 } from 'antd'
@@ -31,7 +31,7 @@ const StudentList = ({tag}) => {
       renderItem = {student => (
         <ListItem onClick={showStudentCard(student)}>
           <ListItemMeta
-            avatar      = {<Avatar student={student} />}
+            avatar      = {<StudentAvatar id={student.id} />}
             title       = {<Title student={student} />}
             description = {<Description student={student} />}
           />
@@ -40,12 +40,6 @@ const StudentList = ({tag}) => {
     />
   )
 }
-
-const Avatar = observer(function Avatar({student}){
-  return (
-    <Avtr src={`https://api.schoolstatus.com/avatars/student/${student.id}.png`} />
-  )
-})
 
 const Description = observer( function Description({student}){
   return (
