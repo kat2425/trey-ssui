@@ -9,6 +9,7 @@ import Infractions           from 'modules/logic/Infractions'
 import Financials            from 'modules/logic/Financials'
 import MyStudents            from 'modules/logic/MyStudents'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
+import TagBuilder            from 'modules/logic/TagBuilder/'
 
 import ChannelHistory        from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
@@ -34,6 +35,7 @@ const AppContainer = ({match}) => {
         <Route path='/r/assessment/tvaas' component={TVAASController} />
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
+        <Route path='/r/bullseye' component={TagBuilder} />
 
         {/* Channel */}
         <Route path='/r/channel/inbox' component={SMSController} />
@@ -55,7 +57,8 @@ const AppContainer = ({match}) => {
               </div>
             </DumbContainer>
           )
-        }} />
+        }} 
+        />
       </Switch>
 
       <Route path='*/students/:studentId' component={StudentCardController} />

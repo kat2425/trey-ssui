@@ -1,0 +1,29 @@
+/*
+ * Override antd classes
+ */
+
+.ant-popover-arrow {
+   display: none;
+}
+
+.ant-select-arrow {
+  margin-top: 0 !important;
+}
+
+.ant-list, 
+.ant-select, 
+.ant-select-dropdown,
+.ant-dropdown-menu-item,
+.ant-btn,
+.ant-list-item-meta-title,
+.ant-list-item-meta-description,
+.ant-tooltip,
+.ant-input-number,
+.ant-form *,
+.ant-form label,
+.ant-menu,
+.ant-notification
+{
+  font-family: $font-family-base;
+  font-size: 12px/*$font-size-base*/;
+}

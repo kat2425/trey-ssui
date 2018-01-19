@@ -137,7 +137,7 @@ class CallingStore {
           errorMessage = error.response.data.message
         }
 
-        UiStore.addNotification('Error', errorMessage)
+        UiStore.addNotification({title: 'Error', message: errorMessage, type: 'error'})
         console.error('Calling Error:', error)
       })
   }
@@ -230,7 +230,7 @@ class CallingStore {
           errorMessage = 'We experienced an unknown error.'
       }
 
-      UiStore.addNotification('Error', errorMessage)
+        UiStore.addNotification({title: 'Error', message: errorMessage, type: 'error'})
       console.error('Calling Error:', error)
     })
   }
