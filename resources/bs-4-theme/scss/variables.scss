@@ -48,7 +48,7 @@ $alert-warning-border: #E6D0A1;
 
 
 // Text Color
-$font-family-sans-serif: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 $font-family-base:       $font-family-sans-serif;
 $text-color:             $gray-dark;
 $letter-spacing-base:    0;

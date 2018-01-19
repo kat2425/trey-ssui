@@ -2,7 +2,7 @@ import React                 from 'react'
 import { observer }          from 'mobx-react'
 import { ModifiedIndicator } from 'ui/shell/SmartTags'
 
-import { 
+import {
   Button,
   Tooltip
 } from 'antd'
@@ -19,10 +19,10 @@ function Title({tagStore}){
       </h5>
       {selectedTag.isEditable && (
         <Tooltip title='Edit Tag'>
-          <Button 
+          <Button
             onClick = {() => tagStore.editTag(selectedTag)}
             icon    = "edit"
-            style   = {{border: 0}}
+            style   = {{border: 0, background: 'transparent'}}
           />
         </Tooltip>
       )}

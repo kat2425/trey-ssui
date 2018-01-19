@@ -1,6 +1,7 @@
-import React               from 'react'
-import { observer }        from 'mobx-react'
-import { Button, Tooltip } from 'antd'
+import React        from 'react'
+import { observer } from 'mobx-react'
+import { Button }   from 'reactstrap'
+import { Tooltip }  from 'antd'
 
 function ExportCSVButton({tagStore}){
   const { selectedTag } = tagStore
@@ -9,14 +10,19 @@ function ExportCSVButton({tagStore}){
 
   return (
     <Tooltip title='Export CSV'>
+      {/* <Button */}
+      {/*   loading   = {tagStore.isFetchingTagCSV} */}
+      {/*   icon      = 'download' */}
+      {/*   type      = 'primary' */}
+      {/*   ghost */}
+      {/*   className = 'mr-2' */}
+      {/*   onClick   = {() => tagStore.fetchTagCSV(selectedTag)} */}
+      {/* > */}
       <Button
-        loading   = {tagStore.isFetchingTagCSV}
-        icon      = 'download'
-        type      = 'primary'
-        ghost
-        className = 'mr-2'
-        onClick   = {() => tagStore.fetchTagCSV(selectedTag)}
+        onClick = {() => tagStore.fetchTagCSV(selectedTag)}
+        className = 'pl-2 mr-2'
       >
+        <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
         Export CSV
       </Button>
     </Tooltip>

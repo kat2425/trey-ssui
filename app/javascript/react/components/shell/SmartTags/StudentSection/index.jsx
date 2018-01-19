@@ -10,18 +10,18 @@ import Result         from './Result'
 
 function StudentSection({tagStore}){
   const { selectedTag } = tagStore
-  const { 
-    renderIfLoading, 
-    renderIfStudents, 
-    renderIfNoStudents 
+  const {
+    renderIfLoading,
+    renderIfStudents,
+    renderIfNoStudents
   } = getRenderFunctions(tagStore)
 
   return (
     <Panel
-      className="pt-4"
-      title="Students"
-      contentStyle={{ minHeight: 'auto' }}
-      titleRight={() => (
+      className    = "pt-4"
+      title        = "Students"
+      contentStyle = {{ minHeight: 'auto' }}
+      titleRight   = {() => (
         <Result
           results = {selectedTag.students.length}
           total   = {selectedTag.pagination.total}

@@ -28,7 +28,7 @@ import {
 
 @observer
 export default class TagBuilder extends Component {
-  state = { 
+  state = {
     dimensions: {
       width:  500,
       height: 500
@@ -57,8 +57,8 @@ export default class TagBuilder extends Component {
     const { width, height } = this.state.dimensions
     const {selectedTag} = tagStore
     const {
-      renderIfTag,          
-      renderContent,        
+      renderIfTag,
+      renderContent,
       renderIfLoadingSchema,
       renderIfNoSelectedTag,
       renderQueryBuilder,
@@ -70,21 +70,25 @@ export default class TagBuilder extends Component {
       <Wrapper>
         {renderIfTag(<UnsavedPrompt tagStore={tagStore} />)}
         <Row type='flex'>
-          <Col xs={24} sm={24} md={5} lg={4}>
+          <Col style={{ background: '#fff' }} xs={24} sm={24} md={5} lg={4}>
             <SideNav tagStore={tagStore} />
           </Col>
+
           <Content innerRef={node => this.container = node} xs={24} sm={24} md={19} lg={20}>
             <TopSection tagStore={tagStore} />
+
             {renderIfNoSelectedTag(<p className='mt-5 text-muted text-center'>No Tag Selected</p>)}
             {renderIfLoadingSchema(<LoadingSpinner center />)}
+
             <Row>
               {renderIfHideMap([
                 <Col xs={24} sm={24} md={18} xxl={20} key={uuid()}>
                   {renderQueryBuilder(<QueryBuilder tag={selectedTag}/>)}
                 </Col>,
+
                 <Col xs={24} sm={24} md={6} xxl={4} key={uuid()}>
                   {renderContent(
-                    <div className='py-4 pr-2'>
+                    <div className='py-4 pr-2 mr-2'>
                       <NaturalLanguageSection   tagStore={tagStore} />
                       <MapSection               tagStore={tagStore} />
                       <StudentSection           tagStore={tagStore} />
@@ -92,6 +96,7 @@ export default class TagBuilder extends Component {
                   )}
                 </Col>
               ])}
+
               {renderIfShowMap(
                 <Col >
                   <MapView width={width} height={height} container={this.container}/>
@@ -100,6 +105,7 @@ export default class TagBuilder extends Component {
             </Row>
           </Content>
         </Row>
+
         <TagFormModal tagStore={tagStore} />
       </Wrapper>
     )
@@ -118,17 +124,17 @@ const getRenderFunctions = (tagStore) => {
   const renderIfShowMap       = renderIf(selectedTag && tagStore.showMap)
   const renderIfHideMap       = renderIf(selectedTag && !tagStore.showMap)
   const renderIfNoSelectedTag = renderIf(
-    !selectedTag && 
-    !tagStore.isFetchingSchema && 
+    !selectedTag &&
+    !tagStore.isFetchingSchema &&
     !tagStore.isSelectingTag
   )
 
   return {
-    renderIfTag,          
-    renderIfLoading,      
-    renderIfNoTags,       
-    renderIfTags,         
-    renderContent,        
+    renderIfTag,
+    renderIfLoading,
+    renderIfNoTags,
+    renderIfTags,
+    renderContent,
     renderIfLoadingSchema,
     renderIfNoSelectedTag,
     renderQueryBuilder,
@@ -136,4 +142,3 @@ const getRenderFunctions = (tagStore) => {
     renderIfHideMap
   }
 }
-

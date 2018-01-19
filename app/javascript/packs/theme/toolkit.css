@@ -263,12 +263,12 @@ html {
   -webkit-tap-highlight-color: transparent; }
 
 body {
-  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1rem;
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 1rem !important;
   font-weight: 300;
   line-height: 1.6;
   color: #292b2c;
-  background-color: #f5f8fa; }
+  background-color: #f5f8fa !important; }
 
 [tabindex="-1"]:focus {
   outline: none !important; }
@@ -4058,7 +4058,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -4140,7 +4140,7 @@ button.close {
   display: block;
   max-width: 276px;
   padding: 1px;
-  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -8685,12 +8685,16 @@ img.zoom-img {
 .ant-list-item-meta-description,
 .ant-tooltip,
 .ant-input-number,
+.ant-input,
 .ant-form *,
 .ant-form label,
 .ant-menu,
 .ant-notification {
-  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px; }
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 1rem !important; }
+
+.ant-input-search:not(.ant-input-search-small) > .ant-input-suffix {
+  right: 22px; }
 
 .mapboxgl-popup-close-button {
   right: 5px;
@@ -8993,8 +8997,29 @@ div.tooltip-inner {
   border-color: #d43f3a;
 }
 */
+.group-or-rule {
+  padding-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 20px; }
+
+.rule {
+  background-color: rgba(219, 227, 234, 0.34);
+  border: 1px solid rgba(145, 151, 160, 0.35);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.125); }
+
+.group {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.115); }
+
+.group--children > .group-container > .group {
+  background-color: rgba(220, 230, 236, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.125); }
+
 .group-or-rule-container {
   padding-right: 0; }
+
+.group--children > .group-or-rule-container > .group-or-rule::before, .group--children > .group-or-rule-container > .group-or-rule::after {
+  height: calc(50% + 18px); }
 
 .vjs-bool-cell-true {
   border-top: 1px solid #ccf7cc !important;

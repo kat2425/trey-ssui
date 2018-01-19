@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 10px;
-  background-color: rgb(245,245,245);
+  background-color: rgb(255,255,255);
   border-bottom: 1px solid rgba(0,0,0,0.125);
   height: 65px;
 `
