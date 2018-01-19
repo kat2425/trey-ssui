@@ -24,7 +24,7 @@ export class GroupStore {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification('Error', this.isError.message)
+        UiStore.addNotification({title: 'Error', message: this.isError.message, type: 'error'})
       }
     })
   }
