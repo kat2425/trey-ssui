@@ -14,6 +14,7 @@ import MapGL, {
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 import tagStore from 'stores/TagStore'
+const MAP_ACCESS_TOKEN = 'pk.eyJ1Ijoiam9lLWJ1emEiLCJhIjoiY2o4b2EzNndsMDFhczMycnpwbW94ZDcxbCJ9.QQgP-GaylKEV7U-I3md1Yg'
 
 @observer
 export default class MapView extends Component {
@@ -108,9 +109,10 @@ export default class MapView extends Component {
     return (
       <MapGL
         {...viewport}
-        mapStyle         = 'mapbox://styles/mapbox/streets-v9'
-        onViewportChange = {this.updateViewport}
-        ref              = {map => this.mapRef = map}
+        mapStyle             = 'mapbox://styles/mapbox/streets-v9'
+        onViewportChange     = {this.updateViewport}
+        ref                  = {map => this.mapRef = map}
+        mapboxApiAccessToken = {MAP_ACCESS_TOKEN}
       >
         {selectedTag.studentsCoordinates.map(this.renderStudentMarker)}
         {this._renderPopup()}
