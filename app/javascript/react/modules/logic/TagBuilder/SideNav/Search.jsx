@@ -4,10 +4,10 @@ import { Input }    from 'antd'
 
 function Search({tagStore}){
   return (
-    <Input.Search 
+    <Input.Search
       size        = 'large'
-      className   = 'my-3 px-2'
-      placeholder = 'Filter tags'
+      className   = 'my-3 px-3'
+      placeholder = 'Find a tag...'
       onChange    = {tagStore.handleTagFilter}
     />
   )

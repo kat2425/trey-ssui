@@ -13,24 +13,24 @@ export default function ActionButtons({
   disabled      = true,
   loadingOnTest = false,
   loadingOnSave = false,
-  onTest, 
+  onTest,
   onSave
 }) {
   return (
-    <div className='d-flex my-4 justify-content-end'>
+    <div className='d-flex my-4 justify-content-end mr-3'>
       <Button.Group>
-        <Button 
+        <Button
           onClick  = {() => onSave()}
           disabled = {disabled}
           icon     = 'save'
           loading  = {loadingOnSave}
-          type     = 'primary'
+          type     = 'default'
         >
           Save Tag
         </Button>
+
         <Button
-          type      = 'primary'
-          ghost
+          type      = 'default'
           onClick   = {() => onTest()}
           disabled  = {disabled}
           loading   = {loadingOnTest}

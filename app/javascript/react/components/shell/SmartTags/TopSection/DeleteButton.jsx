@@ -1,26 +1,27 @@
-import React                           from 'react'
-import { observer }                    from 'mobx-react'
-import { Button, Tooltip, Popconfirm } from 'antd'
+import React                   from 'react'
+import { observer }            from 'mobx-react'
+import { Button }              from 'reactstrap'
+import { Tooltip, Popconfirm } from 'antd'
 
 function DeleteButton({tagStore}){
   const { selectedTag } = tagStore
 
   if(!selectedTag) return null
   return (
-    <Popconfirm 
+    <Popconfirm
       title      = "Are you sure?"
       onConfirm  = {selectedTag.deleteTag}
       okText     = 'OK'
       cancelText = 'Cancel'
     >
       <Tooltip title='Delete Tag'>
-        <Button 
-          loading   = {selectedTag.isDeleting}
-          icon      = 'delete'
-          type      = 'danger'
-          ghost
-        >              
-          Delete
+        <Button
+          className = 'pl-2'
+          color     = 'danger'
+          disabled  = {selectedTag.isDeleting}
+        >
+          <span className='icon icon-trash text-white' style={{marginRight: '4px'}}/>
+          {selectedTag.isDeleting ? 'Deleting...' : 'Delete' }
         </Button>
       </Tooltip>
     </Popconfirm>
