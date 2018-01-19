@@ -15,6 +15,7 @@ function DeleteButton({tagStore}){
     >
       <Tooltip title='Delete Tag'>
         <Button 
+          loading   = {selectedTag.isDeleting}
           icon      = 'delete'
           type      = 'danger'
           ghost

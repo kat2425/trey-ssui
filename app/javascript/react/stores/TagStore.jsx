@@ -41,7 +41,7 @@ export class TagStore {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification('Error', this.isError.message)
+        UiStore.addNotification({title: this.isError.title, message: this.isError.message, type: 'error'})
       }
     })
   }
@@ -51,7 +51,7 @@ export class TagStore {
     const orderedTags = _.orderBy(this.tags.values(), t => t.createdAt, 'desc')
 
     if(!this.tagFilter) return orderedTags
-    return orderedTags.filter(t => t.name.indexOf(this.tagFilter) > -1)
+    return orderedTags.filter(t => t.name.toLowerCase().indexOf(this.tagFilter.toLowerCase()) > -1)
   }
 
   @computed get hasTags() {

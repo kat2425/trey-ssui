@@ -72,7 +72,7 @@ export default class Tag {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification(this.isError.title || 'Error', this.isError.message)
+        UiStore.addNotification({title: this.isError.title, message: this.isError.message, type: 'error'})
       }
     })
   }
@@ -248,7 +248,7 @@ export default class Tag {
         this.tagStore.addTag(this)
         wasActive && this.tagStore.setSelectedTag(this)
 
-        UiStore.addNotification('Tag', 'created successfully')
+        UiStore.addNotification({title: 'Tag', message: 'created successfully', type: 'success'})
 
         this.tagStore.toggleQueryForm()
       })
@@ -273,11 +273,14 @@ export default class Tag {
         return
       }
 
+      this.setIsDeleting(true)
+      this.setIsError(false)
+
       await sxhr.delete(`/smart_tags/${this.id}`)
       runInAction(() => {
         this.tagStore.deleteTag(this)
 
-        UiStore.addNotification('Tag', 'deleted successfully')
+        UiStore.addNotification({title: 'Tag', message: 'deleted successfully', type: 'success'})
       })
     } catch(e) {
       const error = getError(e)
@@ -286,7 +289,9 @@ export default class Tag {
         message: error.message,
         title:   error.title
       })
-    }   
+    } finally {
+      this.setIsDeleting(false)
+    }
   }
 
   /*
@@ -305,7 +310,7 @@ export default class Tag {
         this.resetStatus()
         this.updateFromJson(data)
         this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
-        UiStore.addNotification('Tag', 'saved successfully')
+        UiStore.addNotification({title: 'Tag', message: 'saved successfully', type: 'success'})
       })
     } catch (e) {
       const error = getError(e)

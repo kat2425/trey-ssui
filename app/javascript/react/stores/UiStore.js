@@ -59,8 +59,8 @@ export class UiStore {
   }
 
   // Actions
-  @action addNotification(title, body) {
-    this.notifications.push({title, body})
+  @action addNotification({title, message, type}) {
+    this.notifications.push({title, message, type})
   }
 
   @action removeNotification(index) {
@@ -99,15 +99,12 @@ export class UiStore {
     })
   }
 
-  @action notify = ({type = 'warning', title, body}, i) => {
+  @action notify = ({type = 'warning', title, message}, i) => {
     notification[type]({
       key:         i,
       message:     title,
-      description: body,
-      onClose:     () => this.removeNotification(i),
-      style:       {
-        marginTop: 40
-      }
+      description: message,
+      onClose:     () => this.removeNotification(i)
     })
   }
 
