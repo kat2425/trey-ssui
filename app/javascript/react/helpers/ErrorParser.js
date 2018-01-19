@@ -7,8 +7,8 @@ export default function ErrorParser(e){
     if(isHTML(e.response.data)) return _error
 
     _error = {
-      title:   e.response.message,
-      message: e.response.errors
+      title:   e.response.data.message,
+      message: e.response.data.errors
     }
   }   
 
