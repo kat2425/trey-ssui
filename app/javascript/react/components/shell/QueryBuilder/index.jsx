@@ -8,7 +8,7 @@ import ActionButtons from './ActionButtons'
 
 function QueryBuilder({tag}){ 
   return (
-    <div className='p-4'>
+    <div className='p-4 query-builder'>
       <Query 
         config      = {tag.config}
         value       = {tag.treeQuery}
