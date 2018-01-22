@@ -19,6 +19,10 @@ html, body {
   height: 57px;
 }
 
+.pagination {
+  margin-bottom: 14px !important;
+}
+
 #intercom-container .intercom-launcher-frame,
 .intercom-launcher-frame {
   box-shadow: none !important;
