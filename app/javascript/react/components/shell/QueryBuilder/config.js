@@ -1926,7 +1926,7 @@ export default {
     operatorPlaceholder: 'Select operator',
     deleteLabel: null,
     addGroupLabel: 'Add group',
-    addRuleLabel: 'Add rule',
+    addRuleLabel: 'Add filter',
     delGroupLabel: null,
     canLeaveEmptyGroup: true, //after deletion
     formatReverse: (
