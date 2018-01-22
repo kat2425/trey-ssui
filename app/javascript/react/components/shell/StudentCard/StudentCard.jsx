@@ -23,6 +23,7 @@ import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 import Info             from './Info'
 import Overview         from './Overview'
 import Assessment       from './Assessment'
+import Grades           from './Grades'
 import FinancialAid     from './FinancialAid'
 import Contacts         from './Contacts'
 import CourseAttendance from './CourseAttendance'
@@ -45,14 +46,14 @@ const cardStyle = {
 
   content: {
     zIndex:          1028,
-    top:             75,
-    bottom:          70,
-    left:            17,
-    right:           17,
-    borderRadius:    '0.25em',
+    top:             55,
+    bottom:          50,
+    left:            0,
+    right:           0,
     border:          'none',
     backgroundColor: '#f7f9fb',
-    paddingBottom:   35
+    paddingBottom:   35,
+    borderRadius:    0
   }
 }
 
@@ -114,7 +115,7 @@ export default class StudentCard extends Component {
 
     return (
       <Row>
-        <Col sm='3' style={scrollStyle}>
+        <Col sm='2' style={scrollStyle}>
           <Info student={student} />
 
           <Card>
@@ -157,6 +158,13 @@ export default class StudentCard extends Component {
               />
 
               <UserMenuItem
+                title     = 'Grades'
+                iconClass = 'icon-ruler'
+                link      = {`${match.url}/grades`}
+                location  = {location}
+              />
+
+              <UserMenuItem
                 title     = 'Engagement'
                 iconClass = 'icon-swap'
                 link      = {`${match.url}/engagement`}
@@ -183,7 +191,7 @@ export default class StudentCard extends Component {
         </Col>
 
         {/* Root Container */}
-        <Col sm='9'>
+        <Col sm='10'>
           <CloseBtn onClick={this.closeCard} />
 
           <Switch location={location}>
@@ -213,6 +221,11 @@ export default class StudentCard extends Component {
             <Route
               path   = {`${match.url}/assessment`}
               render = {() => <Assessment student={student}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/grades`}
+              render = {() => <Grades student={student}/> }
             />
 
             <Route
