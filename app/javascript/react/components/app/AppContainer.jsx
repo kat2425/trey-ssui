@@ -9,6 +9,7 @@ import Infractions           from 'modules/logic/Infractions'
 import Financials            from 'modules/logic/Financials'
 import MyStudents            from 'modules/logic/MyStudents'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
+import PSAT89                from 'modules/logic/PSAT89'
 
 import ChannelHistory        from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
@@ -32,6 +33,7 @@ const AppContainer = ({match}) => {
         <Route path='/r/attendance' component={Attendance} />
         <Route path='/r/infractions' component={Infractions} />
         <Route path='/r/assessment/tvaas' component={TVAASController} />
+        <Route path='/r/assessment/psat89' component={PSAT89} />
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
 

@@ -12,11 +12,15 @@ const UserMenu = () => {
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar'>
       <UserMenuSection title='Core Data'>
         <UserMenuItem title='My Students' iconClass='icon-users' link='/r/my_students' active/>
-        {/* <UserMenuItem title='Attendance' iconClass='icon-calendar' link='/r/attendance' /> */}
-        {/* <UserMenuItem title='Discipline' iconClass='icon-thermometer' link='/r/infractions' active/> */}
-        {/* <UserMenuItem title='Assessment' iconClass='icon-bar-graph' link='/r/assessment/tvaas' /> */}
-        <UserMenuItem title='Financials' iconClass='icon-credit' link='/r/financials' />
+        <UserMenuItem title='Attendance' iconClass='icon-calendar' link='/r/attendance' />
+        <UserMenuItem title='Discipline' iconClass='icon-thermometer' link='/r/infractions' active/>
+        <UserMenuItem title='Assessment' iconClass='icon-bar-graph' link='/r/assessment/psat89' />
+        {/* <UserMenuItem title='Financials' iconClass='icon-credit' link='/r/financials' /> */}
       </UserMenuSection>
+
+      {/* <UserMenuSection title='Assessment'> */}
+      {/*   <UserMenuItem title='PSAT 8/9' iconClass='icon-bar-graph' link='/r/assessment/psat89' /> */}
+      {/* </UserMenuSection> */}
 
       {/* <UserMenuSection title='Accountability'> */}
       {/*   <UserMenuItem title='Sneak Peek' iconClass='icon-eye' /> */}
