@@ -27,6 +27,22 @@ export default class Courses extends Component {
     })
   }
 
+  setInactive(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params: {
+        ...this.state.params,
+        deleted_at: [ jrsValue ]
+      },
+
+      selected: {
+        ...this.state.selected,
+        deleted_at: val
+      }
+    })
+  }
+
   render() {
     return (
       <VJSChart
@@ -41,6 +57,15 @@ export default class Courses extends Component {
           student_id: [ this.props.student.id ]
         }}
       >
+        <VJSICSelect
+          id            = 'show_deleted'
+          inputPath     = '/public/VJS/ss_ui/courses/show_deleted'
+          selectedValue = {this.state.selected.deleted_at}
+          handleChange  = {::this.setInactive}
+          placeholder   = 'Inactives?'
+          width         = {100}
+        />
+
         <VJSICSelect
           id            = 'student_course_terms'
           inputPath     = '/public/VJS/ss_ui/courses/student_course_terms'

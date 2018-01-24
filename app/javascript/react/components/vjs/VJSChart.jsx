@@ -273,7 +273,7 @@ export default class VJSChart extends Component {
               </div>
 
               <div className='ml-auto' style={{display: 'flex'}}>
-                <div className='mr-2'>
+                <div className='mr-2 row'>
                   { this.props.children }
                 </div>
 
