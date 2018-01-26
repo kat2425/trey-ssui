@@ -7,6 +7,7 @@ const Wrapper = styled.div.attrs({
 })`
   padding: 20px 18px;
   background-color: #fff;
+  flex-wrap: wrap;
 `
 
 Header.propTypes = {
