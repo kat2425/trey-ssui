@@ -4,6 +4,7 @@ import {observer}    from 'mobx-react'
 import {Button, Row} from 'antd'
 import mapStore      from 'stores/MapStore'
 import renderIf      from 'render-if'
+import pluralize     from 'helpers/pluralize'
 
 
 function LeftControlPanel() {
@@ -14,7 +15,12 @@ function LeftControlPanel() {
     <Wrapper>
       <Row type="flex" align="middle" justify="center">
         {renderIfFetching(<Button icon='loading'>Fetching Students</Button>)}
-        {renderTotal(<Results><b>{mapStore.totalStudents}</b>&nbsp;Students</Results>)}
+        {renderTotal(
+          <Results>
+            <b>{mapStore.totalStudents}</b>&nbsp;
+            {pluralize(mapStore.totalStudents, 'Student')}
+          </Results>
+        )}
       </Row>
     </Wrapper>
   )

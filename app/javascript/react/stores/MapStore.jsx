@@ -130,7 +130,7 @@ export class MapStore {
     try{
       this.setIsError(false)
 
-      if(_.isEmpty(this.map) || _.isEmpty(this.geoData)) return
+      if(_.isEmpty(this.map) || _.isEmpty(_.get(this.geoData, 'features', 0))) return
 
       this.map.fitBounds(turf.bbox(this.geoData), {padding: 20})
     } catch(e){
