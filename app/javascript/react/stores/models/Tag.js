@@ -108,9 +108,16 @@ export default class Tag {
 
   @computed get humanStringFormat(){
     try {
-      const output = queryString(this.treeQuery, config, true)
+      let output = queryString(this.treeQuery, config, true)
 
-      return output ? ` of your students whose ${output.split('(').join('').split(')').join('')}` : ''
+      if (output) {
+        output = output.split('(').join('').split(')').join('')
+        output = output.replace(/\bor|and\b/g, '<span class="super-bold">$&</span>')
+      } else {
+        output = ''
+      }
+
+      return output
     } catch(e){
       console.warn(e)
       return ''

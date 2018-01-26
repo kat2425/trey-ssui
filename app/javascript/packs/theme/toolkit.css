@@ -9025,6 +9025,9 @@ div.tooltip-inner {
 .group--children > .group-or-rule-container > .group-or-rule::before, .group--children > .group-or-rule-container > .group-or-rule::after {
   height: calc(50% + 18px); }
 
+.super-bold {
+  text-shadow: 0px 1px, 1px 0px, 1px 1px; }
+
 .vjs-bool-cell-true {
   border-top: 1px solid #ccf7cc !important;
   background-color: #e6fbe6; }
