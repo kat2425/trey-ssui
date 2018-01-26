@@ -36,7 +36,7 @@ export default function ActionButtons({
           loading   = {loadingOnTest}
           icon      = "play-circle-o"
         >
-          Test Tag
+          Run
         </Button>
       </Button.Group>
     </div>
