@@ -8689,7 +8689,8 @@ img.zoom-img {
 .ant-form *,
 .ant-form label,
 .ant-menu,
-.ant-notification {
+.ant-notification,
+.ant-card {
   font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 1rem !important; }
 

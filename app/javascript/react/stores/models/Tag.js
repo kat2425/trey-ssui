@@ -82,10 +82,6 @@ export default class Tag {
     return this.studentMap.values().map(this.mapStudent)
   }
 
-  @computed get studentsCoordinates(){
-    return this.students.filter(this.filterValidCoordinates)
-  }
-
   @computed get isActive(){
     return this.tagStore.selectedTag === this
   }
@@ -194,6 +190,8 @@ export default class Tag {
   }
 
   @action testTag = async() => {
+    if(!this.isValid) return
+
     try {
       this.setIsFetchingStudents(true)
       this.setIsError(false)
@@ -365,8 +363,6 @@ export default class Tag {
   }
 
   @action handleOnTagClick = () => {
-    if(!this.isValid) return
-
     this.setActive()
     this.testTag()
   }
@@ -426,10 +422,5 @@ export default class Tag {
     latitude:  parseFloat(student.latitude),
     longitude: parseFloat(student.longitude)
   })
-
-  @action filterValidCoordinates = s => (
-    _.isFinite(s.longitude) && 
-    _.isFinite(s.latitude)
-  )
 }
 

@@ -153,6 +153,7 @@ export class TagStore {
 
   @action handleAddTag = () => {
     this.addTag(new Tag({isNew: true}, this))
+    this.showMap = false
   }
 
   @action addTag = tag => {

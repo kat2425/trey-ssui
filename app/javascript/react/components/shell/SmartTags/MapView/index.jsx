@@ -1,124 +1,74 @@
-import React, {Component} from 'react'
-import { observer }       from 'mobx-react'
+import React, {Component}                   from 'react'
+import {observer}                           from 'mobx-react'
 
-import StudentPin         from './StudentPin'
-import StudentInfo        from './StudentInfo'
-import RightControlPanel  from './RightControlPanel'
-import LeftControlPanel   from './LeftControlPanel'
+import ReactMapboxGl, {GeoJSONLayer, Popup} from 'react-mapbox-gl'
 
-import MapGL, {
-  Marker, 
-  Popup, 
-  FlyToInterpolator
-} from 'react-map-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
+import {token, styles, mapStyle}            from './config'
+import {addClusterLayers, source}           from './layers'
 
-import tagStore from 'stores/TagStore'
-const MAP_ACCESS_TOKEN = 'pk.eyJ1Ijoiam9lLWJ1emEiLCJhIjoiY2o4b2EzNndsMDFhczMycnpwbW94ZDcxbCJ9.QQgP-GaylKEV7U-I3md1Yg'
+import Wrapper                              from './Wrapper'
+import RightControlPanel                    from './RightControlPanel'
+import LeftControlPanel                     from './LeftControlPanel'
+import StudentInfo                          from './StudentInfo'
+
+import mapStore                             from 'stores/MapStore'
+
+const Map = ReactMapboxGl({accessToken: token})
 
 @observer
 export default class MapView extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      viewport: {
-        latitude:  30.776464864611626,
-        longitude: -89.58102755248547,
-        zoom:      8,
-        bearing:   0,
-        pitch:     0,
-        width:     500,
-        height:    500
-      },
-      popupInfo: null
-    }
-  }
+  center = [-90.1123, 32.4001]
 
   componentDidMount() {
-    window.addEventListener('resize', this.resize)
-    this.resize()
+    mapStore.fetchGeoJSON(this.props.tag)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize)
+    mapStore.clear()
   }
 
-  resize = () => {
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        width:  this.props.width || window.innerWidth,
-        height: this.props.height || window.innerHeight
-      }
-    })
-  }
-
-  updateViewport = (viewport) => {
-    this.setState({viewport})
-  }
-
-  renderStudentMarker = (student, index) => {
-    return (
-      <Marker
-        key       = {`marker-${index}`}
-        longitude = {student.longitude}
-        latitude  = {student.latitude}
-      >
-        <StudentPin size={20} onClick={this.handleOnMarkerClick(student)} />
-      </Marker>
-    )
-  }
-
-  handleOnMarkerClick = (student) => () => {
-    this.setState({popupInfo: student} )
-
-    this.updateViewport({
-      ...this.state.viewport,
-      latitude:               student.latitude,
-      longitude:              student.longitude,
-      zoom:                   10,
-      transitionInterpolator: new FlyToInterpolator(),
-      transitionDuration:     500
-    })
-  }
-
-  _renderPopup = () => {
-    const {popupInfo} = this.state
-
-    return (
-      popupInfo && (
-        <Popup
-          tipSize   = {5}
-          anchor    = 'top'
-          longitude = {popupInfo.longitude}
-          latitude  = {popupInfo.latitude}
-          onClose   = {() => this.setState({popupInfo: null})}
-        >
-          <StudentInfo student={popupInfo} />
-        </Popup>
-      )
-    )
+  onStyleLoad = map => {
+    mapStore.setMap(map)
+    addClusterLayers(map)
   }
 
   render() {
-    const { viewport }    = this.state
-    const { selectedTag } = tagStore
-
-    if(!selectedTag) return null
+    const {width, height}   = this.props
+    const {selectedStudent} = mapStore
 
     return (
-      <MapGL
-        {...viewport}
-        mapStyle             = 'mapbox://styles/mapbox/streets-v9'
-        onViewportChange     = {this.updateViewport}
-        ref                  = {map => this.mapRef = map}
-        mapboxApiAccessToken = {MAP_ACCESS_TOKEN}
-      >
-        {selectedTag.studentsCoordinates.map(this.renderStudentMarker)}
-        {this._renderPopup()}
-        {<RightControlPanel />}
-        {<LeftControlPanel />}
-      </MapGL>
+      <Wrapper style={{width, height}}>
+        <Map
+          style          = {styles.streets}
+          center         = {this.center}
+          containerStyle = {mapStyle}
+          onStyleLoad    = {this.onStyleLoad}
+          accessToken    = {token}
+          onClick        = {() => mapStore.setSelectedStudent(null)}
+        >
+          <GeoJSONLayer
+            id            = {source}
+            data          = {mapStore.geoData}
+            circleOnClick = {mapStore.handleMarkerClick}
+            circleLayout  = {{visibility: 'visible'}}
+            sourceOptions = {{
+              cluster:       true,
+              clusterRadius: 50
+            }}
+          />
+          {selectedStudent && (
+            <Popup
+              anchor      = 'bottom'
+              key         = {selectedStudent.id}
+              coordinates = {selectedStudent.position}
+            >
+              <StudentInfo student={selectedStudent} />
+            </Popup>
+          )}
+        </Map>
+        <RightControlPanel />
+        <LeftControlPanel />
+      </Wrapper>
     )
   }
 }

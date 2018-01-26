@@ -99,7 +99,7 @@ export default class TagBuilder extends Component {
 
               {renderIfShowMap(
                 <Col >
-                  <MapView width={width} height={height} container={this.container}/>
+                  <MapView width={width} height={height} tag={selectedTag}/>
                 </Col>
               )}
             </Row>

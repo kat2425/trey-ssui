@@ -54,7 +54,7 @@ const Title = observer(function Title({student}){
         className='font-weight-bold'
         onClick={showStudentCard(student)}
       >
-        {`${student.last_name} ${student.first_name}`}
+        {`${student.last_name}, ${student.first_name}`}
       </a>
       <span className='text-muted'> {`, Grade ${student.grade}`} </span>
     </span>
