@@ -17,28 +17,26 @@ export default function ActionButtons({
   onSave
 }) {
   return (
-    <div className='d-flex my-4 justify-content-end mr-3'>
-      <Button.Group>
-        <Button
-          onClick  = {() => onSave()}
-          disabled = {disabled}
-          icon     = 'save'
-          loading  = {loadingOnSave}
-          type     = 'default'
-        >
-          Save Tag
-        </Button>
+    <div className='d-flex my-4 justify-content-between mr-3'>
+      <Button
+        onClick  = {() => onSave()}
+        disabled = {disabled}
+        icon     = 'save'
+        loading  = {loadingOnSave}
+        type     = 'default'
+      >
+        Save Tag
+      </Button>
 
-        <Button
-          type      = 'default'
-          onClick   = {() => onTest()}
-          disabled  = {disabled}
-          loading   = {loadingOnTest}
-          icon      = "play-circle-o"
-        >
-          Run
-        </Button>
-      </Button.Group>
+      <Button
+        type      = 'default'
+        onClick   = {() => onTest()}
+        disabled  = {disabled}
+        loading   = {loadingOnTest}
+        icon      = "play-circle-o"
+      >
+        Run
+      </Button>
     </div>
   )
 }
