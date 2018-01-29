@@ -18,7 +18,6 @@ function StudentSection({tagStore}){
 
   return (
     <Panel
-      className    = "pt-4"
       title        = "Students"
       contentStyle = {{ minHeight: 'auto' }}
       titleRight   = {() => (

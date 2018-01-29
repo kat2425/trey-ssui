@@ -30,6 +30,12 @@ const {queryBuilderFormat, queryString} = Utils
 
 const TAG_NAME_PLACEHOLDER = 'Untitled Tag'
 
+export const TABS = {
+  QUERY_BUILDER: 'query-builder',
+  MAP:           'map',
+  STUDENTS:      'students'
+}
+
 export default class Tag {
   static untitledTagsCounter = 0
 
@@ -47,6 +53,7 @@ export default class Tag {
   @setter @observable isCloned           = false
   @setter @observable isModified         = false
   @setter @observable hasBeenTested      = true
+  @setter @observable activeTab          = TABS.QUERY_BUILDER
 
   @setter @observable name = null
   @observable createdAt    = null
@@ -85,6 +92,18 @@ export default class Tag {
     return this.tagStore.selectedTag === this
   }
 
+  @computed get showQueryBuilderTab(){
+    return this.activeTab === TABS.QUERY_BUILDER
+  }
+
+  @computed get showMapTab(){
+    return this.activeTab === TABS.MAP
+  }
+
+  @computed get showStudentsTab(){
+    return this.activeTab === TABS.STUDENTS
+  }
+
   @computed get showQueryBuilder(){
     return !this.isFetchingSchema && this.isActive
   }
@@ -112,6 +131,7 @@ export default class Tag {
       if (output) {
         output = output.split('(').join('').split(')').join('')
         output = output.replace(/\bor|and\b/g, '<span class="super-bold">$&</span>')
+        output = ` of your students whose ${output}`
       } else {
         output = ''
       }

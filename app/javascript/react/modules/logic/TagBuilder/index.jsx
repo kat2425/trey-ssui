@@ -18,11 +18,11 @@ import { Row, Col }       from 'antd'
 import {
   TagFormModal,
   NaturalLanguageSection,
-  MapSection,
   StudentSection,
   TopSection,
   UnsavedPrompt,
-  MapView
+  MapView,
+  Tabs
 } from 'ui/shell/SmartTags'
 
 
@@ -62,43 +62,46 @@ export default class TagBuilder extends Component {
       renderIfLoadingSchema,
       renderIfNoSelectedTag,
       renderQueryBuilder,
-      renderIfHideMap,
-      renderIfShowMap
+      renderIfShowMapTab,
+      renderIfShowStudentsTab,
+      renderIfShowQueryBuilderTab
     } = getRenderFunctions(tagStore)
 
     return (
       <Wrapper>
         {renderIfTag(<UnsavedPrompt tagStore={tagStore} />)}
         <Row type='flex'>
-          <Col style={{ background: '#fff' }} xs={24} sm={24} md={5} lg={4}>
+          <Col style={{ background: '#fff' }} xs={24} sm={24} md={6} lg={5}>
             <SideNav tagStore={tagStore} />
           </Col>
 
-          <Content innerRef={node => this.container = node} xs={24} sm={24} md={19} lg={20}>
-            <TopSection tagStore={tagStore} />
-
+          <Content innerRef={node => this.container = node} xs={24} sm={24} md={18} lg={19}>
             {renderIfNoSelectedTag(<p className='mt-5 text-muted text-center'>No Tag Selected</p>)}
             {renderIfLoadingSchema(<LoadingSpinner center />)}
 
-            <Row>
-              {renderIfHideMap([
-                <Col xs={24} sm={24} md={18} xxl={20} key={uuid()}>
+            <TopSection tagStore={tagStore} />
+
+            {renderIfTag(<Tabs tag={selectedTag} />)}
+
+            <Row className='mt-4'>
+              {renderIfShowQueryBuilderTab([
+                <Col xs={24} sm={24} md={17} xxl={20} key={uuid()} className='px-4'>
                   {renderQueryBuilder(<QueryBuilder tag={selectedTag}/>)}
                 </Col>,
-
-                <Col xs={24} sm={24} md={6} xxl={4} key={uuid()}>
+                <Col xs={24} sm={24} md={7} xxl={4} key={uuid()} className='pr-4'>                  
                   {renderContent(
-                    <div className='py-4 pr-2 mr-2'>
-                      <NaturalLanguageSection   tagStore={tagStore} />
-                      <MapSection               tagStore={tagStore} />
-                      <StudentSection           tagStore={tagStore} />
-                    </div>
+                    <NaturalLanguageSection tagStore={tagStore} />
                   )}
                 </Col>
               ])}
 
-              {renderIfShowMap(
-                <Col >
+              {renderIfShowStudentsTab(
+                <Col className='px-4 mx-4 mb-4'>                  
+                  <StudentSection tagStore={tagStore} />
+                </Col>
+              )}
+              {renderIfShowMapTab(
+                <Col>
                   <MapView width={width} height={height} tag={selectedTag}/>
                 </Col>
               )}
@@ -113,17 +116,22 @@ export default class TagBuilder extends Component {
 }
 
 const getRenderFunctions = (tagStore) => {
-  const { selectedTag }       = tagStore
-  const renderIfTag           = renderIf(selectedTag)
-  const renderIfLoading       = renderIf(tagStore.isFetchingTags && tagStore.isEmpty)
-  const renderIfNoTags        = renderIf(!tagStore.isFetchingTags && tagStore.isEmpty)
-  const renderIfTags          = renderIf(!tagStore.isEmpty)
-  const renderContent         = renderIf(selectedTag && !tagStore.isFetchingSchema)
-  const renderIfLoadingSchema = renderIf(tagStore.isFetchingSchema)
-  const renderQueryBuilder    = renderIf(selectedTag && selectedTag.showQueryBuilder)
-  const renderIfShowMap       = renderIf(selectedTag && tagStore.showMap)
-  const renderIfHideMap       = renderIf(selectedTag && !tagStore.showMap)
-  const renderIfNoSelectedTag = renderIf(
+  const { selectedTag }             = tagStore
+  const renderIfTag                 = renderIf(selectedTag)
+  const renderIfLoading             = renderIf(tagStore.isFetchingTags && tagStore.isEmpty)
+  const renderIfNoTags              = renderIf(!tagStore.isFetchingTags && tagStore.isEmpty)
+  const renderIfTags                = renderIf(!tagStore.isEmpty)
+  const renderContent               = renderIf(selectedTag && !tagStore.isFetchingSchema)
+  const renderIfLoadingSchema       = renderIf(tagStore.isFetchingSchema)
+  const renderQueryBuilder          = renderIf(selectedTag && selectedTag.showQueryBuilder)
+
+  const renderIfShowMap             = renderIf(selectedTag && tagStore.showMap)
+  const renderIfShowMapTab          = renderIf(selectedTag && selectedTag.showMapTab)
+  const renderIfShowStudentsTab     = renderIf(selectedTag && selectedTag.showStudentsTab)
+  const renderIfShowQueryBuilderTab = renderIf(selectedTag && selectedTag.showQueryBuilderTab)
+
+  const renderIfHideMap             = renderIf(selectedTag && !tagStore.showMap)
+  const renderIfNoSelectedTag       = renderIf(
     !selectedTag &&
     !tagStore.isFetchingSchema &&
     !tagStore.isSelectingTag
@@ -139,6 +147,9 @@ const getRenderFunctions = (tagStore) => {
     renderIfNoSelectedTag,
     renderQueryBuilder,
     renderIfShowMap,
-    renderIfHideMap
+    renderIfHideMap,
+    renderIfShowMapTab,
+    renderIfShowStudentsTab,
+    renderIfShowQueryBuilderTab
   }
 }

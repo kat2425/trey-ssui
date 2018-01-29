@@ -7,7 +7,6 @@ import {token, styles, mapStyle}            from './config'
 import {addClusterLayers, source}           from './layers'
 
 import Wrapper                              from './Wrapper'
-import RightControlPanel                    from './RightControlPanel'
 import LeftControlPanel                     from './LeftControlPanel'
 import StudentInfo                          from './StudentInfo'
 
@@ -39,7 +38,7 @@ export default class MapView extends Component {
     return (
       <Wrapper style={{width, height}}>
         <Map
-          style          = {styles.streets}
+          style          = {styles.dark}
           center         = {this.center}
           containerStyle = {mapStyle}
           onStyleLoad    = {this.onStyleLoad}
@@ -66,7 +65,6 @@ export default class MapView extends Component {
             </Popup>
           )}
         </Map>
-        <RightControlPanel />
         <LeftControlPanel />
       </Wrapper>
     )
