@@ -48,7 +48,6 @@ export default class Tag {
   @setter @observable isModified         = false
   @setter @observable hasBeenTested      = true
 
-
   @setter @observable name = null
   @observable createdAt    = null
 
@@ -203,10 +202,7 @@ export default class Tag {
       this.setIsFetchingStudents(true)
       this.setIsError(false)
 
-      const {headers, data: students} = await xhr.post('/query/fetch', 
-        { query: this.queryFormat },
-        { params: this.paginationParams }
-      )
+      const { headers, data: students } = await this.testTagQueryEndpoint()
 
       runInAction(() => {
         students.forEach(this.addStudent)
@@ -429,5 +425,20 @@ export default class Tag {
     latitude:  parseFloat(student.latitude),
     longitude: parseFloat(student.longitude)
   })
+
+  // Helper Functions
+  // ------------------------------------------------------------------------------
+  testTagQueryEndpoint = () => {
+    if (this.isNew || this.isModified) {
+      return xhr.post('/query/fetch', 
+        { query: this.queryFormat },
+        { params: this.paginationParams }
+      )  
+    } else {
+      return xhr.get(`/query/fetch/${this.id}`, 
+        { params: this.paginationParams }
+      ) 
+    }
+  }
 }
 
