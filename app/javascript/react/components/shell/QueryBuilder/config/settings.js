@@ -16,17 +16,9 @@ const settings = {
   },
   // You can change the position of the group actions to the following:
   // oneOf [topLeft, topCenter, topRight (default), bottomLeft, bottomCenter, bottomRight]
-  groupActionsPosition:     'bottomLeft',
-  groupActionsPositionList: {
-    topLeft:      'group--actions--tl',
-    topCenter:    'group--actions--tc',
-    topRight:     'group--actions--tr',
-    bottomLeft:   'group--actions--bl',
-    bottomCenter: 'group--actions--bc',
-    bottomRight:  'group--actions--br'
-  },
+  groupActionsPosition:    'bottomLeft',
   // 'default' (default if present), 'keep' (keep prev from last field), 'first', 'none'
-  setOpOnChangeField:      ['keep', 'default'],   
+  setOpOnChangeField:      ['keep', 'default'],
   //false - if prev & next fields have same type (widget), keep
   clearValueOnChangeField: false, 
   clearValueOnChangeOp:    false,

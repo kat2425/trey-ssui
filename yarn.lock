@@ -7329,8 +7329,8 @@ react-attr-converter@^0.3.1:
   resolved "https://registry.yarnpkg.com/react-attr-converter/-/react-attr-converter-0.3.1.tgz#4a2abf6d907b7ddae4d862dfec80e489ce41ad6e"
 
 react-awesome-query-builder@^0.1.29:
-  version "0.1.34"
-  resolved "https://registry.yarnpkg.com/react-awesome-query-builder/-/react-awesome-query-builder-0.1.34.tgz#d1eb5d65de1160285d79a593d1006a4db298d0a5"
+  version "0.1.35"
+  resolved "https://registry.yarnpkg.com/react-awesome-query-builder/-/react-awesome-query-builder-0.1.35.tgz#5fcb69287c93f64758d8210109325e598673f302"
   dependencies:
     antd "^2.12.2"
     classnames "^2.2.5"
