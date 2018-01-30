@@ -14,7 +14,7 @@ import turf                  from 'turf'
 
 const headers = {
   headers: {
-    'Content-Type': 'application/geo+json'
+    'Accept': 'application/geo+json'
   }
 }
 
