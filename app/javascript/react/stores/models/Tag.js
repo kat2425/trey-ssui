@@ -23,7 +23,7 @@ import moment     from  'moment'
 
 import stringify  from  'json-stringify-safe'
 import {Utils}    from  'react-awesome-query-builder'
-import config     from  'ui/shell/QueryBuilder/config'
+import config     from  'ui/shell/QueryBuilder/config/'
 import Pagination from  'stores/models/Pagination'
 
 const {queryBuilderFormat, queryString} = Utils
@@ -363,6 +363,7 @@ export default class Tag {
     this.isModified = true
     this.treeQuery  = tree
     this.clearStudents()
+    this.pagination.clear()
   }
 
   @action handleOnTagClick = () => {
