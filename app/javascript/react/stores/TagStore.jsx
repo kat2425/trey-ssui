@@ -7,7 +7,7 @@ import {
   toJS
 } from 'mobx'
 
-import { SCHEMA_XHR as sxhr, QUERYCSV_XHR as qxhr} from  'helpers/XHR'
+import { SCHEMA_XHR as sxhr, QUERY_XHR as qxhr} from  'helpers/XHR'
 import { setter } from 'mobx-decorators'
 import _          from 'lodash'
 
@@ -99,7 +99,10 @@ export class TagStore {
     try {
       this.setIsFetchingTagCSV(true)
       this.setIsError(false)
-      const {data} = await qxhr.get(`/query/fetch/${tag.id}/csv`)
+
+      const {data} = await qxhr.get(`/query/fetch/${tag.id}/csv`, {
+        headers: { 'Accept': 'application/csv' }
+      })
 
       this.downloadCSV(tag.name, data)
     } catch (e) {
