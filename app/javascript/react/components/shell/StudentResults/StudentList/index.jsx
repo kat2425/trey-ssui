@@ -2,13 +2,9 @@ import React          from 'react'
 import { observer }   from 'mobx-react'
 import fireEvent      from 'helpers/FireEvent'
 import styled         from 'styled-components'
-import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import StudentAvatar  from 'ui/shell/StudentAvatar'
-
-import {
-  List,
-  Button
-} from 'antd'
+import Paginatron     from 'ui/shell/Paginatron'
+import List           from 'antd'
 
 const ListItemMeta = List.Item.Meta
 const ListItem = styled(List.Item)`
@@ -21,23 +17,27 @@ const ListItem = styled(List.Item)`
 `
 
 const StudentList = ({tag}) => {
-  const { students } = tag
+  const { students, pagination } = tag
 
   return (
-    <List
-      itemLayout = "horizontal"
-      dataSource = {students}
-      loadMore   = {loadMore(tag)}
-      renderItem = {student => (
-        <ListItem onClick={showStudentCard(student)}>
-          <ListItemMeta
-            avatar      = {<StudentAvatar id={student.id} />}
-            title       = {<Title student={student} />}
-            description = {<Description student={student} />}
-          />
-        </ListItem>
-      )}
-    />
+    <div>
+      <List
+        itemLayout = "horizontal"
+        dataSource = {students}
+        renderItem = {student => (
+          <ListItem onClick={showStudentCard(student)}>
+            <ListItemMeta
+              avatar      = {<StudentAvatar id={student.id} />}
+              title       = {<Title student={student} />}
+              description = {<Description student={student} />}
+            />
+          </ListItem>
+        )}
+      />
+      <div className='mt-4'>
+        <Paginatron totalPages={pagination.totalPages} currentPage={pagination.current} onChange={pagination.onChange}/>
+      </div>
+    </div>
   )
 }
 
@@ -60,15 +60,6 @@ const Title = observer(function Title({student}){
     </span>
   )
 })
-
-const loadMore = (tag) => {
-  return tag.pagination.showLoadingMore ? (
-    <div style={{ textAlign: 'center', marginTop: 12, height: 50, lineHeight: '50px' }}>
-      {tag.isFetchingStudents && <LoadingSpinner center />}
-      {!tag.isFetchingStudents && <Button onClick={tag.pagination.loadMore}>Load More</Button>}
-    </div>
-  ) : null
-}
 
 const showStudentCard = (student) => (e) => {
   e.preventDefault()

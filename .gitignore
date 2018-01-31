@@ -40,3 +40,4 @@ config/secrets.yml.key
 # Ignore Desktop Service Store
 *.DS_Store
 
+/.idea

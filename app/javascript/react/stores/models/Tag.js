@@ -225,6 +225,7 @@ export default class Tag {
       const { headers, data: students } = await this.testTagQueryEndpoint()
 
       runInAction(() => {
+        this.studentMap.clear()
         students.forEach(this.addStudent)
         this.setPagination(headers)
         this.hasBeenTested = true

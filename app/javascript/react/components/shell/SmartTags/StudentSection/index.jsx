@@ -22,8 +22,8 @@ function StudentSection({tagStore}){
       contentStyle = {{ minHeight: 'auto' }}
       titleRight   = {() => (
         <Result
-          results = {selectedTag.students.length}
-          total   = {selectedTag.pagination.total}
+          results = {selectedTag.pagination.current}
+          total   = {selectedTag.pagination.totalPages}
         />
       )}
     >

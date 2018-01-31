@@ -9,27 +9,29 @@ import { setter }                       from 'mobx-decorators'
 const LIMIT = 15
 
 export default class Pagination {
-  store            = null
-  hideOnSinglePage = false
-  simple           = true
-  size             = 'small'
+  store                                   = null
 
   @setter @observable pageSize            = LIMIT
   @setter @observable current             = 1
   @setter @observable total               = 0
   @setter @observable currentTotalResults = 0
 
-  
-  @computed get showLoadingMore() {
-    return this.currentTotalResults > 0 && this.currentTotalResults < this.total 
-  }
-
   constructor(store, size = LIMIT, current = 1, total = 0){
-    this.store = store
+    this.store    = store
 
     this.pageSize = size
     this.current  = current
     this.total    = total
+  }
+
+  @computed get showLoadingMore() {
+    return this.currentTotalResults > 0 && this.currentTotalResults < this.total
+  }
+
+  @computed get totalPages() {
+    const pages = Math.ceil(this.total / LIMIT)
+
+    return parseInt(pages)
   }
 
   @action loadMore = () => {
@@ -38,15 +40,15 @@ export default class Pagination {
   }
 
   @action clear = () => {
-    this.pageSize = this.limit
+    this.pageSize = LIMIT
     this.current  = 1
     this.total    = 0
   }
 
-  @action onChange = (page, pageSize) => {
+  @action onChange = (page, pageSize = LIMIT) => {
     this.current  = page
     this.pageSize = pageSize
-    this.store.onPageChange(page, pageSize)
+    this.store.onPageChange()
   }
 
   @action calculateTotalResults = () => {
