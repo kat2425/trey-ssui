@@ -1,10 +1,10 @@
-import React          from 'react'
-import { observer }   from 'mobx-react'
-import fireEvent      from 'helpers/FireEvent'
-import styled         from 'styled-components'
-import StudentAvatar  from 'ui/shell/StudentAvatar'
-import Paginatron     from 'ui/shell/Paginatron'
-import List           from 'antd'
+import React         from 'react'
+import { observer }  from 'mobx-react'
+import fireEvent     from 'helpers/FireEvent'
+import styled        from 'styled-components'
+import StudentAvatar from 'ui/shell/StudentAvatar'
+import Paginatron    from 'ui/shell/Paginatron'
+import { List }      from 'antd'
 
 const ListItemMeta = List.Item.Meta
 const ListItem = styled(List.Item)`
