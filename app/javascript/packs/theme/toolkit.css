@@ -8671,31 +8671,28 @@ img.zoom-img {
  * Override antd classes
  */
 .ant-popover-arrow {
-  display: none; }
+  display: none !important; }
 
 .ant-select-arrow {
   margin-top: 0 !important; }
 
-.ant-list,
-.ant-select,
-.ant-select-dropdown,
-.ant-dropdown-menu-item,
-.ant-btn,
-.ant-list-item-meta-title,
-.ant-list-item-meta-description,
-.ant-tooltip,
-.ant-input-number,
-.ant-input,
-.ant-form *,
-.ant-form label,
-.ant-menu,
-.ant-notification,
-.ant-card {
-  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  font-size: 1rem !important; }
+.ant-switch-checked {
+  background-color: #3f9fcf; }
+
+.btn {
+  cursor: pointer; }
+
+.ant-btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(51, 153, 204, 0.25) !important; }
+
+.ant-btn-default:hover, .ant-btn-default:focus {
+  color: #292b2c !important;
+  background-color: #e6e6e6 !important;
+  border-color: #adadad !important; }
 
 .ant-input-search:not(.ant-input-search-small) > .ant-input-suffix {
-  right: 22px; }
+  right: 22px !important; }
 
 .mapboxgl-popup-close-button {
   right: 5px;

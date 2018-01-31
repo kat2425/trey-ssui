@@ -34,6 +34,7 @@
     "jquery": "^3.2.1",
     "js-yaml": "^3.9.0",
     "keycode": "^2.1.9",
+    "less-vars-to-js": "^1.2.1",
     "lodash": "^4.17.4",
     "mapbox-gl": "^0.44.0",
     "mobx": "^3.2.2",

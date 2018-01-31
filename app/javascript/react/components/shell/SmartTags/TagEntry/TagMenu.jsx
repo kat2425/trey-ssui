@@ -78,7 +78,7 @@ function TagMenu({tag}){
 
 const MenuItem = styled(Menu.Item)`
   ${ifProp('delete', `
-    color: #f5222d;
+    color: #f5222d !important;
   `)}
 `
 const MenuBtn = styled(Button)`
@@ -86,8 +86,9 @@ const MenuBtn = styled(Button)`
   border-color: transparent;
   background-color: transparent;
   &:hover{
-    border-color: #40a9ff;
-    background-color: white;
+    color: #59b2d9 !important;
+    background-color: #fff !important;
+    border-color: #59b2d9 !important;
   }
 
   & > .anticon{

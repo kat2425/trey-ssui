@@ -1,0 +1,159 @@
+/*
+ * Full list of ant variables can be found:
+ * https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
+ * 
+ * Note: You must restart bin/webpack-dev-server for changes to take effect
+ */
+
+
+/*
+ * Imported from Bootstrap
+ */
+@white                         : #fff;
+@black                         : #000;
+@red                           : #d9534f;
+@orange                        : #cbb956;
+@yellow                        : #ffd500;
+@green                         : #4eb76e;
+@blue                          : #3399cc;
+@teal                          : #8eb4cb;
+@pink                          : #ff5b77;
+@purple                        : #613d7c;
+
+// Body
+@body-bg                       : #f5f8fa;
+
+// Gray Scale
+@gray-darker                   : #122a38;
+@gray-dark                     : #1e3948;
+@gray                          : #536570;
+@gray-light                    : #9da9b0;
+@gray-lighter                  : #d4dbe0;
+@gray-lightest                 : #f5f8fa;
+
+// Brand Scale
+@brand-primary                 : @blue;
+@brand-success                 : #4eb76e;
+@brand-warning                 : #cbb956;
+@brand-danger                  : @red;
+@brand-info                    : #8eb4cb;
+
+// Text Color
+@font-family-sans-serif        : "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+@font-family-base              : @font-family-sans-serif;
+/* -------------------------------- */
+
+
+/*
+ * Antd custom variables
+ */
+@primary-color                 : @brand-primary;
+@info-color                    : @brand-info;
+@success-color                 : @brand-success;
+@processing-color              : @primary-color;
+@error-color                   : @brand-danger;
+@highlight-color               : @brand-danger;
+@warning-color                 : @brand-warning;
+@normal-color                  : @gray-dark;
+
+
+// Body
+@body-background               : @body-bg;
+
+// Text 
+@font-family                   : @font-family-sans-serif;
+@heading-color                 : fade(#000, 85%);
+@text-color                    : $gray-dark;
+@text-color-secondary          : fade(#000, 45%);
+@heading-color-dark            : fade(#fff, 100%);
+@text-color-dark               : fade(#fff,85%);
+@text-color-secondary-dark     : fade(#fff, 65%);
+@font-size-base                : 14px;
+@font-size-lg                  : @font-size-base + 2px;
+@font-size-sm                  : 12px;
+@line-height-base              : 1.5;
+@border-radius-base            : 4px;
+@border-radius-sm              : 2px;
+
+// vertical paddings
+@padding-lg                    : 24px; // containers
+@padding-md                    : 16px; // small containers and buttons
+@padding-sm                    : 12px; // Form controls and items
+@padding-xs                    : 8px;  // small items
+
+// vertical padding for all form controls
+@control-padding-horizontal    : @padding-sm;
+@control-padding-horizontal-sm : @padding-xs;
+
+// Border color
+@border-color-base             : hsv(0, 0, 85%);  // base border outline a component
+@border-color-split            : hsv(0, 0, 91%);  // split border inside a component
+@border-width-base             : 1px;            // width of the border for a component
+@border-style-base             : solid;          // style of a components border
+
+// Outline
+@outline-blur-size             : 0;
+@outline-width                 : 2px;
+@outline-color                 : @primary-color;
+
+@background-color-light        : hsv(0, 0, 98%);  // background of header and selected item
+@background-color-base         : hsv(0, 0, 96%);  // Default grey background color
+
+// Disabled states
+@disabled-color                : fade(#000, 25%);
+@disabled-bg                   : @background-color-base;
+@disabled-color-dark           : fade(#fff, 35%);
+
+// Shadow
+@shadow-color                  : rgba(0, 0, 0, .15);
+@box-shadow-base               : @shadow-1-down;
+@shadow-1-up                   : 0 2px 8px @shadow-color;
+@shadow-1-down                 : 0 2px 8px @shadow-color;
+@shadow-1-left                 : -2px 0 8px @shadow-color;
+@shadow-1-right                : 2px 0 8px @shadow-color;
+@shadow-2                      : 0 4px 12px @shadow-color;
+
+// Buttons
+@btn-font-weight               : normal;
+@btn-border-radius-base        : @border-radius-base;
+@btn-border-radius-sm          : @border-radius-base;
+
+@btn-primary-color             : #fff;
+@btn-primary-bg                : @primary-color;
+
+@btn-default-color             : #292b2c;
+@btn-default-bg                : #fff;
+@btn-default-border            : @border-color-base;
+
+@btn-danger-color              : @error-color;
+@btn-danger-bg                 : @background-color-base;
+@btn-danger-border             : @border-color-base;
+
+@btn-disable-color             : @disabled-color;
+@btn-disable-bg                : @disabled-bg;
+@btn-disable-border            : @border-color-base;
+
+@btn-padding-base              : 0 @padding-md - 1px;
+@btn-font-size-lg              : @font-size-lg;
+@btn-font-size-sm              : @font-size-base;
+@btn-padding-lg                : @btn-padding-base;
+@btn-padding-sm                : 0 @padding-xs - 1px;
+
+@btn-height-base               : 34px;
+@btn-height-lg                 : 42px;
+@btn-height-sm                 : 26px;
+
+@btn-circle-size               : @btn-height-base;
+@btn-circle-size-lg            : @btn-height-lg;
+@btn-circle-size-sm            : @btn-height-sm;
+
+/* @btn-group-border           : @primary-5; */
+
+
+// Outline
+@outline-blur-size             : 0;
+@outline-width                 : 2px;
+@outline-color                 : @primary-color;
+
+// Switch
+@switch-color                  : @primary-color;

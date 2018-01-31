@@ -35,7 +35,11 @@ const StudentList = ({tag}) => {
         )}
       />
       <div className='mt-4'>
-        <Paginatron totalPages={pagination.totalPages} currentPage={pagination.current} onChange={pagination.onChange}/>
+        <Paginatron 
+          totalPages  = {pagination.totalPages}
+          currentPage = {pagination.current}
+          onChange    = {pagination.onChange}
+        />
       </div>
     </div>
   )
