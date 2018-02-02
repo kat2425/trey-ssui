@@ -2,6 +2,7 @@ import React          from 'react'
 import {observer}     from 'mobx-react'
 import renderIf       from 'render-if'
 import _              from 'lodash'
+import renderHTML     from 'react-render-html'
 
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import Panel          from 'ui/shell/Panel'
@@ -22,7 +23,7 @@ function NaturalLanguageSection({tagStore}) {
       {renderIfStudents(<Title>{selectedTag.pagination.total}</Title>)}
       {renderIfNoStudentsAndTested(<Title>0</Title>)}
       {renderIfNoStudentsNotTested(<p className='my-3 text-muted text-center'>.  .  .</p>)}
-      <p className='pb-2' dangerouslySetInnerHTML={{__html: selectedTag.humanStringFormat}}></p>
+      <p className='pb-2'>{renderHTML(selectedTag.humanStringFormat)}</p>
     </Panel>
   )
 }
