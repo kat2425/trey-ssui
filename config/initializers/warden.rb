@@ -24,6 +24,10 @@ Warden::Strategies.add(:bcrypt) do
   def authenticate!
     return fail! if (user = User[:username => params[:username]]).nil?
 
+    if (user&.district.district_code != '9999') && !(user&.district.higher_ed)
+      return fail!
+    end
+
     if User.bcrypt_authenticate(user, params[:password])
       success!(user)
     else

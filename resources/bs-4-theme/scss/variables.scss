@@ -7,6 +7,9 @@ $icon-font-name: "toolkit-entypo";
 // Body
 $body-bg: #f5f8fa;
 
+// Grid
+// $grid-gutter-width-base: 10px !default;
+
 // Component borders
 // Create a custom variable to base the border-color off the body background.
 $toolkit-border-color:  darken(#f5f8fa, 10%);

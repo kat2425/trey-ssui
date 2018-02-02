@@ -14,6 +14,8 @@ import ChannelHistory        from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
 
 import TVAASController       from 'ui/controllers/TVAASController'
+import MAAP                  from 'modules/logic/MAAP'
+
 import SMSController         from 'ui/controllers/SMSController'
 
 import StudentCardController from 'ui/controllers/StudentCardController'
@@ -32,6 +34,7 @@ const AppContainer = ({match}) => {
         <Route path='/r/attendance' component={Attendance} />
         <Route path='/r/infractions' component={Infractions} />
         <Route path='/r/assessment/tvaas' component={TVAASController} />
+        <Route path='/r/assessment/maap' component={MAAP} />
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
 

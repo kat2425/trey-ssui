@@ -16,6 +16,17 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Set a global constant to reference current school year
+CURRENT_SCHOOL_YEAR = begin
+  t = Time.now.to_date
+
+  if t.month >= 7 && t.month <= 12
+    t.year + 1
+  else
+    t.year
+  end
+end
+
 module SchoolStatus
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

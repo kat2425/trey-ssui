@@ -15,11 +15,11 @@ const activeItem = {
 
 const UserMenuItem = ({link, title, iconClass, ...rest}) => (
   <NavItem className='pr-1'>
-    <NavLink 
-      tag={RRNavLink} 
-      activeStyle={activeItem} 
-      className='pr-4 pl-4 p-1' 
-      to={(link || '/404')}
+    <NavLink
+      tag         = {RRNavLink}
+      activeStyle = {activeItem}
+      className   = 'pr-4 pl-4 p-1'
+      to          = {(link || '/404')}
       {...rest}
     >
       <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />

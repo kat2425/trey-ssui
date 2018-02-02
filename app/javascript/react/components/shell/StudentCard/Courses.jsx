@@ -44,10 +44,12 @@ export default class Courses extends Component {
   }
 
   render() {
+    const coursePath = (this.props.higherEd) ? '' : '_k12'
+
     return (
       <VJSChart
         id         = 'sc-student-courses'
-        reportPath = '/public/VJS/ss_ui/courses/student_card'
+        reportPath = {`/public/VJS/ss_ui/courses/student_card${coursePath}`}
         scale      = 'container'
         title      = 'Schedule'
         isTable    = {true}

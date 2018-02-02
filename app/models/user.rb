@@ -61,15 +61,17 @@ class User < Sequel::Model(:users)
   # UI props
   def ui_props
     self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at).merge(
-      :accessToken      => last_access_token,
-      :api              => 'https://api.schoolstatus.com',
-      :districtID       => district_id,
-      :districtName     => district&.district_name,
-      :has_channel      => has_channel?,
-      :intercomUserHash => intercom_user_hash,
-      :jasper           => jasper_user_creds,
-      :modules          => modules.map(&:symbol),
-      :policies         => policies.map(&:name)
+      :accessToken       => last_access_token,
+      :api               => 'https://api.schoolstatus.com',
+      :districtID        => district_id,
+      :districtName      => district&.district_name,
+      :currentSchoolYear => CURRENT_SCHOOL_YEAR,
+      :has_channel       => has_channel?,
+      :higherEd          => district&.higher_ed,
+      :intercomUserHash  => intercom_user_hash,
+      :jasper            => jasper_user_creds,
+      :modules           => modules.map(&:symbol),
+      :policies          => policies.map(&:name)
     )
   end
 

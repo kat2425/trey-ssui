@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Courses   from './Courses'
 
-const Overview = ({student, handleClick}) => {
+const Overview = ({student, higherEd, handleClick}) => {
   return (
     <div>
       <h4 className='m-1 mb-3'>
@@ -11,7 +11,7 @@ const Overview = ({student, handleClick}) => {
       </h4>
 
       <div>
-        <Courses student={student} />
+        <Courses student={student} higherEd={higherEd} />
       </div>
     </div>
   )

@@ -1,8 +1,8 @@
 import React from 'react'
 
-const LoadingSpinner = ({className, center}) => {
+const LoadingSpinner = ({className, center, style}) => {
   return (
-    <div className={`loading-container p-4 ${centerStyle(center)} ${className}`}>
+    <div className={`loading-container ${centerStyle(center)} p-4 ${className}`} style={style}>
       <div className='loading'/>
     </div>
   )
