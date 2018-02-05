@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx'
 import { setter }                       from 'mobx-decorators'
 import xhr                              from 'helpers/XHR'
-import _                                from 'lodash'
+import { pipe, filter, size, orderBy }  from 'lodash/fp'
 
 import Pager                            from 'stores/models/Pager'
 import Call                             from 'stores/models/Call'
@@ -21,14 +21,14 @@ export class CallStore {
     return this.pager.limit
   } 
   @computed get descCalls() {
-    return _.orderBy(this.calls.values(), c => c.createdAt, 'desc')
+    return orderBy(c => c.createdAt, 'desc')(this.calls.values())
   }
 
   @computed get missedCallCount(){
-    return _(this.calls.values())
-      .filter(c => c.isMissedCall && !c.isRead)
-      .size()
-      .value()
+    return pipe(
+      filter(c => c.isMissedCall && !c.isRead),
+      size
+    )(this.calls.values())
   }
 
   @computed

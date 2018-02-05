@@ -17,6 +17,7 @@
   ],
   "plugins": [
     ["import", { "libraryName": "antd", "style": true }],
+    "lodash",
     "transform-regenerator",
     "transform-decorators-legacy",
     ["transform-runtime", {
@@ -28,6 +29,6 @@
       "alias": {
         "ui": "./app/javascript/react/components"
       }
-    }]
+    }],
   ]
 }
