@@ -49,6 +49,10 @@ html, body {
   height: inherit !important;
 }
 
+.no-flex-grow {
+  flex-grow: 0;
+}
+
 .vjs-avatar > div {
   width: inherit !important;
   height: inherit !important;
@@ -80,6 +84,18 @@ html, body {
   color: white
 }
 
+.Select-menu-outer {
+  max-height: 375px !important;
+}
+
+.Select-menu {
+  max-height: 373px !important;
+}
+
+.Select-clear {
+  font-size: 20px;
+  margin-top: 4px;
+}
 
 .text-clear {
   color: white;

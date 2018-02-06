@@ -8,6 +8,7 @@ const Wrapper = styled.div.attrs({ className: 'p-3' })`
  display: flex;
  align-items: center;
  cursor: pointer;
+ margin-left: 10px;
  border-bottom: 1px solid ${borderColor};
  border-right: 1px solid ${borderColor};
  border-left: 2px solid ${borderColor};
