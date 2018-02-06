@@ -18,7 +18,9 @@
   "plugins": [
     ["import", { "libraryName": "antd", "style": true }],
     "lodash",
-    "babel-plugin-styled-components",
+    ["styled-components", {
+      "uglifyPure": false
+    }],
     "transform-regenerator",
     "transform-decorators-legacy",
     ["transform-runtime", {
