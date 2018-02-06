@@ -1,18 +1,20 @@
 import _ from 'lodash'
 
 export default function ErrorParser(e){
-  let _error = { title: 'Error', message: e.message}
+  const error = { title: 'Error', message: e.message}
 
   if( _.has(e, 'response.data')){
-    if(isHTML(e.response.data)) return _error
+    if(isHTML(e.response.data)) return error
 
-    _error = {
-      title:   e.response.data.message,
-      message: e.response.data.errors
+    if(_.has(e, 'response.data.message') && _.has(e, 'response.data.errors')) {
+      return {
+        title:   e.response.data.message,
+        message: e.response.data.errors
+      }
     }
   }   
 
-  return _error
+  return error
 }
 
 
