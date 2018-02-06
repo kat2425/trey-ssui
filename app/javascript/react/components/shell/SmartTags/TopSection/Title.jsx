@@ -20,9 +20,10 @@ function Title({tagStore}){
       {selectedTag.isEditable && (
         <Tooltip title='Edit Tag'>
           <Button
-            onClick = {() => tagStore.editTag(selectedTag)}
-            icon    = "edit"
-            style   = {{border: 0, background: 'transparent'}}
+            onClick  = {() => tagStore.editTag(selectedTag)}
+            icon     = "edit"
+            style    = {{border: 0, background: 'transparent'}}
+            disabled = {!selectedTag.modifiable}
           />
         </Tooltip>
       )}

@@ -207,7 +207,8 @@ export default class Tag {
     }
 
     if(isNewAndCloned){
-      this.name = `${name} (cloned)`
+      this.name       = `${name} (cloned)`
+      this.modifiable = true
     }
   }
 

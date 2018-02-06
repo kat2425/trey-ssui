@@ -4,6 +4,7 @@ import { Button } from 'antd'
 
 ActionButtons.propTypes = {
   disabled:      PropTypes.bool,
+  modifiable:    PropTypes.bool,
   loadingOnTest: PropTypes.bool,
   loadingOnSave: PropTypes.bool,
   onTest:        PropTypes.func,
@@ -11,6 +12,7 @@ ActionButtons.propTypes = {
 }
 export default function ActionButtons({
   disabled      = true,
+  modifiable    = false,
   loadingOnTest = false,
   loadingOnSave = false,
   onTest,
@@ -20,7 +22,7 @@ export default function ActionButtons({
     <div className='d-flex my-4 justify-content-between mr-3'>
       <Button
         onClick  = {() => onSave()}
-        disabled = {disabled}
+        disabled = {disabled || !modifiable}
         icon     = 'save'
         loading  = {loadingOnSave}
         type     = 'default'

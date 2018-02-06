@@ -15,7 +15,7 @@ import {
 
 const menu = (tag = {}, store = {}) => (
   <Menu style={{minWidth: 100}}>
-    {!tag.isNew && [
+    {!tag.isNew && tag.modifiable && [
       <MenuItem key={uuid()}>
         <div onClick={() => store.editTag(tag)}>
           <ActionIcon type='edit' />
@@ -31,35 +31,39 @@ const menu = (tag = {}, store = {}) => (
           Test
         </div>
       </MenuItem>,
-      <Menu.Divider key={uuid()} />,
+      <Menu.Divider key={uuid()} />
+    ]}
+    {tag.modifiable && [
       <MenuItem key={uuid()}>
         <div onClick={() => tag.handleOnSave()}>
           <ActionIcon type='save' />
           Save
         </div>
-      </MenuItem>
+      </MenuItem>,
+      <Menu.Divider key={uuid()}/>
     ]}
-    {tag.modifiable && [
-      <Menu.Divider key={uuid()}/>,
+    {[
       <MenuItem key={uuid()}>
         <div onClick={() => store.cloneTag(tag)}>
           <ActionIcon type='copy' />
           Clone
         </div>
+      </MenuItem>,
+      <Menu.Divider key={uuid()}/>
+    ]}
+    {tag.modifiable && [
+      <MenuItem key={uuid()} delete>
+        <Popconfirm
+          title      = {`Are you sure you want to delete ${tag.name} ?`}
+          onConfirm  = {tag.deleteTag}
+          okText     = {`Delete ${tag.name}`}
+          cancelText = {'Cancel'}
+        >
+          <ActionIcon type='delete' />
+          Delete
+        </Popconfirm>
       </MenuItem>
     ]}
-    <Menu.Divider />
-    <MenuItem delete>
-      <Popconfirm 
-        title      = "Are you sure?"
-        onConfirm  = {tag.deleteTag}
-        okText     = 'OK'
-        cancelText = 'Cancel'
-      >
-        <ActionIcon type='delete' />
-        Delete
-      </Popconfirm>
-    </MenuItem>
   </Menu>
 )
 

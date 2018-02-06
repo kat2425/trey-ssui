@@ -21,6 +21,7 @@ function QueryBuilder({tag}){
         disabled      = {!tag.isValid}
         onTest        = {tag.testTag}
         onSave        = {tag.handleOnSave}
+        modifiable    = {tag.modifiable}
       />
     </div>
   )

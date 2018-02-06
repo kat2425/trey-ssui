@@ -9,16 +9,16 @@ function DeleteButton({tagStore}){
   if(!selectedTag) return null
   return (
     <Popconfirm
-      title      = "Are you sure?"
+      title      = {`Are you sure you want to delete ${selectedTag.name} ?`}
       onConfirm  = {selectedTag.deleteTag}
-      okText     = 'OK'
+      okText     = {`Delete ${selectedTag.name}`}
       cancelText = 'Cancel'
     >
       <Tooltip title='Delete Tag'>
         <Button
           className = 'pl-2'
           color     = 'danger'
-          disabled  = {selectedTag.isDeleting}
+          disabled  = {selectedTag.isDeleting || !selectedTag.modifiable}
         >
           <span className='icon icon-trash text-white' style={{marginRight: '4px'}}/>
           {selectedTag.isDeleting ? 'Deleting...' : 'Delete' }
