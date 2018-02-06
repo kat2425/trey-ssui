@@ -123,9 +123,12 @@ export default class VJSChart extends Component {
   }
 
   renderPaginator() {
-    if ((this.state.totalPages > 1) && this.state.resourceLoaded && this.props.isTable && !this.props.ignorePagination) {
+    if ((this.state.totalPages > 1) &&
+         this.state.resourceLoaded &&
+         this.props.isTable &&
+         !this.props.ignorePagination) {
       return (
-        <Pagination className='float-right'>
+        <Pagination className='float-right mb-2' style={{marginTop: '-30px'}}>
           <PaginationItem
             onClick  = {() => this.changeReportPage(this.state.currentPage - 1)}
             disabled = {this.state.currentPage === 1}
@@ -256,15 +259,17 @@ export default class VJSChart extends Component {
     //  * sadly, using 'inline-block' and a center align is not a solution
     // --
     // FIXME: several things here in render() can be extracted into wrapper components
+    const cardHeight = (this.props.fullHeight) ? 'h-100' : 'mb-3'
+
     return (
       <div className={this.props.className}>
-        <Card className='mb-4'>
-          <CardBlock>
+        <Card className={cardHeight}>
+          <CardBlock className='no-flex-grow p-0 pl-2 pb-2 pt-2'>
             <div className='row mr-2 ml-1'>
               <div>
                 <h5 className='mt-2'>
                   <span
-                    className = {`icon ${this.collapseIcon()} mr-3`}
+                    className = {`icon ${this.collapseIcon()} mr-2`}
                     onClick   = {() => this.toggleCollapse()}
                   />
 
@@ -273,7 +278,7 @@ export default class VJSChart extends Component {
               </div>
 
               <div className='ml-auto' style={{display: 'flex'}}>
-                <div className='mr-2'>
+                <div className='mr-2 row'>
                   { this.props.children }
                 </div>
 

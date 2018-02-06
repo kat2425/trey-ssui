@@ -3,29 +3,54 @@ import React, { Component } from 'react'
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
+import MassEmail            from 'ui/shell/MassEmail/MassEmail'
 
 import fireEvent            from 'helpers/FireEvent'
+import userStore            from 'stores/UserStore'
+import renderIf             from 'ui/hoc/renderIf'
+
+const EMassEmail   = renderIf(MassEmail)
+const EVJSICSelect = renderIf(VJSICSelect)
 
 export default class RiskAnalysis extends Component {
   constructor(props) {
     super(props)
+    const _currentYear = userStore.user.currentSchoolYear.toString()
 
-    this.state = { params: {}, selected: {} }
+    this.state = {
+      params: {
+        school_year: [_currentYear ]
+      },
+      selected: {
+        school_year: { selected: true, label: _currentYear , value: _currentYear }
+      }
+    }
+  }
+
+  setPeriodFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, class_period: [ jrsValue ] },
+      selected: { ...this.state.selected, class_period: val }
+    })
+  }
+
+  setCourseFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, course_id: [ jrsValue ] },
+      selected: { ...this.state.selected, course_id: val }
+    })
   }
 
   setTeacherFilter(val) {
     const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
-      params: {
-        ...this.state.params,
-        teacher_id: [ jrsValue ]
-      },
-
-      selected: {
-        ...this.state.selected,
-        teacher_id: val
-      }
+      params:   { ...this.state.params, teacher_id: [ jrsValue ] },
+      selected: { ...this.state.selected, teacher_id: val }
     })
   }
 
@@ -33,55 +58,88 @@ export default class RiskAnalysis extends Component {
     const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
-      params: {
-        ...this.state.params,
-        term: [ jrsValue ]
-      },
-
-      selected: {
-        ...this.state.selected,
-        term: val
-      }
+      params:   { ...this.state.params, term: [ jrsValue ] },
+      selected: { ...this.state.selected, term: val }
     })
   }
 
+  setYearFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, school_year: [ jrsValue ] },
+      selected: { ...this.state.selected, school_year: val }
+    })
+  }
+
+  renderMassEmail() {
+    if (!!this.state.selected.course_id && !!this.state.selected.term) {
+      return (
+        <EMassEmail
+          type     = 'course'
+          name     = {this.state.selected.course_id.label}
+          id       = {this.state.selected.course_id.value}
+          renderIf = {!!this.state.selected.course_id && !!this.state.selected.term}
+        />
+      )
+    }
+  }
+
   render() {
+    const studentDetailPath = (userStore.user.higherEd) ? 'student_detail' : 'standard_student_detail'
+
     return (
       <div>
         <ModuleHeader title='Risk Analysis'>
-          <VJSICSelect
-            id            = 'user_teachers'
-            inputPath     = '/public/VJS/ss_ui/shared/input_controls/user_teachers'
-            selectedValue = {this.state.selected.teacher_id}
-            handleChange  = {::this.setTeacherFilter}
-            placeholder   = 'Instructor'
-            width         = {275}
+          {/* { this.renderMassEmail() } */}
+
+          <EVJSICSelect
+            id            = 'course_id'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
+            selectedValue = {this.state.selected.course_id}
+            handleChange  = {::this.setCourseFilter}
+            params        = {this.state.params}
+            placeholder   = 'Course'
+            width         = {200}
+            renderIf      = {!!this.state.selected.term && !!this.state.selected.teacher_id}
           />
 
-          <VJSICSelect
-            id            = 'user_course_terms'
-            inputPath     = '/public/VJS/ss_ui/shared/input_controls/user_course_terms'
+          <EVJSICSelect
+            id            = 'term'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
             selectedValue = {this.state.selected.term}
             handleChange  = {::this.setTermFilter}
+            params        = {this.state.params}
             placeholder   = 'Term'
-            width         = {150}
+            width         = {100}
+            renderIf      = {!!this.state.selected.teacher_id}
+          />
+
+          <EVJSICSelect
+            id            = 'teacher_id'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
+            selectedValue = {this.state.selected.teacher_id}
+            handleChange  = {::this.setTeacherFilter}
+            params        = {this.state.params}
+            placeholder   = 'Teacher'
+            width         = {200}
+          />
+
+          <EVJSICSelect
+            id            = 'school_year'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
+            selectedValue = {this.state.selected.school_year}
+            handleChange  = {::this.setYearFilter}
+            params        = {this.state.params}
+            placeholder   = 'Year'
+            width         = {100}
           />
         </ModuleHeader>
-
-
-        {/* <div className='row'> */}
-        {/*   <VJSChart */}
-        {/*     id         = 'financials-demographics-breakdown' */}
-        {/*     reportPath = '/public/VJS/ss_ui/financials/breakdown_by_demographics' */}
-        {/*     title      = 'Demographics Breakdown' */}
-        {/*     className  = 'col-md-12' */}
-        {/*   /> */}
-        {/* </div> */}
 
         <div className='row'>
           <VJSChart
             id          = 'risk-student-detail'
-            reportPath  = '/public/VJS/ss_ui/risk_analysis/student_detail'
+            reportPath  = {`/public/VJS/ss_ui/risk_analysis/${studentDetailPath}`}
             params      = {this.state.params}
             title       = 'Student Detail'
             className   = 'col-md-12'

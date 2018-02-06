@@ -56,7 +56,7 @@ export default class CommsHistory extends Component {
         <Loader isLoading={isLoading} />
 
         {(!isLoading && _.isEmpty(sortedCommunications)) && (
-          <MsgWrapper>No engagement for this student yet.</MsgWrapper>
+          <MsgWrapper>This student does not have any engagement history.</MsgWrapper>
         )}
 
         {!_.isEmpty(sortedCommunications) && (

@@ -33,30 +33,22 @@ const renderDOB = (dob) => {
 
 const Info = ({ student }) => {
   return (
-    <Card className='card-profile mb-4'>
+    <Card className='card-profile mb-3'>
       <CardHeader style={cardHeader}/>
 
-      <CardBlock className='text-xs-center mb-0'>
+      <CardBlock className='text-xs-center mb-0 pb-1'>
         <StudentAvatar id={student.id} size={95} className='card-profile-img mx-auto' />
-        <br/>
         <CardTitle>{student.first_name} {student.last_name}</CardTitle>
         <h6>{ student.school.school_name }</h6>
-        <br/>
 
-        <ul className='card-menu'>
-          <li className='card-menu-item'>
-            <strong>ID Number</strong>
-            <br/>
-            <h6><Badge color='success'>{student.state_id}</Badge></h6>
-          </li>
-
-          <li className='card-menu-item'>
+        <ul className='card-menu mb-2'>
+          <li className='card-menu-item text-muted'>
             <strong>Grade</strong>
             <br/>
             <h6><Badge color='info'>{ student.grade }</Badge></h6>
           </li>
 
-          <li className='card-menu-item'>
+          <li className='card-menu-item text-muted'>
             <strong>Enrolled?</strong>
             <br/>
             <h6><Badge color='danger'>{ student.enrollment_status }</Badge></h6>
@@ -65,7 +57,15 @@ const Info = ({ student }) => {
       </CardBlock>
 
       <CardBlock style={{marginTop: '-5px'}} className='pt-0 pb-0 mb-0'>
-        <ul className='list-unstyled list-spaced'>
+        <ul className='list-unstyled list-spaced mb-2'>
+          <li>
+            <span className='mr-3 text-muted icon icon-share' style={iconStyle}/>
+            <span>ID #: </span>
+            <span className='text-info' style={{ borderBottom: '1px dotted rgba(0,0,0,0.25)' }}>
+              { student.state_id }
+            </span>
+          </li>
+
           <li>
             <span className='mr-3 text-muted icon icon-cake' style={iconStyle}/>
             <span>Birthdate: </span>

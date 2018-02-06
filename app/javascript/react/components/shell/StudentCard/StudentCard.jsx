@@ -23,10 +23,12 @@ import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 import Info             from './Info'
 import Overview         from './Overview'
 import Assessment       from './Assessment'
-import Grades           from './Grades'
+import MAAP             from './Assessments/MAAP'
+import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
 import Contacts         from './Contacts'
 import CourseAttendance from './CourseAttendance'
+import Attendance       from './Attendance'
 import Engagement       from './CommsHistory/'
 import SurveyMonkey     from './SurveyMonkey'
 
@@ -35,8 +37,13 @@ import Notes           from '../Notes'
 
 import CallingStore    from 'stores/CallingStore'
 
+import renderIf        from 'ui/hoc/renderIf'
+import userStore       from 'stores/UserStore'
 import fireEvent       from 'helpers/FireEvent'
 import _               from 'lodash'
+
+const EFinancialAid = renderIf(FinancialAid)
+const EUserMenuItem = renderIf(UserMenuItem)
 
 const cardStyle = {
   overlay: {
@@ -50,10 +57,11 @@ const cardStyle = {
     bottom:          50,
     left:            0,
     right:           0,
+    borderRadius:    0,
     border:          'none',
     backgroundColor: '#f7f9fb',
-    paddingBottom:   35,
-    borderRadius:    0
+    padding:         15,
+    paddingBottom:   5
   }
 }
 
@@ -115,13 +123,13 @@ export default class StudentCard extends Component {
 
     return (
       <Row>
-        <Col sm='2' style={scrollStyle}>
+        <Col xl='2' lg='3' md='3' sm='3' style={scrollStyle}>
           <Info student={student} />
 
-          <Card>
+          <Card className='mb-3'>
             {this.props.children}
 
-            <UserMenuSection title='Details'>
+            <UserMenuSection>
               <UserMenuItem
                 title     = 'Overview'
                 iconClass = 'icon-list'
@@ -136,32 +144,44 @@ export default class StudentCard extends Component {
                 location  = {location}
               />
 
-              <UserMenuItem
+              <EUserMenuItem
+                title     = 'Attendance'
+                iconClass = 'icon-calendar'
+                link      = {`${match.url}/course_attendance`}
+                location  = {location}
+                renderIf  = {userStore.user.higherEd}
+              />
+
+              <EUserMenuItem
                 title     = 'Attendance'
                 iconClass = 'icon-calendar'
                 link      = {`${match.url}/attendance`}
                 location  = {location}
+                renderIf  = {!(userStore.user.higherEd)}
               />
 
-              {/* <UserMenuItem  */}
-              {/*   title     = 'Discipline' */}
-              {/*   iconClass = 'icon-thermometer' */}
-              {/*   link      = {`${match.url}/discipline`} */}
-              {/*   location  = {location} */}
-              {/* />  */}
+              <EUserMenuItem
+                title     = 'Discipline'
+                iconClass = 'icon-thermometer'
+                link      = {`${match.url}/infractions`}
+                location  = {location}
+                renderIf  = {!(userStore.user.higherEd)}
+              />
 
-              <UserMenuItem
+              <EUserMenuItem
                 title     = 'Assessment'
                 iconClass = 'icon-bar-graph'
                 link      = {`${match.url}/assessment`}
                 location  = {location}
+                renderIf  = {userStore.user.higherEd}
               />
 
-              <UserMenuItem
-                title     = 'Grades'
-                iconClass = 'icon-ruler'
-                link      = {`${match.url}/grades`}
+              <EUserMenuItem
+                title     = 'Assessment'
+                iconClass = 'icon-bar-graph'
+                link      = {`${match.url}/maap`}
                 location  = {location}
+                renderIf  = {!(userStore.user.higherEd)}
               />
 
               <UserMenuItem
@@ -171,11 +191,12 @@ export default class StudentCard extends Component {
                 location  = {location}
               />
 
-              <UserMenuItem
+              <EUserMenuItem
                 title     = 'Student Surveys'
                 iconClass = 'icon-help-with-circle'
                 link      = {`${match.url}/student_surveys`}
                 location  = {location}
+                renderIf  = {userStore.user.higherEd}
               />
 
               <UserMenuItem
@@ -187,11 +208,11 @@ export default class StudentCard extends Component {
             </UserMenuSection>
           </Card>
 
-          <FinancialAid student={student} />
+          <EFinancialAid student={student} renderIf={userStore.hasModules('vjs_financials')} />
         </Col>
 
         {/* Root Container */}
-        <Col sm='10'>
+        <Col xl='10' lg='9' md='9' sm='9'>
           <CloseBtn onClick={this.closeCard} />
 
           <Switch location={location}>
@@ -199,7 +220,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/overview`}
-              render = {() => <Overview student={student} handleClick={this.closeCard}/> }
+              render = {() => <Overview student={student} higherEd={userStore.user.higherEd} handleClick={this.closeCard}/> }
             />
 
             <Route
@@ -214,8 +235,18 @@ export default class StudentCard extends Component {
             />
 
             <Route
-              path   = {`${match.url}/attendance`}
+              path   = {`${match.url}/course_attendance`}
               render = {() => <CourseAttendance student={student}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/attendance`}
+              render = {() => <Attendance student={student}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/infractions`}
+              render = {() => <Infractions student={student}/> }
             />
 
             <Route
@@ -224,8 +255,8 @@ export default class StudentCard extends Component {
             />
 
             <Route
-              path   = {`${match.url}/grades`}
-              render = {() => <Grades student={student}/> }
+              path   = {`${match.url}/maap`}
+              render = {() => <MAAP student={student}/> }
             />
 
             <Route
