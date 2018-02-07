@@ -2,6 +2,11 @@
  * Override antd classes
  */
 
+// Variables
+$ant-select-dropdown-max-height: 500px !important;
+
+
+// Styles
 .ant-popover-arrow {
   display: none !important;
 }
@@ -12,6 +17,10 @@
 
 .ant-switch-checked {
   background-color: $brand-primary;
+}
+
+.ant-select-dropdown-menu {
+  max-height: $ant-select-dropdown-max-height;
 }
 
 .btn {

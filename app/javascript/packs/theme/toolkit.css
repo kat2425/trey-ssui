@@ -8679,6 +8679,9 @@ img.zoom-img {
 .ant-switch-checked {
   background-color: #3f9fcf; }
 
+.ant-select-dropdown-menu {
+  max-height: 500px !important; }
+
 .btn {
   cursor: pointer; }
 
