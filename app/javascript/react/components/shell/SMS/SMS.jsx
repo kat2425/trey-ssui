@@ -21,7 +21,7 @@ export default class SMS extends Component {
 
   renderConversation({isLoading, descMessages}) {
     return (
-      <div className='p-3 pb-5'>
+      <div className='p-3'>
         <Conversation messages={descMessages} setRead={this.setRead} />
       </div>
     )

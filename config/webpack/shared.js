@@ -36,7 +36,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
+    new webpack.EnvironmentPlugin([JSON.parse(JSON.stringify(env)), 'MAPBOX_ACCESS_TOKEN']),
     new ExtractTextPlugin(env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'),
     new ManifestPlugin({
       publicPath: output.publicPath,

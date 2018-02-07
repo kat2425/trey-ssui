@@ -71,6 +71,10 @@ const UserMenu = () => {
         <EUserMenuItem title='Engagement' iconClass='icon-power-plug' link='/r/channel/engagement' />
       </UserMenuSection>
 
+      <UserMenuSection title='Utilities'>
+        <UserMenuItem title='Bullseye' iconClass='icon-hair-cross' link='/r/bullseye' />
+      </UserMenuSection>
+
       <UserMenuSection title='Insights'>
         <EUserMenuItem title={_riskItemLabel} iconClass='icon-traffic-cone' link='/r/risk_analysis' />
         {/* <EUserMenuItem title='Reporting' iconClass='icon-funnel' link='/r/dumb' /> */}

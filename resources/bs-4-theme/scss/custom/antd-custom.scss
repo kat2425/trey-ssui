@@ -1,0 +1,50 @@
+/*
+ * Override antd classes
+ */
+
+.ant-popover-arrow {
+  display: none !important;
+}
+
+.ant-select-arrow {
+  margin-top: 0 !important;
+}
+
+.ant-switch-checked {
+  background-color: $brand-primary;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.ant-btn {
+  &-default {
+    &:hover, 
+    &:focus {
+      color: #292b2c !important;
+      background-color: #e6e6e6 !important;
+      border-color: #adadad !important;
+    }
+  }
+
+  &.disabled, 
+  &[disabled], 
+  &.disabled:hover, 
+  &[disabled]:hover, 
+  &.disabled:focus, 
+  &[disabled]:focus, 
+  &.disabled:active, 
+  &[disabled]:active, 
+  &.disabled.active, 
+  &[disabled].active {
+    color: rgba(0, 0, 0, 0.25) !important;
+    background-color: #f5f5f5 !important;
+    border-color: #d9d9d9 !important;
+  }
+}
+
+
+.ant-input-search:not(.ant-input-search-small) > .ant-input-suffix {
+  right: 22px !important;
+}

@@ -34,7 +34,7 @@ const redContainer = (isSecondary) => ({
   position:        'absolute',
   width:           '100%',
   top:             '160px',
-  bottom:          '50px',
+  bottom:          '145px',
   overflow:        'auto'
 })
 

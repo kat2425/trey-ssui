@@ -8,10 +8,19 @@
 html, body {
   text-rendering:optimizeLegibility !important;
   font-weight: 400;
+  /*
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  */
 }
 
 .app-navbar {
   height: 57px;
+}
+
+.pagination {
+  margin-bottom: 14px !important;
 }
 
 #intercom-container .intercom-launcher-frame,

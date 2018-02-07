@@ -16,6 +16,12 @@
     "react"
   ],
   "plugins": [
+    ["import", { "libraryName": "antd", "style": true }],
+    "lodash",
+    ["styled-components", {
+      "uglifyPure": false
+    }],
+    "transform-regenerator",
     "transform-decorators-legacy",
     ["transform-runtime", {
       "polyfill": false,
@@ -26,6 +32,6 @@
       "alias": {
         "ui": "./app/javascript/react/components"
       }
-    }]
+    }],
   ]
 }

@@ -1,10 +1,17 @@
-import { observable, autorun, reaction, action } from 'mobx'
-import { setter, toggle }                        from 'mobx-decorators'
+import { setter }           from 'mobx-decorators'
+import SMSConversationStore from 'stores/SMSConversation'
+import callStore            from 'stores/CallStore'
+import ReminderStore        from 'stores/ReminderStore'
+import { notification }     from 'antd'
+import _                    from 'lodash'
 
-import SMSConversationStore                      from 'stores/SMSConversation'
-import callStore                                 from 'stores/CallStore'
-import ReminderStore                             from 'stores/ReminderStore'
-import fireEvent                                 from 'helpers/FireEvent'
+import { 
+  observable, 
+  autorun, 
+  reaction, 
+  action,
+  computed
+} from 'mobx'
 
 export const SIDEBAR = {
   SMS:      'SMS',
@@ -41,14 +48,27 @@ export class UiStore {
 
   constructor() {
     this.autoFetchSMSConversation() 
+    this.autoFetchCallLogs()
+    this.autoHideCallInfo()
+    this.autoNotify()
   }
 
-  @action addNotification(title, body) {
-    this.notifications.push({title, body})
+  // Computed
+  @computed get uniqueNotifications(){
+    return _.uniqWith(this.notifications, _.isEqual)
+  }
+
+  // Actions
+  @action addNotification({title, message, type}) {
+    this.notifications.push({title, message, type})
   }
 
   @action removeNotification(index) {
     this.notifications.splice(index, 1)
+  }
+
+  @action setSidebarVisibility(show){
+    this.hideSidebar = !show 
   }
 
   // Auto Actions
@@ -63,6 +83,29 @@ export class UiStore {
 
   @action handleCallSidebar(){
     callStore.fetchCallLogs()
+  }
+
+  @action autoFetchCallLogs(){
+    reaction(
+      ()     => this.showCallSidebar,
+      (show) => show && callStore.fetchCallLogs()
+    ) 
+  }
+
+  @action autoNotify = () => {
+    autorun('notifications', () => {
+      if(_.isEmpty(this.uniqueNotifications)) return
+      this.uniqueNotifications.forEach(this.notify)
+    })
+  }
+
+  @action notify = ({type = 'warning', title, message}, i) => {
+    notification[type]({
+      key:         i,
+      message:     title,
+      description: message,
+      onClose:     () => this.removeNotification(i)
+    })
   }
 
   @action handleReminderSidebar(){

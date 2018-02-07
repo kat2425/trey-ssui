@@ -1,10 +1,21 @@
-import { observable, action, computed } from 'mobx'
-import { setter }                       from 'mobx-decorators'
+import { setter }    from 'mobx-decorators'
+import moment        from 'moment'
+import xhr           from 'helpers/XHR'
+import Communication from 'stores/models/Communication'
 
-import moment                           from 'moment'
-import _                                from 'lodash'
-import xhr                              from 'helpers/XHR'
-import Communication                    from 'stores/models/Communication'
+import { 
+  observable, 
+  action, 
+  computed 
+} from 'mobx'
+
+import { 
+  pipe, 
+  map, 
+  orderBy, 
+  reduce, 
+  filter 
+} from 'lodash/fp'
 
 export class CommsStore {
   prevStudentId = null
@@ -15,7 +26,7 @@ export class CommsStore {
   @setter @observable selectedComm = null
 
   @computed get sortedCommunications() {
-    return _.orderBy(this.communications.values(), c => c.createdAt, ['desc'] )
+    return orderBy(c => c.createdAt, ['desc'] )(this.communications.values())
   }
 
   getCommHistoryParams = () => ({
@@ -35,15 +46,15 @@ export class CommsStore {
   )
 
   @computed get groupedSms() {
-    return _(this.communications.values())
-      .filter(c => c.type === 'sms' && this.isCommEqualToSelectedComm(c))
-      .value()
+    return  filter(
+      c => c.type === 'sms' && this.isCommEqualToSelectedComm(c)
+    )(this.communications.values()) 
   }
 
   @computed get groupedEmails() {
-    return _(this.communications.values())
-      .filter(c => c.type === 'email' && this.isCommEqualToSelectedComm(c))
-      .value()
+    return  filter(
+      c => c.type === 'email' && this.isCommEqualToSelectedComm(c)
+    )(this.communications.values()) 
   }
 
 
@@ -63,14 +74,13 @@ export class CommsStore {
    * eg. {'Today':[{sms1}, {sms2}]}
    */
   @computed get orderedSms() {
-    return _
-      .chain(this.groupedSms)
-      .map(s => {
+    return pipe(
+      map(s => {
         s['groupDate'] = this.getDate(s.createdAt)
         return s
-      })
-      .orderBy(['createdAt'], ['asc'])
-      .reduce((acc, curr) => {
+      }),
+      orderBy(['createdAt'], ['asc']),
+      reduce((acc, curr) => {
         if (!acc[curr.groupDate]) {
           acc[curr.groupDate] = []
         }
@@ -78,7 +88,7 @@ export class CommsStore {
         acc[curr.groupDate].push(curr)
         return acc
       }, {})
-      .value()
+    )(this.groupedSms)
   }
 
   /*
@@ -86,14 +96,13 @@ export class CommsStore {
    * eg. {'Today':[{email1}, {email2}]}
    */
   @computed get orderedEmails() {
-    return _
-      .chain(this.groupedEmails)
-      .map(s => {
+    return pipe(
+      map(s => {
         s['groupDate'] = this.getDate(s.createdAt)
         return s
-      })
-      .orderBy(['createdAt'], ['asc'])
-      .reduce((acc, curr) => {
+      }),
+      orderBy(['createdAt'], ['asc']),
+      reduce((acc, curr) => {
         if (!acc[curr.groupDate]) {
           acc[curr.groupDate] = []
         }
@@ -101,7 +110,7 @@ export class CommsStore {
         acc[curr.groupDate].push(curr)
         return acc
       }, {})
-      .value()
+    )(this.groupedEmails)
   }
 
   @action clearData = () => {
