@@ -95,7 +95,8 @@ export default class CallBar extends Component {
       isCalling,
       isConferenceCalling,
       callTime,
-      contactName
+      contactName,
+      isConnected
     } = this.props.callingStore
 
     return (
@@ -109,6 +110,24 @@ export default class CallBar extends Component {
             }
           </span>
           <span style={{ float: 'right' }}>{!isConferenceCalling && callTime ? callTime : null}</span>
+          <ReactCSSTransitionGroup
+            transitionName         = 'callBar'
+            transitionEnterTimeout = {500}
+            transitionLeaveTimeout = {200}
+          >
+            {isCalling && isConnected &&
+              <Button
+                id      = 'CallNotesPopover'
+                size    = 'sm'
+                color   = 'success'
+                style   = {Object.assign({}, callBarBtn, { marginLeft: 35 })}
+                onClick = {() => this.props.callingStore.isCallNotes(true)}
+                outline
+              >
+                Notes
+              </Button>
+            }
+          </ReactCSSTransitionGroup>
         </Col>
 
         <Col md='4'>

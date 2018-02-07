@@ -24,11 +24,10 @@ import {
   action, 
   computed,
 } from 'mobx'
-
-import { setter }                       from 'mobx-decorators'
-import DateFormat                       from 'helpers/DateFormat'
-import uiStore                          from 'stores/UiStore'
-import _                                from 'lodash'
+import { setter } from 'mobx-decorators'
+import DateFormat from 'helpers/DateFormat'
+import uiStore    from 'stores/UiStore'
+import _          from 'lodash'
 
 export default class Call {
   callStore         = null
@@ -118,6 +117,7 @@ export default class Call {
     direction,
     call_transcripts:   callTranscripts,
     voicemails = [],
+    notes = [],
     student_id:         studentId
   }) => {
     this.id                = id
@@ -131,6 +131,7 @@ export default class Call {
     this.callStatus        = callStatus
     this.callTranscript    = callTranscripts.length ? callTranscripts[0].call_transcript : []
     this.voicemails        = voicemails 
+    this.notes             = notes
     this.studentId         = studentId
   }
 
