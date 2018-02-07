@@ -11,10 +11,10 @@ import { Col }         from 'antd'
 function TopSection({tagStore}){
   return (
     <Wrapper type='flex' justify='space-between'>
-      <Col xs={24} sm={8}>
+      <Col xs={24} sm={12}>
         <Title tagStore={tagStore} />
       </Col>
-      <Col xs={24} sm={8}>
+      <Col xs={24} sm={12}>
         <div className='d-flex flex-row align-items-center justify-content-end' >
           <ExportCSVButton tagStore={tagStore} />
           <CloneButton     tagStore={tagStore} />

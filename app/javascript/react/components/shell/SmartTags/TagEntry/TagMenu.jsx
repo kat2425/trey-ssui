@@ -28,7 +28,7 @@ const menu = (tag = {}, store = {}) => (
       <MenuItem key={uuid()}>
         <div onClick={tag.handleOnTagClick}>
           <ActionIcon type='play-circle-o' />
-          Test
+          Run
         </div>
       </MenuItem>,
       <Menu.Divider key={uuid()} />
@@ -70,7 +70,7 @@ const menu = (tag = {}, store = {}) => (
 function TagMenu({tag}){
   return (
     <Dropdown 
-      onClick = {e => e.preventDefault()}
+      onClick = {e => e.stopPropagation()}
       trigger = {['click']}
       overlay = {menu(tag, store)}
     >

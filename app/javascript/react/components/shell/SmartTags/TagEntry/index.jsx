@@ -24,8 +24,8 @@ TagEntry.propTypes = {
 
 function TagEntry({tag}){
   return (
-    <Wrapper active={tag.isActive}>
-      <Title title={tag.name} isNew={tag.isNew} onClick={tag.handleOnTagClick}>
+    <Wrapper active={tag.isActive} onClick={tag.handleOnTagClick}>
+      <Title title={tag.name} isNew={tag.isNew}>
         <Icon type='tag-o' className='mr-2'/>
         <ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator>
       </Title>
