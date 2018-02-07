@@ -51,7 +51,7 @@ const menu = (tag = {}, store = {}) => (
       </MenuItem>,
       <Menu.Divider key={uuid()}/>
     ]}
-    {tag.modifiable && [
+    {(tag.isNew || tag.modifiable) && [
       <MenuItem key={uuid()} delete>
         <Popconfirm
           title      = {`Are you sure you want to delete ${tag.name} ?`}
