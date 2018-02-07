@@ -1,48 +1,78 @@
 import React, { Component } from 'react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
-import VJSContainer         from 'ui/vjs/VJSContainer'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 import fireEvent            from 'helpers/FireEvent'
+import userStore            from 'stores/UserStore'
+import renderIf             from 'ui/hoc/renderIf'
 
 export default class Attendance extends Component {
   constructor(props) {
     super(props)
-    this.state = { params: { first_name: [ null ], last_name: [ null ] }, selected: {} }
+
+    this._currentYear = userStore.user.currentSchoolYear
+    this.state        = {
+      params: {
+        school_year: [ this._currentYear ]
+      },
+      selected: {
+        school_year: { selected: true, label: this._currentYear , value: this._currentYear }
+      }
+    }
   }
 
-  setTestFilter(val) {
-    const jrsValue = val ? val.value : '~NOTHING~'
+  setYearFilter(val) {
+    const jrsValue = val ? val.value : this._currentYear
 
-    this.stateState({
-      params: {
-        ...this.state.params,
-        test_cascade: [ jrsValue ]
-      },
+    this.setState({
+      params:   { ...this.state.params, school_year: [ jrsValue ] },
+      selected: { ...this.state.selected, school_year: val }
+    })
+  }
 
-      selected: {
-        ...this.state.selected,
-        test_cascade: val
-      }
+  setDetailDate(val) {
+    this.setState({
+      params: { ...this.state.params, attendance_date: [ val ] }
     })
   }
 
   render() {
     return (
-      <VJSContainer>
+      <div>
         <ModuleHeader title='Attendance'>
+          <VJSICSelect
+            id            = 'school_year'
+            inputPath     = '/public/VJS/ss_ui/attendance/school_year'
+            selectedValue = {this.state.selected.school_year}
+            handleChange  = {::this.setYearFilter}
+            clearable     = {false}
+            placeholder   = 'Year'
+            width         = {100}
+          />
         </ModuleHeader>
 
         <div className='row mb-3'>
           <VJSChart
-            id         = 'ada-over-year'
-            reportPath = '/public/VJS/ss_ui/attendance/ada_over_year'
-            scale      = 'container'
-            className  = 'col-md-9'
+            id          = 'ada-over-year'
+            reportPath  = '/public/VJS/ss_ui/attendance/ada_over_year'
+            scale       = 'container'
+            className   = 'col-md-9'
             fullHeight  = {true}
-            title      = 'Average Over Year'
+            title       = 'Average Over Year'
+            params      = {this.state.params}
+            linkOptions = {{
+              events: {
+                click: (ev, link) => {
+                  const detailDate = link.parameters._date
+
+                  // if (detailDate) {
+                  //   this.setDetailDate(detailDate)
+                  // }
+                }
+              }
+            }}
           />
 
           <VJSChart
@@ -51,6 +81,7 @@ export default class Attendance extends Component {
             title       = 'Daily Breakdown'
             className   = 'col-md-3'
             fullHeight  = {true}
+            params      = {this.state.params}
           />
         </div>
 
@@ -62,6 +93,7 @@ export default class Attendance extends Component {
             className   = 'col-md-4'
             isTable     = {true}
             fullHeight  = {true}
+            params      = {this.state.params}
             linkOptions = {{
               events: {
                 click: (ev, link) => {
@@ -82,6 +114,7 @@ export default class Attendance extends Component {
             className   = 'col-md-8'
             isTable     = {true}
             fullHeight  = {true}
+            params      = {this.state.params}
           />
         </div>
 
@@ -92,6 +125,7 @@ export default class Attendance extends Component {
             title       = 'Student Detail'
             className   = 'col-md-12'
             isTable     = {true}
+            params      = {this.state.params}
             linkOptions = {{
               events: {
                 click: (ev, link) => {
@@ -105,7 +139,7 @@ export default class Attendance extends Component {
             }}
           />
         </div>
-      </VJSContainer>
+      </div>
     )
   }
 }

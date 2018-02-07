@@ -2,14 +2,50 @@ import React, { Component } from 'react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
+import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 import fireEvent            from 'helpers/FireEvent'
+import userStore            from 'stores/UserStore'
+import renderIf             from 'ui/hoc/renderIf'
 
 export default class Infractions extends Component {
+  constructor(props) {
+    super(props)
+
+    this._currentYear = userStore.user.currentSchoolYear
+    this.state        = {
+      params: {
+        school_year: [ this._currentYear ]
+      },
+      selected: {
+        school_year: { selected: true, label: this._currentYear , value: this._currentYear }
+      }
+    }
+  }
+
+  setYearFilter(val) {
+    const jrsValue = val ? val.value : this._currentYear
+
+    this.setState({
+      params:   { ...this.state.params, school_year: [ jrsValue ] },
+      selected: { ...this.state.selected, school_year: val }
+    })
+  }
+
   render() {
     return (
       <div>
-        <ModuleHeader title='Infractions'/>
+        <ModuleHeader title='Infractions'>
+          <VJSICSelect
+            id            = 'school_year'
+            inputPath     = '/public/VJS/ss_ui/infractions/school_year'
+            selectedValue = {this.state.selected.school_year}
+            handleChange  = {::this.setYearFilter}
+            clearable     = {false}
+            placeholder   = 'Year'
+            width         = {100}
+          />
+        </ModuleHeader>
 
         <div className='row mb-3'>
           <VJSChart
@@ -17,28 +53,31 @@ export default class Infractions extends Component {
             reportPath = '/public/VJS/ss_ui/infractions/infractions_over_year'
             scale      = 'container'
             className  = 'col-md-9'
-            fullHeight  = {true}
+            fullHeight = {true}
+            params     = {this.state.params}
             title      = 'Totals Over Year'
           />
 
           <VJSChart
-            id          = 'infractions-daily-breakdown'
-            reportPath  = '/public/VJS/ss_ui/infractions/daily_breakdown'
-            title       = 'Daily Breakdown'
-            className   = 'col-md-3'
-            fullHeight  = {true}
+            id         = 'infractions-daily-breakdown'
+            reportPath = '/public/VJS/ss_ui/infractions/daily_breakdown'
+            title      = 'Daily Breakdown'
+            className  = 'col-md-3'
+            fullHeight = {true}
+            params     = {this.state.params}
           />
         </div>
 
         <div className='row mb-3'>
           <VJSChart
-            id         = 'infraction-top-list'
-            reportPath = '/public/VJS/ss_ui/infractions/top_students'
-            scale      = 'container'
-            title      = 'Most Infractions'
-            className  = 'col-md-6'
-            isTable    = {true}
-            fullHeight = {true}
+            id          = 'infraction-top-list'
+            reportPath  = '/public/VJS/ss_ui/infractions/top_students'
+            scale       = 'container'
+            title       = 'Most Infractions'
+            className   = 'col-md-6'
+            isTable     = {true}
+            fullHeight  = {true}
+            params      = {this.state.params}
             linkOptions = {{
               events: {
                 click: (ev, link) => {
@@ -58,18 +97,20 @@ export default class Infractions extends Component {
             scale      = 'container'
             title      = 'Totals by Type'
             className  = 'col-md-6'
-            fullHeight  = {true}
+            fullHeight = {true}
+            params     = {this.state.params}
           />
         </div>
 
         <div className='row'>
           <VJSChart
-            id         = 'infractions-student-detail'
-            reportPath = '/public/VJS/ss_ui/infractions/student_detail'
-            scale      = 'container'
-            title      = 'Student Detail'
-            className  = 'col-md-12'
-            isTable    = {true}
+            id          = 'infractions-student-detail'
+            reportPath  = '/public/VJS/ss_ui/infractions/student_detail'
+            scale       = 'container'
+            title       = 'Student Detail'
+            className   = 'col-md-12'
+            isTable     = {true}
+            params      = {this.state.params}
             linkOptions = {{
               events: {
                 click: (ev, link) => {

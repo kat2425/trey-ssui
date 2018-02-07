@@ -16,6 +16,8 @@ import ChannelEngagement     from 'modules/channel/Engagement'
 import TVAASController       from 'ui/controllers/TVAASController'
 import MAAP                  from 'modules/logic/MAAP'
 
+import LPS                   from 'modules/logic/accountability/LPS'
+
 import SMSController         from 'ui/controllers/SMSController'
 
 import StudentCardController from 'ui/controllers/StudentCardController'
@@ -37,6 +39,8 @@ const AppContainer = ({match}) => {
         <Route path='/r/assessment/maap' component={MAAP} />
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
+
+        <Route path='/r/accountability/lps' component={LPS} />
 
         {/* Channel */}
         <Route path='/r/channel/inbox' component={SMSController} />

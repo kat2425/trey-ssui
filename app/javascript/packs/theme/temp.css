@@ -36,12 +36,12 @@ html, body {
   text-decoration: underline
 }
 
-.vjs-avatar[style] {
-  height: inherit !important;
-}
-
 .no-flex-grow {
   flex-grow: 0;
+}
+
+.vjs-avatar[style] {
+  height: inherit !important;
 }
 
 .vjs-avatar > div {
