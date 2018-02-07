@@ -27,6 +27,7 @@ import MAAP             from './Assessments/MAAP'
 import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
 import Contacts         from './Contacts'
+import Grades           from './Grades'
 import CourseAttendance from './CourseAttendance'
 import Attendance       from './Attendance'
 import Engagement       from './CommsHistory/'
@@ -184,6 +185,14 @@ export default class StudentCard extends Component {
                 renderIf  = {!(userStore.user.higherEd)}
               />
 
+              <EUserMenuItem
+                title     = 'Grades'
+                iconClass = 'icon-check'
+                link      = {`${match.url}/grades`}
+                location  = {location}
+                renderIf  = {!(userStore.user.higherEd)}
+              />
+
               <UserMenuItem
                 title     = 'Engagement'
                 iconClass = 'icon-swap'
@@ -252,6 +261,11 @@ export default class StudentCard extends Component {
             <Route
               path   = {`${match.url}/assessment`}
               render = {() => <Assessment student={student}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/grades`}
+              render = {() => <Grades student={student}/> }
             />
 
             <Route
