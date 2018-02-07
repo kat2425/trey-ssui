@@ -26,6 +26,8 @@ import {
 } from 'ui/shell/SmartTags'
 
 
+const TOP_BOTTOM_HEIGHT = 135
+
 @observer
 export default class TagBuilder extends Component {
   state = {
@@ -34,10 +36,15 @@ export default class TagBuilder extends Component {
       height: 500
     }
   }
-
   componentDidMount(){
+    window.addEventListener('resize', this.handleOnResize)
+
     tagStore.fetchTags()
     this.calculateDimensions(this.container)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleOnResize)
   }
 
   calculateDimensions = (node) => {
@@ -48,9 +55,17 @@ export default class TagBuilder extends Component {
     this.setState({
       dimensions: {
         width:  _node.offsetWidth,
-        height: _node.offsetHeight
+        height: _node.offsetHeight - TOP_BOTTOM_HEIGHT
       }
     })
+  }
+
+  handleOnResize = () => {
+    this.calculateDimensions(this.container)
+  }  
+
+  setContainerRef = (node) => {
+    this.container = node
   }
 
   render() {
@@ -75,7 +90,7 @@ export default class TagBuilder extends Component {
             <SideNav tagStore={tagStore} />
           </Col>
 
-          <Content innerRef={node => this.container = node} xs={24} sm={24} md={18} lg={19}>
+          <Content innerRef={this.setContainerRef} xs={24} sm={24} md={18} lg={19}>
             {renderIfNoSelectedTag(<p className='mt-5 text-muted text-center'>No Tag Selected</p>)}
             {renderIfLoadingSchema(<LoadingSpinner center />)}
 

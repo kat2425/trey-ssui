@@ -1,5 +1,6 @@
 import React, {Component}                   from 'react'
 import {observer}                           from 'mobx-react'
+import _                                    from 'lodash'
 
 import ReactMapboxGl, {GeoJSONLayer, Popup} from 'react-mapbox-gl'
 
@@ -18,8 +19,25 @@ const Map = ReactMapboxGl({accessToken: token})
 export default class MapView extends Component {
   center = [-90.1123, 32.4001]
 
+  state = {
+    width:  this.props.width || '500px',
+    height: this.props.height || '500px'
+  }
+
   componentDidMount() {
     mapStore.fetchGeoJSON(this.props.tag)
+  }
+
+  componentWillReceiveProps({width: nWidth, height: nHeight}){
+    const { width, height } = this.state
+
+    if(nWidth !== width || nHeight !== height){
+      this.setState({ width: nWidth, height: nHeight })
+    }
+  }
+
+  componentDidUpdate(){
+    mapStore.map && mapStore.map.resize()
   }
 
   componentWillUnmount() {
@@ -31,8 +49,12 @@ export default class MapView extends Component {
     addClusterLayers(map)
   }
 
+  handleOnResize = _.debounce(() => {
+    mapStore.fitBounds()
+  }, 200)
+
   render() {
-    const {width, height}   = this.props
+    const {width, height}   = this.state
     const {selectedStudent} = mapStore
 
     return (
@@ -43,6 +65,7 @@ export default class MapView extends Component {
           containerStyle = {mapStyle}
           onStyleLoad    = {this.onStyleLoad}
           accessToken    = {token}
+          onResize       = {this.handleOnResize}
           onClick        = {() => mapStore.setSelectedStudent(null)}
         >
           <GeoJSONLayer
