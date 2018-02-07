@@ -6,7 +6,7 @@ import { Tooltip }  from 'antd'
 function CloneButton({tagStore}){
   const { selectedTag } = tagStore
 
-  if(!selectedTag || !selectedTag.modifiable) return null
+  if(!selectedTag) return null
 
   return (
     <Tooltip title='Clone Tag'>

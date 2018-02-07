@@ -11,7 +11,7 @@ function DeleteButton({tagStore}){
     <Popconfirm
       title      = {`Are you sure you want to delete ${selectedTag.name} ?`}
       onConfirm  = {selectedTag.deleteTag}
-      okText     = {`Delete ${selectedTag.name}`}
+      okText     = 'Delete'
       cancelText = 'Cancel'
     >
       <Tooltip title='Delete Tag'>

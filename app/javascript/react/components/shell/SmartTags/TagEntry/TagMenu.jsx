@@ -45,7 +45,7 @@ const menu = (tag = {}, store = {}) => (
     {[
       <MenuItem key={uuid()}>
         <div onClick={() => store.cloneTag(tag)}>
-          <ActionIcon type='copy' />
+          <CopyIcon/>
           Clone
         </div>
       </MenuItem>,
@@ -56,7 +56,7 @@ const menu = (tag = {}, store = {}) => (
         <Popconfirm
           title      = {`Are you sure you want to delete ${tag.name} ?`}
           onConfirm  = {tag.deleteTag}
-          okText     = {`Delete ${tag.name}`}
+          okText     = {'Delete'}
           cancelText = {'Cancel'}
         >
           <ActionIcon type='delete' />
@@ -104,5 +104,10 @@ const ActionIcon = styled(Icon)`
   font-size: 14px;
   margin-right: 12px;
 `
-
+const CopyIcon = styled.span.attrs({
+  className: 'icon icon-documents text-muted'
+})`
+  font-size: 14px;
+  margin-right: 12px;
+`
 export default observer(TagMenu)
