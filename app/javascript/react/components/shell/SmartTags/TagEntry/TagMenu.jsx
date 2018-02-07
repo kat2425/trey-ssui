@@ -33,7 +33,7 @@ const menu = (tag = {}, store = {}) => (
       </MenuItem>,
       <Menu.Divider key={uuid()} />
     ]}
-    {tag.modifiable && [
+    {tag.isValid && tag.modifiable && [
       <MenuItem key={uuid()}>
         <div onClick={() => tag.handleOnSave()}>
           <ActionIcon type='save' />
