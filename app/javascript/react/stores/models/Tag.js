@@ -204,6 +204,7 @@ export default class Tag {
 
     if(isOnlyNew){
       this.name = `${TAG_NAME_PLACEHOLDER} ${++Tag.untitledTagsCounter}`
+      this.modifiable = true
     }
 
     if(isNewAndCloned){

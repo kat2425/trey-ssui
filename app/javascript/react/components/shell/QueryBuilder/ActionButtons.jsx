@@ -12,7 +12,7 @@ ActionButtons.propTypes = {
 }
 export default function ActionButtons({
   disabled      = true,
-  modifiable    = false,
+  modifiable    = true,
   loadingOnTest = false,
   loadingOnSave = false,
   onTest,
