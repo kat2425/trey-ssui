@@ -13,7 +13,7 @@ import StudentInfo                          from './StudentInfo'
 
 import mapStore                             from 'stores/MapStore'
 
-const Map = ReactMapboxGl({accessToken: token})
+const Map = ReactMapboxGl({accessToken: token, trackResize: false})
 
 @observer
 export default class MapView extends Component {
@@ -49,10 +49,6 @@ export default class MapView extends Component {
     addClusterLayers(map)
   }
 
-  handleOnResize = _.debounce(() => {
-    mapStore.fitBounds()
-  }, 200)
-
   render() {
     const {width, height}   = this.state
     const {selectedStudent} = mapStore
@@ -65,7 +61,6 @@ export default class MapView extends Component {
           containerStyle = {mapStyle}
           onStyleLoad    = {this.onStyleLoad}
           accessToken    = {token}
-          onResize       = {this.handleOnResize}
           onClick        = {() => mapStore.setSelectedStudent(null)}
         >
           <GeoJSONLayer
