@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { toJS }             from 'mobx'
 import { observer }         from 'mobx-react'
 import Select               from 'react-select'
 
@@ -8,13 +9,13 @@ export default class Picker extends Component {
     return (
       <div>
         <Select
-          labelKey={this.props.labelKey}
-          multi={this.props.multi ? true : false}
-          onChange={this.props.handleChange}
-          options={this.props.options.toJS()}
-          placeholder={this.props.placeholder ? this.props.placeholder : 'Select...'}
-          value={this.props.selectedValues.toJS()}
-          valueKey={this.props.valueKey}
+          labelKey    = {this.props.labelKey}
+          multi       = {this.props.multi ? true : false}
+          onChange    = {this.props.handleChange}
+          options     = {toJS(this.props.options)}
+          placeholder = {this.props.placeholder ? this.props.placeholder : 'Select...'}
+          value       = {toJS(this.props.selectedValues)}
+          valueKey    = {this.props.valueKey}
         />
       </div>
     )
