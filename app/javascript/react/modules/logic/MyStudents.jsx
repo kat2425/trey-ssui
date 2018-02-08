@@ -164,12 +164,12 @@ export default class MyStudents extends Component {
           />
 
           <VJSChart
-            id         = 'recent-activity'
-            reportPath = '/public/VJS/ss_ui/channel/recent_activity'
-            scale      = 'container'
-            title      = 'Recent Activity'
-            className  = 'col-md-5'
-            isTable    = {true}
+            id          = 'recent-activity'
+            reportPath  = '/public/VJS/ss_ui/channel/recent_activity'
+            scale       = 'container'
+            title       = 'Recent Engagements'
+            className   = 'col-md-5'
+            isTable     = {true}
             fullHeight  = {true}
             linkOptions = {{
               events: {
@@ -177,7 +177,10 @@ export default class MyStudents extends Component {
                   const studentID = link.parameters._student_id
 
                   if (studentID) {
-                    fireEvent('showStudentCard', { student: studentID })
+                    fireEvent('showStudentCard', {
+                      student: studentID,
+                      path:    'engagement'
+                    })
                   }
                 }
               }

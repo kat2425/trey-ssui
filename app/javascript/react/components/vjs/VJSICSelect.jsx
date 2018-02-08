@@ -16,6 +16,10 @@ export default class VJSICSelect extends Component {
     className: PropTypes.string,
   }
 
+  static defaultProps = {
+    multi: false
+  }
+
   constructor(props) {
     super(props)
 
@@ -78,6 +82,8 @@ export default class VJSICSelect extends Component {
           value          = {this.props.selectedValue}
           onChange       = {this.props.handleChange}
           maxHeight      = {375}
+          clearable      = {this.props.clearable}
+          mutli          = {this.props.multi}
           optionRenderer = {this.props.optionRenderer || null}
         />
       </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes            from 'prop-types'
 
 import {
   Collapse,            Button,         Card,           CardBlock,
@@ -11,6 +12,10 @@ import LoadingSpinner from 'ui/shell/LoadingSpinner'
 const chartContainer = { margin: '5px' }
 
 export default class VJSChart extends Component {
+  static defaultProps = {
+    isTable: false
+  }
+
   constructor(props) {
     super(props)
 
@@ -20,6 +25,9 @@ export default class VJSChart extends Component {
     this.report     = null
     this.reportID   = `vjs-${this.props.id}`
     this.state      = {
+      isExporting:    false,
+      showError:      false,
+      emptyReport:    false,
       resourceLoaded: false,
       collapse:       false,
       totalPages:     0,
@@ -61,10 +69,13 @@ export default class VJSChart extends Component {
   exportFile(format) {
     const _ignorePagination = format === 'pdf' ? false : true
 
+    this.setState({ isExporting: true })
+
     this.report.export({
       outputFormat:     format,
       ignorePagination: _ignorePagination
     }, (link) => {
+      this.setState({ isExporting: false })
       window.location.href = (link.href || link)
     })
   }
@@ -95,9 +106,15 @@ export default class VJSChart extends Component {
       // Hide our loading indicator on a successful render
       success: () => {
         if (this._isMounted) this.setState({ resourceLoaded: true })
+
+        // console.log(`--data | ${this.reportID} --`)
+        // console.log(this.report)
+        // if (!this.report.data().components.length && this.props.isTable) {
+        //   this.setState({ emptyReport: true })
+        // }
       },
 
-      error: this.handleError
+      error: ::this.handleError
     })
   }
 
@@ -106,7 +123,45 @@ export default class VJSChart extends Component {
       if (this._retries <= 2) {
         this.renderChart(this.props.reportPath, this.props.params)
         this._retries++
+      } else {
+        this.setErrorState(err)
       }
+    } else {
+      this.setErrorState(err)
+    }
+  }
+
+  setErrorState(err) {
+    this.setState({ resourceLoaded: true, showError: true, errState: err })
+  }
+
+  renderError() {
+    if (this.state.showError) {
+      return (
+        <div className='mb-4' style={{ color: '#df4d4b' }}>
+          <span className='icon icon-emoji-sad' style={{ fontSize: '32px' }} />
+          <br />
+          <h5>Oh no!  We encountered an error fetching this data.</h5>
+          <div style={{ color: '#df4d4b'}} className='text-left m-4 alert alert-danger'>
+            <strong style={{ color: '#741e20'}}>Error Code:</strong>
+            <br />
+            <pre style={{fontSize: '11px'}}>{ this.state.errState.errorCode }</pre>
+            <strong style={{ color: '#741e20'}}>Message:</strong>
+            <br />
+            <pre style={{fontSize: '11px'}}>{ this.state.errState.message }</pre>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  renderEmptyMessage() {
+    if (this.state.emptyReport) {
+      return (
+        <div className='m-4 p-4 text-muted'>
+          <h5 style={{opacity: '0.5'}}>No Data Found...</h5>
+        </div>
+      )
     }
   }
 
@@ -122,13 +177,29 @@ export default class VJSChart extends Component {
     }
   }
 
+  renderExportLoader() {
+    if (this.state.isExporting) {
+      return (
+        <LoadingSpinner
+          padding      = {2}
+          className    = 'pr-3'
+          spinnerStyle = {{
+            width:       '18px',
+            height:      '18px',
+            borderWidth: '0.22rem'
+          }}
+        />
+      )
+    }
+  }
+
   renderPaginator() {
     if ((this.state.totalPages > 1) &&
          this.state.resourceLoaded &&
          this.props.isTable &&
          !this.props.ignorePagination) {
       return (
-        <Pagination className='float-right mb-2' style={{marginTop: '-30px'}}>
+        <Pagination className='float-right' style={{marginTop: '-30px'}}>
           <PaginationItem
             onClick  = {() => this.changeReportPage(this.state.currentPage - 1)}
             disabled = {this.state.currentPage === 1}
@@ -283,10 +354,11 @@ export default class VJSChart extends Component {
                 </div>
 
                 <ButtonDropdown isOpen={this.state.exportOpen} toggle={::this.toggleExport}>
+                  { this.renderExportLoader() }
                   <DropdownToggle
                     style = {{padding: 0, width: 44, height: 36}}
                     size  = 'sm'
-                    id    = {`${this.reportID}-export-pdf`}
+                    id    = {`${this.reportID}-export-data`}
                     caret
                   >
                     <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
@@ -294,17 +366,40 @@ export default class VJSChart extends Component {
 
                   <DropdownMenu right>
                     <DropdownItem header>Export as</DropdownItem>
+
                     <DropdownItem divider />
-                    <DropdownItem><span onClick={() => this.exportFile('csv')}>CSV</span></DropdownItem>
-                    <DropdownItem><span onClick={() => this.exportFile('pdf')}>PDF</span></DropdownItem>
+
+                    <DropdownItem
+                      onClick  = {() => this.exportFile('csv')}
+                      disabled = {!this.props.isTable}
+                      hidden   = {!this.props.isTable}
+                    >
+                      <span>CSV</span>
+                    </DropdownItem>
+
+                    <DropdownItem
+                      onClick  = {() => this.exportFile('xls')}
+                      disabled = {!this.props.isTable}
+                      hidden   = {!this.props.isTable}
+                    >
+                      <span>XLS</span>
+                    </DropdownItem>
+
+                    <DropdownItem
+                      onClick  = {() => this.exportFile('pdf')}
+                      disabled = {this.props.isTable}
+                      hidden   = {this.props.isTable}
+                    >
+                      <span>PDF</span>
+                    </DropdownItem>
                   </DropdownMenu>
                 </ButtonDropdown>
 
                 <UncontrolledTooltip
                   placement = 'left'
-                  target    = {`${this.reportID}-export-pdf`}
+                  target    = {`${this.reportID}-export-data`}
                 >
-                  Save this chart as PDF
+                  Export data
                 </UncontrolledTooltip>
               </div>
             </div>
@@ -313,6 +408,8 @@ export default class VJSChart extends Component {
           <Collapse isOpen={!this.state.collapse}>
             <div className='text-center' style={chartContainer}>
               { this.renderLoader() }
+              { this.renderError() }
+              { this.renderEmptyMessage() }
 
               <center>
                 <div id={this.reportID}>

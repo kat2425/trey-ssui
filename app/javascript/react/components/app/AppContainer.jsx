@@ -14,8 +14,10 @@ import TagBuilder            from 'modules/logic/TagBuilder/'
 import ChannelHistory        from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
 
-import TVAASController       from 'ui/controllers/TVAASController'
-import MAAP                  from 'modules/logic/MAAP'
+// Assessment
+import Assessments           from 'modules/logic/assessment/Assessment'
+
+import LPS                   from 'modules/logic/accountability/LPS'
 
 import SMSController         from 'ui/controllers/SMSController'
 
@@ -34,11 +36,14 @@ const AppContainer = ({match}) => {
         <Route path='/r/my_students' component={MyStudents} />
         <Route path='/r/attendance' component={Attendance} />
         <Route path='/r/infractions' component={Infractions} />
-        <Route path='/r/assessment/tvaas' component={TVAASController} />
-        <Route path='/r/assessment/maap' component={MAAP} />
+
+        <Route path='/r/assessment' component={Assessments} />
+
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
         <Route path='/r/bullseye' component={TagBuilder} />
+
+        <Route path='/r/accountability/lps' component={LPS} />
 
         {/* Channel */}
         <Route path='/r/channel/inbox' component={SMSController} />

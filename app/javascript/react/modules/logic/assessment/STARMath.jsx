@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 
-import VJSChart  from 'ui/vjs/VJSChart'
-import fireEvent from 'helpers/FireEvent'
+import ModuleHeader         from 'ui/shell/ModuleHeader'
+import VJSChart             from 'ui/vjs/VJSChart'
 
-export default class MAAP extends Component {
+import fireEvent            from 'helpers/FireEvent'
+
+export default class STARMath extends Component {
   constructor(props) {
     super(props)
   }
@@ -13,9 +15,9 @@ export default class MAAP extends Component {
       <div>
         <div className='row'>
           <VJSChart
-            id          = 'maap-student-detail'
-            reportPath  = '/public/VJS/ss_ui/assessment/maap/student_detail'
-            title       = 'MAAP'
+            id          = 'star-math-student-detail'
+            reportPath  = '/public/VJS/ss_ui/assessment/renplace/star_math/student_detail'
+            title       = 'STAR Math'
             className   = 'col-md-12'
             isTable     = {true}
             linkOptions = {{
@@ -26,7 +28,7 @@ export default class MAAP extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'assessment/maap'
+                      // path:    'assessment/maap'
                     })
                   }
                 }

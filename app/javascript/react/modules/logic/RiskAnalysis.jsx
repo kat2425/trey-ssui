@@ -86,7 +86,9 @@ export default class RiskAnalysis extends Component {
   }
 
   render() {
-    const studentDetailPath = (userStore.user.higherEd) ? 'student_detail' : 'standard_student_detail'
+    const studentDetailPath = (userStore.user.higherEd)
+      ? '/public/VJS/ss_ui/risk_analysis/student_detail'
+      : '/public/VJS/at_risk_student_detail'
 
     return (
       <div>
@@ -139,7 +141,7 @@ export default class RiskAnalysis extends Component {
         <div className='row'>
           <VJSChart
             id          = 'risk-student-detail'
-            reportPath  = {`/public/VJS/ss_ui/risk_analysis/${studentDetailPath}`}
+            reportPath  = {studentDetailPath}
             params      = {this.state.params}
             title       = 'Student Detail'
             className   = 'col-md-12'

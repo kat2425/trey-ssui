@@ -20,7 +20,7 @@ html, body {
 }
 
 .pagination {
-  margin-bottom: 14px !important;
+  margin-bottom: 0.5rem !important;
 }
 
 #intercom-container .intercom-launcher-frame,
@@ -45,12 +45,12 @@ html, body {
   text-decoration: underline
 }
 
-.vjs-avatar[style] {
-  height: inherit !important;
-}
-
 .no-flex-grow {
   flex-grow: 0;
+}
+
+.vjs-avatar[style] {
+  height: inherit !important;
 }
 
 .vjs-avatar > div {

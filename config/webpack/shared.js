@@ -3,17 +3,18 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
 
-const webpack = require('webpack')
+const webpack                                        = require('webpack')
 const { basename, dirname, join, relative, resolve } = require('path')
-const { sync } = require('glob')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const extname = require('path-complete-extname')
-const { env, settings, output, loadersDir } = require('./configuration.js')
+const { sync }                                       = require('glob')
+const ExtractTextPlugin                              = require('extract-text-webpack-plugin')
+const ManifestPlugin                                 = require('webpack-manifest-plugin')
+const extname                                        = require('path-complete-extname')
+const { env, settings, output, loadersDir }          = require('./configuration.js')
+const Dotenv                                         = require('dotenv-webpack')
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`
-const entryPath = join(settings.source_path, settings.source_entry_path)
-const packPaths = sync(join(entryPath, extensionGlob))
+const entryPath     = join(settings.source_path, settings.source_entry_path)
+const packPaths     = sync(join(entryPath, extensionGlob))
 
 module.exports = {
   entry: packPaths.reduce(
@@ -36,6 +37,7 @@ module.exports = {
   },
 
   plugins: [
+    new Dotenv(),
     new webpack.EnvironmentPlugin([JSON.parse(JSON.stringify(env)), 'MAPBOX_ACCESS_TOKEN']),
     new ExtractTextPlugin(env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'),
     new ManifestPlugin({
