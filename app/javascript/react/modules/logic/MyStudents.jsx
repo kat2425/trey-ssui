@@ -23,10 +23,6 @@ export default class MyStudents extends Component {
     super(props)
     const _currentYear = userStore.user.currentSchoolYear.toString()
 
-    console.log('--dotenv--')
-    console.log(process.env.FOO_MAN)
-    console.log('--/dotenv--')
-
     this.state = {
       params: {
         school_year: [_currentYear ]
