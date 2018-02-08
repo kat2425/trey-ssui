@@ -29,7 +29,7 @@ def update_service
   _new_revision_id = new_revision_id
 
   JSON.parse `aws ecs update-service --cluster ss-ui --service ss-ui --task-definition ss-ui:#{_new_revision_id}`
-  puts "[x] Updated service to revision #{_new_revision_id.to_s.fg()}"
+  puts "[x] Updated service to revision #{_new_revision_id.to_s.fg(83)}"
 end
 
 update_service
