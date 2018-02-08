@@ -117,11 +117,15 @@ export default class VJSChart extends Component {
         this.renderChart(this.props.reportPath, this.props.params)
         this._retries++
       } else {
-        this.setState({ resourceLoaded: true, showError: true, errState: err })
+        this.setErrorState(err)
       }
     } else {
-      this.setState({ resourceLoaded: true, showError: true, errState: err })
+      this.setErrorState(err)
     }
+  }
+
+  setErrorState(err) {
+    this.setState({ resourceLoaded: true, showError: true, errState: err })
   }
 
   renderError() {
@@ -134,10 +138,10 @@ export default class VJSChart extends Component {
           <div style={{ color: '#df4d4b'}} className='text-left m-4 alert alert-danger'>
             <strong style={{ color: '#741e20'}}>Error Code:</strong>
             <br />
-            <pre>{ this.state.errState.errorCode }</pre>
+            <pre style={{fontSize: '11px'}}>{ this.state.errState.errorCode }</pre>
             <strong style={{ color: '#741e20'}}>Message:</strong>
             <br />
-            <pre>{ this.state.errState.message }</pre>
+            <pre style={{fontSize: '11px'}}>{ this.state.errState.message }</pre>
           </div>
         </div>
       )
