@@ -199,7 +199,7 @@ export default class VJSChart extends Component {
          this.props.isTable &&
          !this.props.ignorePagination) {
       return (
-        <Pagination className='float-right mb-2' style={{marginTop: '-30px'}}>
+        <Pagination className='float-right' style={{marginTop: '-30px'}}>
           <PaginationItem
             onClick  = {() => this.changeReportPage(this.state.currentPage - 1)}
             disabled = {this.state.currentPage === 1}

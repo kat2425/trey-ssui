@@ -20,7 +20,7 @@ html, body {
 }
 
 .pagination {
-  margin-bottom: 14px !important;
+  margin-bottom: 0.5rem !important;
 }
 
 #intercom-container .intercom-launcher-frame,
