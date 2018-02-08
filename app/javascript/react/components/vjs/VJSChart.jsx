@@ -107,9 +107,11 @@ export default class VJSChart extends Component {
       success: () => {
         if (this._isMounted) this.setState({ resourceLoaded: true })
 
-        if (!this.report.data().components.length && this.props.isTable) {
-          this.setState({ emptyReport: true })
-        }
+        // console.log(`--data | ${this.reportID} --`)
+        // console.log(this.report)
+        // if (!this.report.data().components.length && this.props.isTable) {
+        //   this.setState({ emptyReport: true })
+        // }
       },
 
       error: ::this.handleError
