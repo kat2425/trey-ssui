@@ -27,6 +27,7 @@ export default class VJSChart extends Component {
     this.state      = {
       isExporting:    false,
       showError:      false,
+      emptyReport:    false,
       resourceLoaded: false,
       collapse:       false,
       totalPages:     0,
@@ -105,6 +106,12 @@ export default class VJSChart extends Component {
       // Hide our loading indicator on a successful render
       success: () => {
         if (this._isMounted) this.setState({ resourceLoaded: true })
+
+        // console.log(`--data | ${this.reportID} --`)
+        // console.log(this.report)
+        // if (!this.report.data().components.length && this.props.isTable) {
+        //   this.setState({ emptyReport: true })
+        // }
       },
 
       error: ::this.handleError
@@ -143,6 +150,16 @@ export default class VJSChart extends Component {
             <br />
             <pre style={{fontSize: '11px'}}>{ this.state.errState.message }</pre>
           </div>
+        </div>
+      )
+    }
+  }
+
+  renderEmptyMessage() {
+    if (this.state.emptyReport) {
+      return (
+        <div className='m-4 p-4 text-muted'>
+          <h5 style={{opacity: '0.5'}}>No Data Found...</h5>
         </div>
       )
     }
@@ -392,6 +409,7 @@ export default class VJSChart extends Component {
             <div className='text-center' style={chartContainer}>
               { this.renderLoader() }
               { this.renderError() }
+              { this.renderEmptyMessage() }
 
               <center>
                 <div id={this.reportID}>

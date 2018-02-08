@@ -49,6 +49,7 @@ class UserMain extends Component {
       this.currentPath = location.pathname
       history.push(`${this.currentPath}/students/${studentId}/${cardPath}`)
     }
+
     uiStore.setIsStudentCardOpen(true)
   }
 

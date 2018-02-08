@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import VJSChart  from 'ui/vjs/VJSChart'
 import fireEvent from 'helpers/FireEvent'
 
-export default class MAAP extends Component {
+export default class ATI extends Component {
   constructor(props) {
     super(props)
   }
@@ -13,9 +13,9 @@ export default class MAAP extends Component {
       <div>
         <div className='row'>
           <VJSChart
-            id          = 'maap-student-detail'
-            reportPath  = '/public/VJS/ss_ui/assessment/maap/student_detail'
-            title       = 'MAAP'
+            id          = 'ati-student-detail'
+            reportPath  = '/public/VJS/ss_ui/assessment/ati/student_detail'
+            title       = 'ATI'
             className   = 'col-md-12'
             isTable     = {true}
             linkOptions = {{
@@ -26,7 +26,7 @@ export default class MAAP extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'assessment/maap'
+                      path:    'assessment/ati'
                     })
                   }
                 }
