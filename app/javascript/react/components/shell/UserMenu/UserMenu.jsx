@@ -72,7 +72,12 @@ const UserMenu = () => {
       </UserMenuSection>
 
       <UserMenuSection title='Utilities'>
-        <UserMenuItem title='Bullseye' iconClass='icon-hair-cross' link='/r/bullseye' />
+        <EUserMenuItem
+          title     = 'Bullseye'
+          iconClass = 'icon-hair-cross'
+          link      = '/r/bullseye'
+          renderIf  = {userStore.hasModules('bullseye')}
+        />
       </UserMenuSection>
 
       <UserMenuSection title='Insights'>

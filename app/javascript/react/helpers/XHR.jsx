@@ -13,7 +13,7 @@ axios.defaults.headers.common['x-ss-token']   = window.SSUser && window.SSUser.a
 axios.defaults.timeout                        = 30000
 
 // For Tag Builder
-export const SCHEMA_XHR = axios.create(config('https://api.schoolstatus.com'))
-export const QUERY_XHR  = axios.create(config('http://25.83.82.65:5000'))
+export const SCHEMA_XHR = axios.create(config(process.env.TURBINE_BASE))
+export const QUERY_XHR  = axios.create(config(process.env.SCRUNCHIE_BASE))
 
 export default XHR
