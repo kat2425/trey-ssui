@@ -1,6 +1,5 @@
 import React, {Component}                   from 'react'
 import {observer}                           from 'mobx-react'
-import _                                    from 'lodash'
 
 import ReactMapboxGl, {GeoJSONLayer, Popup} from 'react-mapbox-gl'
 
