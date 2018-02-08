@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
+import { toJS }           from 'mobx'
 import { observer }       from 'mobx-react'
 import _                  from 'lodash'
 
 import {
-  Container, Button, Card, CardBlock,
-  CardTitle, CardSubtitle, CardText,
-  FormGroup, FormFeedback, Label, Input,
-  Row, Col, Badge, ListGroup, ListGroupItem
+  Button, Card, CardBlock,
+  CardTitle, Row, Col, ListGroup, 
+  ListGroupItem
 } from 'reactstrap'
 
 import ReactMarkdown from 'react-markdown'
@@ -46,13 +46,13 @@ export default class NoteView extends Component {
     )
   }
 
-  renderVisibleTo(notes) {
+  renderVisibleTo() {
     return (
       <Col sm="6">
         <p>
           <span style={{color: '#3f9fcf'}} className='icon icon-eye'> </span>
           <span style={{color: '#3f9fcf'}}>Visible to: </span>
-          <span style={{color: '#A9A9A9'}}>{notes.length > 0 ? this.renderGroupNames() : null}</span>
+          <span style={{color: '#A9A9A9'}}>{this.renderGroupNames()}</span>
         </p>
       </Col>
     )
@@ -62,7 +62,7 @@ export default class NoteView extends Component {
     const { notes }       = this.props.noteStore
     const currentNote     = notes[this.props.noteStore.selectedNoteIndex]
     const notesGroups     = currentNote.groups
-    const noteStoreGroups = this.props.noteStore.groups.toJS()
+    const noteStoreGroups = toJS(this.props.noteStore.groups)
 
     if(!notesGroups.length > 0 && !currentNote.global) {
       return 'Just Me'
@@ -71,7 +71,7 @@ export default class NoteView extends Component {
     } else {
       return notesGroups.map((g) => {
         return _.find(noteStoreGroups, (group) => { return group.id === g.id })
-      }).map(({group_name}) => group_name).join(', ')
+      }).map(({group_name}) => group_name).join(', ') 
     }
   }
 
@@ -144,7 +144,7 @@ export default class NoteView extends Component {
 
             <CardBlock className="pt-0">
               <Row>
-                {notes.length > 0 && this.renderVisibleTo(notes)}
+                {!_.isEmpty(this.noteStoreGroups) && this.renderVisibleTo()}
                 {notes.length > 0 &&
                   <NoteTags
                     notes       = {notes}
