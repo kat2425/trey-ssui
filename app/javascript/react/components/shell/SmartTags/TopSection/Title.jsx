@@ -1,5 +1,10 @@
 import React                 from 'react'
 import { observer }          from 'mobx-react'
+
+import styled                from 'styled-components'
+import { ifProp }            from 'styled-tools'
+import { ellipsis }          from 'polished'
+
 import { ModifiedIndicator } from 'ui/shell/SmartTags'
 
 import {
@@ -14,9 +19,9 @@ function Title({tagStore}){
 
   return (
     <div className = 'd-flex flex-row align-items-center' >
-      <h5 style={nameStyle(selectedTag.isNew)} title={selectedTag.name}>
+      <H5 isNew={selectedTag.isNew} title={selectedTag.name}>
         <ModifiedIndicator tag={selectedTag}>{selectedTag.name}</ModifiedIndicator>
-      </h5>
+      </H5>
       {selectedTag.isEditable && (
         <Tooltip title='Edit Tag'>
           <Button
@@ -32,13 +37,12 @@ function Title({tagStore}){
 }
 
 
-const nameStyle = (isNew) => {
-  if(!isNew) return
-
-  return {
-    color:     '#777',
-    fontStyle: 'italic'
-  }
-}
+const H5 = styled.h5`
+  ${ellipsis('100%')}
+  ${ifProp('isNew', `
+    color: #777;
+    font-style: italic;
+  `)}
+`
 
 export default observer(Title)

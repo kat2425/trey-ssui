@@ -28,12 +28,12 @@ const menu = (tag = {}, store = {}) => (
       <MenuItem key={uuid()}>
         <div onClick={tag.handleOnTagClick}>
           <ActionIcon type='play-circle-o' />
-          Test
+          Run
         </div>
       </MenuItem>,
       <Menu.Divider key={uuid()} />
     ]}
-    {tag.modifiable && [
+    {tag.isValid && tag.modifiable && [
       <MenuItem key={uuid()}>
         <div onClick={() => tag.handleOnSave()}>
           <ActionIcon type='save' />
@@ -51,7 +51,7 @@ const menu = (tag = {}, store = {}) => (
       </MenuItem>,
       <Menu.Divider key={uuid()}/>
     ]}
-    {tag.modifiable && [
+    {(tag.isNew || tag.modifiable) && [
       <MenuItem key={uuid()} delete>
         <Popconfirm
           title      = {`Are you sure you want to delete ${tag.name} ?`}
@@ -70,7 +70,7 @@ const menu = (tag = {}, store = {}) => (
 function TagMenu({tag}){
   return (
     <Dropdown 
-      onClick = {e => e.preventDefault()}
+      onClick = {e => e.stopPropagation()}
       trigger = {['click']}
       overlay = {menu(tag, store)}
     >
