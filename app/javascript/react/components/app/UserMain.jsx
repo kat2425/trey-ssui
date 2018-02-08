@@ -34,19 +34,21 @@ class UserMain extends Component {
 
   showStudentCard = (e) => {
     if(!e.detail.student) return
-    const studentId = e.detail.student
 
-    this.goToStudentCard(studentId)
+    const studentId = e.detail.student
+    const cardPath  = e.detail.path || 'overview'
+
+    this.goToStudentCard(studentId, cardPath)
   }
 
-  goToStudentCard = (studentId) => {
+  goToStudentCard = (studentId, cardPath) => {
     const {history, location, uiStore} = this.props
 
     if(uiStore.isStudentCardOpen){
-      history.replace(`${this.currentPath}/students/${studentId}/overview`)
+      history.replace(`${this.currentPath}/students/${studentId}/${cardPath}`)
     } else {
       this.currentPath = location.pathname
-      history.push(`${this.currentPath}/students/${studentId}/overview`)
+      history.push(`${this.currentPath}/students/${studentId}/${cardPath}`)
     }
     uiStore.setIsStudentCardOpen(true)
   }

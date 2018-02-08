@@ -38,7 +38,7 @@ const UserMenu = () => {
         {/* <EUserMenuItem title='Assessment' iconClass='icon-bar-graph' link='/r/assessment/tvaas' /> */}
         <EUserMenuItem
           title     = 'Assessment'
-          iconClass = 'icon-feather'
+          iconClass = 'icon-area-graph'
           link      = '/r/assessment/maap'
           renderIf  = {userStore.hasModules('assessment')}
         />

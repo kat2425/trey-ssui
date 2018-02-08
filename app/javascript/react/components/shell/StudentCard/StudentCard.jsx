@@ -170,16 +170,16 @@ export default class StudentCard extends Component {
 
               <EUserMenuItem
                 title     = 'Assessment'
-                iconClass = 'icon-bar-graph'
-                link      = {`${match.url}/assessment`}
+                iconClass = 'icon-area-graph'
+                link      = {`${match.url}/assessment/act`}
                 location  = {location}
                 renderIf  = {userStore.user.higherEd}
               />
 
               <EUserMenuItem
                 title     = 'Assessment'
-                iconClass = 'icon-bar-graph'
-                link      = {`${match.url}/maap`}
+                iconClass = 'icon-area-graph'
+                link      = {`${match.url}/assessment/maap`}
                 location  = {location}
                 renderIf  = {!(userStore.user.higherEd)}
               />
@@ -220,18 +220,26 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/overview`}
-              render = {() => <Overview student={student} higherEd={userStore.user.higherEd} handleClick={this.closeCard}/> }
+              render = {() =>
+                <Overview
+                  student     = {student}
+                  higherEd    = {userStore.user.higherEd}
+                  handleClick = {this.closeCard}
+                />
+              }
             />
 
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() => <Contacts
-                store             = {CallingStore}
-                student           = {student}
-                contacts          = {contacts}
-                handleContactFave = {::this.props.store.toggleContactPrimary}
-                handleSendEmail   = {::this.props.store.triggerNativeMailTo}
-              /> }
+              render = {() =>
+                <Contacts
+                  store             = {CallingStore}
+                  student           = {student}
+                  contacts          = {contacts}
+                  handleContactFave = {::this.props.store.toggleContactPrimary}
+                  handleSendEmail   = {::this.props.store.triggerNativeMailTo}
+                />
+              }
             />
 
             <Route
@@ -250,12 +258,12 @@ export default class StudentCard extends Component {
             />
 
             <Route
-              path   = {`${match.url}/assessment`}
+              path   = {`${match.url}/assessment/act`}
               render = {() => <Assessment student={student}/> }
             />
 
             <Route
-              path   = {`${match.url}/maap`}
+              path   = {`${match.url}/assessment/maap`}
               render = {() => <MAAP student={student}/> }
             />
 
