@@ -131,11 +131,13 @@ export default class VJSChart extends Component {
           <span className='icon icon-emoji-sad' style={{ fontSize: '32px' }} />
           <br />
           <h5>Oh no!  We encountered an error fetching this data.</h5>
-          <br/>
-          <div style={{ color: '#df4d4b'}}>
-            <strong style={{ color: '#741e20'}}>Error Code:</strong> { this.state.errState.errorCode }
+          <div style={{ color: '#df4d4b'}} className='text-left m-4 alert alert-danger'>
+            <strong style={{ color: '#741e20'}}>Error Code:</strong>
             <br />
-            <strong style={{ color: '#741e20'}}>Message:</strong> { this.state.errState.message }
+            <pre>{ this.state.errState.errorCode }</pre>
+            <strong style={{ color: '#741e20'}}>Message:</strong>
+            <br />
+            <pre>{ this.state.errState.message }</pre>
           </div>
         </div>
       )

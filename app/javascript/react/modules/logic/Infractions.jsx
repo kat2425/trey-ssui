@@ -32,10 +32,34 @@ export default class Infractions extends Component {
     })
   }
 
+  setSchoolFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, school_id: [ jrsValue ] },
+      selected: { ...this.state.selected, school_id: val }
+    })
+  }
+
+  setDetailDate(val) {
+    this.setState({
+      params: { ...this.state.params, date: [ val ] }
+    })
+  }
+
   render() {
     return (
       <div>
         <ModuleHeader title='Infractions'>
+          <VJSICSelect
+            id            = 'user_schools'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/user_schools'
+            selectedValue = {this.state.selected.school_id}
+            handleChange  = {::this.setSchoolFilter}
+            placeholder   = 'School'
+            width         = {300}
+          />
+
           <VJSICSelect
             id            = 'school_year'
             inputPath     = '/public/VJS/ss_ui/infractions/school_year'
@@ -56,6 +80,17 @@ export default class Infractions extends Component {
             fullHeight = {true}
             params     = {this.state.params}
             title      = 'Totals Over Year'
+            linkOptions = {{
+              events: {
+                click: (ev, link) => {
+                  const detailDate = link.parameters._date
+
+                  if (detailDate) {
+                    this.setDetailDate(detailDate)
+                  }
+                }
+              }
+            }}
           />
 
           <VJSChart
