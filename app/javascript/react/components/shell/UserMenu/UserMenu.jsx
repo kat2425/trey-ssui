@@ -67,8 +67,8 @@ const UserMenu = () => {
 
       <UserMenuSection title='Communication'>
         {/* <EUserMenuItem title='Inbox' iconClass='icon-inbox' link='/r/channel/inbox' /> */}
-        {/* <EUserMenuItem title='Communications' iconClass='icon-chat' link='/r/channel/history' /> */}
         <EUserMenuItem title='Engagement' iconClass='icon-power-plug' link='/r/channel/engagement' />
+        {/* <EUserMenuItem title='Call History' iconClass='icon-phone' link='/r/channel/history' /> */}
       </UserMenuSection>
 
       <UserMenuSection title='Utilities'>
