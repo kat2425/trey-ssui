@@ -3,6 +3,7 @@
 .vjs-bar-cell {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+  min-width: 175px !important;
 
   &:before {
     content:          '\a0';
