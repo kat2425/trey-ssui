@@ -301,6 +301,17 @@ export default class VJSChart extends Component {
           $(html).find('table.jrPage.table > tbody > tr > td').css('padding', '').css('white-space', '')
         }
       }
+    } else if (this.props.isCrosstab) {
+      return {
+        beforeRender: (html) => {
+          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%')
+          $(html).find('table.jrPage.table > tbody > tr:nth-child(1)').css('display', 'none')
+          $(html).find('table.jrPage.table > tbody > tr:nth-child(2) > td').css('border-top', 'none')
+          $(html).find('table.jrPage.table > tbody > tr').css('height', '')
+          $(html).find('table.jrPage.table > tbody > tr > td').css('padding', '').css('white-space', '')
+          $(html).find('table.jrPage.table > tbody > tr > td:last-child').css('display', 'none')
+        }
+      }
     } else {
       return {
         beforeRender: (html) => {
