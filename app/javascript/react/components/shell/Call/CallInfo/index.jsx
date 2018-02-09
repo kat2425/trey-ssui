@@ -27,8 +27,8 @@ function CallInfo({store, show, onGoBack}) {
       <Header onGoBack={onGoBack} call={selectedCall}/>
       <ScrollView>
         <SubHeader call={selectedCall} />
-        <Transcript isLoading={isLoading} transcript={transcript} />
         <Player src={selectedCall.recordingPath} />
+        <Transcript isLoading={isLoading} transcript={transcript} />
         <CallNotes notes={notes} />
       </ScrollView>
     </Wrapper>

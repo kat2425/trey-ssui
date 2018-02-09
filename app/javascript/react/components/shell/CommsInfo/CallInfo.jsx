@@ -9,8 +9,8 @@ const CallInfo = ({comm}) => {
 
   return (
     <div className='d-flex flex-column'>
-      <Transcript isLoading={isLoading} transcript={transcript}/>
       <Player src={preview}/>
+      <Transcript isLoading={isLoading} transcript={transcript}/>
       <CallNotes notes={notes} />
     </div>
   )

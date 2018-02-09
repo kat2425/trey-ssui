@@ -19,7 +19,8 @@ const Name  = styled.h4`
   padding: 8px;
   ${ifProp('bg', `
     background-color: #eaeaea;
-    border-radius: 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
     margin:0;
   `)}
 `
