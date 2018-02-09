@@ -9,10 +9,12 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 Tabs.propTypes = {
-  tag: PropTypes.object.isRequired
+  tag: PropTypes.object
 }
 
 function Tabs({tag}) {
+  if(!tag) return null
+
   return (
     <Row type='flex' justify='center' className='mb-3'>
       <RadioGroup 
