@@ -10,21 +10,22 @@ import {
   SCHEMA_XHR as sxhr, 
   QUERY_XHR as xhr
 } from 'helpers/XHR'
-import getError from 'helpers/ErrorParser'
 
-import { fromJS } from  'immutable'
-import { setter } from  'mobx-decorators'
-import userStore  from  'stores/UserStore'
-import UiStore    from  'stores/UiStore'
-import _          from  'lodash'
-import uuid       from  'uuid'
-import moment     from  'moment'
+import getError      from 'helpers/ErrorParser'
+
+import { setter }    from 'mobx-decorators'
+import userStore     from 'stores/UserStore'
+import UiStore       from 'stores/UiStore'
+import _             from 'lodash'
+import uuid          from 'uuid'
+import moment        from 'moment'
 
 
-import stringify  from  'json-stringify-safe'
-import {Utils}    from  'react-awesome-query-builder'
-import config     from  'ui/shell/QueryBuilder/config/'
-import Pagination from  'stores/models/Pagination'
+import stringify     from 'json-stringify-safe'
+import {Utils}       from 'react-awesome-query-builder'
+import config        from 'ui/shell/QueryBuilder/config/'
+import Pagination    from 'stores/models/Pagination'
+import fromJSOrdered from 'helpers/fromJSOrdered'
 
 const {queryBuilderFormat, queryString} = Utils
 
@@ -367,7 +368,7 @@ export default class Tag {
     this.name       = name
     this.createdAt  = createdAt
     this.query      = query
-    this.treeQuery  = fromJS(treeQuery)
+    this.treeQuery  = fromJSOrdered(treeQuery)
     this.modifiable = modifiable
     this.system     = system
     this.global     = global
