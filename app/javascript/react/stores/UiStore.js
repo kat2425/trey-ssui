@@ -3,14 +3,12 @@ import SMSConversationStore from 'stores/SMSConversation'
 import callStore            from 'stores/CallStore'
 import ReminderStore        from 'stores/ReminderStore'
 import { notification }     from 'antd'
-import _                    from 'lodash'
 
 import { 
   observable, 
   autorun, 
   reaction, 
-  action,
-  computed
+  action
 } from 'mobx'
 
 export const SIDEBAR = {
@@ -50,21 +48,14 @@ export class UiStore {
     this.autoFetchSMSConversation() 
     this.autoFetchCallLogs()
     this.autoHideCallInfo()
-    this.autoNotify()
-  }
-
-  // Computed
-  @computed get uniqueNotifications(){
-    return _.uniqWith(this.notifications, _.isEqual)
   }
 
   // Actions
   @action addNotification({title, message, type}) {
-    this.notifications.push({title, message, type})
-  }
-
-  @action removeNotification(index) {
-    this.notifications.splice(index, 1)
+    notification[type]({
+      message:     title,
+      description: message,
+    })
   }
 
   @action setSidebarVisibility(show){
@@ -90,22 +81,6 @@ export class UiStore {
       ()     => this.showCallSidebar,
       (show) => show && callStore.fetchCallLogs()
     ) 
-  }
-
-  @action autoNotify = () => {
-    autorun('notifications', () => {
-      if(_.isEmpty(this.uniqueNotifications)) return
-      this.uniqueNotifications.forEach(this.notify)
-    })
-  }
-
-  @action notify = ({type = 'warning', title, message}, i) => {
-    notification[type]({
-      key:         i,
-      message:     title,
-      description: message,
-      onClose:     () => this.removeNotification(i)
-    })
   }
 
   @action handleReminderSidebar(){

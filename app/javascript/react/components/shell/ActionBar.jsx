@@ -2,6 +2,7 @@ import React                   from 'react'
 import { observer }            from 'mobx-react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import CallBar                 from 'ui/shell/ActionBar/Calling/CallBar'
+import CallNotesDialog         from 'ui/shell/ActionBar/Calling/CallNotesDialog'
 import intercomIcon            from 'images/intercom-icon.svg'
 import { SIDEBAR }             from 'stores/UiStore'
 
@@ -61,6 +62,7 @@ function ActionBar({callingStore, uiStore, store}) {
           <img src={intercomIcon} style={{width: '32px', height: '32px', marginTop: '-6px'}}/>
         </NavItem>
       </Nav>
+      <CallNotesDialog callingStore={this.props.callingStore} />
     </Navbar>
   )
 }

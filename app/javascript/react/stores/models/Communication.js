@@ -26,12 +26,18 @@
 }
 */
 
-import { observable, action, computed, reaction, runInAction } from 'mobx'
+import { 
+  observable, 
+  action,
+  computed, 
+  reaction, 
+  runInAction 
+} from 'mobx'
 
-import { setter }                       from 'mobx-decorators'
-import DateFormat                       from 'helpers/DateFormat'
-import _                                from 'lodash'
-import xhr                              from 'helpers/XHR'
+import { setter }  from 'mobx-decorators'
+import DateFormat  from 'helpers/DateFormat'
+import _           from 'lodash'
+import xhr         from 'helpers/XHR'
 
 export default class Communication {
   commsStore   = null
@@ -59,6 +65,7 @@ export default class Communication {
     this.autoFetchTranscript()
     this.autoFetchEmail()
     this.autoFetchVoicemail()
+    this.autoFetchCallNotes()
   }
 
   // Computed
@@ -158,6 +165,32 @@ export default class Communication {
       (isFetch) => isFetch && this.fetchSms(),
       true
     ) 
+  }
+
+  @action autoFetchCallNotes = () => {
+    reaction(
+      () => this.isActive && this.isCall,
+      (isFetch) => isFetch && this.fetchCallNotes(),
+      true
+    )
+  }
+
+  @action fetchCallNotes = async(params, id = this.id) => {
+    try {
+      this.setIsLoading(true)
+      this.setIsError(false)
+
+      return await xhr.get(`/commo/call_log/${id}`, {
+        params: {
+          only: 'notes'
+        }
+      }).
+        then((e) => { this.notes = e.data.notes })
+    } catch (err) {
+      this.setIsError(err)
+    } finally {
+      this.setIsLoading(false)
+    }
   }
 
   @action update = ({

@@ -44,7 +44,7 @@ const InboxItem = (props) => {
 
       <Media body>
         <ContactLink tag='h6' name={props.name} studentId={props.studentId} />
-        <p>{ !!props.media ? <InboxMMS src={props.media}/> : _.truncate(props.message, {'length': 45}) }</p>
+        <div>{ !!props.media ? <InboxMMS src={props.media}/> : _.truncate(props.message, {'length': 45}) }</div>
       </Media>
 
       <Media right>

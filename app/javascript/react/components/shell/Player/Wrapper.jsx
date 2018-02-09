@@ -6,7 +6,10 @@ const Wrapper = styled.div`
  flex: 1;
  align-items: center;
  padding: 5px 8px; 
+ margin: 10px 0;
  background: ${prop('background','#f3f3f3')};
+ border: 1px solid rgba(0, 0, 0, 0.125);
+ border-radius: 4px;
 
  ${ifProp('disabled', `
   background: #f3f3f3;

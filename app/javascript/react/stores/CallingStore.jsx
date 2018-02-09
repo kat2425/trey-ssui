@@ -1,9 +1,9 @@
-import { observable, action }  from 'mobx'
-import { setter }              from 'mobx-decorators'
-import xhr                     from 'helpers/XHR'
-import moment                  from 'moment'
-import { padCharsStart }       from 'lodash/fp'
-import UiStore                 from 'stores/UiStore'
+import { observable, action, autorun } from 'mobx'
+import { setter }                      from 'mobx-decorators'
+import xhr                             from 'helpers/XHR'
+import moment                          from 'moment'
+import { padCharsStart }               from 'lodash/fp'
+import UiStore                         from 'stores/UiStore'
 
 class CallingStore {
   // Observables
@@ -11,23 +11,48 @@ class CallingStore {
   @setter @observable callTime             = null
   @setter @observable isCalling            = false
   @setter @observable isConferenceCalling  = false
+  @setter @observable selectCallNotes      = false
   @setter @observable selectCall           = false
   @setter @observable selectConferenceCall = false
   @setter @observable selectDialPad        = false
   @setter @observable selectMute           = false
+  @setter @observable isError              = null
+  @setter @observable isSaved              = null
 
-  @observable connection          = null
-  @observable contact             = null
-  @observable contactName         = null
-  @observable currentOutputDevice = null
-  @observable isConnected         = false
-  @observable outputDevices       = []
-  @observable phoneNumber         = null
-  @observable studentID           = null
+  @observable connection                   = null
+  @observable contact                      = null
+  @observable contactName                  = null
+  @observable currentOutputDevice          = null
+  @observable isConnected                  = false
+  @observable outputDevices                = []
+  @observable phoneNumber                  = null
+  @observable studentID                    = null
+  @observable callSID                      = null
+  @observable callNoteText                 = ''
 
   callStartTime   = null
   device          = null
   intervalHandler = null
+
+  constructor() {
+    this.initAutoruns()
+  }
+
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if (this.isError && !this.isError.hideNotification) {
+        UiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    this.isError.type || 'error'
+        })
+      }
+    })
+  }
 
   generateToken = () => {
     return xhr.get('/commo/capability_token')
@@ -35,7 +60,7 @@ class CallingStore {
         return response
       })
       .catch((error) => {
-        console.log(error)
+        console.log('generate token error:', error)
       })
   }
 
@@ -57,7 +82,7 @@ class CallingStore {
     this.phoneNumber = this.contact.refs[0].phone
     this.userId      = data.data.user
 
-    const token      = data.data.token
+    const token = data.data.token
 
     this.setupDevice(token)
 
@@ -76,6 +101,7 @@ class CallingStore {
     this.connection = Twilio.Device.connect(params)
 
     this.connection.accept((conn) => {
+      this.callSID = conn.parameters.CallSid
       this.getOutputDevices()
       this.isConnected = true
 
@@ -137,14 +163,18 @@ class CallingStore {
           errorMessage = error.response.data.message
         }
 
-        UiStore.addNotification({title: 'Error', message: errorMessage, type: 'error'})
+        UiStore.addNotification({
+          title:   'Error',
+          message: errorMessage,
+          type:    'error'
+        })
         console.error('Calling Error:', error)
       })
   }
 
   @action
   initiateConferenceCall = async(contact, student_id) => {
-    const data  = await this.generateToken()
+    const data = await this.generateToken()
 
     this.contactID   = contact.refs[0].id
     this.contactName = contact.refs[0].name
@@ -204,36 +234,62 @@ class CallingStore {
     try {
       this.device = Twilio.Device.setup(token, { region: 'us1', debug: true })
     }
-    catch(e) {
+    catch (e) {
       console.log(e)
     }
 
     this.device.error((error) => {
-      let errorMessage = null
-      
-      switch(error.code) {
-        case 31000:
-          errorMessage = "We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet."
-          break;
-        case 31002:
-          errorMessage = "This contact's number does not allow communication from SchoolStatus."
-          break;
-        case 31003:
-          errorMessage = "We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet."
-          break;
-        case 31205:
-          errorMessage = "There was an error attempting to place the call. Please refresh the page and try again."
-        case 31208: 
-          errorMessage = 'We require access to your microphone.'
-          break;
-        default: 
-          errorMessage = 'We experienced an unknown error.'
-      }
+      const message = returnError(error.code)
 
-        UiStore.addNotification({title: 'Error', message: errorMessage, type: 'error'})
-      console.error('Calling Error:', error)
+      this.setIsError({
+        message,
+        title: 'Error'
+      })
     })
   }
+
+/* Call Notes */
+@action
+isCallNotes = (bool) => {
+  this.selectCallNotes = bool
+}
+
+@action
+setCallNoteText = (text) => {
+  this.callNoteText = text
+}
+
+@action
+addCallNote = () => {
+  this.setIsError(false)
+  if(this.callNoteText.trim() != '') {
+    xhr.post('/commo/call_log/deferred_note', {
+      call_log_sid: this.callSID,
+      body:         this.callNoteText
+    })
+      .then(action(() => {
+        this.setCallNoteText('')
+        
+        UiStore.addNotification({
+          title:   'Note',
+          message: 'Note successfully added!',
+          type:    'success'
+        })
+      }))
+      .catch((error) => {
+        this.setIsError({
+          message: 'Something went wrong! We were unable to save the note',
+          title:   'Error'
+        })
+      })
+  } else {
+    UiStore.addNotification({
+      title:   'Note',
+      message: 'Your note cannot be empty!',
+      type:    'error'
+    })
+  }
+}
 }
 
 function getTime(start, end) {
@@ -247,6 +303,30 @@ function getTime(start, end) {
   const secs      = (parseInt(duration.asSeconds()) - minutes * 60).toString()
 
   return `${padTime(minutes)}:${padTime(secs)}`
+}
+
+function returnError(errorCode) {
+  switch (errorCode) {
+  case 31000:
+    return `We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet.`
+    break
+  case 31002:
+    return `This contact's number does not allow communication from SchoolStatus.`
+    break
+  case 31003:
+    return `We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet.`
+    break
+  case 31205:
+    return `There was an error attempting to place the call. Please refresh the page and try again.`
+    break
+  case 31208:
+    return `We require access to your microphone.`
+    break
+  default:
+    return `We experienced an unknown error.`
+  }
+
+  return errorMessage
 }
 
 export default CallingStore = new CallingStore()

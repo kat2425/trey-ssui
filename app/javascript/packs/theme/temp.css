@@ -478,3 +478,25 @@ td.rdtYear:hover {
   font-size: 1.2em;
   margin-top: 37px;
 }
+
+.call-note-container-enter {
+  opacity: 0.01;
+  transform: translateY(100%);
+  transition: transform 1000ms ease-out;
+}
+
+.call-note-container.call-note-container-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.call-note-container-leave {
+  opacity: 1;
+  transform: translateY(100%);
+  transition: transform 1000ms ease-out;
+}
+
+.call-note-container-leave.call-note-container-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
