@@ -11,7 +11,7 @@ import MyStudents            from 'modules/logic/MyStudents'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 import TagBuilder            from 'modules/logic/TagBuilder/'
 
-import ChannelHistory        from 'modules/channel/History'
+import CallHistory           from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
 
 // Assessment
@@ -47,7 +47,7 @@ const AppContainer = ({match}) => {
 
         {/* Channel */}
         <Route path='/r/channel/inbox' component={SMSController} />
-        <Route path='/r/channel/history' component={ChannelHistory} />
+        <Route path='/r/channel/history' component={CallHistory} />
         <Route path='/r/channel/engagement' component={ChannelEngagement} />
 
         {/* Misc */}
@@ -65,7 +65,7 @@ const AppContainer = ({match}) => {
               </div>
             </DumbContainer>
           )
-        }} 
+        }}
         />
       </Switch>
 
