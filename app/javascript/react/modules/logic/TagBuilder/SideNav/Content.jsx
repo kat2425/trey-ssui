@@ -6,9 +6,7 @@ const Content = styled.div`
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
   width: 100%;
-  /*max-height: calc(100vh - 300px);*/
   &::after{
     content: '';
     display: block;
