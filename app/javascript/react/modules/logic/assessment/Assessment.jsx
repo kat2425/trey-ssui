@@ -13,6 +13,8 @@ import MAAP                 from 'modules/logic/MAAP'
 import ATI                  from 'modules/logic/assessment/ATI'
 import STARReading          from 'modules/logic/assessment/STARReading'
 import STARMath             from 'modules/logic/assessment/STARMath'
+import STAREarlyLit         from 'modules/logic/assessment/STAREarlyLit'
+import AccelReader          from 'modules/logic/assessment/AccelReader'
 
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
@@ -24,9 +26,11 @@ class Assessments extends Component {
     super(props)
 
     this.options = [
-      { value: 'maap',         label: 'MAAP'         },
-      { value: 'star_reading', label: 'STAR Reading' },
-      { value: 'star_math',    label: 'STAR Math'    },
+      { value: 'maap',           label: 'MAAP'               },
+      { value: 'star_reading',   label: 'STAR Reading'       },
+      { value: 'star_math',      label: 'STAR Math'          },
+      { value: 'star_early_lit', label: 'STAR Early Lit'     },
+      { value: 'accel_reader',   label: 'Accelerated Reader' },
       // { value: 'ati',          label: 'ATI' }
     ]
 
@@ -70,10 +74,12 @@ class Assessments extends Component {
         </ModuleHeader>
 
         <Switch>
-          <Route path='/r/assessment/maap'         component={MAAP}        />
-          <Route path='/r/assessment/ati'          component={ATI}         />
-          <Route path='/r/assessment/star_reading' component={STARReading} />
-          <Route path='/r/assessment/star_math'    component={STARMath}    />
+          <Route path='/r/assessment/maap'           component={MAAP}         />
+          <Route path='/r/assessment/ati'            component={ATI}          />
+          <Route path='/r/assessment/star_reading'   component={STARReading}  />
+          <Route path='/r/assessment/star_math'      component={STARMath}     />
+          <Route path='/r/assessment/star_early_lit' component={STAREarlyLit} />
+          <Route path='/r/assessment/accel_reader'   component={AccelReader}  />
         </Switch>
       </div>
     )
