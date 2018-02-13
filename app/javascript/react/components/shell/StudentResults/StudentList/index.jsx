@@ -27,7 +27,7 @@ const StudentList = ({tag}) => {
         renderItem = {student => (
           <ListItem onClick={showStudentCard(student)}>
             <ListItemMeta
-              avatar      = {<StudentAvatar id={student.id} />}
+              avatar      = {<StudentAvatar id={student.id} size={42}/>}
               title       = {<Title student={student} />}
               description = {<Description student={student} />}
             />
