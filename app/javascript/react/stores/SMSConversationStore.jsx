@@ -1,17 +1,20 @@
 import {
   observable,
   action,
-  computed
+  computed,
+  autorun
 } from 'mobx'
 
-import _            from 'lodash'
-import xhr          from 'helpers/XHR'
+import _             from 'lodash'
+import xhr           from 'helpers/XHR'
+import intercomEvent from 'helpers/Intercom'
 
-import { SIDEBAR }  from 'stores/UiStore'
-import uiStore      from 'stores/UiStore'
-import { setter }   from 'mobx-decorators'
-import Conversation from 'stores/models/Conversation'
-import Scroller     from 'stores/models/Scroller'
+import { SIDEBAR }   from 'stores/UiStore'
+import uiStore       from 'stores/UiStore'
+import getError      from 'helpers/ErrorParser'
+import { setter }    from 'mobx-decorators'
+import Conversation  from 'stores/models/Conversation'
+import Scroller      from 'stores/models/Scroller'
 
 export class SMSConversationStore {
   @observable limit           = 20
@@ -20,7 +23,12 @@ export class SMSConversationStore {
   @observable scrollers       = observable.map()
   @setter @observable isError = null
 
+  constructor() {
+    this.initAutoruns()
+  }
+
   // Computed Values
+
   @computed
   get descMessages() {
     const conversation = this.getCurrentConversation()
@@ -37,6 +45,22 @@ export class SMSConversationStore {
   }
 
   // Actions
+
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if (this.isError && !this.isError.hideNotification) {
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    this.isError.type || 'error'
+        })
+      }
+    })
+  }
   @action
   addMessage = (msg) => {
     const conversation = this.conversations.get(msg.conversation_id)
@@ -50,11 +74,10 @@ export class SMSConversationStore {
     const limit = scroller ? scroller.limit : this.limit
 
     this.isLoading = true
-
-    xhr.get(`/commo/sms/conversation/${id}`, {
-      params: {
-        only:
-          [
+    try {
+      const res = await xhr.get(`/commo/sms/conversation/${id}`, {
+        params: {
+          only: [
             'id',
             'created_at',
             'conversation_id',
@@ -70,16 +93,21 @@ export class SMSConversationStore {
             'language',
             'meta'
           ].join(','),
-        limit: limit,
-        page:  1
-      }
-    }).then(this.fetchConversationOK(id))
+          limit: limit,
+          page:  1
+        }
+      })
+
+      this.fetchConversationOK(id, res.headers, res.data)
+    } catch(e) {
+      this.setIsError(getError(e))
+    } finally {
+      this.isLoading = false
+    }
   }
 
   @action
-  fetchConversationOK = id => ({headers, data}) => {
-    this.isLoading = false
-
+  fetchConversationOK = (id, headers, data) => {
     this.updateConversation(id, data)
     this.updateScroller(id, headers)
   }
@@ -99,17 +127,21 @@ export class SMSConversationStore {
   }
 
   @action
-  initiateConversation = (contact) => {
-    return xhr.post('/commo/conversations', {
-      number:     contact.phone,
-      contact_id: contact.id
-    })
-      .then(res => res.data)
-      .then(this.initiateConversationOk(contact))
+  initiateConversation = async(contact) => {
+    try {
+      await xhr.post('/commo/conversations', {
+        number:     contact.phone,
+        contact_id: contact.id
+      })
+
+      this.initiateConversationOk(contact, contact.id)
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
   }
 
   @action
-  initiateConversationOk = contact => ({id}) => {
+  initiateConversationOk = (contact, id) => {
     uiStore.setCurrentContact(contact)
     uiStore.setCurrentConversation(id)
     uiStore.setSelectedSidebar(SIDEBAR.SMS)
@@ -118,18 +150,16 @@ export class SMSConversationStore {
   }
 
   @action
-  sendMessage(msg, id, attachment) {
-    if (attachment) {
-      const data = this.getAttachmentData(msg, id, attachment)
+  sendMessage = (msg, id, attachment = null) => {
+    intercomEvent('web:sms:send', {
+      contact_id: id,
+      attachment: (attachment ? true : false)
+    })
 
-      xhr.post('/commo/sms/send_message/contact', data, { 
-        'Content-Type': 'multipart/form-data' 
-      }).then(this.sendMessageOK)
+    if (attachment) {
+      this.sendWithAttachment(msg, id, attachment)
     } else {
-      xhr.post('/commo/sms/send_message/contact', {
-        contact_id: id,
-        body:       msg
-      }).then(this.sendMessageOK)
+      this.sendWithoutAttachment(msg, id)
     }
   }
 
@@ -138,9 +168,52 @@ export class SMSConversationStore {
     this.addMessage(response.data)
   }
 
+  getAttachmentData = (msg, id, attachment) => {
+    const data = new FormData()
+
+    data.append('contact_id', id)
+    data.append('body',       msg)
+    data.append('attachment', attachment)
+
+    return data
+  }
+
   @action
-  setRead(id) {
-    xhr.put(`/commo/sms_log/${id}/read`)
+  sendWithAttachment = async(msg, id, attachment) => {
+    const data = this.getAttachmentData(msg, id, attachment)
+
+    try {
+      const res = await xhr.post('/commo/sms/send_message/contact', data, {
+        'Content-Type': 'multipart/form-data'
+      })
+
+      this.sendMessageOK(res)
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action
+  sendWithoutAttachment = async(msg, id) => {
+    try {
+      const res = await xhr.post('/commo/sms/send_message/contact', {
+        contact_id: id,
+        body:       msg
+      })
+
+      this.sendMessageOK(res)
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action
+  setRead = async(id) => {
+    try {
+      await xhr.put(`/commo/sms_log/${id}/read`)
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
   }
 
   @action
@@ -186,16 +259,6 @@ export class SMSConversationStore {
     } else {
       this.scrollers.set(id, new Scroller(this.limit, total))
     }
-  }
-
-  getAttachmentData = (msg, id, attachment) => {
-    const data = new FormData()
-
-    data.append('contact_id', id)
-    data.append('body',       msg)
-    data.append('attachment', attachment)
-
-    return data
   }
 }
 

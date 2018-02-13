@@ -20,8 +20,8 @@ import SidebarController       from 'ui/controllers/SidebarController'
 import smsInboxStore           from 'stores/SMSInboxStore'
 import callingStore            from 'stores/CallingStore'
 import webSocketStore          from 'stores/WebSocketStore'
-import SMSConversationStore    from 'stores/SMSConversation'
-import MailerStore             from 'stores/MailerStore'
+import smsConversationStore    from 'stores/SMSConversationStore'
+import mailerStore             from 'stores/MailerStore'
 import callStore               from 'stores/CallStore'
 import reminderStore           from 'stores/ReminderStore'
 
@@ -83,7 +83,7 @@ class UserMain extends Component {
     const contact = _.get(e, 'detail.contact')
 
     if(contact){
-      SMSConversationStore.initiateConversation(contact)
+      smsConversationStore.initiateConversation(contact)
       return
     }
 
@@ -92,7 +92,7 @@ class UserMain extends Component {
   }
 
   showMailer = (e) => {
-    MailerStore.fetchEmailAddress(e.detail.type, e.detail.id, e.detail.name)
+    mailerStore.fetchEmailAddress(e.detail.type, e.detail.id, e.detail.name)
   }
 
   componentDidMount() {
@@ -171,7 +171,7 @@ class UserMain extends Component {
               callingStore  = {callingStore}
               reminderStore = {reminderStore}
             />
-            <MailWriter store={MailerStore} />
+            <MailWriter store={mailerStore} />
             <SidebarController callStore={callStore} />
           </div>
         </div>
