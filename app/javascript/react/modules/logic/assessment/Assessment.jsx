@@ -10,6 +10,8 @@ import ModuleHeader         from 'ui/shell/ModuleHeader'
 import Select               from 'react-virtualized-select'
 
 import MAAP                 from 'modules/logic/MAAP'
+import PSAT89               from 'modules/logic/assessment/PSAT89'
+import PSATNM               from 'modules/logic/assessment/PSATNM'
 import ATI                  from 'modules/logic/assessment/ATI'
 import STARReading          from 'modules/logic/assessment/STARReading'
 import STARMath             from 'modules/logic/assessment/STARMath'
@@ -26,11 +28,13 @@ class Assessments extends Component {
     super(props)
 
     this.options = [
-      { value: 'maap',           label: 'MAAP'               },
-      { value: 'star_reading',   label: 'STAR Reading'       },
-      { value: 'star_math',      label: 'STAR Math'          },
-      { value: 'star_early_lit', label: 'STAR Early Lit'     },
-      { value: 'accel_reader',   label: 'Accelerated Reader' },
+      // { value: 'maap',           label: 'MAAP'               },
+      // { value: 'star_reading',   label: 'STAR Reading'       },
+      // { value: 'star_math',      label: 'STAR Math'          },
+      // { value: 'star_early_lit', label: 'STAR Early Lit'     },
+      // { value: 'accel_reader',   label: 'Accelerated Reader' },
+      { value: 'psat_89',        label: 'PSAT 8/9'           },
+      { value: 'psat_nm',        label: 'PSAT NM'            },
       // { value: 'ati',          label: 'ATI' }
     ]
 
@@ -80,6 +84,8 @@ class Assessments extends Component {
           <Route path='/r/assessment/star_math'      component={STARMath}     />
           <Route path='/r/assessment/star_early_lit' component={STAREarlyLit} />
           <Route path='/r/assessment/accel_reader'   component={AccelReader}  />
+          <Route path='/r/assessment/psat_89'        component={PSAT89}       />
+          <Route path='/r/assessment/psat_nm'        component={PSATNM}       />
         </Switch>
       </div>
     )
