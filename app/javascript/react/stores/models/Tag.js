@@ -201,6 +201,7 @@ export default class Tag {
       this.createdAt     = moment().format()
       this.hasBeenTested = false
       this.setActive()
+      this.setActiveTab(TABS.QUERY_BUILDER)
     }
 
     if(isOnlyNew){
@@ -373,6 +374,8 @@ export default class Tag {
     this.system     = system
     this.global     = global
     this.groups     = groups
+
+    this.setActiveTab(TABS.STUDENTS)
   }
 
   @action setActive = () => {
