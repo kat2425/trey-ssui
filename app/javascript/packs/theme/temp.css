@@ -500,3 +500,16 @@ td.rdtYear:hover {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+
+.mailer-editor > div > div:first-child {
+  background-color: #f9f9f9 !important;
+  border-color: rgb(236, 238, 239) !important;
+  border-radius: 0 !important;
+  margin: 0;
+  padding: 10px 10px 5px;
+}
+
+.DraftEditor-root {
+  min-height: 400px;
+  background-color: white !important;
+}
