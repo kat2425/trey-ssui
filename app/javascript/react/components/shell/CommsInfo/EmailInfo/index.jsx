@@ -18,7 +18,7 @@ const EmailInfo = ({store}) => {
 
 const EmailList = ({date, list}) => (
   <div>
-    <p className='text-center text-muted'>{date}</p>
+    <p className='text-center text-muted mb-2'>{date}</p>
     {list.map(c => <Email key={uuid()} date={date} comm={c} />)}
   </div>
 )
