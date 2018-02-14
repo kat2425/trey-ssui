@@ -236,6 +236,4 @@ export class TagStore {
   }
 }
 
-const singleton = new TagStore()
-
-export default singleton
+export default new TagStore()

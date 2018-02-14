@@ -12,7 +12,7 @@ function TagFormModal({tagStore}) {
       className="h-100 d-flex flex-column justify-content-center my-0"
     >
       <ModalBody>
-        <TagForm tag={tagStore.editedTag} onCancel={handleOnCancel(tagStore)} />
+        <TagForm tag={tagStore.editedTag} store={tagStore} onCancel={handleOnCancel(tagStore)} />
       </ModalBody>
     </Modal>
   )

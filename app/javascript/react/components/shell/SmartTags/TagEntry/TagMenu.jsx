@@ -15,7 +15,7 @@ import {
 
 const menu = (tag = {}, store = {}) => (
   <Menu style={{minWidth: 100}}>
-    {!tag.isNew && tag.modifiable && [
+    {tag.modifiable && [
       <MenuItem key={uuid()}>
         <div onClick={() => store.editTag(tag)}>
           <ActionIcon type='edit' />

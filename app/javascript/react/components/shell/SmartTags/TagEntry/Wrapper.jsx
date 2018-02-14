@@ -1,7 +1,8 @@
-import styled   from 'styled-components'
-import {ifProp} from 'styled-tools'
+import styled     from 'styled-components'
+import { ifProp } from 'styled-tools'
+import { darken } from 'polished'
 
-const Wrapper = styled.div.attrs({ className: 'p-3 pl-3' })`
+const Wrapper = styled.div.attrs({ className: 'py-3 px-2' })`
  display: flex;
  flex-direction: row;
  justify-content: space-between;
@@ -18,6 +19,14 @@ const Wrapper = styled.div.attrs({ className: 'p-3 pl-3' })`
   background-color: rgb(247, 252, 255);
   color: #3f9fcf;
  }
+
+ ${ifProp('isModified', `
+  background-color: #fff1f0;
+
+  &:hover {
+   background-color: ${darken(0.01, '#fff1f0')};
+  }
+ `)}
 `
 
 export default Wrapper
