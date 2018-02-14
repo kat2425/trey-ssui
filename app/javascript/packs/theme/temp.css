@@ -102,6 +102,14 @@ html, body {
   opacity: 0.0;
 }
 
+.bg-white {
+  background: #fff
+}
+
+.bg-light-green {
+  background: #f2fff1
+}
+
 .table-hover tbody tr:hover {
   background-color: rgba(0,0,0,0.025)
 }

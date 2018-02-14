@@ -34,9 +34,10 @@ const InboxMMS = (props) => {
 
 const InboxItem = (props) => {
   const unreadColor = ((props.read) ? 'text-clear' : ((props.direction === 'inbound') ? 'text-primary' : 'text-clear' ))
+  const unreadBackground = ((props.read) ? 'bg-white' : ((props.direction === 'inbound') ? 'bg-light-green' : 'bg-white' ))
 
   return (
-    <Media className='list-group-item' style={itemStyle}>
+    <Media className={`list-group-item ${unreadBackground}`} style={itemStyle}>
 
       <Media className='pr-4 pl-2 pb-2 pt-2' left>
         {props.avatar}
@@ -44,7 +45,12 @@ const InboxItem = (props) => {
 
       <Media body>
         <ContactLink tag='h6' name={props.name} studentId={props.studentId} />
-        <div>{ !!props.media ? <InboxMMS src={props.media}/> : _.truncate(props.message, {'length': 45}) }</div>
+        <div>
+          { !!props.media
+            ? <InboxMMS src={props.media} />
+            : _.truncate(props.message, {'length': 45})
+          }
+        </div>
       </Media>
 
       <Media right>
@@ -55,7 +61,7 @@ const InboxItem = (props) => {
 
       <Media className='pl-2' right>
         <small>
-          <span className={`ml-2 ${unreadColor}`} style={{fontSize: 9}}>&#11044;</span>
+          <span className={`ml-2 icon icon-controller-record ${unreadColor}`} style={{fontSize: 12}}/>
         </small>
       </Media>
     </Media>
