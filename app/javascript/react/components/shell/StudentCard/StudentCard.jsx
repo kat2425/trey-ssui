@@ -177,13 +177,13 @@ export default class StudentCard extends Component {
                 renderIf  = {userStore.user.higherEd}
               />
 
-              <EUserMenuItem
-                title     = 'Assessment'
-                iconClass = 'icon-area-graph'
-                link      = {`${match.url}/assessment/maap`}
-                location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
-              />
+              {/* <EUserMenuItem */}
+              {/*   title     = 'Assessment' */}
+              {/*   iconClass = 'icon-area-graph' */}
+              {/*   link      = {`${match.url}/assessment/maap`} */}
+              {/*   location  = {location} */}
+              {/*   renderIf  = {!(userStore.user.higherEd)} */}
+              {/* /> */}
 
               <EUserMenuItem
                 title     = 'Grades'
