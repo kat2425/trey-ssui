@@ -18,6 +18,9 @@ import STARMath             from 'modules/logic/assessment/STARMath'
 import STAREarlyLit         from 'modules/logic/assessment/STAREarlyLit'
 import AccelReader          from 'modules/logic/assessment/AccelReader'
 
+import userStore            from 'stores/UserStore'
+import _                    from 'lodash'
+
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
 import 'react-virtualized-select/styles.css'
@@ -27,20 +30,24 @@ class Assessments extends Component {
   constructor(props) {
     super(props)
 
-    this.options = [
-      // { value: 'maap',           label: 'MAAP'               },
-      // { value: 'star_reading',   label: 'STAR Reading'       },
-      // { value: 'star_math',      label: 'STAR Math'          },
-      // { value: 'star_early_lit', label: 'STAR Early Lit'     },
-      // { value: 'accel_reader',   label: 'Accelerated Reader' },
-      { value: 'psat_89',        label: 'PSAT 8/9'           },
-      { value: 'psat_nm',        label: 'PSAT NM'            },
-      // { value: 'ati',          label: 'ATI' }
+    this.options = this.listOptions()
+    this.state   = { selectedOption: '' }
+  }
+
+  listOptions = () => {
+    const  { modules } = userStore.user
+    const options      = [
+      { module: 'vjs_maap',     value: 'maap',           label: 'MAAP'               },
+      { module: 'vjs_renplace', value: 'star_reading',   label: 'STAR Reading'       },
+      { module: 'vjs_renplace', value: 'star_math',      label: 'STAR Math'          },
+      { module: 'vjs_renplace', value: 'star_early_lit', label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace', value: 'accel_reader',   label: 'Accelerated Reader' },
+      { module: 'vjs_psat',     value: 'psat_89',        label: 'PSAT 8/9'           },
+      { module: 'vjs_psat',     value: 'psat_nm',        label: 'PSAT NM'            },
+      { module: 'vjs_ati',      value: 'ati',            label: 'ATI'                }
     ]
 
-    this.state = {
-      selectedOption: '',
-    }
+    return _.filter(options, (o) => userStore.hasModules(o.module))
   }
 
   handleChange(selectedOption) {

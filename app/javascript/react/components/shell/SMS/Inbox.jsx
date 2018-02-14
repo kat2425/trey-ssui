@@ -1,9 +1,9 @@
 import React, { Component} from 'react'
-import PropTypes from 'prop-types'
-import { observer }         from 'mobx-react'
+import PropTypes           from 'prop-types'
+import { observer }        from 'mobx-react'
 
-import { Media } from 'reactstrap'
-import InboxItem from './InboxItem'
+import { Media }           from 'reactstrap'
+import InboxItem           from './InboxItem'
 
 @observer
 export default class Inbox extends Component {

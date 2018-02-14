@@ -39,7 +39,7 @@ const UserMenu = () => {
         <EUserMenuItem
           title     = 'Assessment'
           iconClass = 'icon-area-graph'
-          link      = '/r/assessment/psat_89'
+          link      = '/r/assessment'
           renderIf  = {userStore.hasModules('assessment')}
         />
 
