@@ -99,8 +99,8 @@ export default class StudentCard extends Component {
       <Modal
         style={cardStyle}
         isOpen
-        onRequestClose={this.closeCard}
-        contentLabel='Student Card'
+        onRequestClose = {this.closeCard}
+        contentLabel   = 'Student Card'
       >
         {student ? this.renderCard() : this.renderLoader()}
       </Modal>

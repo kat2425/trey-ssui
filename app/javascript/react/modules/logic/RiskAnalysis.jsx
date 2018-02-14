@@ -73,13 +73,16 @@ export default class RiskAnalysis extends Component {
   }
 
   renderMassEmail() {
-    if (!!this.state.selected.course_id && !!this.state.selected.term) {
+    const { selected } = this.state
+
+    if (!!selected.course_id && !!selected.term) {
       return (
         <EMassEmail
           type     = 'course'
-          name     = {this.state.selected.course_id.label}
-          id       = {this.state.selected.course_id.value}
-          renderIf = {!!this.state.selected.course_id && !!this.state.selected.term}
+          name     = {`${selected.course_id.label} | ${selected.teacher_id.label} | ${selected.term.label}`}
+          id       = {selected.course_id.value}
+          label    = 'Email Course'
+          renderIf = {!!selected.course_id && !!selected.term}
         />
       )
     }
@@ -93,7 +96,7 @@ export default class RiskAnalysis extends Component {
     return (
       <div>
         <ModuleHeader title='Risk Analysis'>
-          {/* { this.renderMassEmail() } */}
+          { this.renderMassEmail() }
 
           <EVJSICSelect
             id            = 'course_id'

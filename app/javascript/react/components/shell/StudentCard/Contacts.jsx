@@ -117,9 +117,12 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
                     color     = 'info'
                     className = 'mr-2'
                     onClick   = {() => {
-                      window.studentCardMailer = window.open('', '_blank')
-                      handleSendEmail(ref.id)}
-                    }
+                      fireEvent('showMailer', {
+                        type: 'individual',
+                        id:   ref.id,
+                        name: ref.name
+                      })
+                    }}
                   >
                     <span className='icon icon-mail' />
                   </Button>

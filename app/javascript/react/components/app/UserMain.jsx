@@ -7,17 +7,19 @@ import UserMenu                from 'ui/shell/UserMenu/UserMenu'
 import ActionBar               from 'ui/shell/ActionBar'
 import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
+import MailWriter              from 'ui/shell/MailWriter'
 import Sidebar                 from 'ui/shell/SMS/Sidebar'
 import {CallSidebar, CallInfo} from 'ui/shell/Call'
 
 import CallingController       from 'ui/controllers/CallingController'
+import SidebarController       from 'ui/controllers/SidebarController'
 
 import SMSInboxStore           from 'stores/SMSInbox'
 import CallingStore            from 'stores/CallingStore'
 import WebSocketStore          from 'stores/WebSocket'
 import SMSConversationStore    from 'stores/SMSConversation'
+import MailerStore             from 'stores/MailerStore'
 import callStore               from 'stores/CallStore'
-import SidebarController       from 'ui/controllers/SidebarController'
 
 import VJSContainer            from 'ui/vjs/VJSContainer'
 
@@ -85,6 +87,9 @@ class UserMain extends Component {
     uiStore.toggleSidebar()
   }
 
+  showMailer = (e) => {
+    MailerStore.fetchEmailAddress(e.detail.type, e.detail.id, e.detail.name)
+  }
 
   componentDidMount() {
     WebSocketStore.subscribeUser(window.SSUser.id)
@@ -93,6 +98,8 @@ class UserMain extends Component {
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
     window.addEventListener('toggleSidebar',      this.toggleSidebar)
     window.addEventListener('toggleCallSidebar',  this.toggleCallSidebar)
+    window.addEventListener('showMailer',         this.showMailer)
+    window.addEventListener('closeMailer',        this.closeMailer)
 
     window.intercomSettings = {
       app_id:     'c443b08a556eb87a1f39f088cda1b1f93e3a6631',
@@ -118,6 +125,9 @@ class UserMain extends Component {
     window.removeEventListener('showStudentCard',    this.showStudentCard)
     window.removeEventListener('onCloseStudentCard', this.onCloseStudentCard)
     window.removeEventListener('toggleSidebar',      this.toggleSidebar)
+    window.removeEventListener('toggleCallSidebar',  this.toggleCallSidebar)
+    window.removeEventListener('showMailer',         this.showMailer)
+    window.removeEventListener('closeMailer',        this.closeMailer)
   }
 
   render() {
@@ -132,6 +142,7 @@ class UserMain extends Component {
             <UserMenu />
             <AppContainer />
             <ActionBar store={SMSInboxStore} uiStore={this.props.uiStore} callingStore={CallingStore}/>
+            <MailWriter store={MailerStore} />
             <SidebarController callStore={callStore} />
             <CallInfo
               store    = {callStore}
