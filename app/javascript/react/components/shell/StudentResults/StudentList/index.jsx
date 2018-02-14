@@ -12,7 +12,7 @@ const ListItem = styled(List.Item)`
   padding-right: 10px;
   cursor: pointer;
   &:hover{
-    background-color:  rgba(0, 0, 0, 0.08);
+    background-color:  rgba(0, 0, 0, 0.025);
   }
 `
 
@@ -22,18 +22,19 @@ const StudentList = ({tag}) => {
   return (
     <div>
       <List
-        itemLayout = "horizontal"
+        itemLayout = 'horizontal'
         dataSource = {students}
         renderItem = {student => (
           <ListItem onClick={showStudentCard(student)}>
             <ListItemMeta
-              avatar      = {<StudentAvatar id={student.id} />}
+              avatar      = {<StudentAvatar id={student.id} size={42}/>}
               title       = {<Title student={student} />}
               description = {<Description student={student} />}
             />
           </ListItem>
         )}
       />
+      <hr />
       <div className='mt-4'>
         <Paginatron 
           totalPages  = {pagination.totalPages}
@@ -54,12 +55,9 @@ const Description = observer( function Description({student}){
 const Title = observer(function Title({student}){ 
   return (
     <span className='mb-0'>
-      <a 
-        className='font-weight-bold'
-        onClick={showStudentCard(student)}
-      >
+      <span className='d-inline-block font-weight-bold' style={{color: '#292B2C'}}>
         {`${student.last_name}, ${student.first_name}`}
-      </a>
+      </span>
       <span className='text-muted'> {`, Grade ${student.grade}`} </span>
     </span>
   )
