@@ -105,7 +105,7 @@ export default class RiskAnalysis extends Component {
             handleChange  = {::this.setCourseFilter}
             params        = {this.state.params}
             placeholder   = 'Course'
-            width         = {200}
+            width         = {220}
             renderIf      = {!!this.state.selected.term && !!this.state.selected.teacher_id}
           />
 

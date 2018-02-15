@@ -82,6 +82,7 @@ export default class VJSICSelect extends Component {
           value          = {this.props.selectedValue}
           onChange       = {this.props.handleChange}
           maxHeight      = {375}
+          optionHeight   = {(this.props.optionHeight || 54)}
           clearable      = {this.props.clearable}
           mutli          = {this.props.multi}
           optionRenderer = {this.props.optionRenderer || null}
