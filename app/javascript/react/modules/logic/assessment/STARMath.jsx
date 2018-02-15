@@ -28,7 +28,7 @@ export default class STARMath extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      // path:    'assessment/maap'
+                      path:    'assessment/star_math'
                     })
                   }
                 }

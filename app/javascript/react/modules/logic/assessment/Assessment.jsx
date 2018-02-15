@@ -35,16 +35,16 @@ class Assessments extends Component {
   }
 
   listOptions = () => {
-    const  { modules } = userStore.user
+    const { modules }  = userStore.user
     const options      = [
-      { module: 'vjs_maap',     value: 'maap',           label: 'MAAP'               },
-      { module: 'vjs_renplace', value: 'star_reading',   label: 'STAR Reading'       },
-      { module: 'vjs_renplace', value: 'star_math',      label: 'STAR Math'          },
-      { module: 'vjs_renplace', value: 'star_early_lit', label: 'STAR Early Lit'     },
       { module: 'vjs_renplace', value: 'accel_reader',   label: 'Accelerated Reader' },
+      { module: 'vjs_ati',      value: 'ati',            label: 'ATI'                },
+      { module: 'vjs_maap',     value: 'maap',           label: 'MAAP'               },
       { module: 'vjs_psat',     value: 'psat_89',        label: 'PSAT 8/9'           },
       { module: 'vjs_psat',     value: 'psat_nm',        label: 'PSAT NM'            },
-      { module: 'vjs_ati',      value: 'ati',            label: 'ATI'                }
+      { module: 'vjs_renplace', value: 'star_early_lit', label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace', value: 'star_math',      label: 'STAR Math'          },
+      { module: 'vjs_renplace', value: 'star_reading',   label: 'STAR Reading'       },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
-const MAAP = ({student}) => {
+const STARMath = ({student}) => {
   return (
     <div>
       <VJSChart
-        id               = 'sc-maap'
-        reportPath       = '/public/VJS/ss_ui/assessment/maap/student_card'
+        id               = 'sc-star-math'
+        reportPath       = '/public/VJS/ss_ui/assessment/renplace/star_math/student_card'
         scale            = 'container'
-        title            = 'MAAP'
+        title            = 'STAR Math'
         isTable          = {true}
         ignorePagination = {true}
         params           = {{
@@ -21,7 +21,7 @@ const MAAP = ({student}) => {
   )
 }
 
-MAAP.defaultProps = {}
-MAAP.propTypes = {}
+STARMath.defaultProps = {}
+STARMath.propTypes = {}
 
-export default MAAP
+export default STARMath

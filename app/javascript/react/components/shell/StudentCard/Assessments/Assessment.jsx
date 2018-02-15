@@ -5,9 +5,16 @@ import {
   Switch, Route, withRouter, Redirect
 } from 'react-router-dom'
 
-import Select from 'react-virtualized-select'
-import SubmoduleHeader         from 'ui/shell/SubmoduleHeader'
-import MAAP from './MAAP'
+import Select          from 'react-virtualized-select'
+import SubmoduleHeader from 'ui/shell/SubmoduleHeader'
+import userStore       from 'stores/UserStore'
+import _               from 'lodash'
+
+import MAAP            from './MAAP'
+import STARReading     from './STARReading'
+import STARMath        from './STARMath'
+import STAREarlyLit    from './STAREarlyLit'
+import AccelReader     from './AccelReader'
 
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
@@ -21,15 +28,24 @@ class Assessments extends Component {
     super(props)
 
     this.currentPath = null
+    this.options     = this.listOptions()
+    this.state       = { selectedOption: '' }
+  }
 
-    this.options = [
-      { value: 'maap',         label: 'MAAP'         },
-      { value: 'star_reading', label: 'STAR Reading' },
+  listOptions = () => {
+    const { modules }  = userStore.user
+    const options      = [
+      { module: 'vjs_renplace', value: 'accel_reader',   label: 'Accelerated Reader' },
+      { module: 'vjs_ati',      value: 'ati',            label: 'ATI'                },
+      { module: 'vjs_maap',     value: 'maap',           label: 'MAAP'               },
+      { module: 'vjs_psat',     value: 'psat_89',        label: 'PSAT 8/9'           },
+      { module: 'vjs_psat',     value: 'psat_nm',        label: 'PSAT NM'            },
+      { module: 'vjs_renplace', value: 'star_early_lit', label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace', value: 'star_math',      label: 'STAR Math'          },
+      { module: 'vjs_renplace', value: 'star_reading',   label: 'STAR Reading'       },
     ]
 
-    this.state = {
-      selectedOption: '',
-    }
+    return _.filter(options, (o) => userStore.hasModules(o.module))
   }
 
   handleChange(selectedOption) {
@@ -38,8 +54,8 @@ class Assessments extends Component {
 
     this.setState({ selectedOption })
 
-    this.currentPath = location.pathname
-    history.push(`${this.currentPath}/${value}`)
+    this.currentPath = _.take(location.pathname.split('/'), 3).join('/')
+    history.push(`${this.currentPath}/students/${student.id}/assessment/${value}`)
   }
 
   renderDropdown() {
@@ -47,7 +63,7 @@ class Assessments extends Component {
     const value              = selectedOption && selectedOption.value
 
     return (
-      <div style={{width: 300}} className='ml-2'>
+      <div style={{width: 300}} className='ml-2 mr-3'>
         <Select
           name        = 'sc-assessment-menu'
           value       = {value}
@@ -72,8 +88,28 @@ class Assessments extends Component {
 
         <Switch location={location}>
           <Route
-            path   = {`${match.url}/assessment/maap`}
+            path   = {`${match.url}/maap`}
             render = {() => <MAAP student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/star_reading`}
+            render = {() => <STARReading student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/star_math`}
+            render = {() => <STARMath student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/star_early_lit`}
+            render = {() => <STAREarlyLit student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/accel_reader`}
+            render = {() => <AccelReader student={student}/> }
           />
         </Switch>
       </div>

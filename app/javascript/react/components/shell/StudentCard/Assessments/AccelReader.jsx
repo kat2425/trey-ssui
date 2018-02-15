@@ -3,16 +3,15 @@ import PropTypes from 'prop-types'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
-const MAAP = ({student}) => {
+const AccelReader = ({student}) => {
   return (
     <div>
       <VJSChart
-        id               = 'sc-maap'
-        reportPath       = '/public/VJS/ss_ui/assessment/maap/student_card'
+        id               = 'sc-accel-reader'
+        reportPath       = '/public/VJS/ss_ui/assessment/renplace/accel_reader/student_card'
         scale            = 'container'
-        title            = 'MAAP'
+        title            = 'Accelerated Reader'
         isTable          = {true}
-        ignorePagination = {true}
         params           = {{
           student_id: [ student.id ]
         }}
@@ -21,7 +20,7 @@ const MAAP = ({student}) => {
   )
 }
 
-MAAP.defaultProps = {}
-MAAP.propTypes = {}
+AccelReader.defaultProps = {}
+AccelReader.propTypes = {}
 
-export default MAAP
+export default AccelReader

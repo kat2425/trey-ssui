@@ -28,7 +28,7 @@ export default class AccelReader extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      // path:    'assessment/maap'
+                      path:    'assessment/accel_reader'
                     })
                   }
                 }

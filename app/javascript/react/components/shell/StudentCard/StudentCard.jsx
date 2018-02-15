@@ -23,6 +23,7 @@ import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 import Info             from './Info'
 import Overview         from './Overview'
 import Assessment       from './Assessment'
+import Assessments      from './Assessments/Assessment'
 import MAAP             from './Assessments/MAAP'
 import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
@@ -177,13 +178,13 @@ export default class StudentCard extends Component {
                 renderIf  = {userStore.user.higherEd}
               />
 
-              {/* <EUserMenuItem */}
-              {/*   title     = 'Assessment' */}
-              {/*   iconClass = 'icon-area-graph' */}
-              {/*   link      = {`${match.url}/assessment/maap`} */}
-              {/*   location  = {location} */}
-              {/*   renderIf  = {!(userStore.user.higherEd)} */}
-              {/* /> */}
+              <EUserMenuItem
+                title     = 'Assessment'
+                iconClass = 'icon-area-graph'
+                link      = {`${match.url}/assessment`}
+                location  = {location}
+                renderIf  = {!(userStore.user.higherEd)}
+              />
 
               <EUserMenuItem
                 title     = 'Grades'
@@ -266,19 +267,24 @@ export default class StudentCard extends Component {
               render = {() => <Infractions student={student}/> }
             />
 
-            <Route
-              path   = {`${match.url}/assessment/act`}
-              render = {() => <Assessment student={student}/> }
-            />
+            {/* <Route */}
+            {/*   path   = {`${match.url}/assessment/act`} */}
+            {/*   render = {() => <Assessment student={student}/> } */}
+            {/* /> */}
 
             <Route
               path   = {`${match.url}/grades`}
               render = {() => <Grades student={student}/> }
             />
 
+            {/* <Route */}
+            {/*   path   = {`${match.url}/assessment/maap`} */}
+            {/*   render = {() => <MAAP student={student}/> } */}
+            {/* /> */}
+
             <Route
-              path   = {`${match.url}/assessment/maap`}
-              render = {() => <MAAP student={student}/> }
+              path   = {`${match.url}/assessment`}
+              render = {() => <Assessments student={student}/> }
             />
 
             <Route

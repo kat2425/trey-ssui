@@ -33,8 +33,13 @@ const InboxMMS = (props) => {
 }
 
 const InboxItem = (props) => {
-  const unreadColor = ((props.read) ? 'text-clear' : ((props.direction === 'inbound') ? 'text-primary' : 'text-clear' ))
-  const unreadBackground = ((props.read) ? 'bg-white' : ((props.direction === 'inbound') ? 'bg-light-green' : 'bg-white' ))
+  const unreadColor = ((props.read)
+    ? 'text-clear'
+    : ((props.direction === 'inbound') ? 'text-primary' : 'text-clear' ))
+
+  const unreadBackground = ((props.read)
+    ? 'bg-white'
+    : ((props.direction === 'inbound') ? 'bg-light-green' : 'bg-white' ))
 
   return (
     <Media className={`list-group-item ${unreadBackground}`} style={itemStyle}>
