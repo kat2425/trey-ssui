@@ -14,10 +14,12 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "arca"
   ],
   "rules": {
     "eqeqeq": ["error", "smart"],
+    "arca/import-align": "error",
     "indent": [
       "error",
       2
