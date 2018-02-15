@@ -70,6 +70,7 @@
     "react/jsx-closing-bracket-location": [1, "line-aligned"],
     "react/jsx-closing-bracket-location": [1, "tag-aligned"],
     "react/jsx-uses-vars": ["error"],
-    "react/jsx-uses-react": 1
+    "react/jsx-uses-react": 1,
+    "no-console": 0
   }
 }
