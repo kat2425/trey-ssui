@@ -1,4 +1,4 @@
-import { 
+import {
   observable,
   action,
   autorun
@@ -19,33 +19,42 @@ export class MailerStore {
   @observable name                   = undefined
   @observable conversationID         = null
 
-  constructor(){
-    this.autoErrorNotifier()
+  constructor() {
+    this.initAutoruns()
   }
 
   // Autoruns
-  autoErrorNotifier = () => {
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
-      if(this.isError && !this.isError.hideNotification){
+      if (this.isError && !this.isError.hideNotification) {
         uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
-          type:    'error'
+          type:    this.isError.type || 'error'
         })
       }
     })
   }
 
   @action
-  fetchEmailAddress(type, id, name) {
+  fetchEmailAddress = async(type, id, name) => {
     this.name = name
+    try {
+      const res = await xhr.get('/commo/email/get_conversation', {
+        params: {
+          id:   id,
+          type: type
+        }
+      })
 
-    xhr.get('/commo/email/get_conversation', {
-      params: {
-        id:   id,
-        type: type
-      }
-    }).then(this.fetchEmailAddressOK)
+      this.fetchEmailAddressOK(res)
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
   }
 
   @action.bound
