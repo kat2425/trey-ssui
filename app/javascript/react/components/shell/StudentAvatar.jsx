@@ -12,7 +12,8 @@ const StudentAvatar = (props) => {
       width:           imgSize,
       height:          imgSize,
       borderRadius:    500,
-    }} />
+    }}
+    />
   )
 }
 

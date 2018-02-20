@@ -18,6 +18,7 @@ import MySchools             from 'modules/logic/Dashboard/MySchools'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 import TagBuilder            from 'modules/logic/TagBuilder/'
 import Groups                from 'modules/logic/Groups'
+import SeatingChart          from 'ui/shell/SeatingChart'
 
 import CallHistory           from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
@@ -68,6 +69,7 @@ const AppContainer = ({ match }) => {
         <Route path='/r/assessment' component={Assessments} />
 
         <Route path='/r/financials' component={Financials} />
+        <Route path='/r/seating_chart/:course_id' component={SeatingChart} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
         <Route path='/r/searchlight' component={TagBuilder} />
 
