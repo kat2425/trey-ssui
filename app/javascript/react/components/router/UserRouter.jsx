@@ -2,7 +2,7 @@ import React                        from 'react'
 import { BrowserRouter }            from 'react-router-dom'
 import { LastLocationProvider }     from 'react-router-last-location'
 import { Provider as MobxProvider } from 'mobx-react'
-import { notification }             from 'antd'
+import { notification, message }    from 'antd'
 
 import UserMain   from 'ui/app/UserMain'
 import uiStore    from 'stores/UiStore'
@@ -18,6 +18,11 @@ const UserRouter = props => {
   groupStore.fetchGroups()
   notification.config({
     top: 75
+  })
+  
+  message.config({
+    top:      100,
+    duration:  1.5
   })
 
   const store = {uiStore, userStore, tagStore}
