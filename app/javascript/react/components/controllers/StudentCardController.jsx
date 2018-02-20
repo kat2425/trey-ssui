@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import StudentCardStore   from 'stores/StudentCard'
+import studentCardStore   from 'stores/StudentCardStore'
 import uiStore            from 'stores/UiStore'
 import StudentCard        from 'ui/shell/StudentCard/StudentCard'
 
@@ -23,10 +23,10 @@ export default class StudentCardController extends Component {
   }
 
   fetchStudentInfo = (studentId) => {
-    StudentCardStore.fetchStudent(studentId)
+    studentCardStore.fetchStudent(studentId)
   }
 
   render() {
-    return <StudentCard store={StudentCardStore} />
+    return <StudentCard store={studentCardStore} />
   }
 }
