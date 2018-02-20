@@ -76,7 +76,10 @@ export default class SeatingChart extends Component {
 
   setInitialOptions = () => {
     const {
+<<<<<<< HEAD
       fetchCourseName,
+=======
+>>>>>>> feat: add seating chart
       fetchCourseStudents,
       setSelectedCourse
     } = seatingChartStore
@@ -85,7 +88,11 @@ export default class SeatingChart extends Component {
 
     setSelectedCourse(course_id)
     fetchCourseStudents(course_id)
+<<<<<<< HEAD
     fetchCourseName(course_id)
+=======
+
+>>>>>>> feat: add seating chart
 
     this.setState({
       selected: { ...this.state.selected, course_id }
@@ -170,6 +177,7 @@ export default class SeatingChart extends Component {
     this.hasDragged && updateSeatingChart(selectedCourse, layout)
   }
 
+<<<<<<< HEAD
   getCourseName = () => {
     const {
       courseName,
@@ -188,6 +196,13 @@ export default class SeatingChart extends Component {
     const {
       courseName,
       coursePeriod,
+=======
+  render() {
+    const {
+      isFetchingLayout,
+      isFetchingStudents,
+      isFetchingCourses,
+>>>>>>> feat: add seating chart
       layout
     } = seatingChartStore
 
@@ -202,9 +217,43 @@ export default class SeatingChart extends Component {
           </NavLink>
         </ModuleHeader>
 
+<<<<<<< HEAD
         <Card>
           <CardBlock>
             <h5 className='mb-2'>{this.getCourseName()}</h5>
+=======
+        <div style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
+          <ReactToPrint
+            trigger={() =>
+              <Icon
+                type      = "printer"
+                className = 'ml-2'
+                style     = {{
+                  fontSize: 24,
+                  color:    '#08c',
+                  cursor:   'pointer'
+                }}
+              />
+            }
+            content={() => this.componentRef}
+          />
+          <Spin
+            indicator={antIcon}
+            spinning={
+              isFetchingLayout
+              || isFetchingStudents
+              || isFetchingCourses
+            }
+          />
+        </div>
+
+        <div className='clearfix'>
+        </div>
+
+        <Card>
+          <CardBlock>
+            <h5>Name of Class</h5>
+>>>>>>> feat: add seating chart
 
             {!_isEmpty(layout) && this.renderLayout()}
           </CardBlock>
