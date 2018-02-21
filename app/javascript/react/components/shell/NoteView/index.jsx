@@ -138,7 +138,7 @@ export default class NoteView extends Component {
           }
 
           <Col sm={notes.length > 0 ? '9' : '12'}>
-            <CardBlock>
+            <CardBlock className='pb-0'>
               { notes.length > 0 ? this.renderNote(notes[this.props.noteStore.selectedNoteIndex]) : this.renderEmptyMessage() }
             </CardBlock>
 
