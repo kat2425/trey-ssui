@@ -1,27 +1,29 @@
-import React                from 'react'
-import PropTypes            from 'prop-types'
+import React     from 'react'
+import PropTypes from 'prop-types'
 import { 
   Modal, 
   ModalBody, 
   ModalHeader
 } from 'reactstrap'
 
-AttachmentModal.propTypes = {
+ImageModal.propTypes = {
   toggle: PropTypes.func.isRequired,
   src:    PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired
 }
-export default function AttachmentModal({ src, isOpen, toggle }) {
+export default function ImageModal({ src, isOpen, toggle }) {
   return (
     <Modal 
       isOpen={isOpen} 
       toggle={toggle} 
       size='lg' 
-      className='h-100 d-flex flex-column justify-content-center my-0'
     >
       <ModalHeader toggle={toggle} />
       <ModalBody>
-        <img src={src} className='img-fluid mx-auto d-block'/>
+        <img 
+          src={src} className='img-fluid mx-auto d-block' 
+          style={{maxHeight: '80vh'}} // prevents covering the action bar at the footer
+        />
       </ModalBody>
     </Modal>
   )

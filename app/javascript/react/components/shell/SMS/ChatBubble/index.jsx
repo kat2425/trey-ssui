@@ -1,29 +1,8 @@
 import React                 from 'react'
-import PropTypes             from 'prop-types'
 import VisibilitySensor      from 'react-visibility-sensor'
 import moment                from 'moment'
 import {UncontrolledTooltip} from 'reactstrap'
-
-const ChatBubbleMMS = (props) => {
-  const { mode, src, height, width, style } = props
-
-  const modes = {
-    fill: 'cover',
-    fit:  'contain'
-  }
-
-  const size = modes[mode] || 'contain'
-
-  const important = {
-    backgroundImage:    `url("${src}")`,
-    backgroundSize:     size,
-    backgroundPosition: 'center center',
-    backgroundRepeat:   'no-repeat',
-    minHeight:          '150px'
-  }
-
-  return <div {...props} style={{...style, ...important}} />
-}
+import ChatBubbleMMS         from './ChatBubbleMMS'
 
 const ChatBubble = (props) => {
   const bubbleDirection = (props.direction === 'outbound') ? 'media-current-user ml-5' : 'mr-5'
