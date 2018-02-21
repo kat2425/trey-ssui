@@ -1,13 +1,39 @@
-import { observable, action, computed } from 'mobx'
+import { 
+  observable,
+  action,
+  autorun
+} from 'mobx'
 
-import _             from 'lodash'
-import xhr           from 'helpers/XHR'
+import { setter } from 'mobx-decorators'
+import xhr        from 'helpers/XHR'
+import uiStore    from 'stores/UiStore'
+import getError   from 'helpers/ErrorParser'
+import _isEmpty   from 'lodash/isEmpty'
 
 export class MailerStore {
+  @setter @observable isError = false
+
   @observable visible = false
 
   @observable name           = undefined
   @observable conversationID = null
+
+  constructor(){
+    this.autoErrorNotifier()
+  }
+
+  // Autoruns
+  autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if(this.isError && !this.isError.hideNotification){
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    'error'
+        })
+      }
+    })
+  }
 
   @action
   fetchEmailAddress(type, id, name) {
@@ -35,13 +61,43 @@ export class MailerStore {
   }
 
   @action
-  sendEmail(subject, body, onSuccess) {
-    xhr.post('/commo/email', {
-      conversation_id: this.conversationID,
-      subject:         subject,
-      body:            body
-    }).then(onSuccess)
+  sendEmail = async({subject, body, fileList = [], onSuccess}) => {
+    try {
+      const res = await this.sendEmailEndPoint({
+        conversation_id: this.conversationID,
+        subject,
+        body,
+        fileList
+      }) 
+
+      onSuccess(res)
+    } catch(e){
+      this.setIsError(getError(e))
+    }
   }
+
+  @action sendEmailEndPoint = async(params) => {
+    if(!_isEmpty(params.fileList)){
+      return await xhr.post('/commo/email', getAttachmentData(params), {
+        'Content-Type': 'multipart/form-data'
+      })
+    } else {
+      return await xhr.post('/commo/email', params)
+    }
+  }
+}
+
+function getAttachmentData({conversation_id, subject, body,  fileList}){
+  const data = new FormData()
+
+  data.append('conversation_id', conversation_id)
+  data.append('subject', subject)
+  data.append('body', body)
+  fileList.forEach(file => {
+    data.append('file', file)
+  })
+
+  return data
 }
 
 export default new MailerStore()
