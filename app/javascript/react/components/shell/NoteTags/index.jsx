@@ -8,13 +8,16 @@ import _                         from 'lodash'
 export default class NoteTags extends Component {
   renderTags() {
     const { currentNote, tags } = this.props
-    const notesTags                    = currentNote.student_note_tags
-    const noteStoreTags                = toJS(tags)
+    const currentTags           = currentNote.student_note_tags
+    const noteStoreTags         = toJS(tags)
 
-    return notesTags.map((g) => {
+    if(_.isEmpty(currentTags)) {
+      return null
+    }
+
+    return currentTags.map((g) => {
       return _.find(noteStoreTags, (tag) => { return tag.id === g.id })
-    })
-      .map((t) => 
+    }).map((t) => 
         <Badge key={ t.id } color="primary" pill style={{ marginRight: 5 }}>
           <span className='icon icon-tag' style={{ padding: 5 }}>{' '}{t.name}</span>
         </Badge>
@@ -24,8 +27,8 @@ export default class NoteTags extends Component {
   render() {
     return (
       <Col sm="6">
-        <span className="float-right">
-          {!_.isEmpty(this.noteStoreTags) && this.renderTags()}
+        <span>
+          {this.renderTags()}
         </span>
       </Col>
     )

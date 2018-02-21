@@ -84,7 +84,7 @@ class NoteStore {
   }
 
   @action
-  resetNoteForm() {
+  resetNoteForm = () => {
     this.title = ''
     this.message = ''
     this.global = false
