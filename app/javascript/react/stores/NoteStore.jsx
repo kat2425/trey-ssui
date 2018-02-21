@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx'
-import _xhr from 'helpers/XHR'
+import _xhr                   from 'helpers/XHR'
+import _                      from 'lodash'
 
 class NoteStore {
   @observable notes = []
