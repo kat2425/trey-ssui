@@ -7,6 +7,9 @@ import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import Panel          from 'ui/shell/Panel'
 import StudentList    from 'ui/shell/StudentResults/StudentList'
 import Result         from './Result'
+import {
+  NaturalLanguageSection
+} from 'ui/shell/SmartTags'
 
 function StudentSection({tagStore}){
   const { selectedTag } = tagStore
@@ -27,6 +30,12 @@ function StudentSection({tagStore}){
         />
       )}
     >
+      {renderIfStudents(
+        <div>
+          <NaturalLanguageSection tagStore={tagStore}/>
+          <hr />
+        </div>
+      )}
       {renderIfLoading(<LoadingSpinner center />)}
       {renderIfStudents(<StudentList tag={selectedTag} />)}
       {renderIfNoStudents(<p className='my-5 text-muted text-center'>No Students</p>)}
