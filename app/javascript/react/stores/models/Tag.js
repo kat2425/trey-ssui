@@ -130,6 +130,8 @@ export default class Tag {
 
   @computed get humanStringFormat(){
     try {
+      if(!this.treeQuery || !this.treeQuery.get('type')) return ''      
+
       let output = queryString(this.treeQuery, config, true)
 
       if (output) {
