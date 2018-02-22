@@ -4,11 +4,12 @@ import { LastLocationProvider }     from 'react-router-last-location'
 import { Provider as MobxProvider } from 'mobx-react'
 import { notification }             from 'antd'
 
-import UserMain   from 'ui/app/UserMain'
-import uiStore    from 'stores/UiStore'
-import userStore  from 'stores/UserStore'
-import tagStore   from 'stores/TagStore'
-import groupStore from 'stores/GroupStore'
+import UserMain      from 'ui/app/UserMain'
+import uiStore       from 'stores/UiStore'
+import userStore     from 'stores/UserStore'
+import tagStore      from 'stores/TagStore'
+import groupStore    from 'stores/GroupStore'
+import smsInboxStore from 'stores/SMSInbox'
 
 const UserRouter = props => {
   // we inject ui related user props serverside and set to window var window.SSUser = props.user
@@ -16,6 +17,7 @@ const UserRouter = props => {
   userStore.setUser(props.user)
   tagStore.fetchSchema()
   groupStore.fetchGroups()
+  smsInboxStore.fetchInbox()
   notification.config({
     top: 75
   })
