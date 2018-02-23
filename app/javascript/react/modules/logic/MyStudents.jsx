@@ -69,14 +69,14 @@ export default class MyStudents extends Component {
     })
   }
 
-  setYearFilter(val) {
-    const jrsValue = val ? val.value : '~NOTHING~'
-
-    this.setState({
-      params:   { ...this.state.params, school_year: [ jrsValue ] },
-      selected: { ...this.state.selected, school_year: val }
-    })
-  }
+  // setYearFilter(val) {
+  //   const jrsValue = val ? val.value : '~NOTHING~'
+  //
+  //   this.setState({
+  //     params:   { ...this.state.params, school_year: [ jrsValue ] },
+  //     selected: { ...this.state.selected, school_year: val }
+  //   })
+  // }
 
   renderMassEmail() {
     const { selected } = this.state
@@ -95,6 +95,14 @@ export default class MyStudents extends Component {
   }
 
   render() {
+    const studentsPath = (userStore.user.higherEd)
+      ? '/public/VJS/ss_ui/students/my_students_detail'
+      : '/public/VJS/ss_ui/students/my_students_detail_k12'
+
+    const activityPath = (userStore.user.higherEd)
+      ? '/public/VJS/ss_ui/channel/recent_activity'
+      : '/public/VJS/ss_ui/channel/recent_activity_k12'
+
     return (
       <div>
         <ModuleHeader title='My Students'>
@@ -132,26 +140,25 @@ export default class MyStudents extends Component {
             width         = {200}
           />
 
-          <EVJSICSelect
-            id            = 'school_year'
-            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
-            selectedValue = {this.state.selected.school_year}
-            handleChange  = {::this.setYearFilter}
-            params        = {this.state.params}
-            placeholder   = 'Year'
-            width         = {100}
-          />
+          {/* <EVJSICSelect */}
+          {/*   id            = 'school_year' */}
+          {/*   inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report' */}
+          {/*   selectedValue = {this.state.selected.school_year} */}
+          {/*   handleChange  = {::this.setYearFilter} */}
+          {/*   params        = {this.state.params} */}
+          {/*   placeholder   = 'Year' */}
+          {/*   width         = {100} */}
+          {/* /> */}
         </ModuleHeader>
 
-        <div className='row mb-3'>
+        <div className='row'>
           <VJSChart
             id          = 'my-students-detail'
-            reportPath  = '/public/VJS/ss_ui/students/my_students_detail'
+            reportPath  = {studentsPath}
             scale       = 'container'
             title       = 'Details'
             className   = 'col-md-7'
             isTable     = {true}
-            fullHeight  = {true}
             params      = {this.state.params}
             linkOptions = {{
               events: {
@@ -168,12 +175,11 @@ export default class MyStudents extends Component {
 
           <VJSChart
             id          = 'recent-activity'
-            reportPath  = '/public/VJS/ss_ui/channel/recent_activity'
+            reportPath  = {activityPath}
             scale       = 'container'
             title       = 'Recent Engagements'
             className   = 'col-md-5'
             isTable     = {true}
-            fullHeight  = {true}
             linkOptions = {{
               events: {
                 click: (ev, link) => {

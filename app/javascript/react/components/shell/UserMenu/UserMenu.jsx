@@ -51,16 +51,22 @@ const UserMenu = () => {
         />
       </UserMenuSection>
 
-      <EUserMenuSection title='Accountability' renderIf={userStore.hasModules('vjs_aa_2017')} >
-        {/* <EUserMenuItem */}
-        {/*   title     = 'Final Results' */}
-        {/*   iconClass = 'icon-eye' */}
-        {/* /> */}
+      <EUserMenuSection
+        title    = 'Accountability'
+        renderIf = {userStore.hasModules('vjs_aa_2017','vjs_lps')}
+      >
+        <EUserMenuItem
+          title     = 'Final Results'
+          iconClass = 'icon-eye'
+          link      = '/r/accountability/final_results'
+          renderIf  = {userStore.hasModules('vjs_aa_2017')}
+        />
 
         <EUserMenuItem
           title     = 'Lowest Performing'
           iconClass = 'icon-ruler'
           link      = '/r/accountability/lps'
+          renderIf  = {userStore.hasModules('vjs_lps')}
         />
       </EUserMenuSection>
 
@@ -68,17 +74,27 @@ const UserMenu = () => {
       <UserMenuSection title='Communication'>
         {/* <EUserMenuItem title='Inbox' iconClass='icon-inbox' link='/r/channel/inbox' /> */}
         <EUserMenuItem title='Engagement' iconClass='icon-power-plug' link='/r/channel/engagement' />
-        {/* <EUserMenuItem title='Call History' iconClass='icon-phone' link='/r/channel/history' /> */}
+        <EUserMenuItem title='Call History' iconClass='icon-phone' link='/r/channel/history' />
       </UserMenuSection>
 
-      <UserMenuSection title='Utilities'>
+      <EUserMenuSection
+        title    = 'Utilities'
+        renderIf = {userStore.hasModules('bullseye','reporting')}
+      >
         <EUserMenuItem
-          title     = 'Bullseye'
-          iconClass = 'icon-hair-cross'
+          title     = 'Searchlight'
+          iconClass = 'icon-flashlight'
           link      = '/r/bullseye'
           renderIf  = {userStore.hasModules('bullseye')}
         />
-      </UserMenuSection>
+
+        <EUserMenuItem
+          title     = 'Reporting'
+          iconClass = 'icon-unread'
+          link      = '/r/reporting'
+          renderIf  = {userStore.hasModules('reporting')}
+        />
+      </EUserMenuSection>
 
       <UserMenuSection title='Insights'>
         <EUserMenuItem title={_riskItemLabel} iconClass='icon-traffic-cone' link='/r/risk_analysis' />

@@ -17,6 +17,7 @@ import STARReading          from 'modules/logic/assessment/STARReading'
 import STARMath             from 'modules/logic/assessment/STARMath'
 import STAREarlyLit         from 'modules/logic/assessment/STAREarlyLit'
 import AccelReader          from 'modules/logic/assessment/AccelReader'
+import Scantron             from 'modules/logic/assessment/Scantron'
 
 import userStore            from 'stores/UserStore'
 import _                    from 'lodash'
@@ -45,6 +46,7 @@ class Assessments extends Component {
       { module: 'vjs_renplace', value: 'star_early_lit', label: 'STAR Early Lit'     },
       { module: 'vjs_renplace', value: 'star_math',      label: 'STAR Math'          },
       { module: 'vjs_renplace', value: 'star_reading',   label: 'STAR Reading'       },
+      { module: 'vjs_scantron', value: 'scantron',       label: 'Scantron'           },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))
@@ -93,6 +95,26 @@ class Assessments extends Component {
           <Route path='/r/assessment/accel_reader'   component={AccelReader}  />
           <Route path='/r/assessment/psat_89'        component={PSAT89}       />
           <Route path='/r/assessment/psat_nm'        component={PSATNM}       />
+          <Route path='/r/assessment/scantron'       component={Scantron}     />
+
+          <Route render={() => {
+            return (
+              <div className='text-center align-middle empty-message-container'>
+                <h1 style={{fontSize: '48px'}}>
+                  <span className='icon icon-forward'/>
+                </h1>
+
+                <h4>Looking for something?</h4>
+
+                <center>
+                  <p className='text-center mt-4 w-50'>
+                    Click the menu in the top right corner. From the drop-down menu,
+                    select an assessment package you'd like to view.
+                  </p>
+                </center>
+              </div>
+              )
+          }}/>
         </Switch>
       </div>
     )
