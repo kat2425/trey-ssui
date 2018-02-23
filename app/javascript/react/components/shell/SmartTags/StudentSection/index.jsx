@@ -3,7 +3,6 @@ import {observer}     from 'mobx-react'
 import _              from 'lodash'
 import renderIf       from 'render-if'
 
-import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import Panel          from 'ui/shell/Panel'
 import StudentList    from 'ui/shell/StudentResults/StudentList'
 import Result         from './Result'
@@ -13,11 +12,7 @@ import {
 
 function StudentSection({tagStore}){
   const { selectedTag } = tagStore
-  const {
-    renderIfLoading,
-    renderIfStudents,
-    renderIfNoStudents
-  } = getRenderFunctions(tagStore)
+  const { renderIfStudents } = getRenderFunctions(tagStore)
 
   return (
     <Panel
@@ -30,15 +25,9 @@ function StudentSection({tagStore}){
         />
       )}
     >
-      {renderIfStudents(
-        <div>
-          <NaturalLanguageSection tagStore={tagStore}/>
-          <hr />
-        </div>
-      )}
-      {renderIfLoading(<LoadingSpinner center />)}
+      <NaturalLanguageSection tagStore={tagStore}/>
+      {renderIfStudents(<hr />)}
       {renderIfStudents(<StudentList tag={selectedTag} />)}
-      {renderIfNoStudents(<p className='my-5 text-muted text-center'>No Students</p>)}
     </Panel>
   )
 }
