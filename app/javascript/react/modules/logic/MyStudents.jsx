@@ -43,7 +43,13 @@ export default class MyStudents extends Component {
   }
 
   setCourseFilter(val) {
+    const { selected } = this.state
     const jrsValue = val ? val.value : '~NOTHING~'
+    const isSelected = val && selected.course_id && val.value
+
+    if(isSelected && val.value === selected.course_id.value) {
+      return
+    }
 
     this.setState({
       params:   { ...this.state.params,   course_id: [ jrsValue ] },
@@ -52,20 +58,41 @@ export default class MyStudents extends Component {
   }
 
   setTeacherFilter(val) {
+    const { selected } = this.state
     const jrsValue = val ? val.value : '~NOTHING~'
+    const isSelected = val && selected.teacher_id && val.value
+
+    if (isSelected && val.value === selected.teacher_id.value) {
+      return
+    }
 
     this.setState({
       params:   { ...this.state.params, teacher_id: [ jrsValue ] },
-      selected: { ...this.state.selected, teacher_id: val }
+      selected: { 
+        ...this.state.selected, 
+        course_id:  null, 
+        term:       null, 
+        teacher_id: val 
+      }
     })
   }
 
   setTermFilter(val) {
+    const { selected } = this.state
     const jrsValue = val ? val.value : '~NOTHING~'
-
+    const isSelected = val && selected.term && val.value 
+    
+    if (isSelected && val.value === selected.term.value) {
+      return
+    }
+    
     this.setState({
       params:   { ...this.state.params, term: [ jrsValue ] },
-      selected: { ...this.state.selected, term: val }
+      selected: {
+        ...this.state.selected,
+        course_id: null, 
+        term:      val 
+      }
     })
   }
 
@@ -74,7 +101,13 @@ export default class MyStudents extends Component {
 
     this.setState({
       params:   { ...this.state.params, school_year: [ jrsValue ] },
-      selected: { ...this.state.selected, school_year: val }
+      selected: {
+        ...this.state.selected, 
+        school_year: val,
+        teacher_id:  null,
+        course_id:   null,
+        term:        null
+      }
     })
   }
 
