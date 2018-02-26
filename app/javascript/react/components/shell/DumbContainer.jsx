@@ -9,10 +9,10 @@ const DumbContainer = ({title, children}) => {
 
   return (
     <div>
-      <h3 className='ml-4 mr-4 mt-3 mb-3'>{title}</h3>
+      <h3 className='ml-4 mr-4 mt-3 mb-3'>{ title }</h3>
 
-      <div className='ml-4 mr-4 mb-5 p-3' style={dumbStyle}>
-        {children}
+      <div className='ml-4 mr-4 mb-5 p-3' style={ dumbStyle }>
+        { children }
       </div>
     </div>
   )

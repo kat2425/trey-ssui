@@ -63,14 +63,14 @@ export default class RiskAnalysis extends Component {
     })
   }
 
-  setYearFilter(val) {
-    const jrsValue = val ? val.value : '~NOTHING~'
-
-    this.setState({
-      params:   { ...this.state.params, school_year: [ jrsValue ] },
-      selected: { ...this.state.selected, school_year: val }
-    })
-  }
+  // setYearFilter(val) {
+  //   const jrsValue = val ? val.value : '~NOTHING~'
+  //
+  //   this.setState({
+  //     params:   { ...this.state.params, school_year: [ jrsValue ] },
+  //     selected: { ...this.state.selected, school_year: val }
+  //   })
+  // }
 
   renderMassEmail() {
     const { selected } = this.state
@@ -84,6 +84,30 @@ export default class RiskAnalysis extends Component {
           label    = 'Email Course'
           renderIf = {!!selected.course_id && !!selected.term}
         />
+      )
+    }
+  }
+
+  renderCharts() {
+    if (!userStore.user.higherEd) {
+      return (
+        <div className='row'>
+          <VJSChart
+            id          = 'risk-area-breakdown'
+            reportPath  = '/public/VJS/at_risk_area_breakdown'
+            params      = {this.state.params}
+            title       = 'Area Breakdown'
+            className   = 'col-md-6'
+          />
+
+          <VJSChart
+            id          = 'risk-totals-breakdown'
+            reportPath  = '/public/VJS/at_risk_totals_breakdown'
+            params      = {this.state.params}
+            title       = 'Totals'
+            className   = 'col-md-6'
+          />
+        </div>
       )
     }
   }
@@ -130,16 +154,18 @@ export default class RiskAnalysis extends Component {
             width         = {200}
           />
 
-          <EVJSICSelect
-            id            = 'school_year'
-            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
-            selectedValue = {this.state.selected.school_year}
-            handleChange  = {::this.setYearFilter}
-            params        = {this.state.params}
-            placeholder   = 'Year'
-            width         = {100}
-          />
+          {/* <EVJSICSelect */}
+          {/*   id            = 'school_year' */}
+          {/*   inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report' */}
+          {/*   selectedValue = {this.state.selected.school_year} */}
+          {/*   handleChange  = {::this.setYearFilter} */}
+          {/*   params        = {this.state.params} */}
+          {/*   placeholder   = 'Year' */}
+          {/*   width         = {100} */}
+          {/* /> */}
         </ModuleHeader>
+
+        { this.renderCharts() }
 
         <div className='row'>
           <VJSChart

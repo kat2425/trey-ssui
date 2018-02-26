@@ -3,6 +3,9 @@ import PropTypes            from 'prop-types'
 
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
+import renderIf             from 'ui/hoc/renderIf'
+
+const EVJSICSelect = renderIf(VJSICSelect)
 
 export default class Courses extends Component {
   constructor(props) {
@@ -59,22 +62,24 @@ export default class Courses extends Component {
           student_id: [ this.props.student.id ]
         }}
       >
-        <VJSICSelect
+        <EVJSICSelect
           id            = 'show_deleted'
           inputPath     = '/public/VJS/ss_ui/courses/show_deleted'
           selectedValue = {this.state.selected.deleted_at}
           handleChange  = {::this.setInactive}
           placeholder   = 'Inactives?'
           width         = {100}
+          renderIf      = {this.props.higherEd}
         />
 
-        <VJSICSelect
+        <EVJSICSelect
           id            = 'student_course_terms'
           inputPath     = '/public/VJS/ss_ui/courses/student_course_terms'
           selectedValue = {this.state.selected.term}
           handleChange  = {::this.setCourseTerm}
           placeholder   = 'Course Term'
           width         = {250}
+          renderIf      = {this.props.higherEd}
         />
       </VJSChart>
     )

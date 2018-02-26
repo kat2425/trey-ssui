@@ -17,6 +17,7 @@ import ChannelEngagement     from 'modules/channel/Engagement'
 // Assessment
 import Assessments           from 'modules/logic/assessment/Assessment'
 
+import FinalResults          from 'modules/logic/accountability/FinalResults'
 import LPS                   from 'modules/logic/accountability/LPS'
 
 import SMSController         from 'ui/controllers/SMSController'
@@ -24,7 +25,7 @@ import SMSController         from 'ui/controllers/SMSController'
 import StudentCardController from 'ui/controllers/StudentCardController'
 
 import UserSettings          from 'modules/UserSettings'
-import DumbContainer         from 'ui/shell/DumbContainer'
+import EmptyMessage         from 'ui/shell/EmptyMessage'
 
 const AppContainer = ({match}) => {
   return (
@@ -43,6 +44,7 @@ const AppContainer = ({match}) => {
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
         <Route path='/r/bullseye' component={TagBuilder} />
 
+        <Route path='/r/accountability/final_results' component={FinalResults} />
         <Route path='/r/accountability/lps' component={LPS} />
 
         {/* Channel */}
@@ -52,18 +54,13 @@ const AppContainer = ({match}) => {
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />
-        <Route path='/r/dumb' component={DumbContainer} />
 
         <Route render={() => {
           return (
-            <DumbContainer>
-              <div style={{textAlign: 'center'}}>
-                <h1>404</h1>
-                <h4 className='text-muted'>Not Found</h4>
-                <br/>
-                <span>You are requesting a resource that is unavailble or no longer exists.</span>
-              </div>
-            </DumbContainer>
+            <EmptyMessage title="Oops!  Something's Missing..." icon='tools'>
+              It looks like you've come across a feature that's not quite ready, yet.  Bear with us
+              as we wrap up the last pieces of SchoolStatus 3.  Thank you for beta-testing!
+            </EmptyMessage>
           )
         }}
         />
