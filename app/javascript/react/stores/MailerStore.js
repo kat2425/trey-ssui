@@ -11,12 +11,13 @@ import getError   from 'helpers/ErrorParser'
 import _isEmpty   from 'lodash/isEmpty'
 
 export class MailerStore {
-  @setter @observable isError = false
+  @setter @observable isError        = false
+  @setter @observable isSendingEmail = false
 
-  @observable visible = false
+  @observable visible                = false
 
-  @observable name           = undefined
-  @observable conversationID = null
+  @observable name                   = undefined
+  @observable conversationID         = null
 
   constructor(){
     this.autoErrorNotifier()
@@ -63,6 +64,8 @@ export class MailerStore {
   @action
   sendEmail = async({subject, body, fileList = [], onSuccess}) => {
     try {
+      this.setIsSendingEmail(true)
+
       const res = await this.sendEmailEndPoint({
         conversation_id: this.conversationID,
         subject,
@@ -73,6 +76,8 @@ export class MailerStore {
       onSuccess(res)
     } catch(e){
       this.setIsError(getError(e))
+    } finally {
+      this.setIsSendingEmail(false)
     }
   }
 
@@ -94,7 +99,7 @@ function getAttachmentData({conversation_id, subject, body,  fileList}){
   data.append('subject', subject)
   data.append('body', body)
   fileList.forEach(file => {
-    data.append('file', file)
+    data.append('attachments[][file]', file)
   })
 
   return data

@@ -83,15 +83,10 @@ export default class MailWriter extends Component {
       })
     },
     beforeUpload: file => {
-      /*
-       * Allow multiple attachments
-       *
-       * this.setState(({fileList}) => {
-       *   return {fileList: [...fileList, file]}
-       * })
-       */
+      this.setState(({fileList}) => {
+        return {fileList: [...fileList, file]}
+      })
 
-      this.setState({fileList: [file]})
       return false
     },
     fileList: this.state.fileList
@@ -122,17 +117,18 @@ export default class MailWriter extends Component {
           >
             <FormGroup row>
               <Label sm={2} className='text-right font-weight-bold'>To:</Label>
-              <Col sm={9}>
+              <Col sm={8} lg={9}>
                 <Input value={store.name} readOnly />
               </Col>
-              <Col sm='1'>
+              <Col sm={2} lg={1}>
                 <Button
                   color     = 'info'
                   onClick   = {this.sendEmail}
                   className = 'w-100'
+                  disabled  = {this.props.store.isSendingEmail}
                 >
                   <span className='icon icon-paper-plane mr-2'/>
-                  Send
+                  {this.props.store.isSendingEmail ? 'Sending...' : 'Send'}
                 </Button>
               </Col>
             </FormGroup>
@@ -160,6 +156,7 @@ export default class MailWriter extends Component {
           <div className='mailer-editor'>
             <RichTextEditor
               className     = 'border-0 bg-light rounded-0'
+              autoFocus
               toolbarConfig = {rteToolbarConfig}
               value         = {this.state.body}
               onChange      = {this.onBodyChange}
