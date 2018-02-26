@@ -17,6 +17,10 @@
     "react",
     "arca"
   ],
+  "globals": {
+    "process": true,
+    "Twilio": true
+  },
   "rules": {
     "eqeqeq": ["error", "smart"],
     "arca/import-align": "error",
