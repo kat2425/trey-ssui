@@ -117,8 +117,9 @@ const types = {
     }
   },
   select: {
-    mainWidget: 'select',
-    widgets:    {
+    valueSources: ['value'],
+    mainWidget:   'select',
+    widgets:      {
       select: {
         operators:   ['select_equals', 'select_not_equals'],
         widgetProps: {
@@ -141,7 +142,8 @@ const types = {
     }
   },
   boolean: {
-    widgets: {
+    valueSources: ['value'],
+    widgets:      {
       boolean: {
         operators:   ['equal'],
         widgetProps: {

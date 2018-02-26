@@ -118,9 +118,12 @@ export default class Tag {
 
   @computed get queryFormat(){
     try {
+      if(!this.treeQuery || !this.treeQuery.get('type')) return null
+
       return stringify(queryBuilderFormat(this.treeQuery, config))
     } catch(e){
-      return this.query ? stringify(this.query) : ''
+      console.error(e)
+      return this.query ? stringify(this.query) : null
     }
   }
 

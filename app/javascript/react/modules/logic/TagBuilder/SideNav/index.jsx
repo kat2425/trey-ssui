@@ -19,7 +19,7 @@ export default function SideNav({tagStore}) {
 
   return (
     <Aside>
-      <Header title='Bullseye'>
+      <Header title='Searchlight'>
         <CreateButton tagStore={tagStore} />
       </Header>
       <Search tagStore={tagStore}/>
