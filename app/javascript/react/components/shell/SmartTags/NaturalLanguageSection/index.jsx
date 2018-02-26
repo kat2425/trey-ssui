@@ -18,7 +18,7 @@ function NaturalLanguageSection({tagStore}) {
   } = getRenderFunctions(tagStore)
 
   return (
-    <Panel contentStyle={panelStyle}>
+    <Panel noBorder contentStyle={panelStyle}>
       {renderIfLoading(<LoadingSpinner center />)}
       {renderIfStudents(<Title>{selectedTag.pagination.total}</Title>)}
       {renderIfNoStudentsAndTested(<Title>0</Title>)}

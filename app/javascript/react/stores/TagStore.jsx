@@ -7,10 +7,13 @@ import {
   toJS
 } from 'mobx'
 
-import { SCHEMA_XHR as sxhr, QUERY_XHR as qxhr} from  'helpers/XHR'
+import { 
+  SCHEMA_XHR as sxhr, 
+  QUERY_XHR as qxhr
+} from  'helpers/XHR'
+
 import { setter } from 'mobx-decorators'
 import _          from 'lodash'
-
 import Tag        from 'stores/models/Tag'
 import Pagination from 'stores/models/Pagination'
 import UiStore    from 'stores/UiStore'
@@ -221,7 +224,7 @@ export class TagStore {
       'groups',
     ]
     const clonedTag = _.pick(toJS(tag), picked)
-    const json      = { ...clonedTag, 'tree_query': clonedTag.treeQuery}
+    const json      = { ...clonedTag, 'tree_query': clonedTag.treeQuery.toJS()}
     const conf      = {isNew: true, isCloned: true}
     const newTag    = new Tag(conf,this,json)
 
@@ -236,6 +239,4 @@ export class TagStore {
   }
 }
 
-const singleton = new TagStore()
-
-export default singleton
+export default new TagStore()

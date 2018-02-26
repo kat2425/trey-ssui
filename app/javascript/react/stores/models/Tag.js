@@ -20,7 +20,6 @@ import _             from 'lodash'
 import uuid          from 'uuid'
 import moment        from 'moment'
 
-
 import stringify     from 'json-stringify-safe'
 import {Utils}       from 'react-awesome-query-builder'
 import config        from 'ui/shell/QueryBuilder/config/'
@@ -54,7 +53,7 @@ export default class Tag {
   @setter @observable isCloned           = false
   @setter @observable isModified         = false
   @setter @observable hasBeenTested      = true
-  @setter @observable activeTab          = TABS.QUERY_BUILDER
+  @setter @observable activeTab          = TABS.STUDENTS
 
   @setter @observable name = null
   @observable createdAt    = null
@@ -79,7 +78,11 @@ export default class Tag {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification({title: this.isError.title, message: this.isError.message, type: 'error'})
+        UiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    'error'
+        })
       }
     })
   }
@@ -115,9 +118,12 @@ export default class Tag {
 
   @computed get queryFormat(){
     try {
+      if(!this.treeQuery || !this.treeQuery.get('type')) return null
+
       return stringify(queryBuilderFormat(this.treeQuery, config))
     } catch(e){
-      return this.query ? stringify(this.query) : ''
+      console.error(e)
+      return this.query ? stringify(this.query) : null
     }
   }
 
@@ -127,6 +133,8 @@ export default class Tag {
 
   @computed get humanStringFormat(){
     try {
+      if(!this.treeQuery || !this.treeQuery.get('type')) return ''      
+
       let output = queryString(this.treeQuery, config, true)
 
       if (output) {
@@ -235,12 +243,7 @@ export default class Tag {
         this.hasBeenTested = true
       })
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
+      this.setIsError(getError(e))
       console.error(e)
     } finally {
       this.setIsFetchingStudents(false)
@@ -252,18 +255,17 @@ export default class Tag {
     this.studentMap.set(student.id, student)
   }
 
-  @action createTag = async(params = {}) => {
+  @action createTag = async() => {
     const wasActive = this.isActive
 
     try {
       this.setIsCreating(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.post('/smart_tags', {...this.getTagParams(params)})
+      const {data} = await sxhr.post('/smart_tags', {...this.getTagParams()})
 
       runInAction(() => {
         this.resetStatus()
-
 
         // delete the old tag with random id
         this.tagStore.deleteTag(this)
@@ -275,16 +277,9 @@ export default class Tag {
         wasActive && this.tagStore.setSelectedTag(this)
 
         UiStore.addNotification({title: 'Tag', message: 'created successfully', type: 'success'})
-
-        this.tagStore.toggleQueryForm()
       })
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
+      this.setIsError(getError(e))
       console.error(e)
     } finally {
       this.setIsCreating(false)
@@ -309,12 +304,8 @@ export default class Tag {
         UiStore.addNotification({title: 'Tag', message: 'deleted successfully', type: 'success'})
       })
     } catch(e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
+      this.setIsError(getError(e))
+      console.error(e)
     } finally {
       this.setIsDeleting(false)
     }
@@ -323,28 +314,24 @@ export default class Tag {
   /*
    * updates tag on the server
    */
-  @action updateTag = async(params = {}) => {
+  @action saveTag = async() => {
     if(!this.isValid) return
 
     try {
       this.setIsUpdating(true)
       this.setIsError(false)
 
-      const {data} = await sxhr.put(`/smart_tags/${this.id}`, {...this.getTagParams(params)})
+      const {data} = await sxhr.put(`/smart_tags/${this.id}`, {...this.getTagParams()})
 
       runInAction(() => {
         this.resetStatus()
         this.updateFromJson(data)
         this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
+
         UiStore.addNotification({title: 'Tag', message: 'saved successfully', type: 'success'})
       })
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
+      this.setIsError(getError(e))
       console.error(e)
     } finally {
       this.setIsUpdating(false)
@@ -374,8 +361,6 @@ export default class Tag {
     this.system     = system
     this.global     = global
     this.groups     = groups
-
-    this.setActiveTab(TABS.STUDENTS)
   }
 
   @action setActive = () => {
@@ -389,6 +374,7 @@ export default class Tag {
   @action setTreeQuery = tree => {
     this.isModified = true
     this.treeQuery  = tree
+
     this.clearStudents()
     this.pagination.clear()
   }
@@ -398,25 +384,34 @@ export default class Tag {
     this.testTag()
   }
 
-  @action handleOnSave = (data) => {
-    this.tagStore.editedTag = this
-
-    if(this.isNew) { 
-      this.tagStore.showQueryForm ? this.createTag(data) : this.tagStore.toggleQueryForm() 
-    } 
-    else { this.updateTag(data) }
+  @action handleOnSave = () => {
+    if(this.isNew){
+      this.createTag()
+    } else {
+      this.saveTag()
+    }
   }
 
-  @action getTagParams = ({name, scope, groupIds}) => {
+  // Used by the TagForm to update a tag 
+  @action updateTag = ({ name, scope, groupIds }) => {
+    this.name   = name
+    this.global = scope ? scope === 'global' : this.global
+    this.system = scope ? scope === 'system' : this.system
+    this.groups = groupIds ? groupIds.split(',') : this.groups
+
+    this.isModified = true
+  }
+
+  @action getTagParams = () => {
     return {
       user_id:     userStore.user.id,
       district_id: userStore.user.districtID,
       query:       this.queryFormat,
       tree_query:  this.treeFormat,
-      tag_name:    name ? name : this.name,
-      global:      scope ? scope === 'global' : this.global,
-      system:      scope ? scope === 'system' : this.system,
-      group_ids:   groupIds ? groupIds : this.groupIds.join(',')
+      tag_name:    this.name,
+      global:      this.global,
+      system:      this.system,
+      group_ids:   this.groupIds.join(',')
     }
   }
 

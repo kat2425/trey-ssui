@@ -1,12 +1,13 @@
 import React                 from 'react'
 import PropTypes             from 'prop-types'
 import {observer}            from 'mobx-react'
+import { Badge }             from 'reactstrap'
+import renderIf              from 'render-if'
 
 import Wrapper               from './Wrapper'
 import TagMenu               from './TagMenu'
 import Title                 from './Title'
 import Aside                 from './Aside'
-import { ModifiedIndicator } from 'ui/shell/SmartTags'
 import {
   FaEyeSlash,
   FaGlobe,
@@ -24,19 +25,33 @@ TagEntry.propTypes = {
 
 function TagEntry({tag}){
   return (
-    <Wrapper active={tag.isActive} onClick={tag.handleOnTagClick}>
+    <Wrapper 
+      active={tag.isActive} 
+      onClick={tag.handleOnTagClick} 
+      isModified={tag.isModified && !tag.isNew}
+    >
       <Title title={tag.name} isNew={tag.isNew}>
         <Icon type='tag-o' className='mr-2'/>
-        <ModifiedIndicator tag={tag}>{tag.name}</ModifiedIndicator>
+        {tag.name}
       </Title>
       <Aside>
-        {!tag.isNew && (
-          <div>
-            {tag.isGlobal  && <ScopeIcon type='global' title='This tag is public to the whole district.'/>}
-            {tag.isGroup   && <ScopeIcon type='group' title='This tag is shared with groups.'/>}
-            {tag.isPrivate && <ScopeIcon type='private' title='This tag is visible only to me.'/>}
-          </div>
+        {renderIf(tag.isNew)(
+          <Badge className='mr-2' color='primary'>New</Badge>
         )}
+        {renderIf(tag.isModified && !tag.isNew)(
+          <Badge className='mr-2' color='danger'>Not Saved</Badge>
+        )}
+        <div>
+          {renderIf(tag.isGlobal)(
+            <ScopeIcon type='global' title='This tag is public to the whole district.'/>
+          )}
+          {renderIf(tag.isGroup)(
+            <ScopeIcon type='group' title='This tag is shared with groups.'/>
+          )}
+          {renderIf(tag.isPrivate)(
+            <ScopeIcon type='private' title='This tag is visible only to me.'/>
+          )}
+        </div>
         <TagMenu tag={tag} className='text-muted' />
       </Aside>
     </Wrapper>

@@ -43,12 +43,13 @@ class FormWrapper extends Component {
   }
 
   handleSubmit = e => {
-    const { form, tag } = this.props
+    const { form, tag, store } = this.props
 
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
-        tag.handleOnSave({...values, groupIds: this.state.selectedGroups})
+        tag.updateTag({...values, groupIds: this.state.selectedGroups})
+        store.toggleQueryForm()
       }
     })
   }
@@ -131,7 +132,6 @@ class FormWrapper extends Component {
             type     = 'primary'
             htmlType = 'submit'
             disabled = {hasErrors(getFieldsError())}
-            loading  = {tag.isUpdating}
           >
             Save
           </Button>
