@@ -17,6 +17,7 @@
     "react"
   ],
   "rules": {
+    "eqeqeq": ["error", "smart"],
     "indent": [
       "error",
       2
