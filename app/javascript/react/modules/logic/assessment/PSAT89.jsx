@@ -31,7 +31,10 @@ export default class PSAT89 extends Component {
                   const studentID = link.parameters._student_id
 
                   if (studentID) {
-                    fireEvent('showStudentCard', { student: studentID })
+                    fireEvent('showStudentCard', {
+                      student: studentID,
+                      path:    'assessment/psat89'
+                    })
                   }
                 }
               }

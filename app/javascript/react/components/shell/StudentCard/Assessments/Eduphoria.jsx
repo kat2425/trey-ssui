@@ -3,14 +3,14 @@ import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
-const STARReading = ({student}) => {
+const Eduphoria = ({student}) => {
   return (
     <div>
       <VJSChart
-        id               = 'sc-star-reading'
-        reportPath       = '/public/VJS/ss_ui/assessment/renplace/star_reading/student_card'
+        id               = 'sc-eduphoria'
+        reportPath       = '/public/VJS/ss_ui/assessment/eduphoria/student_card'
         scale            = 'container'
-        title            = 'STAR Reading'
+        title            = 'Eduphoria'
         isTable          = {true}
         ignorePagination = {true}
         params           = {{
@@ -21,7 +21,7 @@ const STARReading = ({student}) => {
   )
 }
 
-STARReading.defaultProps = {}
-STARReading.propTypes = {}
+Eduphoria.defaultProps = {}
+Eduphoria.propTypes = {}
 
-export default observer(STARReading)
+export default observer(Eduphoria)

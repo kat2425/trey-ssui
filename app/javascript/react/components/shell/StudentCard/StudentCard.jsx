@@ -133,7 +133,7 @@ export default class StudentCard extends Component {
 
             <UserMenuSection>
               <UserMenuItem
-                title     = 'Overview'
+                title     = 'Schedule'
                 iconClass = 'icon-list'
                 link      = {`${match.url}/overview`}
                 location  = {location}

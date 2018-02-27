@@ -8,6 +8,7 @@ import { inject, observer } from 'mobx-react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import Select               from 'react-virtualized-select'
+import EmptyMessage         from 'ui/shell/EmptyMessage'
 
 import MAAP                 from 'modules/logic/MAAP'
 import PSAT89               from 'modules/logic/assessment/PSAT89'
@@ -18,6 +19,10 @@ import STARMath             from 'modules/logic/assessment/STARMath'
 import STAREarlyLit         from 'modules/logic/assessment/STAREarlyLit'
 import AccelReader          from 'modules/logic/assessment/AccelReader'
 import Scantron             from 'modules/logic/assessment/Scantron'
+import Eduphoria            from 'modules/logic/assessment/Eduphoria'
+import Case21               from 'modules/logic/assessment/Case21'
+import OSTP                 from 'modules/logic/assessment/OSTP'
+import CogAT                from 'modules/logic/assessment/CogAT'
 
 import userStore            from 'stores/UserStore'
 import _                    from 'lodash'
@@ -38,15 +43,19 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
-      { module: 'vjs_renplace', value: 'accel_reader',   label: 'Accelerated Reader' },
-      { module: 'vjs_ati',      value: 'ati',            label: 'ATI'                },
-      { module: 'vjs_maap',     value: 'maap',           label: 'MAAP'               },
-      { module: 'vjs_psat',     value: 'psat_89',        label: 'PSAT 8/9'           },
-      { module: 'vjs_psat',     value: 'psat_nm',        label: 'PSAT NM'            },
-      { module: 'vjs_renplace', value: 'star_early_lit', label: 'STAR Early Lit'     },
-      { module: 'vjs_renplace', value: 'star_math',      label: 'STAR Math'          },
-      { module: 'vjs_renplace', value: 'star_reading',   label: 'STAR Reading'       },
-      { module: 'vjs_scantron', value: 'scantron',       label: 'Scantron'           },
+      { module: 'vjs_renplace',  value: 'accel_reader',   label: 'Accelerated Reader' },
+      { module: 'vjs_ati',       value: 'ati',            label: 'ATI'                },
+      { module: 'vjs_case21',    value: 'case21',         label: 'Case21'             },
+      { module: 'vjs_cogat',     value: 'cogat',          label: 'CogAT'              },
+      { module: 'vjs_eduphoria', value: 'eduphoria',      label: 'Eduphoria'          },
+      { module: 'vjs_maap',      value: 'maap',           label: 'MAAP'               },
+      { module: 'vjs_ostp',      value: 'ostp',           label: 'OSTP'               },
+      { module: 'vjs_psat',      value: 'psat_89',        label: 'PSAT 8/9'           },
+      { module: 'vjs_psat',      value: 'psat_nm',        label: 'PSAT NM'            },
+      { module: 'vjs_scantron',  value: 'scantron',       label: 'Scantron'           },
+      { module: 'vjs_renplace',  value: 'star_early_lit', label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace',  value: 'star_math',      label: 'STAR Math'          },
+      { module: 'vjs_renplace',  value: 'star_reading',   label: 'STAR Reading'       },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))
@@ -96,23 +105,17 @@ class Assessments extends Component {
           <Route path='/r/assessment/psat_89'        component={PSAT89}       />
           <Route path='/r/assessment/psat_nm'        component={PSATNM}       />
           <Route path='/r/assessment/scantron'       component={Scantron}     />
+          <Route path='/r/assessment/eduphoria'      component={Eduphoria}    />
+          <Route path='/r/assessment/case21'         component={Case21}       />
+          <Route path='/r/assessment/ostp'           component={OSTP}         />
+          <Route path='/r/assessment/cogat'          component={CogAT}        />
 
           <Route render={() => {
             return (
-              <div className='text-center align-middle empty-message-container'>
-                <h1 style={{fontSize: '48px'}}>
-                  <span className='icon icon-forward'/>
-                </h1>
-
-                <h4>Looking for something?</h4>
-
-                <center>
-                  <p className='text-center mt-4 w-50'>
-                    Click the menu in the top right corner. From the drop-down menu,
-                    select an assessment package you'd like to view.
-                  </p>
-                </center>
-              </div>
+              <EmptyMessage title="Looking for something?" icon='forward'>
+                Click the menu in the top right corner. From the drop-down menu,
+                select an assessment package you'd like to view.
+              </EmptyMessage>
               )
           }}/>
         </Switch>

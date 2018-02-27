@@ -1,13 +1,14 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import PropTypes    from 'prop-types'
+import { observer } from 'mobx-react'
 
-import Courses   from './Courses'
+import Courses      from './Courses'
 
-const Overview = ({student, higherEd, handleClick}) => {
+const Overview = ({student, higherEd}) => {
   return (
     <div>
       <h4 className='m-1 mb-3'>
-        Overview
+        Schedule
       </h4>
 
       <div>
@@ -18,7 +19,6 @@ const Overview = ({student, higherEd, handleClick}) => {
 }
 
 Overview.defaultProps = {}
+Overview.propTypes    = {}
 
-Overview.propTypes = {}
-
-export default Overview
+export default observer(Overview)

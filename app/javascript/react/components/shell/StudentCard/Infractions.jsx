@@ -1,9 +1,14 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
 const Infractions = ({student}) => {
+  const emptyMessage = `
+  This student has zero infractions!  Reach out to one of their contacts to say,
+  "Way to go!"
+  `
+
   return (
     <div>
       <h4 className='m-1 mb-3'>
@@ -18,6 +23,9 @@ const Infractions = ({student}) => {
           title            = 'Infractions'
           isTable          = {true}
           ignorePagination = {true}
+          emptyIcon        = {'emoji-happy'}
+          emptyTitle       = 'Hooray!'
+          emptyMessage     = {emptyMessage}
           params           = {{
             student_id: [ student.id ]
           }}
@@ -28,7 +36,6 @@ const Infractions = ({student}) => {
 }
 
 Infractions.defaultProps = {}
-
 Infractions.propTypes = {}
 
-export default Infractions
+export default observer(Infractions)

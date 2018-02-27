@@ -6,7 +6,7 @@ import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 import fireEvent            from 'helpers/FireEvent'
 
-export default class Eduphoria extends Component {
+export default class OSTP extends Component {
   constructor(props) {
     super(props)
 
@@ -19,10 +19,10 @@ export default class Eduphoria extends Component {
 
         <div className='row'>
           <VJSChart
-            id          = 'eduphoria-student-detail'
-            reportPath  = '/public/VJS/ss_ui/assessment/eduphoria/student_detail_beta'
+            id          = 'ostp-student-detail'
+            reportPath  = '/public/VJS/ss_ui/assessment/ostp/student_detail'
             params      = {this.state.params}
-            title       = 'Eduphoria'
+            title       = 'OSTP'
             className   = 'col-md-12'
             isTable     = {true}
             linkOptions = {{
@@ -33,7 +33,7 @@ export default class Eduphoria extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'assessment/eduphoria'
+                      path:    'assessment/ostp'
                     })
                   }
                 }

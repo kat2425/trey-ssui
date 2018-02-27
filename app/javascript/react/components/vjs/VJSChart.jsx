@@ -8,12 +8,17 @@ import {
 } from 'reactstrap'
 
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
+import EmptyMessage   from 'ui/shell/EmptyMessage'
 
 const chartContainer = { margin: '5px' }
 
 export default class VJSChart extends Component {
   static defaultProps = {
-    isTable: false
+    isTable:      false,
+    noExport:     false,
+    emptyIcon:    'info-with-circle',
+    emptyTitle:   'No Data',
+    emptyMessage: ''
   }
 
   constructor(props) {
@@ -56,7 +61,7 @@ export default class VJSChart extends Component {
     const { reportPath, params } = nextProps
 
     if (!(this.props.params === nextProps.params)) {
-      this.setReportState(false)
+      this.setState({ emptyReport: false, resourceLoaded: false, totalPages: 0 })
       this.renderChart(reportPath, params)
     }
   }
@@ -100,18 +105,25 @@ export default class VJSChart extends Component {
       events: Object.assign((this.props.events || this.correctVJSTable()), {
         changeTotalPages: (total) => {
           if (this._isMounted) this.setState({ totalPages: total })
+        },
+
+        reportCompleted: (status) => {
+          // TODO: can we use an await here to check if component is mounted, if not,
+          // wait until it is, and then complete the function?
+
+          // Hide our loading indicator on a successful render
+          if (this._isMounted) this.setState({ resourceLoaded: true })
+
+          // Show empty message if table has no data
+          if (!this.report.data().components.length && this.props.isTable) {
+            this.setState({ emptyReport: true })
+          }
         }
       }),
 
-      // Hide our loading indicator on a successful render
       success: () => {
-        if (this._isMounted) this.setState({ resourceLoaded: true })
-
-        // console.log(`--data | ${this.reportID} --`)
-        // console.log(this.report)
-        // if (!this.report.data().components.length && this.props.isTable) {
-        //   this.setState({ emptyReport: true })
-        // }
+        // XXX: this is triggered when report is successfully running, but potentially
+        // not yet finished. Should we do anything here?
       },
 
       error: ::this.handleError
@@ -157,10 +169,12 @@ export default class VJSChart extends Component {
 
   renderEmptyMessage() {
     if (this.state.emptyReport) {
+      const { emptyTitle, emptyIcon, emptyMessage } = this.props
+
       return (
-        <div className='m-4 p-4 text-muted'>
-          <h5 style={{opacity: '0.5'}}>No Data Found...</h5>
-        </div>
+        <EmptyMessage title={ emptyTitle } icon={ emptyIcon }>
+          { emptyMessage }
+        </EmptyMessage>
       )
     }
   }
@@ -172,7 +186,7 @@ export default class VJSChart extends Component {
     // method and replace it with a CSS defined animation
     if (!this.state.resourceLoaded) {
       return (
-        <LoadingSpinner />
+        <LoadingSpinner padding={2} />
       )
     }
   }
@@ -199,7 +213,7 @@ export default class VJSChart extends Component {
          this.props.isTable &&
          !this.props.ignorePagination) {
       return (
-        <Pagination className='float-right' style={{marginTop: '-30px'}}>
+        <Pagination className='float-right' style={{marginTop: '-12px'}}>
           <PaginationItem
             onClick  = {() => this.changeReportPage(this.state.currentPage - 1)}
             disabled = {this.state.currentPage === 1}
@@ -294,7 +308,7 @@ export default class VJSChart extends Component {
     if (this.props.isTable) {
       return {
         beforeRender: (html) => {
-          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%')
+          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%').css('margin-bottom', '0')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(1)').css('display', 'none')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(2) > td').css('border-top', 'none')
           $(html).find('table.jrPage.table > tbody > tr').css('height', '')
@@ -304,7 +318,7 @@ export default class VJSChart extends Component {
     } else if (this.props.isCrosstab) {
       return {
         beforeRender: (html) => {
-          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%')
+          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%').css('margin-bottom', '0')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(1)').css('display', 'none')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(2) > td').css('border-top', 'none')
           $(html).find('table.jrPage.table > tbody > tr').css('height', '')
@@ -418,7 +432,6 @@ export default class VJSChart extends Component {
 
           <Collapse isOpen={!this.state.collapse}>
             <div className='text-center' style={chartContainer}>
-              { this.renderLoader() }
               { this.renderError() }
               { this.renderEmptyMessage() }
 
@@ -428,6 +441,7 @@ export default class VJSChart extends Component {
                 </div>
               </center>
 
+              { this.renderLoader() }
               { this.renderPaginator() }
             </div>
           </Collapse>
