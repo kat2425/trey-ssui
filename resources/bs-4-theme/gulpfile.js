@@ -56,8 +56,8 @@ var jqueryVersionCheck = '+function ($) {\n' +
 gulp.task('default', ['scss-min', 'js-min'])
 
 gulp.task('watch', function () {
-  gulp.watch(Paths.SCSS, ['scss-min']);
-  gulp.watch(Paths.JS,   ['js-min']);
+  gulp.watch(Paths.SCSS, { interval: 1000 }, ['scss-min']);
+  gulp.watch(Paths.JS,   { interval: 1000 }, ['js-min']);
 })
 
 gulp.task('docs', ['server'], function () {
