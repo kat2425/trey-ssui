@@ -17,10 +17,11 @@ import {
 const NavItem = ({style, ...rest}) => 
   <NavItm {...rest} style={{...style, cursor: 'pointer'}}/>
 
-function ActionBar({callingStore, uiStore, store}) {
+function ActionBar({callingStore, uiStore, reminderStore, store}) {
   const { callBarVisible }     = callingStore
   const { setSelectedSidebar } = uiStore
   const { totalUnread }        = store
+  const { totalPending }       = reminderStore
 
   return (
     <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
@@ -38,6 +39,14 @@ function ActionBar({callingStore, uiStore, store}) {
         <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.REMINDER)}>
           <span className='icon icon-clock mr-2' style={{opacity: '0.6'}}/>
           <span>Reminders</span>
+          <Badge 
+            color  = 'danger'
+            style  = {actionBarNotification}
+            hidden = {totalPending < 1}
+            pill
+          >
+            {totalPending}
+          </Badge>
         </NavItem>
 
         <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.CALL)}>
