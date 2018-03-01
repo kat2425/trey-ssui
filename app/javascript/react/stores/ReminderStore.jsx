@@ -34,18 +34,27 @@ class ReminderStore {
     return _.isEmpty(this.filteredReminders)
   }
 
+  @computed get totalPending(){
+    return _.filter(this.reminders, (e) => { return e.status === 'pending' }).length
+  }
+
   @action
   fetchReminders = () => {
     this.setIsLoading(true)
 
     xhr.get('/tasks')
       .then((data) => {
-        this.reminders = data.data
-        this.setIsLoading(false)
+        this.fetchRemindersOK(data)
       })
       .catch((error) => {
         this.setIsError(error)
       })
+  }
+
+  @action
+  fetchRemindersOK = ({ data }) => {
+    this.reminders = data
+    this.setIsLoading(false)
   }
 
   @action

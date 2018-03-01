@@ -8,8 +8,7 @@ import ActionBar               from 'ui/shell/ActionBar'
 import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
 import MailWriter              from 'ui/shell/MailWriter'
-import Sidebar                 from 'ui/shell/SMS/Sidebar'
-import {CallSidebar, CallInfo} from 'ui/shell/Call'
+import { CallInfo }            from 'ui/shell/Call'
 
 import CallingController       from 'ui/controllers/CallingController'
 import SidebarController       from 'ui/controllers/SidebarController'
@@ -20,6 +19,7 @@ import WebSocketStore          from 'stores/WebSocket'
 import SMSConversationStore    from 'stores/SMSConversation'
 import MailerStore             from 'stores/MailerStore'
 import callStore               from 'stores/CallStore'
+import reminderStore           from 'stores/ReminderStore'
 
 import VJSContainer            from 'ui/vjs/VJSContainer'
 
@@ -141,7 +141,12 @@ class UserMain extends Component {
             <NavBar />
             <UserMenu />
             <AppContainer />
-            <ActionBar store={SMSInboxStore} uiStore={this.props.uiStore} callingStore={CallingStore}/>
+            <ActionBar 
+              store         = {SMSInboxStore} 
+              uiStore       = {this.props.uiStore} 
+              callingStore  = {CallingStore} 
+              reminderStore = {reminderStore}
+            />
             <MailWriter store={MailerStore} />
             <SidebarController callStore={callStore} />
             <CallInfo

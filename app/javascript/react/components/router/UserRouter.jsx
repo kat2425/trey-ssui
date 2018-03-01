@@ -10,6 +10,7 @@ import userStore     from 'stores/UserStore'
 import tagStore      from 'stores/TagStore'
 import groupStore    from 'stores/GroupStore'
 import smsInboxStore from 'stores/SMSInbox'
+import reminderStore from 'stores/ReminderStore'
 
 const UserRouter = props => {
   // we inject ui related user props serverside and set to window var window.SSUser = props.user
@@ -18,13 +19,14 @@ const UserRouter = props => {
   tagStore.fetchSchema()
   groupStore.fetchGroups()
   smsInboxStore.fetchInbox()
+  reminderStore.fetchReminders()
   notification.config({
     top: 75
   })
   
   message.config({
     top:      100,
-    duration:  1.5
+    duration: 1.5
   })
 
   const store = {uiStore, userStore, tagStore}
