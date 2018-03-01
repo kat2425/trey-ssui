@@ -518,6 +518,6 @@ td.rdtYear:hover {
 }
 
 .DraftEditor-root {
-  min-height: 400px;
+  min-height: calc(100vh - 480px);
   background-color: white !important;
 }
