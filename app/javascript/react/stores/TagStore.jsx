@@ -224,7 +224,10 @@ export class TagStore {
       'groups',
     ]
     const clonedTag = _.pick(toJS(tag), picked)
-    const json      = { ...clonedTag, 'tree_query': clonedTag.treeQuery.toJS()}
+    const json      = { 
+      ...clonedTag, 
+      'tree_query': clonedTag.treeQuery ? clonedTag.treeQuery.toJS() : null
+    }
     const conf      = {isNew: true, isCloned: true}
     const newTag    = new Tag(conf,this,json)
 
