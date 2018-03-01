@@ -22,6 +22,7 @@ import PSAT89          from './PSAT89'
 import PSATNM          from './PSATNM'
 import OSTP            from './OSTP'
 import CogAT           from './CogAT'
+import ATI             from './ATI'
 
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
@@ -151,6 +152,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/cogat`}
             render = {() => <CogAT student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/ati`}
+            render = {() => <ATI student={student}/> }
           />
 
           <Route render={() => {
