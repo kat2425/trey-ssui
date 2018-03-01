@@ -1,5 +1,5 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
@@ -23,4 +23,4 @@ const AccelReader = ({student}) => {
 AccelReader.defaultProps = {}
 AccelReader.propTypes = {}
 
-export default AccelReader
+export default observer(AccelReader)

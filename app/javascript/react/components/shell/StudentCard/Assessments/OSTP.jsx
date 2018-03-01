@@ -3,14 +3,14 @@ import { observer } from 'mobx-react'
 
 import VJSChart     from 'ui/vjs/VJSChart'
 
-const MAAP = ({student}) => {
+const OSTP = ({student}) => {
   return (
     <div>
       <VJSChart
-        id               = 'sc-maap'
-        reportPath       = '/public/VJS/ss_ui/assessment/maap/student_card'
+        id               = 'sc-ostp'
+        reportPath       = '/public/VJS/ss_ui/assessment/ostp/student_card'
         scale            = 'container'
-        title            = 'MAAP'
+        title            = 'OSTP'
         isTable          = {true}
         ignorePagination = {true}
         params           = {{
@@ -21,7 +21,7 @@ const MAAP = ({student}) => {
   )
 }
 
-MAAP.defaultProps = {}
-MAAP.propTypes    = {}
+OSTP.defaultProps = {}
+OSTP.propTypes    = {}
 
-export default observer(MAAP)
+export default observer(OSTP)

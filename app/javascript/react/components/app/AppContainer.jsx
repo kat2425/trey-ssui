@@ -25,7 +25,7 @@ import SMSController         from 'ui/controllers/SMSController'
 import StudentCardController from 'ui/controllers/StudentCardController'
 
 import UserSettings          from 'modules/UserSettings'
-import EmptyMessage         from 'ui/shell/EmptyMessage'
+import EmptyMessage          from 'ui/shell/EmptyMessage'
 
 const AppContainer = ({match}) => {
   return (

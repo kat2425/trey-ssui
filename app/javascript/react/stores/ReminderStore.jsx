@@ -12,7 +12,7 @@ const FILTER = {
 
 class ReminderStore {
   @observable reminders               = []
-  @observable reminderText            = null
+  @observable reminderText            = undefined
   @observable selectedFilter          = FILTER.PENDING
 
   @observable @setter selectedStudent = null

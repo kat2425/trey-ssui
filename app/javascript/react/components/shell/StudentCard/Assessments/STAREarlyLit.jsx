@@ -1,5 +1,5 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
@@ -24,4 +24,4 @@ const STAREarlyLit = ({student}) => {
 STAREarlyLit.defaultProps = {}
 STAREarlyLit.propTypes = {}
 
-export default STAREarlyLit
+export default observer(STAREarlyLit)

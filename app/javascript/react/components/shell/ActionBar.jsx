@@ -5,6 +5,7 @@ import CallBar                 from 'ui/shell/ActionBar/Calling/CallBar'
 import CallNotesDialog         from 'ui/shell/ActionBar/Calling/CallNotesDialog'
 import intercomIcon            from 'images/intercom-icon.svg'
 import { SIDEBAR }             from 'stores/UiStore'
+import userStore               from 'stores/UserStore'
 
 import {
   Navbar,
@@ -14,8 +15,18 @@ import {
 } from 'reactstrap'
 
 
-const NavItem = ({style, ...rest}) => 
+const NavItem = ({style, ...rest}) =>
   <NavItm {...rest} style={{...style, cursor: 'pointer'}}/>
+
+const channelCheck = (caller, item) => {
+  const { user } = userStore
+
+  if (user.hasChannel) {
+    caller(item)
+  } else {
+    alert('You must have communications enabled to utilize this feature')
+  }
+}
 
 function ActionBar({callingStore, uiStore, reminderStore, store}) {
   const { callBarVisible }     = callingStore
@@ -36,11 +47,11 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           </ReactCSSTransitionGroup>
         </NavItem>
 
-        <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.REMINDER)}>
+        <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.REMINDER)}>
           <span className='icon icon-clock mr-2' style={{opacity: '0.6'}}/>
           <span>Reminders</span>
-          <Badge 
-            color  = 'danger'
+          <Badge
+            color  = 'success'
             style  = {actionBarNotification}
             hidden = {totalPending < 1}
             pill
@@ -54,10 +65,10 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           <span>Calls</span>
         </NavItem>
 
-        <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.SMS)}>
+        <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.SMS)}>
           <span className='icon icon-chat mr-2' style={{opacity: '0.6'}}/>
           <span>Messages</span>
-          <Badge 
+          <Badge
             color  = 'danger'
             style  = {actionBarNotification}
             hidden = {totalUnread < 1}
@@ -107,7 +118,7 @@ const getActionBarStyle = ({isCalling, isConferenceCalling, callBarVisible}) => 
   color:           (isCalling ? '#ffffff' : ((!isCalling && callBarVisible) ? '#ffffff' : '#292b2c')),
 })
 
-const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) => 
+const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) =>
   ((isCalling || isConferenceCalling) ? '#5cb85c' : ((!isCalling && callBarVisible) ? '#d9534f' : '#e8e8e8'))
 
 export default observer(ActionBar)

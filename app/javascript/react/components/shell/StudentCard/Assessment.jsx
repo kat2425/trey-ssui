@@ -1,5 +1,5 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
@@ -27,7 +27,6 @@ const Assessment = ({student}) => {
 }
 
 Assessment.defaultProps = {}
-
 Assessment.propTypes = {}
 
-export default Assessment
+export default observer(Assessment)

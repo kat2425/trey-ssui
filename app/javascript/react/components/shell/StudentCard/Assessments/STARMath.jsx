@@ -1,5 +1,5 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
@@ -24,4 +24,4 @@ const STARMath = ({student}) => {
 STARMath.defaultProps = {}
 STARMath.propTypes = {}
 
-export default STARMath
+export default observer(STARMath)

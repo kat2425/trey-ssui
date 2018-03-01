@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import { observer }         from 'mobx-react'
 
 import VJSChart    from 'ui/vjs/VJSChart'
 import VJSICSelect from 'ui/vjs/VJSICSelect'
 import userStore   from 'stores/UserStore'
 
+@observer
 export default class Grades extends Component {
   constructor(props) {
     super(props)

@@ -1,5 +1,5 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 import _         from 'lodash'
 
 import {
@@ -182,4 +182,4 @@ Contacts.defaultProps = {}
 
 Contacts.propTypes = {}
 
-export default Contacts
+export default observer(Contacts)

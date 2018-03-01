@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
+import { observer }         from 'mobx-react'
 
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
@@ -7,6 +8,7 @@ import renderIf             from 'ui/hoc/renderIf'
 
 const EVJSICSelect = renderIf(VJSICSelect)
 
+@observer
 export default class Courses extends Component {
   constructor(props) {
     super(props)
@@ -54,7 +56,7 @@ export default class Courses extends Component {
         id         = 'sc-student-courses'
         reportPath = {`/public/VJS/ss_ui/courses/student_card${coursePath}`}
         scale      = 'container'
-        title      = 'Schedule'
+        title      = 'Details'
         isTable    = {true}
         ignorePagination = {true}
         params     = {{

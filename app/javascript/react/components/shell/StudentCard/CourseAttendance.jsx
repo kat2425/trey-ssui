@@ -1,5 +1,5 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React        from 'react'
+import { observer } from 'mobx-react'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
@@ -26,4 +26,4 @@ CourseAttendance.defaultProps = {}
 
 CourseAttendance.propTypes = {}
 
-export default CourseAttendance
+export default observer(CourseAttendance)

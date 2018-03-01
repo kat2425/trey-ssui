@@ -129,6 +129,3 @@ end
 
 class UserAccessToken < Sequel::Model(:user_access_tokens)
 end
-
-class District < Sequel::Model(:districts)
-end

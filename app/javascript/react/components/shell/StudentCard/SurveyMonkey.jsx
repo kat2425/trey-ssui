@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes   from 'prop-types'
+import { observer }         from 'mobx-react'
 
 import VJSChart    from 'ui/vjs/VJSChart'
 import VJSICSelect from 'ui/vjs/VJSICSelect'
 
+@observer
 export default class SurveyMonkey extends Component {
   constructor(props) {
     super(props)
