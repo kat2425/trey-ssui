@@ -63,10 +63,6 @@ const settings = {
   valueSourcesInfo: {
     value: {
       label: 'Value'
-    },
-    field: {
-      label:  'Field',
-      widget: 'field'
     }
   },
   valueSourcesPopupTitle:   'Select value source',
