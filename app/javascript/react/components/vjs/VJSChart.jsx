@@ -95,6 +95,7 @@ export default class VJSChart extends Component {
       loadingOverlay: false,
       autoresize:     true,
       scrollToTop:    false,
+      scale:          'container',
 
       // Props open to override via our React component
       linkOptions:      this.mergeLinkOptions((this.props.linkOptions || {})),

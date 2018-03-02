@@ -1,19 +1,25 @@
 import React from 'react'
 
+const renderMessage = (message) => {
+  if (message) {
+    return (
+      <p className='mt-4'>{ message }</p>
+    )
+  }
+}
+
 const EmptyMessage = ({title, icon, children}) => {
   return (
-    <div className='text-center align-middle empty-message-container'>
-      <h1 style={{fontSize: '48px'}}>
-        <span className={`icon icon-${ icon }`}/>
-      </h1>
+    <div className='empty-message-container'>
+      <div className='text-center'>
+        <h1 style={{fontSize: '48px'}}>
+          <span className={`icon icon-${ icon }`}/>
+        </h1>
 
-      <h4>{ title }</h4>
+        <h4>{ title }</h4>
 
-      <center>
-        <p className='text-center mt-4 w-50'>
-          { children }
-        </p>
-      </center>
+        { renderMessage(children) }
+      </div>
     </div>
   )
 }
