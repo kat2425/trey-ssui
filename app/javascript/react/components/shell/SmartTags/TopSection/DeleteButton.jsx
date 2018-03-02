@@ -14,7 +14,7 @@ function DeleteButton({tagStore}){
       okText     = 'Delete'
       cancelText = 'Cancel'
     >
-      <Tooltip title='Delete Tag'>
+      <Tooltip title='Delete List'>
         <Button
           className = 'pl-2'
           color     = 'danger'

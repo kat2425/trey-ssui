@@ -118,7 +118,7 @@ class FormWrapper extends Component {
             ]
           })(
             <Input 
-              placeholder="Enter Tag Name" 
+              placeholder="Enter List Name" 
               ref={(input) => {input && window.requestAnimationFrame(()=>{input.focus()})}}
               onFocus={this.handleOnFocus}
             />

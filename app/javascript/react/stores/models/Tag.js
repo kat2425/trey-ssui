@@ -28,7 +28,7 @@ import fromJSOrdered from 'helpers/fromJSOrdered'
 
 const {queryBuilderFormat, queryString} = Utils
 
-const TAG_NAME_PLACEHOLDER = 'Untitled Tag'
+const TAG_NAME_PLACEHOLDER = 'Untitled List'
 
 export const TABS = {
   QUERY_BUILDER: 'query-builder',
@@ -276,7 +276,7 @@ export default class Tag {
         this.tagStore.addTag(this)
         wasActive && this.tagStore.setSelectedTag(this)
 
-        UiStore.addNotification({title: 'Tag', message: 'created successfully', type: 'success'})
+        UiStore.addNotification({title: 'List', message: 'created successfully', type: 'success'})
       })
     } catch (e) {
       this.setIsError(getError(e))
@@ -301,7 +301,7 @@ export default class Tag {
       runInAction(() => {
         this.tagStore.deleteTag(this)
 
-        UiStore.addNotification({title: 'Tag', message: 'deleted successfully', type: 'success'})
+        UiStore.addNotification({title: 'List', message: 'deleted successfully', type: 'success'})
       })
     } catch(e) {
       this.setIsError(getError(e))
@@ -328,7 +328,7 @@ export default class Tag {
         this.updateFromJson(data)
         this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
 
-        UiStore.addNotification({title: 'Tag', message: 'saved successfully', type: 'success'})
+        UiStore.addNotification({title: 'List', message: 'saved successfully', type: 'success'})
       })
     } catch (e) {
       this.setIsError(getError(e))

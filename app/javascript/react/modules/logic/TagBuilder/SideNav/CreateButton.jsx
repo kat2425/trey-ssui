@@ -5,7 +5,7 @@ import { Tooltip }  from 'antd'
 
 function CreateButton({tagStore}){
   return (
-    <Tooltip title='Create A Tag'>
+    <Tooltip title='Create A List'>
       <Button
         onClick   = {tagStore.handleAddTag}
         className = 'pl-2'

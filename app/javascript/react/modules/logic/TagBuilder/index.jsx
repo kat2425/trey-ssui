@@ -91,7 +91,7 @@ export default class TagBuilder extends Component {
           </Col>
 
           <Content innerRef={this.setContainerRef} xs={24} sm={24} md={18} lg={19}>
-            {renderIfNoSelectedTag(<p className='mt-5 text-muted text-center'>No Tag Selected</p>)}
+            {renderIfNoSelectedTag(<p className='mt-5 text-muted text-center'>No List Selected</p>)}
             {renderIfLoadingSchema(<LoadingSpinner center />)}
 
             <TopSection tagStore={tagStore} />
