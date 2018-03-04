@@ -105,7 +105,12 @@ export default class VJSChart extends Component {
       // TODO: fixme with a spread ... operator
       events: Object.assign((this.props.events || this.correctVJSTable()), {
         changeTotalPages: (total) => {
-          if (this._isMounted) this.setState({ totalPages: total })
+
+          if (this._isMounted) {
+            this.setState({
+              totalPages: total
+            })
+          }
         },
 
         reportCompleted: (status) => {
@@ -117,7 +122,9 @@ export default class VJSChart extends Component {
             this.setState({ resourceLoaded: true })
 
             // Show empty message if table has no data
-            if (!this.report.data().components.length && this.props.isTable) {
+            if (!this.report.data().components.length &&
+                !(this.report.data().totalPages == undefined) &&
+                this.props.isTable) {
               this.setState({ emptyReport: true })
             }
           }
@@ -134,13 +141,9 @@ export default class VJSChart extends Component {
   }
 
   handleError(err) {
-    if (err.errorCode === 'resource.not.found') {
-      if (this._retries <= 2) {
-        this.renderChart(this.props.reportPath, this.props.params)
-        this._retries++
-      } else {
-        this.setErrorState(err)
-      }
+    if (this._retries <= 2) {
+      this.renderChart(this.props.reportPath, this.props.params)
+      this._retries++
     } else {
       this.setErrorState(err)
     }
@@ -311,7 +314,7 @@ export default class VJSChart extends Component {
     if (this.props.isTable) {
       return {
         beforeRender: (html) => {
-          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%').css('margin-bottom', '0')
+          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%').css('margin-bottom', '0').css('-webkit-transform', 'scale(1.0)')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(1)').css('display', 'none')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(2) > td').css('border-top', 'none')
           $(html).find('table.jrPage.table > tbody > tr').css('height', '')

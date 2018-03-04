@@ -11,6 +11,7 @@ import userStore       from 'stores/UserStore'
 import _               from 'lodash'
 import EmptyMessage    from 'ui/shell/EmptyMessage'
 
+import ACT             from './ACT'
 import ATI             from './ATI'
 import AccelReader     from './AccelReader'
 import Case21          from './Case21'
@@ -44,6 +45,7 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
+      { module: 'vjs_act',       value: 'act',            label: 'ACT'                },
       { module: 'vjs_ati',       value: 'ati',            label: 'ATI'                },
       { module: 'vjs_case21',    value: 'case21',         label: 'Case21'             },
       { module: 'vjs_cogat',     value: 'cogat',          label: 'CogAT'              },
@@ -159,6 +161,16 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/ati`}
             render = {() => <ATI student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/scantron`}
+            render = {() => <Scantron student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/act`}
+            render = {() => <ACT student={student}/> }
           />
 
           <Route render={() => {

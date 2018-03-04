@@ -4,10 +4,10 @@ import callStore            from 'stores/CallStore'
 import ReminderStore        from 'stores/ReminderStore'
 import { notification }     from 'antd'
 
-import { 
-  observable, 
-  autorun, 
-  reaction, 
+import {
+  observable,
+  autorun,
+  reaction,
   action
 } from 'mobx'
 
@@ -21,31 +21,31 @@ export class UiStore {
   @observable
   selectedSidebar = null
 
-  @setter @observable 
+  @setter @observable
   currentContact = null
 
-  @setter @observable 
+  @setter @observable
   currentConversation = null
 
-  @setter @observable 
+  @setter @observable
   showInbox = true
 
-  @setter @observable 
+  @setter @observable
   shouldScrollToBottom = true
 
-  @setter @observable 
+  @setter @observable
   showCallInfo = false
 
-  @setter @observable 
+  @setter @observable
   sidebarMaxHeight = false
 
-  @setter @observable 
+  @setter @observable
   isStudentCardOpen = false
 
   @observable notifications = []
 
   constructor() {
-    this.autoFetchSMSConversation() 
+    this.autoFetchSMSConversation()
     this.autoFetchCallLogs()
     this.autoHideCallInfo()
   }
@@ -60,13 +60,13 @@ export class UiStore {
   }
 
   @action setSidebarVisibility(show){
-    this.hideSidebar = !show 
+    this.hideSidebar = !show
   }
 
   // Auto Actions
   @action autoFetchSMSConversation(){
     autorun('fetch conversation everytime it is updated', () => {
-      if(!this.currentConversation) return 
+      if(!this.currentConversation) return
 
       this.shouldScrollToBottom = true
       SMSConversationStore.fetchConversation(this.currentConversation)
@@ -81,7 +81,7 @@ export class UiStore {
     reaction(
       ()     => this.showCallSidebar,
       (show) => show && callStore.fetchCallLogs()
-    ) 
+    )
   }
 
   @action handleReminderSidebar(){
@@ -98,7 +98,11 @@ export class UiStore {
 
   @action
   setSelectedSidebar = (sidebar) => {
-    this.selectedSidebar = sidebar
+    if (this.selectedSidebar === sidebar) {
+      this.selectedSidebar = null
+    } else {
+      this.selectedSidebar = sidebar
+    }
   }
 }
 

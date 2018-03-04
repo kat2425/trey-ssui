@@ -6,7 +6,7 @@ const ACTION_BAR_HEIGHT = 50
 const OFFSET_HEIGHT = `${NAV_HEIGHT + ACTION_BAR_HEIGHT}px`
 
 const Wrapper = styled.div.attrs({
-  className: 'col-3 px-0'
+  className: 'col-md-3 px-0'
 })`
   height: calc(100vh - ${OFFSET_HEIGHT});
   position: fixed;

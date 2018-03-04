@@ -13,18 +13,32 @@ const activeItem = {
   backgroundColor: '#f7fcff',
 }
 
-const UserMenuItem = ({link, title, iconClass, ...rest}) => (
+const renderNormal = ({link, title, iconClass, ...rest}) => (
+  <NavLink
+    className   = 'pr-4 pl-4 p-1'
+    href        = {link}
+  >
+    <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />
+    {title}
+  </NavLink>
+)
+
+const renderRouterLink = ({link, title, iconClass, ...rest}) => (
+  <NavLink
+    tag         = {RRNavLink}
+    activeStyle = {activeItem}
+    className   = 'pr-4 pl-4 p-1'
+    to          = {(link || '/404')}
+    {...rest}
+  >
+    <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />
+    {title}
+  </NavLink>
+)
+
+const UserMenuItem = (props) => (
   <NavItem className='pr-1'>
-    <NavLink
-      tag         = {RRNavLink}
-      activeStyle = {activeItem}
-      className   = 'pr-4 pl-4 p-1'
-      to          = {(link || '/404')}
-      {...rest}
-    >
-      <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />
-      {title}
-    </NavLink>
+    { props.noRoute ? renderNormal(props) : renderRouterLink(props) }
   </NavItem>
 )
 

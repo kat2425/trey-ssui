@@ -39,7 +39,7 @@ export default class VJSContainer extends React.Component {
 
   renderChildren() {
     return (
-      <div className='vjs-container'>
+      <div className={`vjs-container ${this.props.className}`}>
         {this.props.children}
       </div>
     )

@@ -14,14 +14,16 @@ class LoginController < ApplicationController
   def warden_logout
     logout
     cookies.delete 'ss_session'
-    redirect_to :login
+
+    if Rails.env == 'production'
+      redirect_to 'https://secure.schoolstatus.com/back_to_core'
+    else
+      redirect_to :login
+    end
   end
 
-  def info
-    # login
-    authenticate!
-    # authenticate!
-    # binding.pry
+  def session_info
+    render :json => session.to_json
   end
 
   def failed

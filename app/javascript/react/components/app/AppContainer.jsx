@@ -4,6 +4,8 @@ import {
   Switch, Route, withRouter, Redirect
 } from 'react-router-dom'
 
+import UserMenu                from 'ui/shell/UserMenu/UserMenu'
+
 import Attendance            from 'modules/logic/Attendance'
 import Infractions           from 'modules/logic/Infractions'
 import Financials            from 'modules/logic/Financials'
@@ -29,7 +31,8 @@ import EmptyMessage          from 'ui/shell/EmptyMessage'
 
 const AppContainer = ({match}) => {
   return (
-    <div className='col-md-10 offset-md-2 mb-5'>
+    <div className='col-md-10 offset-md-2 mb-5' style={{overflowY: 'scroll'}}>
+      <UserMenu />
       <Switch>
         <Redirect exact from='/r/' to='/r/my_students' />
 

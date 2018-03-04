@@ -45,6 +45,8 @@ Warden::Strategies.add(:ss_core_token) do
     raw_cookie    = CGI::unescape(cookies['ss_session'])
     parsed_cookie = Marshal.load Rack::Session::Cookie::Base64.new.decode(Rack::Utils.unescape(raw_cookie))
 
+    puts "-- COOKIE: #{parsed_cookie}"
+
     if (user = User[parsed_cookie['warden.user.session.key']])
       success!(user)
     else

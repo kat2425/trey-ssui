@@ -17,15 +17,18 @@ export default class VJSICSelect extends Component {
   }
 
   static defaultProps = {
-    multi: false
+    multi:      false,
+    setDefault: false
   }
 
   constructor(props) {
     super(props)
 
-    this._isMounted = false
-    this.control    = null
-    this.state      = {
+    this._isMounted     = false
+    this._setDefaultOpt = true
+    this._selectedValue = undefined
+    this.control        = null
+    this.state          = {
       resourceLoaded: false,
       options:        null
     }
@@ -57,13 +60,25 @@ export default class VJSICSelect extends Component {
       params:   (params || {}),
       success:  (ic) => {
         if (this._isMounted) {
-          const filter = _.find(ic, { id: this.props.id })
+          const filter  = _.find(ic, { id: this.props.id })
+          const options = filter.state.options
+
+          if (this._setDefaultOpt && this.props.setDefault) {
+            if (!!options.length) {
+              options[0].selected = true
+            }
+          }
 
           if (filter) {
             this.setState({
               resourceLoaded: true,
-              options:        filter.state.options
+              options:        options
             })
+
+            if (this._setDefaultOpt && this.props.setDefault) {
+              this.props.handleChange(options[0])
+              this._setDefaultOpt = false
+            }
           }
         }
       }

@@ -7,11 +7,15 @@ Rails.application.routes.draw do
   root 'login#index'
 
   # Sessions/Auth
-  get 'login'  => 'login#index'
-  post 'login' => 'login#warden_login'
-  get 'logout' => 'login#warden_logout'
-  get 'info'   => 'login#info'
+  get  'login'        => 'login#index'
+  post 'login'        => 'login#warden_login'
+  get  'logout'       => 'login#warden_logout'
 
+  get  'session_info' => 'login#session_info'
+
+  # Legacy Hooks
+  get '/legacy/useradmin' => 'legacy#useradmin'
+  get '/legacy/settings'  => 'legacy#settings'
 
   # React UserApp
   get 'home'     => redirect('/r')

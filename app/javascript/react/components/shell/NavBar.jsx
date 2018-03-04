@@ -29,7 +29,7 @@ export default class NavBar extends Component {
         fixed     = 'top'
         className = 'navbar-toggleable-sm navbar-inverse bg-navbar app-navbar'
       >
-        <NavbarBrand className='pt-0'>
+        <NavbarBrand className='pt-0' href='/'>
           <img src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' style={brandLogo}/>
         </NavbarBrand>
 
@@ -46,7 +46,7 @@ export default class NavBar extends Component {
             </NavItem>
 
             <NavItem>
-              <NavLink tag={RRNavLink} to='/r/user_settings'>Settings</NavLink>
+              <NavLink href='/legacy/settings'>Settings</NavLink>
             </NavItem>
 
             <NavItem>

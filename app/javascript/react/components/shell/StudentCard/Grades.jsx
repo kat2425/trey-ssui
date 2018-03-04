@@ -10,20 +10,11 @@ export default class Grades extends Component {
   constructor(props) {
     super(props)
 
-    this._currentYear = userStore.user.currentSchoolYear
-
-    this.state        = {
-      params: {
-        school_year: [ this._currentYear ]
-      },
-      selected: {
-        school_year: { selected: true, label: this._currentYear , value: this._currentYear }
-      }
-    }
+    this.state = { params: {}, selected: {} }
   }
 
   setYearFilter(val) {
-    const jrsValue = val ? val.value : this._currentYear
+    const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
       params:   { ...this.state.params, school_year: [ jrsValue ] },
@@ -51,12 +42,14 @@ export default class Grades extends Component {
         >
           <VJSICSelect
             id            = 'school_year'
-            inputPath     = '/public/VJS/ss_ui/grades/school_year'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/student_card_dataset_years/report'
             selectedValue = {this.state.selected.school_year}
             handleChange  = {::this.setYearFilter}
             clearable     = {false}
+            setDefault    = {true}
             placeholder   = 'Year'
             width         = {100}
+            params        = {{ dataset: ['grades'], student_id: [student.id] }}
           />
         </VJSChart>
       </div>

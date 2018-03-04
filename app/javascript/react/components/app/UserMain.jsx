@@ -1,12 +1,17 @@
 import React, { Component }    from 'react'
-import { withRouter }          from 'react-router-dom'
-import _                       from 'lodash'
 import { inject, observer }    from 'mobx-react'
+import _                       from 'lodash'
+
+import {
+  Switch, Route, withRouter
+} from 'react-router-dom'
 
 import UserMenu                from 'ui/shell/UserMenu/UserMenu'
 import ActionBar               from 'ui/shell/ActionBar'
 import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
+import FeedbakLegacy           from 'modules/feedbak/FeedbakLegacy'
+import Reporting               from 'modules/logic/reporting/Reporting'
 import MailWriter              from 'ui/shell/MailWriter'
 import { CallInfo }            from 'ui/shell/Call'
 
@@ -134,17 +139,28 @@ class UserMain extends Component {
     const { uiStore } = this.props
 
     return (
-      <VJSContainer>
-        <div className='container-fluid pt-4'>
-          <div className='row'>
+      <VJSContainer className='h-100'>
+        <div className='container-fluid pt-4 h-100'>
+          <div className='row h-100'>
             <CallingController store={CallingStore} />
             <NavBar />
-            <UserMenu />
-            <AppContainer />
-            <ActionBar 
-              store         = {SMSInboxStore} 
-              uiStore       = {this.props.uiStore} 
-              callingStore  = {CallingStore} 
+            {/* <UserMenu /> */}
+
+            <Switch>
+              <Route path='/r/feedbak' component={FeedbakLegacy} />
+              <Route path='/r/reporting' component={Reporting} />
+
+              <Route render={() => {
+                return (
+                  <AppContainer/>
+                )
+              }} />
+            </Switch>
+
+            <ActionBar
+              store         = {SMSInboxStore}
+              uiStore       = {this.props.uiStore}
+              callingStore  = {CallingStore}
               reminderStore = {reminderStore}
             />
             <MailWriter store={MailerStore} />

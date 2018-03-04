@@ -17,7 +17,7 @@ const UserMenu = () => {
   const _riskItemLabel = userStore.user.higherEd ? 'Risk Analysis' : 'At-Risk'
 
   return (
-    <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar'>
+    <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar pt-0'>
       <UserMenuSection title='Core Data'>
         <EUserMenuItem title='My Students' iconClass='icon-users' link='/r/my_students' active />
 
@@ -35,7 +35,6 @@ const UserMenu = () => {
           renderIf  = {userStore.hasModules('discipline')}
         />
 
-        {/* <EUserMenuItem title='Assessment' iconClass='icon-bar-graph' link='/r/assessment/tvaas' /> */}
         <EUserMenuItem
           title     = 'Assessment'
           iconClass = 'icon-area-graph'
@@ -79,13 +78,20 @@ const UserMenu = () => {
 
       <EUserMenuSection
         title    = 'Utilities'
-        renderIf = {userStore.hasModules('bullseye','reporting')}
+        renderIf = {userStore.hasModules('bullseye','reporting','feedbak')}
       >
         <EUserMenuItem
           title     = 'Searchlight'
           iconClass = 'icon-flashlight'
           link      = '/r/bullseye'
           renderIf  = {userStore.hasModules('bullseye')}
+        />
+
+        <EUserMenuItem
+          title     = 'Feedbak'
+          iconClass = 'icon-retweet'
+          link      = '/r/feedbak'
+          renderIf  = {userStore.hasModules('feedbak')}
         />
 
         <EUserMenuItem
@@ -97,9 +103,25 @@ const UserMenu = () => {
       </EUserMenuSection>
 
       <UserMenuSection title='Insights'>
-        <EUserMenuItem title={_riskItemLabel} iconClass='icon-traffic-cone' link='/r/risk_analysis' />
-        {/* <EUserMenuItem title='Reporting' iconClass='icon-funnel' link='/r/dumb' /> */}
+        <EUserMenuItem
+          title     = {_riskItemLabel}
+          iconClass = 'icon-traffic-cone'
+          link      = '/r/risk_analysis'
+        />
       </UserMenuSection>
+
+      <EUserMenuSection
+        title    = 'Management'
+        renderIf = {userStore.hasModules('useradmin')}
+      >
+        <EUserMenuItem
+          title     = 'User Management'
+          iconClass = 'icon-man'
+          link      = '/legacy/useradmin'
+          renderIf  = {userStore.hasModules('useradmin')}
+          noRoute
+        />
+      </EUserMenuSection>
     </div>
   )
 }

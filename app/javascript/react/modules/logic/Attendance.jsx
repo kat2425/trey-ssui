@@ -23,6 +23,14 @@ export default class Attendance extends Component {
     }
   }
 
+  listOptions = () => {
+    return [
+      { value: 'last_month',   label: 'Last Month'    },
+      { value: 'last_quarter', label: 'Last 3 Months' },
+      { value: 'last_six',     label: 'Last 6 Months' },
+    ]
+  }
+
   setYearFilter(val) {
     const jrsValue = val ? val.value : this._currentYear
 
@@ -78,7 +86,7 @@ export default class Attendance extends Component {
             scale       = 'container'
             className   = 'col-md-9'
             fullHeight  = {true}
-            title       = 'Average Over Year'
+            title       = 'Attendance for Year'
             params      = {this.state.params}
             linkOptions = {{
               events: {
@@ -91,7 +99,8 @@ export default class Attendance extends Component {
                 }
               }
             }}
-          />
+          >
+          </VJSChart>
 
           <VJSChart
             id          = 'ada-daily-breakdown'

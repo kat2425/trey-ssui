@@ -4,7 +4,7 @@ import {
   computed
 } from 'mobx'
 
-import { every, includes } from 'lodash'
+import { some, every, includes } from 'lodash'
 import {setter}            from 'mobx-decorators'
 
 class UserStore {
@@ -23,11 +23,11 @@ class UserStore {
   }
 
   @action hasModules = (...modules) => {
-    return every(modules, m => includes(this.modules, m))
+    return some(modules, m => includes(this.modules, m))
   }
 
   @action hasPolicies = (...policies) => {
-    return every(policies, p => includes(this.policies, p))
+    return some(policies, p => includes(this.policies, p))
   }
 }
 

@@ -1,11 +1,25 @@
 import React, { Component } from 'react'
 
-import VJSChart  from 'ui/vjs/VJSChart'
-import fireEvent from 'helpers/FireEvent'
+import VJSChart             from 'ui/vjs/VJSChart'
+import VJSICSelect          from 'ui/vjs/VJSICSelect'
+import fireEvent            from 'helpers/FireEvent'
 
 export default class MAAP extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      params: {}, selected: {}
+    }
+  }
+
+  setYearFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:     { ...this.state.params, school_year: [ jrsValue ] },
+      selected:   { ...this.state.selected, school_year: val }
+    })
   }
 
   render() {
@@ -18,6 +32,7 @@ export default class MAAP extends Component {
             title       = 'MAAP'
             className   = 'col-md-12'
             isTable     = {true}
+            params      = {this.state.params}
             linkOptions = {{
               events: {
                 click: (ev, link) => {
@@ -32,7 +47,19 @@ export default class MAAP extends Component {
                 }
               }
             }}
-          />
+          >
+            <VJSICSelect
+              id            = 'school_year'
+              inputPath     = '/public/VJS/ss_ui/shared/input_controls/district_dataset_years/report'
+              selectedValue = {this.state.selected.school_year}
+              handleChange  = {::this.setYearFilter}
+              clearable     = {false}
+              setDefault    = {true}
+              placeholder   = 'Year'
+              width         = {100}
+              params        = {{ dataset: ['mde_maps'] }}
+            />
+          </VJSChart>
         </div>
       </div>
     )

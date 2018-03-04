@@ -10,6 +10,7 @@ import ModuleHeader         from 'ui/shell/ModuleHeader'
 import Select               from 'react-virtualized-select'
 import EmptyMessage         from 'ui/shell/EmptyMessage'
 
+import ACT                  from 'modules/logic/assessment/ACT'
 import ATI                  from 'modules/logic/assessment/ATI'
 import AccelReader          from 'modules/logic/assessment/AccelReader'
 import Case21               from 'modules/logic/assessment/Case21'
@@ -43,6 +44,7 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
+      { module: 'vjs_act',       value: 'act',            label: 'ACT'                },
       { module: 'vjs_ati',       value: 'ati',            label: 'ATI'                },
       { module: 'vjs_case21',    value: 'case21',         label: 'Case21'             },
       { module: 'vjs_cogat',     value: 'cogat',          label: 'CogAT'              },
@@ -97,6 +99,7 @@ class Assessments extends Component {
 
         <Switch>
           <Route path='/r/assessment/maap'           component={MAAP}         />
+          <Route path='/r/assessment/act'            component={ACT}          />
           <Route path='/r/assessment/ati'            component={ATI}          />
           <Route path='/r/assessment/star_reading'   component={STARReading}  />
           <Route path='/r/assessment/star_math'      component={STARMath}     />
