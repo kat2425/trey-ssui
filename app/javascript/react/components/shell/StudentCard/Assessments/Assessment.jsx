@@ -11,17 +11,19 @@ import userStore       from 'stores/UserStore'
 import _               from 'lodash'
 import EmptyMessage    from 'ui/shell/EmptyMessage'
 
-import MAAP            from './MAAP'
-import STARReading     from './STARReading'
-import STARMath        from './STARMath'
-import STAREarlyLit    from './STAREarlyLit'
+import ATI             from './ATI'
 import AccelReader     from './AccelReader'
-import Eduphoria       from './Eduphoria'
 import Case21          from './Case21'
+import CogAT           from './CogAT'
+import Eduphoria       from './Eduphoria'
+import MAAP            from './MAAP'
+import OSTP            from './OSTP'
 import PSAT89          from './PSAT89'
 import PSATNM          from './PSATNM'
-import OSTP            from './OSTP'
-import CogAT           from './CogAT'
+import STAREarlyLit    from './STAREarlyLit'
+import STARMath        from './STARMath'
+import STARReading     from './STARReading'
+import Scantron        from './Scantron'
 
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
@@ -42,7 +44,6 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
-      { module: 'vjs_renplace',  value: 'accel_reader',   label: 'Accelerated Reader' },
       { module: 'vjs_ati',       value: 'ati',            label: 'ATI'                },
       { module: 'vjs_case21',    value: 'case21',         label: 'Case21'             },
       { module: 'vjs_cogat',     value: 'cogat',          label: 'CogAT'              },
@@ -51,6 +52,8 @@ class Assessments extends Component {
       { module: 'vjs_ostp',      value: 'ostp',           label: 'OSTP'               },
       { module: 'vjs_psat',      value: 'psat89',         label: 'PSAT 8/9'           },
       { module: 'vjs_psat',      value: 'psatnm',         label: 'PSAT NM'            },
+      { module: 'vjs_scantron',  value: 'scantron',       label: 'Scantron'           },
+      { module: 'vjs_renplace',  value: 'accel_reader',   label: 'Accelerated Reader' },
       { module: 'vjs_renplace',  value: 'star_early_lit', label: 'STAR Early Lit'     },
       { module: 'vjs_renplace',  value: 'star_math',      label: 'STAR Math'          },
       { module: 'vjs_renplace',  value: 'star_reading',   label: 'STAR Reading'       },
@@ -151,6 +154,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/cogat`}
             render = {() => <CogAT student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/ati`}
+            render = {() => <ATI student={student}/> }
           />
 
           <Route render={() => {

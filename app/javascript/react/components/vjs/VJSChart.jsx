@@ -95,6 +95,7 @@ export default class VJSChart extends Component {
       loadingOverlay: false,
       autoresize:     true,
       scrollToTop:    false,
+      scale:          'container',
 
       // Props open to override via our React component
       linkOptions:      this.mergeLinkOptions((this.props.linkOptions || {})),
@@ -112,11 +113,13 @@ export default class VJSChart extends Component {
           // wait until it is, and then complete the function?
 
           // Hide our loading indicator on a successful render
-          if (this._isMounted) this.setState({ resourceLoaded: true })
+          if (this._isMounted) {
+            this.setState({ resourceLoaded: true })
 
-          // Show empty message if table has no data
-          if (!this.report.data().components.length && this.props.isTable) {
-            this.setState({ emptyReport: true })
+            // Show empty message if table has no data
+            if (!this.report.data().components.length && this.props.isTable) {
+              this.setState({ emptyReport: true })
+            }
           }
         }
       }),

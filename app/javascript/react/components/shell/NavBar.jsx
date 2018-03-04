@@ -13,6 +13,11 @@ import fireEvent            from '../../helpers/FireEvent'
 const brandLogo = { height: '35px' }
 
 export default class NavBar extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { isOpen: false }
+  }
 
   onStudentChange = (e) => {
     e.length && fireEvent('showStudentCard', { student: e[0].id })
@@ -21,46 +26,34 @@ export default class NavBar extends Component {
   render() {
     return (
       <Navbar
-        fixed = 'top'
+        fixed     = 'top'
         className = 'navbar-toggleable-sm navbar-inverse bg-navbar app-navbar'
       >
         <NavbarBrand className='pt-0'>
           <img src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' style={brandLogo}/>
         </NavbarBrand>
 
-        {/* <Nav className='navbar-nav mr-auto'> */}
-        {/*   <NavItem> */}
-        {/*     <NavLink active>Logic</NavLink> */}
-        {/*   </NavItem> */}
-        {/*  */}
-        {/*   <NavItem> */}
-        {/*     <NavLink>Channel</NavLink> */}
-        {/*   </NavItem> */}
-        {/*  */}
-        {/*   <NavItem> */}
-        {/*     <NavLink>Feedbak</NavLink> */}
-        {/*   </NavItem> */}
-        {/* </Nav> */}
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className='navbar-nav ml-auto'>
+            <NavItem className='mr-3'>
+              <StudentSearch style={{width: '300px'}} onChange={this.onStudentChange}/>
+            </NavItem>
 
-        <Nav className='navbar-nav ml-auto'>
-          <NavItem className='mr-3'>
-            <StudentSearch style={{width: '300px'}} onChange={this.onStudentChange}/>
-          </NavItem>
+            <NavItem>
+              <NavLink style={{color: '#c3c3c3'}}>
+                { window.SSUser.username }
+              </NavLink>
+            </NavItem>
 
-          <NavItem>
-            <NavLink style={{color: '#c3c3c3'}}>
-              { window.SSUser.username }
-            </NavLink>
-          </NavItem>
+            <NavItem>
+              <NavLink tag={RRNavLink} to='/r/user_settings'>Settings</NavLink>
+            </NavItem>
 
-          <NavItem>
-            <NavLink tag={RRNavLink} to='/r/user_settings'>Settings</NavLink>
-          </NavItem>
-
-          <NavItem>
-            <NavLink href='/logout'>Logout</NavLink>
-          </NavItem>
-        </Nav>
+            <NavItem>
+              <NavLink href='/logout'>Logout</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
       </Navbar>
     )
   }
