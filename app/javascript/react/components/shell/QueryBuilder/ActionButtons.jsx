@@ -27,7 +27,7 @@ export default function ActionButtons({
         loading  = {loadingOnSave}
         type     = 'default'
       >
-        Save Tag
+        Save List
       </Button>
 
       <Button

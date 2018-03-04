@@ -21,7 +21,7 @@ function ModifiedIndicator({children, tag, renderIndicator}){
 
 function Indicator(){
   return (
-    <Tooltip title='Tag has been modified'>
+    <Tooltip title='List has been modified'>
       <span>*</span>
     </Tooltip>
   )

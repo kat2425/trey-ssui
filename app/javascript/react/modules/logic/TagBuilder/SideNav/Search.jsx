@@ -7,7 +7,7 @@ function Search({tagStore}){
     <Input.Search
       size        = 'large'
       className   = 'my-3 px-3'
-      placeholder = 'Find a tag...'
+      placeholder = 'Find a list...'
       onChange    = {tagStore.handleTagFilter}
     />
   )

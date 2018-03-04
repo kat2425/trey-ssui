@@ -17,7 +17,7 @@ function Title({tagStore}){
   return (
     <div className = 'd-flex flex-row align-items-center' >
       <H5 isNew={selectedTag.isNew} title={selectedTag.name}>{selectedTag.name}</H5>
-      <Tooltip title='Edit Tag'>
+      <Tooltip title='Edit List'>
         <Button
           onClick  = {() => tagStore.editTag(selectedTag)}
           icon     = "edit"
