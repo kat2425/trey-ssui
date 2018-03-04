@@ -35,10 +35,16 @@ const StudentSearchItem = ({ student, search }) => {
         <br/>
         <small>{ student.school_name }</small>
         <br/>
-        <small>{ student.state_id }</small>
+        <small>{ renderGrade(student.grade) }{ student.state_id }</small>
       </div>
     </div>
   )
+}
+
+const renderGrade = (grade) => {
+  if (grade !== 'HE') {
+    return `Grade ${grade}, `
+  }
 }
 
 export default class StudentSearch extends Component {

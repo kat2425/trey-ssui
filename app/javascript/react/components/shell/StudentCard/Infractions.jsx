@@ -20,7 +20,7 @@ const Infractions = ({student}) => {
           id               = 'sc-maap'
           reportPath       = '/public/VJS/ss_ui/infractions/student_card'
           scale            = 'container'
-          title            = 'Infractions'
+          title            = 'Details'
           isTable          = {true}
           ignorePagination = {true}
           emptyIcon        = {'emoji-happy'}

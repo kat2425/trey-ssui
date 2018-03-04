@@ -26,7 +26,7 @@ export default class NavBar extends Component {
   render() {
     return (
       <Navbar
-        fixed = 'top'
+        fixed     = 'top'
         className = 'navbar-toggleable-sm navbar-inverse bg-navbar app-navbar'
       >
         <NavbarBrand className='pt-0'>
