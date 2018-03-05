@@ -45,7 +45,7 @@ const AppContainer = ({match}) => {
 
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
-        <Route path='/r/bullseye' component={TagBuilder} />
+        <Route path='/r/searchlight' component={TagBuilder} />
 
         <Route path='/r/accountability/final_results' component={FinalResults} />
         <Route path='/r/accountability/lps' component={LPS} />
