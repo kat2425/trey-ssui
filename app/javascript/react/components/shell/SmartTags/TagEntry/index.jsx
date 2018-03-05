@@ -31,7 +31,6 @@ function TagEntry({tag}){
       isModified={tag.isModified && !tag.isNew}
     >
       <Title title={tag.name} isNew={tag.isNew}>
-        <Icon type='tag-o' className='mr-2'/>
         {tag.name}
       </Title>
       <Aside>
