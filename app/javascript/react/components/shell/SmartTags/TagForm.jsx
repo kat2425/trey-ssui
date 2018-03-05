@@ -133,7 +133,7 @@ class FormWrapper extends Component {
             htmlType = 'submit'
             disabled = {hasErrors(getFieldsError())}
           >
-            Save
+            Update
           </Button>
           <Button 
             className = 'ml-2'
