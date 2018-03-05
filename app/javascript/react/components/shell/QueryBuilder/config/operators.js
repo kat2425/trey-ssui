@@ -98,7 +98,7 @@ const operators = {
       operatorOptions,
       isForDisplay
     ) => {
-      return `${field} is ${value}`
+      return `${field} is greater than or equal to ${value}`
     }
   },
 
