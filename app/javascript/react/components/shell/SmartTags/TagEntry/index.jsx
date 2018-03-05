@@ -43,13 +43,13 @@ function TagEntry({tag}){
         )}
         <div>
           {renderIf(tag.isGlobal)(
-            <ScopeIcon type='global' title='This tag is public to the whole district.'/>
+            <ScopeIcon type='global' title='This list is public to the whole district.'/>
           )}
           {renderIf(tag.isGroup)(
-            <ScopeIcon type='group' title='This tag is shared with groups.'/>
+            <ScopeIcon type='group' title='This list is shared with groups.'/>
           )}
           {renderIf(tag.isPrivate)(
-            <ScopeIcon type='private' title='This tag is visible only to me.'/>
+            <ScopeIcon type='private' title='This list is visible only to me.'/>
           )}
         </div>
         <TagMenu tag={tag} className='text-muted' />

@@ -24,7 +24,7 @@ export default function SideNav({tagStore}) {
       </Header>
       <Search tagStore={tagStore}/>
       <Content>
-        {renderIfNoTags(<p className='mt-5 text-center text-muted'>No saved tags</p>)}
+        {renderIfNoTags(<p className='mt-5 text-center text-muted'>No saved lists</p>)}
         {renderIfLoading(<LoadingSpinner center />)}
         {renderIfTags(<TagList store={tagStore}/>)}
       </Content>
