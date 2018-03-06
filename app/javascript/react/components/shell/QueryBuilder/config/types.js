@@ -103,7 +103,7 @@ const types = {
         opProps: {
           between: {
             valueLabels: [
-              {label: 'Date from', placeholder: 'Enrer datetime from'},
+              {label: 'Date from', placeholder: 'Enter datetime from'},
               {label: 'Date to', placeholder: 'Enter datetime to'}
             ]
           }
@@ -148,12 +148,12 @@ const types = {
         operators:   ['equal'],
         widgetProps: {
           //you can enable this if you don't use fields as value sources
-          //hideOperator: true,
-          //operatorInlineLabel: "is",
+          hideOperator: true,
+          operatorInlineLabel: 'is'
         }
       },
       field: {
-        operators: ['equal', 'not_equal']
+        operators: ['equal']
       }
     }
   }
