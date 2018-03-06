@@ -10,7 +10,7 @@ export default class FeedbakLegacy extends Component {
     return (
       <Iframe
         url = {`https://feedbak-ss-ui.s3.amazonaws.com/index.html#?token=${window.SSUser.accessToken}`}
-        styles = {{marginTop:'-1.5rem'}}
+        styles = {{marginTop: '-1.5rem', height: '100vh'}}
       />
     )
   }
