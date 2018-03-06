@@ -11,7 +11,8 @@ import Aside                 from './Aside'
 import {
   FaEyeSlash,
   FaGlobe,
-  FaGroup
+  FaGroup,
+  FaLock
 } from 'react-icons/lib/fa'
 
 import {
@@ -52,6 +53,9 @@ function TagEntry({tag}){
           {renderIf(tag.isPrivate)(
             <ScopeIcon type='private' title='This list is visible only to me.'/>
           )}
+          {renderIf(!tag.modifiable)(
+            <ScopeIcon type='locked' title='This list cannot be modified.'/>
+          )}
         </div>
         <TagMenu tag={tag} className='text-muted' />
       </Aside>
@@ -73,6 +77,8 @@ const ScopeIcon = ({type, title}) => (
           return <FaGroup style={icStyle} />
         case 'private':
           return <FaEyeSlash style={icStyle} />
+        case 'locked':
+          return <FaLock style={icStyle} />
         default:
           return null
         }
