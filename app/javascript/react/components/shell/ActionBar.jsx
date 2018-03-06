@@ -78,9 +78,11 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           </Badge>
         </NavItem>
 
-        <NavItem className='ml-4 rounded-circle' style={intercomButtonStyle} id='intercom-ss-launcher'>
-          <img src={intercomIcon} style={{width: '32px', height: '32px', marginTop: '-6px'}}/>
-        </NavItem>
+        {!userStore.isImpersonated && (
+          <NavItem className='ml-4 rounded-circle' style={intercomButtonStyle} id='intercom-ss-launcher'>
+            <img src={intercomIcon} style={{width: '32px', height: '32px', marginTop: '-6px'}}/>
+          </NavItem>
+        )}
       </Nav>
       <CallNotesDialog callingStore={this.props.callingStore} />
     </Navbar>
