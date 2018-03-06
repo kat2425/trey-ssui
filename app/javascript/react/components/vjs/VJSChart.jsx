@@ -361,7 +361,7 @@ export default class VJSChart extends Component {
     //  * sadly, using 'inline-block' and a center align is not a solution
     // --
     // FIXME: several things here in render() can be extracted into wrapper components
-    const cardHeight = (this.props.fullHeight) ? 'h-100' : 'mb-3'
+    const cardHeight = (this.props.fullHeight) ? 'h-100' : 'mb-60'
 
     return (
       <div className={this.props.className}>
