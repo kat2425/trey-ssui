@@ -83,7 +83,7 @@ const UserMenu = () => {
         <EUserMenuItem
           title     = 'Searchlight'
           iconClass = 'icon-flashlight'
-          link      = '/r/bullseye'
+          link      = '/r/searchlight'
           renderIf  = {userStore.hasModules('bullseye')}
         />
 
