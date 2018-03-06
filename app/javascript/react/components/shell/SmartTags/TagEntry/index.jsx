@@ -38,7 +38,9 @@ function TagEntry({tag}){
           <Badge className='mr-2' color='primary'>New</Badge>
         )}
         {renderIf(tag.isModified && !tag.isNew)(
-          <Badge className='mr-2' color='danger'>Not Saved</Badge>
+          <Tooltip title={'You have unsaved changes.'}>
+            <Badge className='mr-2' color='danger'>Not Saved</Badge>
+          </Tooltip>
         )}
         <div>
           {renderIf(tag.isGlobal)(
