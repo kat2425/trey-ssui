@@ -31,7 +31,7 @@ import EmptyMessage          from 'ui/shell/EmptyMessage'
 
 const AppContainer = ({match}) => {
   return (
-    <div className='col-md-10 offset-md-2 mb-5' style={{overflowY: 'scroll'}}>
+    <div className='col-md-10 offset-md-2 mb-5'>
       <UserMenu />
       <Switch>
         <Redirect exact from='/r/' to='/r/my_students' />
