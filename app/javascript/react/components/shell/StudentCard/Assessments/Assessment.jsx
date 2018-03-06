@@ -18,6 +18,7 @@ import Case21          from './Case21'
 import CogAT           from './CogAT'
 import Eduphoria       from './Eduphoria'
 import MAAP            from './MAAP'
+import NWEA            from './NWEA'
 import OSTP            from './OSTP'
 import PSAT89          from './PSAT89'
 import PSATNM          from './PSATNM'
@@ -51,6 +52,7 @@ class Assessments extends Component {
       { module: 'vjs_cogat',     value: 'cogat',          label: 'CogAT'              },
       { module: 'vjs_eduphoria', value: 'eduphoria',      label: 'Eduphoria'          },
       { module: 'vjs_maap',      value: 'maap',           label: 'MAAP'               },
+      { module: 'vjs_nwea',      value: 'nwea',           label: 'NWEA'               },
       { module: 'vjs_ostp',      value: 'ostp',           label: 'OSTP'               },
       { module: 'vjs_psat',      value: 'psat89',         label: 'PSAT 8/9'           },
       { module: 'vjs_psat',      value: 'psatnm',         label: 'PSAT NM'            },
@@ -171,6 +173,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/act`}
             render = {() => <ACT student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/nwea`}
+            render = {() => <NWEA student={student}/> }
           />
 
           <Route render={() => {

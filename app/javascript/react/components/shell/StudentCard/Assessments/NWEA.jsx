@@ -5,7 +5,7 @@ import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 @observer
-export default class ACT extends Component {
+export default class NWEA extends Component {
   constructor(props) {
     super(props)
 
@@ -29,10 +29,10 @@ export default class ACT extends Component {
     return (
       <div>
         <VJSChart
-          id               = 'sc-act'
-          reportPath       = '/public/VJS/ss_ui/assessment/act/student_card'
+          id               = 'sc-nwea'
+          reportPath       = '/public/VJS/ss_ui/assessment/nwea/student_card'
           scale            = 'container'
-          title            = 'ACT'
+          title            = 'NWEA'
           isTable          = {true}
           ignorePagination = {true}
           params           = {{
@@ -49,7 +49,7 @@ export default class ACT extends Component {
             setDefault    = {true}
             placeholder   = 'Year'
             width         = {100}
-            params        = {{ dataset: ['act_raws'], student_id: [student.id] }}
+            params        = {{ dataset: ['nwea_maps'], student_id: [student.id] }}
           />
         </VJSChart>
       </div>
