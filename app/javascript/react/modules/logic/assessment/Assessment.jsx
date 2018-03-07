@@ -11,6 +11,7 @@ import Select               from 'react-virtualized-select'
 import EmptyMessage         from 'ui/shell/EmptyMessage'
 
 import ACT                  from 'modules/logic/assessment/ACT'
+import ACTAspire            from 'modules/logic/assessment/ACTAspire'
 import ATI                  from 'modules/logic/assessment/ATI'
 import AccelReader          from 'modules/logic/assessment/AccelReader'
 import Case21               from 'modules/logic/assessment/Case21'
@@ -45,21 +46,22 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
-      { module: 'vjs_act',       value: 'act',            label: 'ACT'                },
-      { module: 'vjs_ati',       value: 'ati',            label: 'ATI'                },
-      { module: 'vjs_case21',    value: 'case21',         label: 'Case21'             },
-      { module: 'vjs_cogat',     value: 'cogat',          label: 'CogAT'              },
-      { module: 'vjs_eduphoria', value: 'eduphoria',      label: 'Eduphoria'          },
-      { module: 'vjs_maap',      value: 'maap',           label: 'MAAP'               },
-      { module: 'vjs_nwea',      value: 'nwea',           label: 'NWEA'               },
-      { module: 'vjs_ostp',      value: 'ostp',           label: 'OSTP'               },
-      { module: 'vjs_psat',      value: 'psat_89',        label: 'PSAT 8/9'           },
-      { module: 'vjs_psat',      value: 'psat_nm',        label: 'PSAT NM'            },
-      { module: 'vjs_scantron',  value: 'scantron',       label: 'Scantron'           },
-      { module: 'vjs_renplace',  value: 'accel_reader',   label: 'Accelerated Reader' },
-      { module: 'vjs_renplace',  value: 'star_early_lit', label: 'STAR Early Lit'     },
-      { module: 'vjs_renplace',  value: 'star_math',      label: 'STAR Math'          },
-      { module: 'vjs_renplace',  value: 'star_reading',   label: 'STAR Reading'       },
+      { module: 'vjs_act',        value: 'act',            label: 'ACT'                },
+      { module: 'vjs_act_aspire', value: 'act_aspire',     label: 'ACT Aspire'         },
+      { module: 'vjs_ati',        value: 'ati',            label: 'ATI'                },
+      { module: 'vjs_case21',     value: 'case21',         label: 'Case21'             },
+      { module: 'vjs_cogat',      value: 'cogat',          label: 'CogAT'              },
+      { module: 'vjs_eduphoria',  value: 'eduphoria',      label: 'Eduphoria'          },
+      { module: 'vjs_maap',       value: 'maap',           label: 'MAAP'               },
+      { module: 'vjs_nwea',       value: 'nwea',           label: 'NWEA'               },
+      { module: 'vjs_ostp',       value: 'ostp',           label: 'OSTP'               },
+      { module: 'vjs_psat',       value: 'psat_89',        label: 'PSAT 8/9'           },
+      { module: 'vjs_psat',       value: 'psat_nm',        label: 'PSAT NM'            },
+      { module: 'vjs_scantron',   value: 'scantron',       label: 'Scantron'           },
+      { module: 'vjs_renplace',   value: 'accel_reader',   label: 'Accelerated Reader' },
+      { module: 'vjs_renplace',   value: 'star_early_lit', label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace',   value: 'star_math',      label: 'STAR Math'          },
+      { module: 'vjs_renplace',   value: 'star_reading',   label: 'STAR Reading'       },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))
@@ -102,6 +104,7 @@ class Assessments extends Component {
         <Switch>
           <Route path='/r/assessment/accel_reader'   component={AccelReader}  />
           <Route path='/r/assessment/act'            component={ACT}          />
+          <Route path='/r/assessment/act_aspire'     component={ACTAspire}    />
           <Route path='/r/assessment/ati'            component={ATI}          />
           <Route path='/r/assessment/case21'         component={Case21}       />
           <Route path='/r/assessment/cogat'          component={CogAT}        />
