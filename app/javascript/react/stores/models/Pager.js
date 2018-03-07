@@ -1,13 +1,12 @@
 import { observable, action, computed } from 'mobx'
-import { setter } from 'mobx-decorators'
 
 export default class Pager {
-  ORIG_LIMIT = 0
+  ORIG_LIMIT = 1
 
-  @observable limit = 0
+  @observable limit = 1
   @observable total = 0
 
-  constructor(limit = 0, total = 0) {
+  constructor(limit = 1, total = 0) {
     this.limit      = limit
     this.total      = parseInt(total)
     this.ORIG_LIMIT = limit
@@ -24,7 +23,8 @@ export default class Pager {
 
   @action increment = () => {
     const newLimit = this.limit + this.ORIG_LIMIT
+    const _limit = (this.total > newLimit) ? newLimit : this.total
 
-    this.limit = (this.total > newLimit) ? newLimit : this.total
+    this.limit = _limit || 1
   }
 }
