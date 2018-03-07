@@ -9,23 +9,13 @@ function ExportCSVButton({tagStore}){
   if(!selectedTag || selectedTag.isNew) return null
 
   return (
-    <Tooltip title='Export CSV'>
-      {/* <Button */}
-      {/*   loading   = {tagStore.isFetchingTagCSV} */}
-      {/*   icon      = 'download' */}
-      {/*   type      = 'primary' */}
-      {/*   ghost */}
-      {/*   className = 'mr-2' */}
-      {/*   onClick   = {() => tagStore.fetchTagCSV(selectedTag)} */}
-      {/* > */}
-      <Button
-        onClick = {() => tagStore.fetchTagCSV(selectedTag)}
-        className = 'pl-2 mr-2'
-      >
-        <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
-        Export CSV
-      </Button>
-    </Tooltip>
+    <Button
+      onClick = {() => tagStore.fetchTagCSV(selectedTag)}
+      className = 'pl-2 mr-2'
+    >
+      <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
+      Export CSV
+    </Button>
   )
 }
 
