@@ -57,7 +57,7 @@ export default class ChatInput extends Component {
   }
 
   sendMessage = (msg) => {
-    if(!msg) return
+    if(!msg && !this.attachmentInput.value) return
 
     SMSConversationStore.sendMessage(msg, this.props.contact.id, this.state.attachment)
 
@@ -74,7 +74,7 @@ export default class ChatInput extends Component {
   render() {
     const {textCounter, attachment} = this.state
     const isOverLimit               = textCounter < 0
-    const disableButton             = textCounter === CHAR_LIMIT
+    const disableButton             = textCounter === CHAR_LIMIT && !attachment
 
     return (
       <Wrapper>
