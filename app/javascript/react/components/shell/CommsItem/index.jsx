@@ -21,6 +21,8 @@ CommsItem.propTypes = {
     fullDate:     PropTypes.string.isRequired,
     timeAgo:      PropTypes.string.isRequired,
     type:         PropTypes.string.isRequired,
+    relationship: PropTypes.string,
+    studentName:  PropTypes.string.isRequired
   }).isRequired,
 }
 
@@ -33,7 +35,9 @@ function CommsItem({comm}){
     contactName,
     handleSelect,
     type,
-    isActive
+    isActive,
+    relationship,
+    studentName
   } = comm
 
   const {first} = this.props
@@ -43,8 +47,22 @@ function CommsItem({comm}){
       {renderIcon(type)}
       <div className='d-flex flex-column justify-content-center ml-2'>
         {isIncoming 
-          ? <Incoming userName={userName} contactName={contactName} /> 
-          : <Outgoing userName={userName} contactName={contactName} />       
+          ? (
+            <Incoming 
+              relationship= {relationship}
+              userName=     {userName} 
+              studentName=  {studentName} 
+              contactName=  {contactName}
+            /> 
+          )
+          : (
+            <Outgoing 
+              relationship= {relationship}
+              userName=     {userName} 
+              studentName=  {studentName} 
+              contactName=  {contactName} 
+            />   
+          )    
         }
         <Time primary={fullDate} secondary={timeAgo} />
       </div>

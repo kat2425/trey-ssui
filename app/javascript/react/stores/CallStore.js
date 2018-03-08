@@ -48,7 +48,7 @@ export class CallStore {
           user_id:         userStore.user.id,
           show_transcript: true,
           limit:           this.limit,
-          except:          ['district', 'school', 'student', 'contact.student'].join(','),
+          except:          ['district', 'school', 'contact.student'].join(','),
         } 
       })
 

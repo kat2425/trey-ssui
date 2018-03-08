@@ -22,18 +22,19 @@ export default class Inbox extends Component {
 
   renderItem(msg) {
     return (
-      <li key={msg.id} onClick = {this.handleSelect(msg)}>
-        <InboxItem
-          key       = {msg.id}
-          read      = {msg.read_status}
-          direction = {msg.direction}
-          name      = {msg.broker.contact.name}
-          time      = {msg.created_at}
-          message   = {msg.body}
-          media     = {msg.media_url}
-          studentId = {msg.broker.contact.student_id}
-        />
-      </li>
+      <InboxItem
+        onClick = {this.handleSelect(msg)}
+        relationship = {msg.broker.contact.relationship}
+        key          = {msg.id}
+        read         = {msg.read_status}
+        direction    = {msg.direction}
+        name         = {msg.broker.contact.name}
+        time         = {msg.created_at}
+        message      = {msg.body}
+        media        = {msg.media_url}
+        studentId    = {msg.broker.contact.student_id}
+        studentName  = {msg.broker.contact.student.full_name}
+      />
     )
   }
 
