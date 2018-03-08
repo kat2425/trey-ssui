@@ -167,7 +167,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-thermometer'
                 link      = {`${match.url}/infractions`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules('discipline'))}
               />
 
               <EUserMenuItem

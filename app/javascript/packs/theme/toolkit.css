@@ -12421,7 +12421,7 @@ div.tooltip-inner {
     color: white;
     font-size: 10px;
     padding: 5px;
-    min-width: 15%;
+    min-width: 1.75rem;
     display: inline-block;
     background-color: #32495e;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.125); }
