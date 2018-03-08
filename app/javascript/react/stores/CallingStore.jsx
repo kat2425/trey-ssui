@@ -77,9 +77,9 @@ class CallingStore {
     this.setIsCalling(true)
     this.setCallBarVisible(true)
 
-    this.contactName = this.contact.refs[0].name
+    this.contactName = this.contact.name
     this.studentID   = studentId
-    this.phoneNumber = this.contact.refs[0].phone
+    this.phoneNumber = this.contact.phone
     this.userId      = data.data.user
 
     const token = data.data.token
@@ -92,7 +92,7 @@ class CallingStore {
   @action
   connect = (number) => {
     const params = {
-      contact_id: this.contact.refs[0].id,
+      contact_id: this.contact.id,
       student_id: this.studentID,
       tocall:     this.phoneNumber,
       user_id:    this.userId
@@ -176,9 +176,9 @@ class CallingStore {
   initiateConferenceCall = async(contact, student_id) => {
     const data = await this.generateToken()
 
-    this.contactID   = contact.refs[0].id
-    this.contactName = contact.refs[0].name
-    this.phoneNumber = contact.refs[0].phone
+    this.contactID   = contact.id
+    this.contactName = contact.name
+    this.phoneNumber = contact.phone
     this.studentID   = student_id
     this.userId      = data.data.user
 
