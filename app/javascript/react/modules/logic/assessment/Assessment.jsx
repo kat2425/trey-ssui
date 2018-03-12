@@ -16,8 +16,11 @@ import ATI                  from 'modules/logic/assessment/ATI'
 import AccelReader          from 'modules/logic/assessment/AccelReader'
 import Case21               from 'modules/logic/assessment/Case21'
 import CogAT                from 'modules/logic/assessment/CogAT'
+import DRA                  from 'modules/logic/assessment/DRA'
+import DRAWordAnalysis      from 'modules/logic/assessment/DRAWordAnalysis'
 import Eduphoria            from 'modules/logic/assessment/Eduphoria'
 import MAAP                 from 'modules/logic/MAAP'
+import MasteryConnect       from 'modules/logic/assessment/MasteryConnect'
 import NWEA                 from 'modules/logic/assessment/NWEA'
 import OSTP                 from 'modules/logic/assessment/OSTP'
 import PSAT89               from 'modules/logic/assessment/PSAT89'
@@ -46,22 +49,25 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
-      { module: 'vjs_act',        value: 'act',            label: 'ACT'                },
-      { module: 'vjs_act_aspire', value: 'act_aspire',     label: 'ACT Aspire'         },
-      { module: 'vjs_ati',        value: 'ati',            label: 'ATI'                },
-      { module: 'vjs_case21',     value: 'case21',         label: 'Case21'             },
-      { module: 'vjs_cogat',      value: 'cogat',          label: 'CogAT'              },
-      { module: 'vjs_eduphoria',  value: 'eduphoria',      label: 'Eduphoria'          },
-      { module: 'vjs_maap',       value: 'maap',           label: 'MAAP'               },
-      { module: 'vjs_nwea',       value: 'nwea',           label: 'NWEA'               },
-      { module: 'vjs_ostp',       value: 'ostp',           label: 'OSTP'               },
-      { module: 'vjs_psat',       value: 'psat_89',        label: 'PSAT 8/9'           },
-      { module: 'vjs_psat',       value: 'psat_nm',        label: 'PSAT NM'            },
-      { module: 'vjs_scantron',   value: 'scantron',       label: 'Scantron'           },
-      { module: 'vjs_renplace',   value: 'accel_reader',   label: 'Accelerated Reader' },
-      { module: 'vjs_renplace',   value: 'star_early_lit', label: 'STAR Early Lit'     },
-      { module: 'vjs_renplace',   value: 'star_math',      label: 'STAR Math'          },
-      { module: 'vjs_renplace',   value: 'star_reading',   label: 'STAR Reading'       },
+      { module: 'vjs_act',             value: 'act',             label: 'ACT'                },
+      { module: 'vjs_act_aspire',      value: 'act_aspire',      label: 'ACT Aspire'         },
+      { module: 'vjs_ati',             value: 'ati',             label: 'ATI'                },
+      { module: 'vjs_case21',          value: 'case21',          label: 'Case21'             },
+      { module: 'vjs_cogat',           value: 'cogat',           label: 'CogAT'              },
+      { module: 'vjs_dra',             value: 'dra',             label: 'DRA'                },
+      { module: 'vjs_dra_wa',          value: 'dra_wa',          label: 'DRA Word Analysis'  },
+      { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
+      { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
+      { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
+      { module: 'vjs_nwea',            value: 'nwea',            label: 'NWEA'               },
+      { module: 'vjs_ostp',            value: 'ostp',            label: 'OSTP'               },
+      { module: 'vjs_psat',            value: 'psat_89',         label: 'PSAT 8/9'           },
+      { module: 'vjs_psat',            value: 'psat_nm',         label: 'PSAT NM'            },
+      { module: 'vjs_scantron',        value: 'scantron',        label: 'Scantron'           },
+      { module: 'vjs_renplace',        value: 'accel_reader',    label: 'Accelerated Reader' },
+      { module: 'vjs_renplace',        value: 'star_early_lit',  label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace',        value: 'star_math',       label: 'STAR Math'          },
+      { module: 'vjs_renplace',        value: 'star_reading',    label: 'STAR Reading'       },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))
@@ -102,22 +108,25 @@ class Assessments extends Component {
         </ModuleHeader>
 
         <Switch>
-          <Route path='/r/assessment/accel_reader'   component={AccelReader}  />
-          <Route path='/r/assessment/act'            component={ACT}          />
-          <Route path='/r/assessment/act_aspire'     component={ACTAspire}    />
-          <Route path='/r/assessment/ati'            component={ATI}          />
-          <Route path='/r/assessment/case21'         component={Case21}       />
-          <Route path='/r/assessment/cogat'          component={CogAT}        />
-          <Route path='/r/assessment/eduphoria'      component={Eduphoria}    />
-          <Route path='/r/assessment/maap'           component={MAAP}         />
-          <Route path='/r/assessment/nwea'           component={NWEA}         />
-          <Route path='/r/assessment/ostp'           component={OSTP}         />
-          <Route path='/r/assessment/psat_89'        component={PSAT89}       />
-          <Route path='/r/assessment/psat_nm'        component={PSATNM}       />
-          <Route path='/r/assessment/scantron'       component={Scantron}     />
-          <Route path='/r/assessment/star_early_lit' component={STAREarlyLit} />
-          <Route path='/r/assessment/star_math'      component={STARMath}     />
-          <Route path='/r/assessment/star_reading'   component={STARReading}  />
+          <Route path='/r/assessment/accel_reader'    component={AccelReader}     />
+          <Route path='/r/assessment/act'             component={ACT}             />
+          <Route path='/r/assessment/act_aspire'      component={ACTAspire}       />
+          <Route path='/r/assessment/ati'             component={ATI}             />
+          <Route path='/r/assessment/case21'          component={Case21}          />
+          <Route path='/r/assessment/cogat'           component={CogAT}           />
+          <Route path='/r/assessment/dra'             component={DRA}             />
+          <Route path='/r/assessment/dra_wa'          component={DRAWordAnalysis} />
+          <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
+          <Route path='/r/assessment/maap'            component={MAAP}            />
+          <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
+          <Route path='/r/assessment/nwea'            component={NWEA}            />
+          <Route path='/r/assessment/ostp'            component={OSTP}            />
+          <Route path='/r/assessment/psat_89'         component={PSAT89}          />
+          <Route path='/r/assessment/psat_nm'         component={PSATNM}          />
+          <Route path='/r/assessment/scantron'        component={Scantron}        />
+          <Route path='/r/assessment/star_early_lit'  component={STAREarlyLit}    />
+          <Route path='/r/assessment/star_math'       component={STARMath}        />
+          <Route path='/r/assessment/star_reading'    component={STARReading}     />
 
           <Route render={() => {
             return (
