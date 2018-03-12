@@ -57,6 +57,8 @@ export default class Infractions extends Component {
             selectedValue = {this.state.selected.school_id}
             handleChange  = {::this.setSchoolFilter}
             placeholder   = 'School'
+            setDefault    = {!userStore.user.isDistrictLevel}
+            clearable     = {userStore.user.isDistrictLevel}
             width         = {300}
           />
 

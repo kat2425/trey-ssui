@@ -31,6 +31,14 @@ export default class Attendance extends Component {
     ]
   }
 
+  getYearReportPath = () => {
+    if (this.state.selected.school_id) {
+      return '/public/VJS/ss_ui/attendance/ada_over_year_school'
+    } else {
+      return '/public/VJS/ss_ui/attendance/ada_over_year'
+    }
+  }
+
   setYearFilter(val) {
     const jrsValue = val ? val.value : this._currentYear
 
@@ -65,6 +73,8 @@ export default class Attendance extends Component {
             selectedValue = {this.state.selected.school_id}
             handleChange  = {::this.setSchoolFilter}
             placeholder   = 'School'
+            setDefault    = {!userStore.user.isDistrictLevel}
+            clearable     = {userStore.user.isDistrictLevel}
             width         = {300}
           />
 
@@ -82,7 +92,7 @@ export default class Attendance extends Component {
         <div className='row mb-3'>
           <VJSChart
             id          = 'ada-over-year'
-            reportPath  = '/public/VJS/ss_ui/attendance/ada_over_year'
+            reportPath  = {this.getYearReportPath()}
             scale       = 'container'
             className   = 'col-md-9'
             fullHeight  = {true}
