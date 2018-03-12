@@ -29,6 +29,7 @@ import STAREarlyLit         from 'modules/logic/assessment/STAREarlyLit'
 import STARMath             from 'modules/logic/assessment/STARMath'
 import STARReading          from 'modules/logic/assessment/STARReading'
 import Scantron             from 'modules/logic/assessment/Scantron'
+import TCAP                 from 'modules/logic/assessment/TCAP'
 
 import userStore            from 'stores/UserStore'
 import _                    from 'lodash'
@@ -64,6 +65,7 @@ class Assessments extends Component {
       { module: 'vjs_psat',            value: 'psat_89',         label: 'PSAT 8/9'           },
       { module: 'vjs_psat',            value: 'psat_nm',         label: 'PSAT NM'            },
       { module: 'vjs_scantron',        value: 'scantron',        label: 'Scantron'           },
+      { module: 'vjs_tcap',            value: 'tcap',            label: 'TCAP'               },
       { module: 'vjs_renplace',        value: 'accel_reader',    label: 'Accelerated Reader' },
       { module: 'vjs_renplace',        value: 'star_early_lit',  label: 'STAR Early Lit'     },
       { module: 'vjs_renplace',        value: 'star_math',       label: 'STAR Math'          },
@@ -127,6 +129,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/star_early_lit'  component={STAREarlyLit}    />
           <Route path='/r/assessment/star_math'       component={STARMath}        />
           <Route path='/r/assessment/star_reading'    component={STARReading}     />
+          <Route path='/r/assessment/tcap'            component={TCAP}            />
 
           <Route render={() => {
             return (

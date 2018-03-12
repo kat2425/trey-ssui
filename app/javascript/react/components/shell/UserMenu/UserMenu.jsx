@@ -97,7 +97,7 @@ const UserMenu = () => {
         <EUserMenuItem
           title     = 'Reporting'
           iconClass = 'icon-unread'
-          link      = '/r/reporting'
+          link      = '/r/reporting/adhoc'
           renderIf  = {userStore.hasModules('reporting')}
         />
       </EUserMenuSection>

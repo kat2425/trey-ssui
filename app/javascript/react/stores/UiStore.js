@@ -41,6 +41,9 @@ export class UiStore {
   @setter @observable
   isStudentCardOpen = false
 
+  @setter @observable
+  isReportingInUse = false
+
   @observable notifications = []
 
   constructor() {
