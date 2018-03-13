@@ -30,6 +30,7 @@ import STAREarlyLit    from './STAREarlyLit'
 import STARMath        from './STARMath'
 import STARReading     from './STARReading'
 import Scantron        from './Scantron'
+import TCAP            from './TCAP'
 
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
@@ -69,6 +70,7 @@ class Assessments extends Component {
       { module: 'vjs_renplace',        value: 'star_early_lit',  label: 'STAR Early Lit'     },
       { module: 'vjs_renplace',        value: 'star_math',       label: 'STAR Math'          },
       { module: 'vjs_renplace',        value: 'star_reading',    label: 'STAR Reading'       },
+      { module: 'vjs_tcap',            value: 'tcap',            label: 'TCAP'               },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))
@@ -206,6 +208,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/dra_wa`}
             render = {() => <DRAWordAnalysis student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/tcap`}
+            render = {() => <TCAP student={student}/> }
           />
 
           <Route render={() => {
