@@ -24,12 +24,14 @@ const ReminderItem = observer(({reminder, handleCheck, handleRemove, handleUndo}
               onClick   = {() => handleCheck(reminder.id)} 
               style     = {{ alignSelf: 'flex-end', marginLeft: 10 }} 
               className = "icon icon-check reminder-check"
+              title     = "Mark task as completed"
             >
             </span> : 
             <span 
               onClick   = {() => handleUndo(reminder.id)} 
               style     = {{ alignSelf: 'flex-end', marginLeft: 10 }} 
               className = "icon icon-back-in-time reminder-check"
+              title     = "Mark task as pending"
             >
             </span>
           }
@@ -37,6 +39,7 @@ const ReminderItem = observer(({reminder, handleCheck, handleRemove, handleUndo}
             onClick   = {() => handleRemove(reminder.id)} 
             style     = {{ alignSelf: 'flex-end', marginLeft: 10 }} 
             className = "icon icon-trash reminder-check"
+            title     = "Delete task"
           >
           </span>
         </div>
