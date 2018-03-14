@@ -43,7 +43,17 @@ class ReminderStore {
   fetchReminders = () => {
     this.setIsLoading(true)
 
-    xhr.get('/tasks')
+    xhr.get('/tasks', {
+      params: {
+        only: [
+          'id', 'created_at', 'updated_at',
+          'status', 'date', 'description', 'school_year',
+          'user.id', 'user.full_name',
+          'student.id', 'student.full_name',
+          'contact.id', 'contact.name'
+        ].join(',')
+      }
+    })
       .then((data) => {
         this.fetchRemindersOK(data)
       })
