@@ -8,6 +8,8 @@ import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 import renderIf             from 'ui/hoc/renderIf'
 
+const EVJSChart = renderIf(VJSChart)
+
 export default class Infractions extends Component {
   constructor(props) {
     super(props)
@@ -73,7 +75,7 @@ export default class Infractions extends Component {
           />
         </ModuleHeader>
 
-        <div className='row mb-3'>
+        <div className='row mb-3' hidden={userStore.user.isTeacher}>
           <VJSChart
             id         = 'infractions-over-year'
             reportPath = '/public/VJS/ss_ui/infractions/infractions_over_year'
@@ -111,7 +113,7 @@ export default class Infractions extends Component {
             reportPath  = '/public/VJS/ss_ui/infractions/top_students'
             scale       = 'container'
             title       = 'Most Infractions'
-            className   = 'col-md-6'
+            className   = {userStore.user.isTeacher ? 'col-md-3' : 'col-md-6'}
             isTable     = {true}
             fullHeight  = {true}
             params      = {this.state.params}
@@ -129,6 +131,16 @@ export default class Infractions extends Component {
                 }
               }
             }}
+          />
+
+          <EVJSChart
+            renderIf    = {userStore.user.isTeacher}
+            id         = 'infractions-daily-breakdown-teacher'
+            reportPath = '/public/VJS/ss_ui/infractions/daily_breakdown'
+            title      = 'Daily Breakdown'
+            className  = 'col-md-3'
+            fullHeight = {true}
+            params     = {this.state.params}
           />
 
           <VJSChart

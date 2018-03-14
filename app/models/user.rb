@@ -66,6 +66,7 @@ class User < Sequel::Model(:users)
       :districtID        => district_id,
       :districtName      => district&.district_name,
       :isDistrictLevel   => is_district_level?,
+      :isTeacher         => is_teacher?,
       :currentSchoolYear => CURRENT_SCHOOL_YEAR,
       :has_channel       => has_channel?,
       :higherEd          => district&.higher_ed,
