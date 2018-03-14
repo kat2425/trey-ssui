@@ -17,8 +17,13 @@ import ATI             from './ATI'
 import AccelReader     from './AccelReader'
 import Case21          from './Case21'
 import CogAT           from './CogAT'
+import DRA             from './DRA'
+import DRAWordAnalysis from './DRAWordAnalysis'
+import DMACSTAAR       from './DMACSTAAR'
+import DMACLocal       from './DMACLocal'
 import Eduphoria       from './Eduphoria'
 import MAAP            from './MAAP'
+import MasteryConnect  from './MasteryConnect'
 import NWEA            from './NWEA'
 import OSTP            from './OSTP'
 import PSAT89          from './PSAT89'
@@ -27,6 +32,7 @@ import STAREarlyLit    from './STAREarlyLit'
 import STARMath        from './STARMath'
 import STARReading     from './STARReading'
 import Scantron        from './Scantron'
+import TCAP            from './TCAP'
 
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
@@ -47,22 +53,28 @@ class Assessments extends Component {
   listOptions = () => {
     const { modules }  = userStore.user
     const options      = [
-      { module: 'vjs_act',        value: 'act',            label: 'ACT'                },
-      { module: 'vjs_act_aspire', value: 'act_aspire',     label: 'ACT Aspire'         },
-      { module: 'vjs_ati',        value: 'ati',            label: 'ATI'                },
-      { module: 'vjs_case21',     value: 'case21',         label: 'Case21'             },
-      { module: 'vjs_cogat',      value: 'cogat',          label: 'CogAT'              },
-      { module: 'vjs_eduphoria',  value: 'eduphoria',      label: 'Eduphoria'          },
-      { module: 'vjs_maap',       value: 'maap',           label: 'MAAP'               },
-      { module: 'vjs_nwea',       value: 'nwea',           label: 'NWEA'               },
-      { module: 'vjs_ostp',       value: 'ostp',           label: 'OSTP'               },
-      { module: 'vjs_psat',       value: 'psat89',         label: 'PSAT 8/9'           },
-      { module: 'vjs_psat',       value: 'psatnm',         label: 'PSAT NM'            },
-      { module: 'vjs_scantron',   value: 'scantron',       label: 'Scantron'           },
-      { module: 'vjs_renplace',   value: 'accel_reader',   label: 'Accelerated Reader' },
-      { module: 'vjs_renplace',   value: 'star_early_lit', label: 'STAR Early Lit'     },
-      { module: 'vjs_renplace',   value: 'star_math',      label: 'STAR Math'          },
-      { module: 'vjs_renplace',   value: 'star_reading',   label: 'STAR Reading'       },
+      { module: 'vjs_act',             value: 'act',             label: 'ACT'                },
+      { module: 'vjs_act_aspire',      value: 'act_aspire',      label: 'ACT Aspire'         },
+      { module: 'vjs_ati',             value: 'ati',             label: 'ATI'                },
+      { module: 'vjs_case21',          value: 'case21',          label: 'Case21'             },
+      { module: 'vjs_cogat',           value: 'cogat',           label: 'CogAT'              },
+      { module: 'vjs_dra',             value: 'dra',             label: 'DRA'                },
+      { module: 'vjs_dra_wa',          value: 'dra_wa',          label: 'DRA Word Analysis'  },
+      { module: 'vjs_dmac_staar',      value: 'dmac_staar',      label: 'STAAR',             },
+      { module: 'vjs_dmac_local',      value: 'dmac_local',      label: 'Local Assessments', },
+      { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
+      { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
+      { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
+      { module: 'vjs_nwea',            value: 'nwea',            label: 'NWEA'               },
+      { module: 'vjs_ostp',            value: 'ostp',            label: 'OSTP'               },
+      { module: 'vjs_psat',            value: 'psat89',          label: 'PSAT 8/9'           },
+      { module: 'vjs_psat',            value: 'psatnm',          label: 'PSAT NM'            },
+      { module: 'vjs_scantron',        value: 'scantron',        label: 'Scantron'           },
+      { module: 'vjs_renplace',        value: 'accel_reader',    label: 'Accelerated Reader' },
+      { module: 'vjs_renplace',        value: 'star_early_lit',  label: 'STAR Early Lit'     },
+      { module: 'vjs_renplace',        value: 'star_math',       label: 'STAR Math'          },
+      { module: 'vjs_renplace',        value: 'star_reading',    label: 'STAR Reading'       },
+      { module: 'vjs_tcap',            value: 'tcap',            label: 'TCAP'               },
     ]
 
     return _.filter(options, (o) => userStore.hasModules(o.module))
@@ -185,6 +197,36 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/act_aspire`}
             render = {() => <ACTAspire student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/mastery_connect`}
+            render = {() => <MasteryConnect student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dra`}
+            render = {() => <DRA student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dra_wa`}
+            render = {() => <DRAWordAnalysis student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/tcap`}
+            render = {() => <TCAP student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dmac_staar`}
+            render = {() => <DMACSTAAR student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dmac_local`}
+            render = {() => <DMACLocal student={student}/> }
           />
 
           <Route render={() => {

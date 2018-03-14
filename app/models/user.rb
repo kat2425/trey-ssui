@@ -65,13 +65,16 @@ class User < Sequel::Model(:users)
       :api               => 'https://api.schoolstatus.com',
       :districtID        => district_id,
       :districtName      => district&.district_name,
+      :isDistrictLevel   => is_district_level?,
+      :isTeacher         => is_teacher?,
       :currentSchoolYear => CURRENT_SCHOOL_YEAR,
       :has_channel       => has_channel?,
       :higherEd          => district&.higher_ed,
       :intercomUserHash  => intercom_user_hash,
       :jasper            => jasper_user_creds,
       :modules           => modules.map(&:symbol),
-      :policies          => policies.map(&:name)
+      :policies          => policies.map(&:name),
+      :schoolFilter      => school_filter
     )
   end
 
@@ -98,6 +101,27 @@ class User < Sequel::Model(:users)
   end
 
   # }}}
+
+  def is_superuser?
+    has_module? :superuser
+  end
+
+  def is_admin?
+    has_module? :useradmin
+  end
+
+  def is_district_level?
+    return false if is_superuser?
+    schools.empty?
+  end
+
+  def list_modules
+    modules_dataset.select_map(:symbol)
+  end
+
+  def has_module?(symbol)
+    list_modules.include? symbol.to_s
+  end
 
   # Itercom User Hash
   def intercom_user_hash
