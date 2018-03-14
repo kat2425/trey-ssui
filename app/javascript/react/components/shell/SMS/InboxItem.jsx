@@ -6,7 +6,7 @@ import ContactLink from 'ui/shell/ContactLink'
 import styled      from 'styled-components'
 import {ifProp}    from 'styled-tools'
 
-const StyledMedia = styled(Media).attrs({ className: 'list-group-item' })` 
+const StyledMedia = styled(Media).attrs({ className: 'list-group-item' })`
   border-left:      none;
   border-right:     none;
   border-top:       none;
@@ -16,7 +16,7 @@ const StyledMedia = styled(Media).attrs({ className: 'list-group-item' })`
   &:hover {
     background-color: rgba(0, 0, 0, 0.08);
   }
-  ${ifProp('unread', ` 
+  ${ifProp('unread', `
     background-color: rgb(198,241,238);
     &:hover {
       background-color: rgba(198, 241, 238, 0.5);
@@ -63,7 +63,7 @@ const InboxItem = (props) => {
       </Media>
 
       <Media body>
-        <ContactLink tag='h6' name={props.name} studentId={props.studentId} />
+        <ContactLink tag='h6' name={props.name} studentId={props.studentId} className='d-inline-block' />
         <div>
           { props.media
             ? <InboxMMS src={props.media} />
