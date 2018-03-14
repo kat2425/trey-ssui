@@ -18,6 +18,8 @@ import Case21               from 'modules/logic/assessment/Case21'
 import CogAT                from 'modules/logic/assessment/CogAT'
 import DRA                  from 'modules/logic/assessment/DRA'
 import DRAWordAnalysis      from 'modules/logic/assessment/DRAWordAnalysis'
+import DMACSTAAR            from 'modules/logic/assessment/DMACSTAAR'
+import DMACLocal            from 'modules/logic/assessment/DMACLocal'
 import Eduphoria            from 'modules/logic/assessment/Eduphoria'
 import MAAP                 from 'modules/logic/MAAP'
 import MasteryConnect       from 'modules/logic/assessment/MasteryConnect'
@@ -57,6 +59,8 @@ class Assessments extends Component {
       { module: 'vjs_cogat',           value: 'cogat',           label: 'CogAT'              },
       { module: 'vjs_dra',             value: 'dra',             label: 'DRA'                },
       { module: 'vjs_dra_wa',          value: 'dra_wa',          label: 'DRA Word Analysis'  },
+      { module: 'vjs_dmac_staar',      value: 'dmac_staar',      label: 'STAAR',             },
+      { module: 'vjs_dmac_local',      value: 'dmac_local',      label: 'Local Assessments', },
       { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
       { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
       { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
@@ -118,6 +122,8 @@ class Assessments extends Component {
           <Route path='/r/assessment/cogat'           component={CogAT}           />
           <Route path='/r/assessment/dra'             component={DRA}             />
           <Route path='/r/assessment/dra_wa'          component={DRAWordAnalysis} />
+          <Route path='/r/assessment/dmac_staar'      component={DMACSTAAR}       />
+          <Route path='/r/assessment/dmac_local'      component={DMACLocal}       />
           <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
           <Route path='/r/assessment/maap'            component={MAAP}            />
           <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />

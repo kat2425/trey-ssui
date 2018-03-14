@@ -19,6 +19,8 @@ import Case21          from './Case21'
 import CogAT           from './CogAT'
 import DRA             from './DRA'
 import DRAWordAnalysis from './DRAWordAnalysis'
+import DMACSTAAR       from './DMACSTAAR'
+import DMACLocal       from './DMACLocal'
 import Eduphoria       from './Eduphoria'
 import MAAP            from './MAAP'
 import MasteryConnect  from './MasteryConnect'
@@ -58,6 +60,8 @@ class Assessments extends Component {
       { module: 'vjs_cogat',           value: 'cogat',           label: 'CogAT'              },
       { module: 'vjs_dra',             value: 'dra',             label: 'DRA'                },
       { module: 'vjs_dra_wa',          value: 'dra_wa',          label: 'DRA Word Analysis'  },
+      { module: 'vjs_dmac_staar',      value: 'dmac_staar',      label: 'STAAR',             },
+      { module: 'vjs_dmac_local',      value: 'dmac_local',      label: 'Local Assessments', },
       { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
       { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
       { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
@@ -213,6 +217,16 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/tcap`}
             render = {() => <TCAP student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dmac_staar`}
+            render = {() => <DMACSTAAR student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dmac_local`}
+            render = {() => <DMACLocal student={student}/> }
           />
 
           <Route render={() => {
