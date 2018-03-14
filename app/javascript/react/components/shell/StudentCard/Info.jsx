@@ -84,6 +84,17 @@ const Info = ({ student }) => {
             <span className='text-info'>{ student.gender }</span>
           </li>
 
+          { student.address && 
+            <li>
+              <span className='mr-3 text-muted icon icon-map' style={iconStyle}/>
+              <span>Address: </span>
+              <span className='text-info'>
+                <br/>{ student.address }, 
+                <br/>{ student.city }, { student.state } {student.zip }
+              </span>
+            </li>
+          }
+
           {renderItem(student.advisor, 'Advisor', 'icon-compass')}
           {renderItem(student.coach,   'Coach',   'icon-feather')}
           {renderItem(student.major,   'Major',   'icon-trophy')}
