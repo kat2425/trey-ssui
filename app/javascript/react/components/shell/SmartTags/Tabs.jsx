@@ -21,7 +21,7 @@ function Tabs({tag}) {
         value    = {tag.activeTab}
         onChange = {(e) => {tag.setActiveTab(e.target.value)}}
       >
-        <RadioButton value={TABS.QUERY_BUILDER}>Query Builder</RadioButton>
+        <RadioButton value={TABS.QUERY_BUILDER} disabled={!tag.modifiable}>Query Builder</RadioButton>
         <RadioButton value={TABS.STUDENTS}> {getStudentLabel(tag)} </RadioButton>
         <RadioButton value={TABS.MAP}>Map</RadioButton>
       </RadioGroup>
