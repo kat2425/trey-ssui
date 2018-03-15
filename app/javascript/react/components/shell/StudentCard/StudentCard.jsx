@@ -89,7 +89,7 @@ export default class StudentCard extends Component {
 
     noteStore.resetNoteForm()
     store.hideCard()
-    fireEvent('onCloseStudentCard', { student: store.student.id })
+    fireEvent('onCloseStudentCard')
   }
 
   render() {
