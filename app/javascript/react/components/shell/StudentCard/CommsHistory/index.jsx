@@ -59,7 +59,7 @@ export default class CommsHistory extends Component {
           <MsgWrapper>This student does not have any engagement history.</MsgWrapper>
         )}
 
-        {!_.isEmpty(sortedCommunications) && (
+        {(!isLoading && !_.isEmpty(sortedCommunications)) && (
           <Container>
             <Main>
               <Left>
