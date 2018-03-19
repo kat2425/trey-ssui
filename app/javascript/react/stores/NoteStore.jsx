@@ -23,6 +23,7 @@ class NoteStore {
 
   @action
   fetchStudentNotes(studentId) {
+    this.selectedNoteIndex = 0
     _xhr.get(`/student_notes`, {
       params: {
         student_id: studentId,
@@ -92,6 +93,7 @@ class NoteStore {
     this.selectedGroups = []
     this.selectedTags   = []
     this.selectedVisibilityIndex = 1
+    this.selectedNoteIndex = 0
     this.showGroups = false
     this.edit = false
     this.isCreating = false
