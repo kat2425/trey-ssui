@@ -17,17 +17,20 @@ import ATI             from './ATI'
 import AccelReader     from './AccelReader'
 import Case21          from './Case21'
 import CogAT           from './CogAT'
+import DMACLocal       from './DMACLocal'
+import DMACSTAAR       from './DMACSTAAR'
 import DRA             from './DRA'
 import DRAWordAnalysis from './DRAWordAnalysis'
-import DMACSTAAR       from './DMACSTAAR'
-import DMACLocal       from './DMACLocal'
 import Eduphoria       from './Eduphoria'
 import MAAP            from './MAAP'
+import MCT             from './MCT'
 import MasteryConnect  from './MasteryConnect'
 import NWEA            from './NWEA'
 import OSTP            from './OSTP'
+import PARCC           from './PARCC'
 import PSAT89          from './PSAT89'
 import PSATNM          from './PSATNM'
+import SATP            from './SATP'
 import STAREarlyLit    from './STAREarlyLit'
 import STARMath        from './STARMath'
 import STARReading     from './STARReading'
@@ -65,8 +68,10 @@ class Assessments extends Component {
       { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
       { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
       { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
+      { module: 'vjs_mct',             value: 'mct',             label: 'MCT'                },
       { module: 'vjs_nwea',            value: 'nwea',            label: 'NWEA'               },
       { module: 'vjs_ostp',            value: 'ostp',            label: 'OSTP'               },
+      { module: 'vjs_parcc',           value: 'parcc',           label: 'PARCC'              },
       { module: 'vjs_psat',            value: 'psat89',          label: 'PSAT 8/9'           },
       { module: 'vjs_psat',            value: 'psatnm',          label: 'PSAT NM'            },
       { module: 'vjs_scantron',        value: 'scantron',        label: 'Scantron'           },
@@ -74,6 +79,7 @@ class Assessments extends Component {
       { module: 'vjs_renplace',        value: 'star_early_lit',  label: 'STAR Early Lit'     },
       { module: 'vjs_renplace',        value: 'star_math',       label: 'STAR Math'          },
       { module: 'vjs_renplace',        value: 'star_reading',    label: 'STAR Reading'       },
+      { module: 'vjs_satp',            value: 'satp',            label: 'SATP'               },
       { module: 'vjs_tcap',            value: 'tcap',            label: 'TCAP'               },
     ]
 
@@ -227,6 +233,21 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/dmac_local`}
             render = {() => <DMACLocal student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/mct`}
+            render = {() => <MCT student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/satp`}
+            render = {() => <SATP student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/parcc`}
+            render = {() => <PARCC student={student}/> }
           />
 
           <Route render={() => {

@@ -21,12 +21,15 @@ import DRAWordAnalysis      from './DRAWordAnalysis'
 import DMACSTAAR            from './DMACSTAAR'
 import DMACLocal            from './DMACLocal'
 import Eduphoria            from './Eduphoria'
+import MCT                  from './MCT'
 import MAAP                 from './MAAP'
 import MasteryConnect       from './MasteryConnect'
 import NWEA                 from './NWEA'
 import OSTP                 from './OSTP'
+import PARCC                from './PARCC'
 import PSAT89               from './PSAT89'
 import PSATNM               from './PSATNM'
+import SATP                 from './SATP'
 import STAREarlyLit         from './STAREarlyLit'
 import STARMath             from './STARMath'
 import STARReading          from './STARReading'
@@ -64,10 +67,13 @@ class Assessments extends Component {
       { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
       { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
       { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
+      { module: 'vjs_mct',             value: 'mct',             label: 'MCT'                },
       { module: 'vjs_nwea',            value: 'nwea',            label: 'NWEA'               },
       { module: 'vjs_ostp',            value: 'ostp',            label: 'OSTP'               },
+      { module: 'vjs_parcc',           value: 'parcc',           label: 'PARCC'              },
       { module: 'vjs_psat',            value: 'psat_89',         label: 'PSAT 8/9'           },
       { module: 'vjs_psat',            value: 'psat_nm',         label: 'PSAT NM'            },
+      { module: 'vjs_satp',            value: 'satp',            label: 'SATP'               },
       { module: 'vjs_scantron',        value: 'scantron',        label: 'Scantron'           },
       { module: 'vjs_tcap',            value: 'tcap',            label: 'TCAP'               },
       { module: 'vjs_renplace',        value: 'accel_reader',    label: 'Accelerated Reader' },
@@ -126,15 +132,18 @@ class Assessments extends Component {
           <Route path='/r/assessment/dmac_local'      component={DMACLocal}       />
           <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
           <Route path='/r/assessment/maap'            component={MAAP}            />
+          <Route path='/r/assessment/mct'             component={MCT}             />
           <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
           <Route path='/r/assessment/nwea'            component={NWEA}            />
           <Route path='/r/assessment/ostp'            component={OSTP}            />
+          <Route path='/r/assessment/parcc'           component={PARCC}           />
           <Route path='/r/assessment/psat_89'         component={PSAT89}          />
           <Route path='/r/assessment/psat_nm'         component={PSATNM}          />
           <Route path='/r/assessment/scantron'        component={Scantron}        />
           <Route path='/r/assessment/star_early_lit'  component={STAREarlyLit}    />
           <Route path='/r/assessment/star_math'       component={STARMath}        />
           <Route path='/r/assessment/star_reading'    component={STARReading}     />
+          <Route path='/r/assessment/satp'            component={SATP}            />
           <Route path='/r/assessment/tcap'            component={TCAP}            />
 
           <Route render={() => {

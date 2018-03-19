@@ -5,6 +5,7 @@ import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 import fireEvent            from 'helpers/FireEvent'
+import userStore            from 'stores/UserStore'
 
 export default class FinalResults extends Component {
   constructor(props) {
@@ -31,13 +32,21 @@ export default class FinalResults extends Component {
     })
   }
 
+  getTotalsPath = () => {
+    if (this.state.selected.school_filter) {
+      return '/public/VJS/ss_ui/accountability/final/school_totals'
+    } else {
+      return '/public/VJS/ss_ui/accountability/final/district_totals'
+    }
+  }
+
   render() {
     return (
       <div>
         <ModuleHeader title='Final Results'>
           <VJSICSelect
             id            = 'test_filter'
-            inputPath     = '/public/VJS/ss_ui/accountability/test_filter'
+            inputPath     = '/public/VJS/ss_ui/accountability/final/test_filter'
             selectedValue = {this.state.selected.test_type}
             handleChange  = {::this.setTestFilter}
             placeholder   = 'Test Type'
@@ -46,10 +55,12 @@ export default class FinalResults extends Component {
 
           <VJSICSelect
             id            = 'school_filter'
-            inputPath     = '/public/VJS/ss_ui/accountability/school_filter'
+            inputPath     = '/public/VJS/ss_ui/accountability/final/school_filter'
             selectedValue = {this.state.selected.school_filter}
             handleChange  = {::this.setSchoolFilter}
             placeholder   = 'School'
+            setDefault    = {!userStore.user.isDistrictLevel}
+            clearable     = {userStore.user.isDistrictLevel}
             width         = {250}
           />
         </ModuleHeader>
@@ -58,7 +69,7 @@ export default class FinalResults extends Component {
           <div className='col-md-4 p-0 m-0'>
             <VJSChart
               id          = 'aa-totals'
-              reportPath  = '/public/VJS/ss_ui/accountability/final/district_totals'
+              reportPath  = {this.getTotalsPath()}
               title       = 'Totals'
               className   = 'col-md-12 p-0 m-0'
               params      = {this.state.params}
