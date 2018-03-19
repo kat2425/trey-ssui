@@ -2,22 +2,21 @@ import React, {Component} from 'react'
 import { toJS }           from 'mobx'
 import { observer }       from 'mobx-react'
 import _                  from 'lodash'
-
+import DateFormat         from 'helpers/DateFormat'
+import ReactMarkdown      from 'react-markdown'
+import NoteTags           from '../NoteTags'
+import NoteItem           from './NoteItem'
 import {
   Button, Card, CardBlock,
-  CardTitle, Row, Col, ListGroup, 
-  ListGroupItem
+  CardTitle, Row, Col, ListGroup
 } from 'reactstrap'
-
-import ReactMarkdown from 'react-markdown'
-import NoteTags      from '../NoteTags'
 
 @observer
 export default class NoteView extends Component {
   renderNote(note) {
     return (
       <Card key={note.id} className='mb-3' style={{minHeight: 350}}>
-        <div className="float-right p-2">
+        <div className="p-2">
           <span
             style     = {{color: '#696969', cursor: 'pointer'}}
             className = 'icon icon-trash float-right mr-2'
@@ -47,18 +46,27 @@ export default class NoteView extends Component {
   }
 
   renderVisibleTo() {
-    return (
-      <Col sm="6">
-        <p>
-          <span style={{color: '#3f9fcf'}} className='icon icon-eye'> </span>
-          <span style={{color: '#3f9fcf'}}>Visible to: </span>
-          <span style={{color: '#A9A9A9'}}>{this.renderGroupNames()}</span>
-        </p>
-      </Col>
+    return (      
+      <p>
+        <span style={{color: '#3f9fcf'}}>Visible to: </span>
+        <span style={{color: '#A9A9A9'}}>{this.renderGroupNames()}</span>
+      </p>
     )
   }
 
-  renderGroupNames() {
+  renderDate = () => {
+    const { notes, selectedNoteIndex }   = this.props.noteStore
+    const currentNote = notes[selectedNoteIndex]
+
+    return (
+      <p>
+        <span style={{color: '#3f9fcf'}}>Created at: </span>
+        <span style={{color: '#A9A9A9'}}>{DateFormat.shortDateTime(currentNote.created_at)}</span>
+      </p>
+    )
+  }
+
+  renderGroupNames = () => {
     const { notes }       = this.props.noteStore
     const currentNote     = notes[this.props.noteStore.selectedNoteIndex]
     const notesGroups     = currentNote.groups
@@ -76,13 +84,20 @@ export default class NoteView extends Component {
   }
 
   renderEmptyMessage = () => {
-    const { isCreating, edit, notes} = this.props.noteStore
+    const { 
+      isCreating, 
+      edit, 
+      notes,
+      selectedNoteIndex
+    } = this.props.noteStore
+
+    const currentNote = notes[selectedNoteIndex]
 
     if(isCreating || edit) {
       return (
         <NotesForm
           noteStore   = {this.props.noteStore}
-          currentNote = {notes[this.props.noteStore.selectedNoteIndex]}
+          currentNote = {currentNote}
           studentId   = {this.props.student.id}
         />
       )
@@ -101,8 +116,18 @@ export default class NoteView extends Component {
     }
   }
 
+  handleSelect = (index) => {
+    this.props.noteStore.resetNoteForm()
+    this.props.noteStore.selectedNoteIndex = index
+  }
+
   render() {
-    const { notes, tags } = this.props.noteStore
+    const {
+      notes, 
+      tags, 
+      selectedNoteIndex 
+    } = this.props.noteStore
+    const currentNote = notes ? notes[selectedNoteIndex] : null
 
     return (
       <div>
@@ -113,23 +138,14 @@ export default class NoteView extends Component {
                 <div className="itemSelector">
                   <ListGroup>
                     { notes.length > 0 &&
-                      notes.map((note, index) =>
-                        this.props.noteStore.selectedNoteIndex === index
-                          ? <ListGroupItem
-                            active
-                            className = "itemSelector__item"
-                            onClick   = {() => { this.props.noteStore.resetNoteForm(); this.props.noteStore.selectedNoteIndex = index }}
-                            key       = {note.id}
-                          >
-                            {note.title}
-                          </ListGroupItem>
-                          : <ListGroupItem
-                            className = "itemSelector__item"
-                            onClick   = {() => { this.props.noteStore.resetNoteForm(); this.props.noteStore.selectedNoteIndex = index  }}
-                            key       = {note.id}>{note.title}
-                          </ListGroupItem>
-                      )
-                    }
+                      notes.map((note, index) =>  
+                        <NoteItem 
+                          key          = {note.id}
+                          active       = {this.props.noteStore.selectedNoteIndex === index} 
+                          note         = {note} 
+                          handleSelect = {() => this.handleSelect(index)} 
+                        />
+                      )}
                   </ListGroup>
                 </div>
               </CardBlock>
@@ -139,17 +155,23 @@ export default class NoteView extends Component {
 
           <Col sm={notes.length > 0 ? '9' : '12'}>
             <CardBlock className='pb-0'>
-              { notes.length > 0 ? this.renderNote(notes[this.props.noteStore.selectedNoteIndex]) : this.renderEmptyMessage() }
+              { !_.isEmpty(notes) 
+                ? this.renderNote(currentNote) 
+                : this.renderEmptyMessage() 
+              }
             </CardBlock>
 
             <CardBlock className="pt-0">
               <Row>
-                {!_.isEmpty(this.noteStoreGroups) && this.renderVisibleTo()}
-                {notes.length > 0 &&
+                <Col sm="6">
+                  {!_.isEmpty(notes) && this.renderVisibleTo()}
+                  {!_.isEmpty(notes) && this.renderDate()}
+                </Col>
+                {!_.isEmpty(notes && currentNote && currentNote.student_note_tags) &&
                   <NoteTags
                     notes       = {notes}
                     tags        = {tags}
-                    currentNote = {notes[this.props.noteStore.selectedNoteIndex]}
+                    currentNote = {currentNote}
                   />
                 }
               </Row>

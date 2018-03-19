@@ -3,6 +3,7 @@ import { toJS }                  from 'mobx'
 import { observer }              from 'mobx-react'
 import { Badge, Col }            from 'reactstrap'
 import _                         from 'lodash'
+import { Tag }                   from 'antd'
 
 @observer
 export default class NoteTags extends Component {
@@ -18,16 +19,15 @@ export default class NoteTags extends Component {
     return currentTags.map((g) => {
       return _.find(noteStoreTags, (tag) => { return tag.id === g.id })
     }).map((t) => 
-        <Badge key={ t.id } color="primary" pill style={{ marginRight: 5 }}>
-          <span className='icon icon-tag' style={{ padding: 5 }}>{' '}{t.name}</span>
-        </Badge>
-      )
+      <Tag className='mb-2'>{t.name}</Tag>
+    )
   }
 
   render() {
     return (
       <Col sm="6">
         <span>
+          <span style={{color: '#3f9fcf'}}>Tags: </span> 
           {this.renderTags()}
         </span>
       </Col>
