@@ -17,7 +17,7 @@ class NoteStore {
   @observable edit                    = false
   @observable isCreating              = false
 
-  visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 } ]
+  visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 }]
 
   /* Notes */
 
@@ -27,7 +27,7 @@ class NoteStore {
       params: {
         student_id: studentId,
         only: [
-          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id', 'student_note_tags.name', 'groups.group_name'
+          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id', 'student_note_tags.name', 'groups.group_name', 'created_at'
         ].join(',')
       }
     }).then(this.fetchStudentNotesOK)

@@ -1,9 +1,24 @@
 .itemSelector {
-  max-height: 350px;
+  padding:1px;
   overflow-y: auto;
-  border-bottom: solid 1px #D3D3D3;
+  border-bottom: none;
+  max-height: 400px;
 }
 
 .itemSelector__item {
-  padding: 15px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.itemSelector__item:hover {
+  color: #3399cc;
+  background-color: rgb(247,252,255);
+}
+
+.itemSelector__item.active {
+  color: #3399cc;
+  background-color: rgb(247,252,255);
+  border: solid 1px rgba(0,0,0,0.125);
 }
