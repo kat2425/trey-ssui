@@ -13,6 +13,10 @@ export default class DateFormat {
     return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM D, YYYY')
   }
 
+  static shortDateTime(str) {
+    return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM D, YYYY h:mm A')
+  }
+
   static time12Hour(str) {
     return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('h:mm A')
   }
