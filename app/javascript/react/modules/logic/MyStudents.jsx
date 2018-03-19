@@ -96,20 +96,18 @@ export default class MyStudents extends Component {
     })
   }
 
-  // setYearFilter(val) {
-  //   const jrsValue = val ? val.value : '~NOTHING~'
-  //
-  //   this.setState({
-  //     params:   { ...this.state.params, school_year: [ jrsValue ] },
-  //     selected: {
-  //       ...this.state.selected,
-  //       school_year: val,
-  //       teacher_id:  null,
-  //       course_id:   null,
-  //       term:        null
-  //     }
-  //   })
-  // }
+  setSchoolFilter(val) {
+    const { selected } = this.state
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, school_id: [ jrsValue ] },
+      selected: {
+        ...this.state.selected,
+        school_id: val
+      }
+    })
+  }
 
   renderMassEmail() {
     const { selected } = this.state
@@ -168,20 +166,25 @@ export default class MyStudents extends Component {
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
             selectedValue = {this.state.selected.teacher_id}
             handleChange  = {::this.setTeacherFilter}
+            setDefault    = {userStore.user.isTeacher}
+            clearable     = {!userStore.user.isTeacher}
             params        = {this.state.params}
             placeholder   = 'Teacher'
             width         = {200}
           />
 
-          {/* <EVJSICSelect */}
-          {/*   id            = 'school_year' */}
-          {/*   inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report' */}
-          {/*   selectedValue = {this.state.selected.school_year} */}
-          {/*   handleChange  = {::this.setYearFilter} */}
-          {/*   params        = {this.state.params} */}
-          {/*   placeholder   = 'Year' */}
-          {/*   width         = {100} */}
-          {/* /> */}
+          <EVJSICSelect
+            id            = 'school_id'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
+            selectedValue = {this.state.selected.school_id}
+            handleChange  = {::this.setSchoolFilter}
+            params        = {this.state.params}
+            setDefault    = {!userStore.user.isTeacher}
+            clearable     = {false}
+            placeholder   = 'School'
+            width         = {250}
+            renderIf      = {!userStore.user.isTeacher}
+          />
         </ModuleHeader>
 
         <div className='row'>
