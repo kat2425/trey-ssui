@@ -21,6 +21,7 @@ import DRAWordAnalysis      from './DRAWordAnalysis'
 import DMACSTAAR            from './DMACSTAAR'
 import DMACLocal            from './DMACLocal'
 import Eduphoria            from './Eduphoria'
+import LASLinks             from './LASLinks'
 import MCT                  from './MCT'
 import MAAP                 from './MAAP'
 import MasteryConnect       from './MasteryConnect'
@@ -65,6 +66,7 @@ class Assessments extends Component {
       { module: 'vjs_dmac_staar',      value: 'dmac_staar',      label: 'STAAR',             },
       { module: 'vjs_dmac_local',      value: 'dmac_local',      label: 'Local Assessments', },
       { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
+      { module: 'vjs_las_links',       value: 'las_links',       label: 'LASLinks'           },
       { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
       { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
       { module: 'vjs_mct',             value: 'mct',             label: 'MCT'                },
@@ -131,6 +133,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/dmac_staar'      component={DMACSTAAR}       />
           <Route path='/r/assessment/dmac_local'      component={DMACLocal}       />
           <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
+          <Route path='/r/assessment/las_links'       component={LASLinks}        />
           <Route path='/r/assessment/maap'            component={MAAP}            />
           <Route path='/r/assessment/mct'             component={MCT}             />
           <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
