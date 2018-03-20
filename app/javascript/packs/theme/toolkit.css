@@ -6535,6 +6535,9 @@ a.bg-inverse:focus, a.bg-inverse:hover {
     margin-top: auto !important;
     margin-bottom: auto !important; } }
 
+.mb-60 {
+  margin-bottom: 60px; }
+
 .text-justify {
   text-align: justify !important; }
 
@@ -8660,12 +8663,30 @@ img.zoom-img {
   margin-left: 5px; }
 
 .itemSelector {
-  max-height: 350px;
+  padding: 1px;
   overflow-y: auto;
-  border-bottom: solid 1px #D3D3D3; }
+  border-bottom: none;
+  max-height: 400px; }
 
 .itemSelector__item {
-  padding: 15px 10px; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 10px;
+  cursor: pointer; }
+
+.itemSelector__item:hover {
+  color: #3399cc;
+  background-color: #f7fcff; }
+
+.itemSelector__item.active {
+  color: #3399cc;
+  background-color: #f7fcff;
+  border: solid 1px rgba(0, 0, 0, 0.125); }
 
 /*
  * Override antd classes
@@ -8781,7 +8802,7 @@ img.zoom-img {
   z-index: 1000;
   padding: 20px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-right: 1px solid rgba(0, 0, 0, 0.125);
   box-shadow: inset 1px 0px 5px 0 rgba(0, 0, 0, 0.25);
   padding-left: 0;
@@ -12418,7 +12439,7 @@ div.tooltip-inner {
     color: white;
     font-size: 10px;
     padding: 5px;
-    min-width: 15%;
+    min-width: 1.75rem;
     display: inline-block;
     background-color: #32495e;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.125); }

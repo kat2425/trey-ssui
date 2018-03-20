@@ -3,31 +3,32 @@ import _xhr                   from 'helpers/XHR'
 import _                      from 'lodash'
 
 class NoteStore {
-  @observable notes = []
-  @observable title = ''
-  @observable message = ''
-  @observable tags = []
-  @observable groups = []
-  @observable selectedGroups = []
-  @observable selectedTags   = []
+  @observable notes                   = []
+  @observable title                   = ''
+  @observable message                 = ''
+  @observable tags                    = []
+  @observable groups                  = []
+  @observable selectedGroups          = []
+  @observable selectedTags            = []
   @observable selectedVisibilityIndex = 1
-  @observable selectedNoteIndex = 0
-  @observable global = false
-  @observable showGroups = false
-  @observable edit = false
-  @observable isCreating = false
+  @observable selectedNoteIndex       = 0
+  @observable global                  = false
+  @observable showGroups              = false
+  @observable edit                    = false
+  @observable isCreating              = false
 
-  visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 } ]
+  visibilityGroups = [{ name: 'Just Me', id: 1 }, { name: 'Everyone', id: 2 }, { name: 'Selected Groups', id: 3 }]
 
   /* Notes */
 
   @action
   fetchStudentNotes(studentId) {
+    this.selectedNoteIndex = 0
     _xhr.get(`/student_notes`, {
       params: {
         student_id: studentId,
         only: [
-          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id', 'student_note_tags.name', 'groups.group_name'
+          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id', 'student_note_tags.name', 'groups.group_name', 'created_at'
         ].join(',')
       }
     }).then(this.fetchStudentNotesOK)
@@ -92,6 +93,7 @@ class NoteStore {
     this.selectedGroups = []
     this.selectedTags   = []
     this.selectedVisibilityIndex = 1
+    this.selectedNoteIndex = 0
     this.showGroups = false
     this.edit = false
     this.isCreating = false
@@ -113,7 +115,6 @@ class NoteStore {
 
   @action.bound
   fetchGroupsOK(res) {
-    console.log(res)
     this.groups = res.data
   }
 
@@ -124,7 +125,6 @@ class NoteStore {
 
   @action.bound
   getEditableNote(note) {
-    console.log(note)
     this.title = note.title
     this.message = note.body
     this.selectedGroups = note.groups

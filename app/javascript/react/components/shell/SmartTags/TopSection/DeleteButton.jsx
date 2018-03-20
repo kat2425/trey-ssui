@@ -14,16 +14,14 @@ function DeleteButton({tagStore}){
       okText     = 'Delete'
       cancelText = 'Cancel'
     >
-      <Tooltip title='Delete List'>
-        <Button
-          className = 'pl-2'
-          color     = 'danger'
-          disabled  = {selectedTag.isDeleting || (!selectedTag.isNew && !selectedTag.modifiable)}
-        >
-          <span className='icon icon-trash text-white' style={{marginRight: '4px'}}/>
-          {selectedTag.isDeleting ? 'Deleting...' : 'Delete' }
-        </Button>
-      </Tooltip>
+      <Button
+        className = 'pl-2'
+        color     = 'danger'
+        disabled  = {selectedTag.isDeleting || (!selectedTag.isNew && !selectedTag.modifiable)}
+      >
+        <span className='icon icon-trash text-white' style={{marginRight: '4px'}}/>
+        {selectedTag.isDeleting ? 'Deleting...' : 'Delete' }
+      </Button>
     </Popconfirm>
   )
 }

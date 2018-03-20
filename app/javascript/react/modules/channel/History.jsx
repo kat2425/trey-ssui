@@ -2,11 +2,20 @@ import React, { Component } from 'react'
 
 import VJSChart     from 'ui/vjs/VJSChart'
 import ModuleHeader from 'ui/shell/ModuleHeader'
+import userStore    from 'stores/UserStore'
 import fireEvent    from 'helpers/FireEvent'
 
 export default class CallHistory extends Component {
   constructor(props) {
     super(props)
+  }
+
+  getHistoryPath = () => {
+    if (UserStore.user.hasChannel) {
+      return '/public/VJS/ss_ui/channel/full_history'
+    } else {
+      return '/public/VJS/ss_ui/channel/call_history'
+    }
   }
 
   render() {
@@ -17,7 +26,7 @@ export default class CallHistory extends Component {
         <div className='row'>
           <VJSChart
             id          = 'call-history'
-            reportPath  = '/public/VJS/ss_ui/channel/call_history'
+            reportPath  = '/public/VJS/ss_ui/channel/full_history'
             title       = 'Student Detail'
             className   = 'col-md-12'
             isTable     = {true}
@@ -29,7 +38,7 @@ export default class CallHistory extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      // path:    'assessment/maap'
+                      path:    'engagement'
                     })
                   }
                 }

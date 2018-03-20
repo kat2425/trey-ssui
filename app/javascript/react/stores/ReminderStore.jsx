@@ -2,6 +2,7 @@ import { observable, action, computed } from 'mobx'
 import { setter }                       from 'mobx-decorators'
 import xhr                              from 'helpers/XHR'
 import userStore                        from 'stores/UserStore'
+import uiStore                          from 'stores/UiStore'
 import _                                from 'lodash'
 
 const FILTER = {
@@ -42,7 +43,17 @@ class ReminderStore {
   fetchReminders = () => {
     this.setIsLoading(true)
 
-    xhr.get('/tasks')
+    xhr.get('/tasks', {
+      params: {
+        only: [
+          'id', 'created_at', 'updated_at',
+          'status', 'date', 'description', 'school_year',
+          'user.id', 'user.full_name',
+          'student.id', 'student.full_name',
+          'contact.id', 'contact.name'
+        ].join(',')
+      }
+    })
       .then((data) => {
         this.fetchRemindersOK(data)
       })
@@ -69,8 +80,16 @@ class ReminderStore {
       })
         .then((data) => {
           this.reminders.unshift(data.data)
+          uiStore.addMessage(
+            'Successfully added reminder!',
+            'success'
+          )
         })
         .catch((error) => {
+          uiStore.addMessage(
+            'Error! Failed to add reminder!',
+            'danger'
+          )
           this.setIsError(error)
         })
     )
@@ -86,6 +105,10 @@ class ReminderStore {
         const index = _.findIndex(this.reminders, (e) => { return e.id == id })
 
         this.reminders[index].status = 'complete'
+        uiStore.addMessage(
+          'Reminder successfully marked as completed!',
+          'success'
+        )
       })
   }
 
@@ -109,6 +132,15 @@ class ReminderStore {
         const index = _.findIndex(this.reminders, (e) => { return e.id == id })
 
         this.reminders.splice(index, 1)
+        uiStore.addMessage(
+          'Reminder successfully deleted!',
+          'warning'
+        )
+      }).catch((error) => {
+        uiStore.addMessage(
+          'Error! Could not delete reminder!',
+          'danger'
+        )
       })
   }
 

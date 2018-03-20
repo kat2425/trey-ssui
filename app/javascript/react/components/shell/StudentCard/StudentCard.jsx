@@ -89,7 +89,7 @@ export default class StudentCard extends Component {
 
     noteStore.resetNoteForm()
     store.hideCard()
-    fireEvent('onCloseStudentCard', { student: store.student.id })
+    fireEvent('onCloseStudentCard')
   }
 
   render() {
@@ -167,13 +167,13 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-thermometer'
                 link      = {`${match.url}/infractions`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules('discipline'))}
               />
 
               <EUserMenuItem
                 title     = 'Assessment'
                 iconClass = 'icon-area-graph'
-                link      = {`${match.url}/assessment/act`}
+                link      = {`${match.url}/assessment_act_higher_ed`}
                 location  = {location}
                 renderIf  = {userStore.user.higherEd}
               />
@@ -267,10 +267,10 @@ export default class StudentCard extends Component {
               render = {() => <Infractions student={student}/> }
             />
 
-            {/* <Route */}
-            {/*   path   = {`${match.url}/assessment/act`} */}
-            {/*   render = {() => <Assessment student={student}/> } */}
-            {/* /> */}
+            <Route
+              path   = {`${match.url}/assessment_act_higher_ed`}
+              render = {() => <Assessment student={student}/> }
+            />
 
             <Route
               path   = {`${match.url}/grades`}

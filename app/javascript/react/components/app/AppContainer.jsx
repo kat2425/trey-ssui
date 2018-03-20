@@ -4,7 +4,9 @@ import {
   Switch, Route, withRouter, Redirect
 } from 'react-router-dom'
 
-import UserMenu                from 'ui/shell/UserMenu/UserMenu'
+import styled                from 'styled-components'
+
+import UserMenu              from 'ui/shell/UserMenu/UserMenu'
 
 import Attendance            from 'modules/logic/Attendance'
 import Infractions           from 'modules/logic/Infractions'
@@ -29,9 +31,15 @@ import StudentCardController from 'ui/controllers/StudentCardController'
 import UserSettings          from 'modules/UserSettings'
 import EmptyMessage          from 'ui/shell/EmptyMessage'
 
+const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2' })`
+  height: calc(100vh - 108px) !important;
+  margin-top: -13px;
+  overflow-y: auto;
+`
+
 const AppContainer = ({match}) => {
   return (
-    <div className='col-md-10 offset-md-2 mb-5' style={{overflowY: 'scroll'}}>
+    <HeightRestrictedDiv>
       <UserMenu />
       <Switch>
         <Redirect exact from='/r/' to='/r/my_students' />
@@ -45,7 +53,7 @@ const AppContainer = ({match}) => {
 
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
-        <Route path='/r/bullseye' component={TagBuilder} />
+        <Route path='/r/searchlight' component={TagBuilder} />
 
         <Route path='/r/accountability/final_results' component={FinalResults} />
         <Route path='/r/accountability/lps' component={LPS} />
@@ -70,7 +78,7 @@ const AppContainer = ({match}) => {
       </Switch>
 
       <Route path='*/students/:studentId' component={StudentCardController} />
-    </div>
+    </HeightRestrictedDiv>
   )
 }
 

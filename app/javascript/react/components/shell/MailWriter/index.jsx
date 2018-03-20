@@ -180,6 +180,7 @@ const modalStyle = {
   content: {
     zIndex:  2001,
     width:   'calc(100vw-80px)',
+    height:  'calc(100vh - 100px)',
     bottom:  'auto',
     padding: 0
   }

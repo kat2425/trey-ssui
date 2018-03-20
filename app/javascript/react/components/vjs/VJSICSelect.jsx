@@ -18,7 +18,8 @@ export default class VJSICSelect extends Component {
 
   static defaultProps = {
     multi:      false,
-    setDefault: false
+    setDefault: false,
+    width:      100
   }
 
   constructor(props) {
@@ -54,6 +55,20 @@ export default class VJSICSelect extends Component {
     this._isMounted = false
   }
 
+  // FIXME: Attempt to dynamically set menu item height.  This works fairly well, but we
+  // can definitely come up with something more accuruate down the road
+  getItemHeight(option) {
+    const { label }   = option
+    const { width }   = this.props
+    const labelLength = (10 * label.replace(/ |,|i|l/g, '').length)
+
+    if (labelLength > width) {
+      return (30 * (Math.ceil(labelLength / width)))
+    } else {
+      return 35
+    }
+  }
+
   renderOptions(path, params) {
     this.control = window.vjsClient.inputControls({
       resource: path,
@@ -87,7 +102,7 @@ export default class VJSICSelect extends Component {
 
   render() {
     return (
-      <div style={{width: (this.props.width || 100)}} className='ml-2'>
+      <div style={{width: this.props.width}} className='ml-2'>
 
         <Select
           name           = {this.props.id}
@@ -97,7 +112,7 @@ export default class VJSICSelect extends Component {
           value          = {this.props.selectedValue}
           onChange       = {this.props.handleChange}
           maxHeight      = {375}
-          optionHeight   = {(this.props.optionHeight || 54)}
+          optionHeight   = {({ option }) => this.getItemHeight(option)}
           clearable      = {this.props.clearable}
           mutli          = {this.props.multi}
           optionRenderer = {this.props.optionRenderer || null}

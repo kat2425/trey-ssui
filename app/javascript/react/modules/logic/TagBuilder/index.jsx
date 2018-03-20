@@ -12,8 +12,12 @@ import tagStore           from 'stores/TagStore'
 import SideNav            from './SideNav'
 import Wrapper            from './Wrapper'
 import Content            from './Content'
-
-import { Row, Col }       from 'antd'
+import { Button }         from 'reactstrap'
+import { 
+  Row,
+  Col,
+  Alert
+} from 'antd'
 
 import {
   TagFormModal,
@@ -26,7 +30,7 @@ import {
 } from 'ui/shell/SmartTags'
 
 
-const TOP_BOTTOM_HEIGHT = 135
+const TOP_BOTTOM_HEIGHT = 120
 
 @observer
 export default class TagBuilder extends Component {
@@ -79,12 +83,22 @@ export default class TagBuilder extends Component {
       renderQueryBuilder,
       renderIfShowMapTab,
       renderIfShowStudentsTab,
-      renderIfShowQueryBuilderTab
+      renderIfShowQueryBuilderTab,
+      renderIfSchemaError
     } = getRenderFunctions(tagStore)
 
     return (
       <Wrapper>
         {renderIfTag(<UnsavedPrompt tagStore={tagStore} />)}
+        {renderIfSchemaError(
+          <Alert 
+            type='error' 
+            message='Error'
+            description={<SchemaErrorMessage onRetry={tagStore.fetchSchema} />} 
+            banner
+          />
+        )}
+        
         <Row type='flex'>
           <Col style={{ background: '#fff' }} xs={24} sm={24} md={6} lg={5}>
             <SideNav tagStore={tagStore} />
@@ -130,6 +144,13 @@ export default class TagBuilder extends Component {
   }
 }
 
+const SchemaErrorMessage = ({onRetry}) => (
+  <span>
+    An error occured while trying to retrieve query fields. Please refresh the page or click 
+    <Button className='p-0 ml-1' style={{marginTop: -1}} onClick={onRetry} color='link'>retry</Button>.
+  </span>
+)
+
 const getRenderFunctions = (tagStore) => {
   const { selectedTag }             = tagStore
   const renderIfTag                 = renderIf(selectedTag)
@@ -138,6 +159,7 @@ const getRenderFunctions = (tagStore) => {
   const renderIfTags                = renderIf(!tagStore.isEmpty)
   const renderContent               = renderIf(selectedTag && !tagStore.isFetchingSchema)
   const renderIfLoadingSchema       = renderIf(tagStore.isFetchingSchema)
+  const renderIfSchemaError         = renderIf(tagStore.isSchemaError)
   const renderQueryBuilder          = renderIf(selectedTag && selectedTag.showQueryBuilder)
 
   const renderIfShowMap             = renderIf(selectedTag && tagStore.showMap)
@@ -165,6 +187,7 @@ const getRenderFunctions = (tagStore) => {
     renderIfHideMap,
     renderIfShowMapTab,
     renderIfShowStudentsTab,
-    renderIfShowQueryBuilderTab
+    renderIfShowQueryBuilderTab,
+    renderIfSchemaError
   }
 }

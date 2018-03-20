@@ -4,6 +4,7 @@ import xhr                             from 'helpers/XHR'
 import moment                          from 'moment'
 import { padCharsStart }               from 'lodash/fp'
 import UiStore                         from 'stores/UiStore'
+import intercomEvent                   from 'helpers/Intercom'
 
 class CallingStore {
   // Observables
@@ -77,9 +78,9 @@ class CallingStore {
     this.setIsCalling(true)
     this.setCallBarVisible(true)
 
-    this.contactName = this.contact.refs[0].name
+    this.contactName = this.contact.name
     this.studentID   = studentId
-    this.phoneNumber = this.contact.refs[0].phone
+    this.phoneNumber = this.contact.phone
     this.userId      = data.data.user
 
     const token = data.data.token
@@ -92,11 +93,13 @@ class CallingStore {
   @action
   connect = (number) => {
     const params = {
-      contact_id: this.contact.refs[0].id,
+      contact_id: this.contact.id,
       student_id: this.studentID,
       tocall:     this.phoneNumber,
       user_id:    this.userId
     }
+
+    intercomEvent('web:calling:web', params)
 
     this.connection = Twilio.Device.connect(params)
 
@@ -142,6 +145,8 @@ class CallingStore {
   // Cell-to-Cell Calling
   @action
   conferenceCall = () => {
+    intercomEvent('web:calling:cell', {contact: this.contactID})
+
     xhr.post('/commo/voice/mobile_call', {
       contact_id: this.contactID
     })
@@ -168,6 +173,8 @@ class CallingStore {
           message: errorMessage,
           type:    'error'
         })
+
+        intercomEvent('web:call:cell_call_error', {message: errorMessage})
         console.error('Calling Error:', error)
       })
   }
@@ -176,9 +183,9 @@ class CallingStore {
   initiateConferenceCall = async(contact, student_id) => {
     const data = await this.generateToken()
 
-    this.contactID   = contact.refs[0].id
-    this.contactName = contact.refs[0].name
-    this.phoneNumber = contact.refs[0].phone
+    this.contactID   = contact.id
+    this.contactName = contact.name
+    this.phoneNumber = contact.phone
     this.studentID   = student_id
     this.userId      = data.data.user
 
@@ -240,6 +247,9 @@ class CallingStore {
 
     this.device.error((error) => {
       const message = returnError(error.code)
+
+      intercomEvent('web:call:web_call_error', {message: message, code: error.code})
+      console.error('Calling Error:', error)
 
       this.setIsError({
         message,

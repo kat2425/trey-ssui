@@ -148,7 +148,15 @@ class UserMain extends Component {
 
             <Switch>
               <Route path='/r/feedbak' component={FeedbakLegacy} />
-              <Route path='/r/reporting' component={Reporting} />
+
+              <Route
+                path = '/r/reporting/adhoc'
+                render = {() => <Reporting action='adhoc'/> }
+              />
+              <Route
+                path = '/r/reporting/viewer'
+                render = {() => <Reporting action='viewer'/> }
+              />
 
               <Route render={() => {
                 return (

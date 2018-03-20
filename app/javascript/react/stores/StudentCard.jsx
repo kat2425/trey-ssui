@@ -136,6 +136,9 @@ class StudentCardStore {
   @action
   hideCard() {
     this.visible = false
+    this.student = null
+    this.contacts.clear()
+    this.communications.clear()
   }
 
   @computed

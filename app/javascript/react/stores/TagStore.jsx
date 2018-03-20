@@ -65,6 +65,10 @@ export class TagStore {
     return !this.tags.size
   }
 
+  @computed get isSchemaError(){
+    return _.isEmpty(config.fields) && !this.isFetchingSchema
+  }
+
   @computed get smartTagsParams(){
     return {
       page:  this.pagination.current,

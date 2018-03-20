@@ -7,10 +7,12 @@ export default class FeedbakLegacy extends Component {
   }
 
   render() {
+    const cacheBust = Number(new Date())
+
     return (
       <Iframe
-        url = {`https://feedbak-ss-ui.s3.amazonaws.com/index.html#?token=${window.SSUser.accessToken}`}
-        styles = {{marginTop:'-1.5rem'}}
+        url = {`https://feedbak-ss-ui.s3.amazonaws.com/index.html#?token=${window.SSUser.accessToken}&qcb=${cacheBust}`}
+        styles = {{marginTop: '-1.5rem', height: '100vh'}}
       />
     )
   }

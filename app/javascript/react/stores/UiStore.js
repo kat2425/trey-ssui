@@ -1,9 +1,8 @@
-import { setter }           from 'mobx-decorators'
-import SMSConversationStore from 'stores/SMSConversation'
-import callStore            from 'stores/CallStore'
-import ReminderStore        from 'stores/ReminderStore'
-import { notification }     from 'antd'
-
+import { setter }                    from 'mobx-decorators'
+import SMSConversationStore          from 'stores/SMSConversation'
+import callStore                     from 'stores/CallStore'
+import ReminderStore                 from 'stores/ReminderStore'
+import { notification, message }     from 'antd'
 import {
   observable,
   autorun,
@@ -42,6 +41,9 @@ export class UiStore {
   @setter @observable
   isStudentCardOpen = false
 
+  @setter @observable
+  isReportingInUse = false
+
   @observable notifications = []
 
   constructor() {
@@ -57,6 +59,12 @@ export class UiStore {
       description: message,
       style:       getNotificationStyle(type)
     })
+  }
+
+  @action addMessage(message, type) {
+    message[type](
+      message
+    )
   }
 
   @action setSidebarVisibility(show){

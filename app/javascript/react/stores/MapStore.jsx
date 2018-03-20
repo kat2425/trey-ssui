@@ -24,7 +24,7 @@ export class MapStore {
   @setter @observable isError    = null
   @setter @observable isFetching = false
 
-  @setter @observable geoData    = observable.shallowObject({})
+  @setter @observable geoData    = null
   @setter @observable student    = null
 
   constructor() {

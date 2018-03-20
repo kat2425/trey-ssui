@@ -8,6 +8,8 @@ import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 import renderIf             from 'ui/hoc/renderIf'
 
+const EVJSChart = renderIf(VJSChart)
+
 export default class Attendance extends Component {
   constructor(props) {
     super(props)
@@ -29,6 +31,14 @@ export default class Attendance extends Component {
       { value: 'last_quarter', label: 'Last 3 Months' },
       { value: 'last_six',     label: 'Last 6 Months' },
     ]
+  }
+
+  getYearReportPath = () => {
+    if (this.state.selected.school_id) {
+      return '/public/VJS/ss_ui/attendance/ada_over_year_school'
+    } else {
+      return '/public/VJS/ss_ui/attendance/ada_over_year'
+    }
   }
 
   setYearFilter(val) {
@@ -65,6 +75,8 @@ export default class Attendance extends Component {
             selectedValue = {this.state.selected.school_id}
             handleChange  = {::this.setSchoolFilter}
             placeholder   = 'School'
+            setDefault    = {!userStore.user.isDistrictLevel}
+            clearable     = {userStore.user.isDistrictLevel}
             width         = {300}
           />
 
@@ -79,10 +91,10 @@ export default class Attendance extends Component {
           />
         </ModuleHeader>
 
-        <div className='row mb-3'>
+        <div className='row mb-3' hidden={userStore.user.isTeacher}>
           <VJSChart
             id          = 'ada-over-year'
-            reportPath  = '/public/VJS/ss_ui/attendance/ada_over_year'
+            reportPath  = {this.getYearReportPath()}
             scale       = 'container'
             className   = 'col-md-9'
             fullHeight  = {true}
@@ -99,8 +111,7 @@ export default class Attendance extends Component {
                 }
               }
             }}
-          >
-          </VJSChart>
+          />
 
           <VJSChart
             id          = 'ada-daily-breakdown'
@@ -117,7 +128,7 @@ export default class Attendance extends Component {
             id          = 'ada-top-students'
             reportPath  = '/public/VJS/ss_ui/attendance/top_students'
             title       = 'Most Absences'
-            className   = 'col-md-4'
+            className   = {userStore.user.isTeacher ? 'col-md-3' : 'col-md-4'}
             isTable     = {true}
             fullHeight  = {true}
             params      = {this.state.params}
@@ -137,11 +148,21 @@ export default class Attendance extends Component {
             }}
           />
 
+          <EVJSChart
+            renderIf    = {userStore.user.isTeacher}
+            id          = 'ada-daily-breakdown-teacher'
+            reportPath  = '/public/VJS/ss_ui/attendance/daily_breakdown'
+            title       = 'Daily Breakdown'
+            className   = 'col-md-3'
+            fullHeight  = {true}
+            params      = {this.state.params}
+          />
+
           <VJSChart
             id          = 'ada-code-breakdown'
             reportPath  = '/public/VJS/ss_ui/attendance/code_breakdown'
             title       = 'Code Breakdown'
-            className   = 'col-md-8'
+            className   = {userStore.user.isTeacher ? 'col-md-6' : 'col-md-8'}
             isTable     = {true}
             fullHeight  = {true}
             params      = {this.state.params}

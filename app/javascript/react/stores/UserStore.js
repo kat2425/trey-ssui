@@ -4,8 +4,8 @@ import {
   computed
 } from 'mobx'
 
-import { some, every, includes } from 'lodash'
-import {setter}            from 'mobx-decorators'
+import { some, includes } from 'lodash'
+import {setter}           from 'mobx-decorators'
 
 class UserStore {
   @setter @observable user = null
@@ -20,6 +20,10 @@ class UserStore {
 
   @computed get policies(){
     return this.user.policies
+  }
+
+  @computed get isImpersonated(){
+    return !!this.user.impersonated
   }
 
   @action hasModules = (...modules) => {

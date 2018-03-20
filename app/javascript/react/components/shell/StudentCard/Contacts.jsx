@@ -70,7 +70,7 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
                 <Button
                   onClick = {() => {
                     store.isCall(true)
-                    store.contact   = contact
+                    store.contact   = ref
                     store.studentId = student.id
                   }}
                   size    = 'sm'

@@ -11,7 +11,8 @@ import Aside                 from './Aside'
 import {
   FaEyeSlash,
   FaGlobe,
-  FaGroup
+  FaGroup,
+  FaLock
 } from 'react-icons/lib/fa'
 
 import {
@@ -31,7 +32,6 @@ function TagEntry({tag}){
       isModified={tag.isModified && !tag.isNew}
     >
       <Title title={tag.name} isNew={tag.isNew}>
-        <Icon type='tag-o' className='mr-2'/>
         {tag.name}
       </Title>
       <Aside>
@@ -39,7 +39,9 @@ function TagEntry({tag}){
           <Badge className='mr-2' color='primary'>New</Badge>
         )}
         {renderIf(tag.isModified && !tag.isNew)(
-          <Badge className='mr-2' color='danger'>Not Saved</Badge>
+          <Tooltip title={'You have unsaved changes.'}>
+            <Badge className='mr-2' color='danger'>Not Saved</Badge>
+          </Tooltip>
         )}
         <div>
           {renderIf(tag.isGlobal)(
@@ -50,6 +52,9 @@ function TagEntry({tag}){
           )}
           {renderIf(tag.isPrivate)(
             <ScopeIcon type='private' title='This list is visible only to me.'/>
+          )}
+          {renderIf(!tag.modifiable)(
+            <ScopeIcon type='locked' title='This list cannot be modified.'/>
           )}
         </div>
         <TagMenu tag={tag} className='text-muted' />
@@ -72,6 +77,8 @@ const ScopeIcon = ({type, title}) => (
           return <FaGroup style={icStyle} />
         case 'private':
           return <FaEyeSlash style={icStyle} />
+        case 'locked':
+          return <FaLock style={icStyle} />
         default:
           return null
         }

@@ -13,6 +13,15 @@ export default class ACTAspire extends Component {
     this.state = { params: {}, selected: {} }
   }
 
+  setYearFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:     { ...this.state.params, school_year: [ jrsValue ] },
+      selected:   { ...this.state.selected, school_year: val }
+    })
+  }
+
   render() {
     return (
       <div>
@@ -31,12 +40,27 @@ export default class ACTAspire extends Component {
                   const studentID = link.parameters._student_id
 
                   if (studentID) {
-                    fireEvent('showStudentCard', { student: studentID })
+                    fireEvent('showStudentCard', {
+                      student: studentID,
+                      path:    'assessment/act_aspire'
+                    })
                   }
                 }
               }
             }}
-          />
+          >
+            <VJSICSelect
+              id            = 'school_year'
+              inputPath     = '/public/VJS/ss_ui/shared/input_controls/district_dataset_years/report'
+              selectedValue = {this.state.selected.school_year}
+              handleChange  = {::this.setYearFilter}
+              clearable     = {false}
+              setDefault    = {true}
+              placeholder   = 'Year'
+              width         = {100}
+              params        = {{ dataset: ['vw_act_aspire'] }}
+            />
+          </VJSChart>
         </div>
       </div>
     )

@@ -4,6 +4,7 @@ import { observer }          from 'mobx-react'
 import styled                from 'styled-components'
 import { ifProp }            from 'styled-tools'
 import { ellipsis }          from 'polished'
+import { FaLock }            from 'react-icons/lib/fa'
 import {
   Button,
   Tooltip
@@ -17,15 +18,31 @@ function Title({tagStore}){
   return (
     <div className = 'd-flex flex-row align-items-center' >
       <H5 isNew={selectedTag.isNew} title={selectedTag.name}>{selectedTag.name}</H5>
-      <Tooltip title='Edit List'>
-        <Button
-          onClick  = {() => tagStore.editTag(selectedTag)}
-          icon     = "edit"
-          style    = {{border: 0, background: 'transparent'}}
-          disabled = {!selectedTag.modifiable}
-        />
-      </Tooltip>
-    </div>
+      {showOptions(tagStore)}
+    </div>  
+  )
+}
+
+function showOptions(tagStore) {
+  const { selectedTag } = tagStore
+  
+  return (
+    selectedTag.modifiable 
+      ? (
+        <Tooltip title='Edit List'>
+          <Button
+            onClick  = {() => tagStore.editTag(selectedTag)}
+            icon     = "edit"
+            style    = {{border: 0, background: 'transparent'}}
+            disabled = {!selectedTag.modifiable}
+          />
+        </Tooltip>  
+      )
+      : (
+        <Tooltip title='You cannot modify this list'>
+          <FaLock className='ml-2' style={{fontSize: 18}} />
+        </Tooltip>
+      )
   )
 }
 

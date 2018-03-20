@@ -29,7 +29,7 @@ export default class ACT extends Component {
     return (
       <div>
         <VJSChart
-          id               = 'sc-maap'
+          id               = 'sc-act'
           reportPath       = '/public/VJS/ss_ui/assessment/act/student_card'
           scale            = 'container'
           title            = 'ACT'

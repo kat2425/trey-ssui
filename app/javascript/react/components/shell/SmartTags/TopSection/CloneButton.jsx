@@ -9,15 +9,13 @@ function CloneButton({tagStore}){
   if(!selectedTag) return null
 
   return (
-    <Tooltip title='Clone List'>
-      <Button
-        className = 'pl-2 mr-2'
-        onClick   = {() => tagStore.cloneTag(selectedTag)}
-      >
-        <span className='icon icon-documents text-muted' style={{marginRight: '4px'}}/>
-        Clone
-      </Button>
-    </Tooltip>
+    <Button
+      className = 'pl-2 mr-2'
+      onClick   = {() => tagStore.cloneTag(selectedTag)}
+    >
+      <span className='icon icon-documents text-muted' style={{marginRight: '4px'}}/>
+      Clone List
+    </Button>
   )
 }
 

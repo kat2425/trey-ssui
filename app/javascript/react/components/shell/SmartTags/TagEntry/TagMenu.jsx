@@ -24,15 +24,6 @@ const menu = (tag = {}, store = {}) => (
       </MenuItem>,
       <Menu.Divider key={uuid()} />
     ]}
-    {tag.isValid && [
-      <MenuItem key={uuid()}>
-        <div onClick={tag.handleOnTagClick}>
-          <ActionIcon type='play-circle-o' />
-          Run
-        </div>
-      </MenuItem>,
-      <Menu.Divider key={uuid()} />
-    ]}
     {tag.isValid && tag.modifiable && [
       <MenuItem key={uuid()}>
         <div onClick={() => tag.handleOnSave()}>
