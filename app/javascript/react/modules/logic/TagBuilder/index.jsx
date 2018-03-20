@@ -30,7 +30,7 @@ import {
 } from 'ui/shell/SmartTags'
 
 
-const TOP_BOTTOM_HEIGHT = 135
+const TOP_BOTTOM_HEIGHT = 120
 
 @observer
 export default class TagBuilder extends Component {
