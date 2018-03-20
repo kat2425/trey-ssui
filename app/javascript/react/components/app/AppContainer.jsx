@@ -20,6 +20,7 @@ import ChannelEngagement     from 'modules/channel/Engagement'
 
 // Assessment
 import Assessments           from 'modules/logic/assessment/Assessment'
+import GrowthCusp            from 'modules/logic/insights/GrowthCusp'
 
 import FinalResults          from 'modules/logic/accountability/FinalResults'
 import LPS                   from 'modules/logic/accountability/LPS'
@@ -62,6 +63,9 @@ const AppContainer = ({match}) => {
         <Route path='/r/channel/inbox' component={SMSController} />
         <Route path='/r/channel/history' component={CallHistory} />
         <Route path='/r/channel/engagement' component={ChannelEngagement} />
+
+        {/* Insights */}
+        <Route path='/r/growth_cusp' component={GrowthCusp} />
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />

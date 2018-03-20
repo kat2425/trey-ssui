@@ -109,6 +109,13 @@ const UserMenu = () => {
           iconClass = 'icon-traffic-cone'
           link      = '/r/risk_analysis'
         />
+
+        <EUserMenuItem
+          title     = 'Growth Cusp'
+          iconClass = 'icon-magnet'
+          link      = '/r/growth_cusp'
+          renderIf  = {userStore.hasModules('vjs_growth_cusp')}
+        />
       </UserMenuSection>
 
       <EUserMenuSection
