@@ -19,6 +19,7 @@ class CallingStore {
   @setter @observable selectMute           = false
   @setter @observable isError              = null
   @setter @observable isSaved              = null
+  @setter @observable isDisabled           = false
 
   @observable connection                   = null
   @observable contact                      = null
@@ -155,11 +156,13 @@ class CallingStore {
         this.setCallBarVisible(true)
 
         setTimeout(() => {
+          this.setIsDisabled(false)
           this.setIsConferenceCalling(false)
           this.setCallBarVisible(false)
-        }, 5000)
+        }, 6000)
       })
       .catch((error) => {
+        this.setIsDisabled(false)
         let errorMessage = 'We experienced an unknown error.'  // default error message
 
         if (error.response.data && error.response.data.message) { // specific errors
@@ -181,15 +184,20 @@ class CallingStore {
 
   @action
   initiateConferenceCall = async(contact, student_id) => {
-    const data = await this.generateToken()
+    try {
+      this.setIsDisabled(true)
+      const data = await this.generateToken()
 
-    this.contactID   = contact.id
-    this.contactName = contact.name
-    this.phoneNumber = contact.phone
-    this.studentID   = student_id
-    this.userId      = data.data.user
+      this.contactID   = contact.id
+      this.contactName = contact.name
+      this.phoneNumber = contact.phone
+      this.studentID   = student_id
+      this.userId      = data.data.user
 
-    this.conferenceCall()
+      this.conferenceCall()
+    } finally {
+      this.setIsDisabled(false)
+    }
   }
 
   @action
