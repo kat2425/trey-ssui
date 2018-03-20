@@ -28,7 +28,16 @@ class NoteStore {
       params: {
         student_id: studentId,
         only: [
-          'id', 'title', 'body', 'groups.id', 'global', 'student_note_tags.id', 'student_note_tags.name', 'groups.group_name', 'created_at'
+          'id', 
+          'title', 
+          'body', 
+          'groups.id', 
+          'global', 
+          'student_note_tags.id', 
+          'student_note_tags.name', 
+          'groups.group_name', 
+          'created_at',
+          'updated_at'
         ].join(',')
       }
     }).then(this.fetchStudentNotesOK)

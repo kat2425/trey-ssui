@@ -59,10 +59,18 @@ export default class NoteView extends Component {
     const currentNote = notes[selectedNoteIndex]
 
     return (
-      <p>
-        <span style={{color: '#3f9fcf'}}>Created at: </span>
-        <span style={{color: '#A9A9A9'}}>{DateFormat.shortDateTime(currentNote.created_at)}</span>
-      </p>
+      <div>
+        <p>
+          <span style={{color: '#3f9fcf'}}>Created at: </span>
+          <span style={{color: '#A9A9A9'}}>{DateFormat.shortDateTime(currentNote.created_at)}</span>
+        </p>
+        {currentNote.updated_at &&
+          <p>
+            <span style={{color: '#3f9fcf'}}>Last Edited: </span>
+            <span style={{color: '#A9A9A9'}}>{DateFormat.shortDateTime(currentNote.updated_at)}</span>
+          </p>
+        }
+      </div>
     )
   }
 
