@@ -135,6 +135,11 @@ class UserMain extends Component {
     window.removeEventListener('closeMailer',        this.closeMailer)
   }
 
+  trackEvent() {
+    console.log('--route event--', this.props)
+    return null
+  }
+
   render() {
     const { uiStore } = this.props
 
@@ -150,19 +155,15 @@ class UserMain extends Component {
               <Route path='/r/feedbak' component={FeedbakLegacy} />
 
               <Route
-                path = '/r/reporting/adhoc'
+                path   = '/r/reporting/adhoc'
                 render = {() => <Reporting action='adhoc'/> }
               />
               <Route
-                path = '/r/reporting/viewer'
+                path   = '/r/reporting/viewer'
                 render = {() => <Reporting action='viewer'/> }
               />
 
-              <Route render={() => {
-                return (
-                  <AppContainer/>
-                )
-              }} />
+              <Route render={() => <AppContainer/> } />
             </Switch>
 
             <ActionBar

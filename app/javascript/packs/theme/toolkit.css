@@ -9995,7 +9995,7 @@ div.tooltip-inner {
 .vjs-rank-cell-red-0 {
   background-color: #f5e6e5;
   border-top: 1px solid #edd1cf !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 .vjs-rank-cell-orange-100 {
   background-color: #ffba00;
@@ -10400,7 +10400,7 @@ div.tooltip-inner {
 .vjs-rank-cell-orange-0 {
   background-color: #f6ecd9;
   border-top: 1px solid #f0e0c0 !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 .vjs-rank-cell-yellow-100 {
   background-color: #f9ec03;
@@ -10805,7 +10805,7 @@ div.tooltip-inner {
 .vjs-rank-cell-yellow-0 {
   background-color: #f8f6d9;
   border-top: 1px solid #f3f0bf !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 -rank-cell-puke-100 {
   background-color: #d5ea0a;
@@ -11210,7 +11210,7 @@ div.tooltip-inner {
 .vjs-rank-cell-puke-0 {
   background-color: #edf1cc;
   border-top: 1px solid #e5eab4 !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 .vjs-rank-cell-green-100 {
   background-color: #8adb38;
@@ -11615,7 +11615,7 @@ div.tooltip-inner {
 .vjs-rank-cell-green-0 {
   background-color: #e1f1d2;
   border-top: 1px solid #d1eabb !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 .vjs-rank-cell-sky-100 {
   background-color: #5abfdd;
@@ -12020,7 +12020,7 @@ div.tooltip-inner {
 .vjs-rank-cell-sky-0 {
   background-color: #edf5f8;
   border-top: 1px solid #d7e9ef !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 .vjs-rank-cell-blue-100 {
   background-color: #428aca;
@@ -12425,7 +12425,7 @@ div.tooltip-inner {
 .vjs-rank-cell-blue-0 {
   background-color: #e6f0f9;
   border-top: 1px solid #cde1f3 !important;
-  opacity: 0.15 !important; }
+  opacity: 0.55 !important; }
 
 .vjs-bar-cell span {
   display: none; }

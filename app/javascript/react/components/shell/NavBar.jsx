@@ -10,23 +10,70 @@ import {
 } from 'reactstrap'
 
 
-import StudentSearch        from './StudentSearch'
-import fireEvent            from '../../helpers/FireEvent'
-import renderIf             from 'ui/hoc/renderIf'
+import StudentSearch from './StudentSearch'
+import fireEvent     from 'helpers/FireEvent'
+import intercomEvent from 'helpers/Intercom'
+import renderIf      from 'ui/hoc/renderIf'
 
 const ENav      = renderIf(Nav)
 const brandLogo = { height: '35px' }
 
+@withRouter
 @inject('uiStore')
-class ReportRoute extends Component {
+class RouteMonitor extends Component {
   componentDidMount() {
-    const { uiStore, status } = this.props
-    uiStore.isReportingInUse = status
+    const { uiStore, status, location } = this.props
+    uiStore.isReportingInUse            = status
+
+    this.trackEvent(location.pathname)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { uiStore, status } = nextProps
-    uiStore.isReportingInUse = status
+    const { uiStore, status, location } = nextProps
+    uiStore.isReportingInUse            = status
+
+    this.trackEvent(location.pathname)
+  }
+
+  trackEvent(path) {
+    if (path !== '/r') {
+      const data = this.untangleRoute(path)
+      intercomEvent(data.event, data.params)
+    }
+  }
+
+  untangleRoute(path) {
+    if (!!path.match(/\/students\//)) {
+      return this.studentCardEvent(path)
+    } else {
+      return this.moduleEvent(path)
+    }
+  }
+
+  moduleEvent(path) {
+    const _match                  = path.match(/\/r\/(.*?)$/)
+    const [ _module, _submodule ] = _match[1].split('/')
+
+    return {
+      event:  `web:${_module}`,
+      params: {
+        sub_module: (_submodule || null)
+      }
+    }
+  }
+
+  studentCardEvent(path) {
+    const _match                  = path.match(/^(.*?)\/students\/(.*?)\/(.*?)$/)
+    const [ _module, _submodule ] = _match[3].split('/')
+
+    return {
+      event:  `web:student_card:${_module}`,
+      params: {
+        student_id: _match[2],
+        sub_module: (_submodule || null),
+        referrer:   (_match[1] === '/r' ? null : _match[1])
+      }
+    }
   }
 
   render() {
@@ -63,7 +110,9 @@ export default class NavBar extends Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Route
             path   = '*'
-            render = {() => <ReportRoute status={!!location.pathname.match(/\/r\/reporting/)}/> }
+            render = {() => (
+              <RouteMonitor status={!!location.pathname.match(/\/r\/reporting/)}/>
+            )}
           />
 
           <ENav className='navbar-nav' renderIf={uiStore.isReportingInUse}>
