@@ -44,6 +44,9 @@ export class UiStore {
   @setter @observable
   isReportingInUse = false
 
+  @setter @observable
+  isFeedbakInUse = false
+
   @observable notifications = []
 
   constructor() {

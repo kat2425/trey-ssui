@@ -14,6 +14,7 @@ import FeedbakLegacy           from 'modules/feedbak/FeedbakLegacy'
 import Reporting               from 'modules/logic/reporting/Reporting'
 import MailWriter              from 'ui/shell/MailWriter'
 import { CallInfo }            from 'ui/shell/Call'
+import StudentCardController   from 'ui/controllers/StudentCardController'
 
 import CallingController       from 'ui/controllers/CallingController'
 import SidebarController       from 'ui/controllers/SidebarController'
@@ -165,6 +166,8 @@ class UserMain extends Component {
 
               <Route render={() => <AppContainer/> } />
             </Switch>
+
+            <Route path='*/students/:studentId' component={StudentCardController} />
 
             <ActionBar
               store         = {SMSInboxStore}

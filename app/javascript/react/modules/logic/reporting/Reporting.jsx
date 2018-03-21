@@ -1,9 +1,22 @@
 import React, { Component } from 'react'
 import Iframe               from 'react-iframe'
+import uiStore              from 'stores/UiStore'
 
 export default class Reporting extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentWillMount() {
+    uiStore.setIsReportingInUse(true)
+  }
+
+  componentWillUnmount() {
+    uiStore.setIsReportingInUse(false)
+  }
+
+  shouldComponentUpdate() {
+    return !uiStore.isReportingInUse
   }
 
   reportingPath = (action) => {
@@ -21,6 +34,7 @@ export default class Reporting extends Component {
     const jrsSeed   = Math.floor((Math.random() * 800000) + 100000)
 
     const frameLink = `${jrsServer}/${this.reportingPath(this.props.action)}&j_username=${jrsID}%7C${jrsOrg}&j_password=${jrsToken}&cb=${jrsSeed};`
+
     return (
       <Iframe
         url    = {frameLink}
