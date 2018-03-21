@@ -22,6 +22,7 @@ import DMACSTAAR       from './DMACSTAAR'
 import DRA             from './DRA'
 import DRAWordAnalysis from './DRAWordAnalysis'
 import Eduphoria       from './Eduphoria'
+import LASLinks        from './LASLinks'
 import MAAP            from './MAAP'
 import MCT             from './MCT'
 import MasteryConnect  from './MasteryConnect'
@@ -66,6 +67,7 @@ class Assessments extends Component {
       { module: 'vjs_dmac_staar',      value: 'dmac_staar',      label: 'STAAR',             },
       { module: 'vjs_dmac_local',      value: 'dmac_local',      label: 'Local Assessments', },
       { module: 'vjs_eduphoria',       value: 'eduphoria',       label: 'Eduphoria'          },
+      { module: 'vjs_las_links',       value: 'las_links',       label: 'LASLinks'           },
       { module: 'vjs_maap',            value: 'maap',            label: 'MAAP'               },
       { module: 'vjs_mastery_connect', value: 'mastery_connect', label: 'Mastery Connect'    },
       { module: 'vjs_mct',             value: 'mct',             label: 'MCT'                },
@@ -248,6 +250,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/parcc`}
             render = {() => <PARCC student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/las_links`}
+            render = {() => <LASLinks student={student}/> }
           />
 
           <Route render={() => {
