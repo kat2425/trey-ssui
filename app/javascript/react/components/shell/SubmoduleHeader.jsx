@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const SubmoduleHeader = ({title, children}) => {
   return (
-    <div className='row mr-3 ml-1'>
+    <div className='row mr-3 ml-1 mt-3'>
       <div>
         <h4 className='m-1 mb-3'>
           {title}

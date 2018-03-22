@@ -62,13 +62,16 @@ const cardStyle = {
     borderRadius:    0,
     border:          'none',
     backgroundColor: '#f7f9fb',
-    padding:         15,
-    paddingBottom:   5
+    paddingLeft:     '15px',
+    paddingRight:    '15px',
+    paddingTop:      '0px',
+    paddingBottom:   '0px',
+    height:          'calc(100vh - 103px)'
   }
 }
 
 const CloseBtn = ({onClick}) => (
-  <div className='float-right h4 p-1 pr-0 mb-2'>
+  <div className='float-right h4 p-1 pr-0 mb-2 mt-3'>
     <span className='icon icon-cross' onClick={onClick} />
   </div>
 )
@@ -109,7 +112,7 @@ export default class StudentCard extends Component {
   }
 
   renderLoader = () => {
-    <Row className='justify-content-sm-center align-items-sm-center h-100'>
+    <Row className='justify-content-sm-center align-items-sm-center'>
       <LoadingSpinner/>
     </Row>
   }
