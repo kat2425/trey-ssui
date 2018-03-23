@@ -4,6 +4,7 @@ import { observer }       from 'mobx-react'
 import commsStore         from 'stores/CommsStore'
 import CommsItem          from 'ui/shell/CommsItem'
 import CommsInfo          from 'ui/shell/CommsInfo'
+import SubmoduleHeader    from 'ui/shell/SubmoduleHeader'
 import _                  from 'lodash'
 
 import Left               from './Left'
@@ -50,8 +51,8 @@ export default class CommsHistory extends Component {
     const { isLoading, sortedCommunications } = commsStore
 
     return (
-      <div className='h-100'>
-        <h4 className='m-1 mb-3'>Engagement</h4>
+      <div>
+        <SubmoduleHeader title='Engagement' />
 
         <Loader isLoading={isLoading} />
 

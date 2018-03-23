@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import SubmoduleHeader    from 'ui/shell/SubmoduleHeader'
 
 import {
   Container, Button,       Card,  CardBlock,
@@ -31,7 +32,7 @@ export default class Notes extends Component {
 
     return (
       <div>
-        <h4 className='m-1 mb-3'>Notes</h4>
+        <SubmoduleHeader title='Notes' />
 
         <Card className='mb-4'>
           {isCreating

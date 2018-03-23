@@ -33,7 +33,7 @@ const renderDOB = (dob) => {
 
 const Info = ({ student }) => {
   return (
-    <Card className='card-profile mb-3'>
+    <Card className='card-profile mb-3 mt-3'>
       <CardHeader style={cardHeader}/>
 
       <CardBlock className='text-xs-center mb-0 pb-1'>

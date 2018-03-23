@@ -1,14 +1,13 @@
-import React        from 'react'
-import { observer } from 'mobx-react'
+import React           from 'react'
+import { observer }    from 'mobx-react'
+import SubmoduleHeader from 'ui/shell/SubmoduleHeader'
 
 import VJSChart  from 'ui/vjs/VJSChart'
 
 const Assessment = ({student}) => {
   return (
     <div>
-      <h4 className='m-1 mb-3'>
-        Assessment
-      </h4>
+      <SubmoduleHeader title='Assessment' />
 
       <div>
         <VJSChart

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { observer }         from 'mobx-react'
+import SubmoduleHeader      from 'ui/shell/SubmoduleHeader'
 
 import VJSChart    from 'ui/vjs/VJSChart'
 import VJSICSelect from 'ui/vjs/VJSICSelect'
@@ -27,7 +28,7 @@ export default class Grades extends Component {
 
     return (
       <div>
-        <h4 className='m-1 mb-3'>Grades</h4>
+        <SubmoduleHeader title='Grades' />
 
         <VJSChart
           id         = 'sc-student-grades'

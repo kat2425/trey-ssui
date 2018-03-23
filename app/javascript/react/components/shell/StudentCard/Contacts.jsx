@@ -1,6 +1,7 @@
-import React        from 'react'
-import { observer } from 'mobx-react'
-import _         from 'lodash'
+import React           from 'react'
+import { observer }    from 'mobx-react'
+import _               from 'lodash'
+import SubmoduleHeader from 'ui/shell/SubmoduleHeader'
 
 import {
   ButtonGroup, ButtonDropdown, Button, Card, Table, Alert,
@@ -141,7 +142,7 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
 const Contacts = ({contacts, store, student, handleContactFave, handleSendEmail}) => {
   return (
     <div>
-      <h4 className='m-1 mb-3'>Contacts</h4>
+      <SubmoduleHeader title='Contacts' />
 
       <Card>
         <Table>
