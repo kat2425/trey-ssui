@@ -1,9 +1,22 @@
 import React, { Component } from 'react'
 import Iframe               from 'react-iframe'
+import uiStore              from 'stores/UiStore'
 
 export default class FeedbakLegacy extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentWillMount() {
+    uiStore.setIsFeedbakInUse(true)
+  }
+
+  componentWillUnmount() {
+    uiStore.setIsFeedbakInUse(false)
+  }
+
+  shouldComponentUpdate() {
+    return !uiStore.isFeedbakInUse
   }
 
   render() {
