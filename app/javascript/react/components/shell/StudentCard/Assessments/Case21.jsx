@@ -29,7 +29,7 @@ export default class Case21 extends Component {
     return (
       <div>
         <VJSChart
-          id               = 'sc-maap'
+          id               = 'sc-case21'
           reportPath       = '/public/VJS/ss_ui/assessment/case21/student_card'
           scale            = 'container'
           title            = 'Case21'
