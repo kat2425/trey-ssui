@@ -147,6 +147,10 @@ export default class NavBar extends Component {
             </NavItem>
 
             <NavItem>
+              <NavLink target="_blank" href='http://help.schoolstatus.com/'>Help</NavLink>
+            </NavItem>
+
+            <NavItem>
               <NavLink href='/logout'>Logout</NavLink>
             </NavItem>
           </Nav>

@@ -1,15 +1,13 @@
-import React, { Component } from 'react'
-
-import {
-  Container, Button, Card, CardBlock,
-  CardTitle, CardSubtitle, CardText,
-  FormGroup, FormFeedback, Label, Input,
-  Row, Col, Badge
-} from 'reactstrap'
-
+import React, { Component }   from 'react'
 import { observer }           from 'mobx-react'
 import Picker                 from '../Picker'
 import GroupPicker            from '../GroupPicker'
+import moment                 from 'moment'
+import {
+  Button, Card, CardBlock,
+  FormGroup, FormFeedback, 
+  Label, Input,
+} from 'reactstrap'
 
 @observer
 export default class NotesForm extends Component {
@@ -24,6 +22,12 @@ export default class NotesForm extends Component {
 
   handleTagChange(val) {
     this.props.noteStore.selectedTags = val
+  }
+
+  handleTimeStamp = () => {
+    const { message, setNoteMessage } = this.props.noteStore
+
+    setNoteMessage(message + moment().format('MMM D, YYYY h:mm A'))
   }
 
   submitNote = () => {
@@ -70,8 +74,15 @@ export default class NotesForm extends Component {
           </FormGroup>
 
           <FormGroup color={this.state.bodyError}>
-            <Label for="message">Body</Label>
-
+            <div className='d-flex justify-content-between mb-2'>
+              <Label for="message">Body</Label>
+              <Button onClick={this.handleTimeStamp} size='sm'>
+                <span
+                  className = 'mr-1 icon icon-clock text-muted'
+                /> 
+                Timestamp
+              </Button>
+            </div>
             <Input
               onChange = {(e) => this.props.noteStore.setNoteMessage(e.target.value)}
               value    = {this.props.noteStore.message}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React        from 'react'
 import { observer } from 'mobx-react'
 import {
   Button, Modal, ModalHeader, 
@@ -39,11 +39,12 @@ const CallDialog = observer(({ callingStore }) => {
           <Card className='mt-4'>
             <CardBlock>
               SchoolStatus will connect this call free of charge. We will call your chosen phone number, then connect you to the above contact.
-                  This will not reveal your phone number.While the call is free to connect, your phone provider will treat this as any other incoming
+                  This will not reveal your phone number. While the call is free to connect, your phone provider will treat this as any other incoming
                   call and will debit your minutes according to your phone plan. SchoolStatus nor your district/school are responsible for these charges.
             </CardBlock>
             <CardBlock>
               <Button
+                disabled={callingStore.isDisabled}
                 onClick={() => callingStore.initiateConferenceCall(contact, studentID)}
                 color="primary"
               >

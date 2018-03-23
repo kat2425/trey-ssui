@@ -8,9 +8,9 @@ import {ellipsis} from 'polished'
 
 export const Incoming = ({userName, contactName, secondary}) => (
   <Wrapper secondary={secondary}>
-    <Name>{userName}</Name>
+    <Name bg>{userName}</Name>
     <LeftIcon />
-    <Name bg>{contactName}</Name>
+    <Name>{contactName}</Name>
   </Wrapper>
 )
 
