@@ -104,11 +104,14 @@
     "babel-plugin-styled-components": "^1.5.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "eslint": "^4.4.1",
+    "eslint-plugin-arca": "^0.6.0",
     "eslint-plugin-react": "^7.3.0",
     "gulp": "^3.9.1",
     "json-stringify-safe": "^5.0.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "lint-staged": "^7.0.0",
+    "pre-commit": "^1.2.2",
     "react-json-pretty": "^1.7.4",
     "react-json-tree": "^0.11.0",
     "webpack-dev-server": "^2.5.1"
@@ -116,6 +119,11 @@
   "scripts": {
     "storybook": "start-storybook -p 3220 -c .storybook",
     "sass": "cd ./resources/bs-4-theme && yarn && gulp && cd ../../",
-    "sass-watch": "cd ./resources/bs-4-theme && yarn && gulp watch && cd ../../"
-  }
+    "sass-watch": "cd ./resources/bs-4-theme && yarn && gulp watch && cd ../../",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged":{
+    "app/javascript/react/**/*.{js,jsx}": ["eslint --fix", "git add"]
+  },
+  "pre-commit": ["lint-staged"]
 }

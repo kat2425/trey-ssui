@@ -1,0 +1,4 @@
+app/javascript/packs/*
+app/assets/javascripts/*
+config/webpack/*
+resources/*
