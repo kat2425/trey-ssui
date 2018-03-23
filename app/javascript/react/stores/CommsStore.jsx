@@ -18,15 +18,13 @@ import {
 } from 'lodash/fp'
 
 export class CommsStore {
-  prevStudentId = null
-
   @setter @observable isLoading    = false
   @setter @observable isError      = false
-  @observable communications       = observable.map()
+  @observable communications       = []
   @setter @observable selectedComm = null
 
   @computed get sortedCommunications() {
-    return orderBy(c => c.createdAt, ['desc'] )(this.communications.values())
+    return orderBy(c => c.createdAt, ['desc'] )(this.communications)
   }
 
   getCommHistoryParams = () => ({
@@ -48,13 +46,13 @@ export class CommsStore {
   @computed get groupedSms() {
     return  filter(
       c => c.type === 'sms' && this.isCommEqualToSelectedComm(c)
-    )(this.communications.values()) 
+    )(this.communications) 
   }
 
   @computed get groupedEmails() {
     return  filter(
       c => c.type === 'email' && this.isCommEqualToSelectedComm(c)
-    )(this.communications.values()) 
+    )(this.communications) 
   }
 
 
@@ -120,18 +118,13 @@ export class CommsStore {
 
   @action fetchCommunicationHistory = async(id) => {
     try {
-      if(this.prevStudentId !== id){
-        this.clearData()
-      }
-
+      this.clearData()
       this.setIsLoading(true)
       this.setIsError(false)
-
 
       const {data}   = await xhr.get( `/channel/communications/${id}`, this.getCommHistoryParams())
 
       this.fetchCommunicationHistoryOK(data)
-      this.prevStudentId = id
     } catch(e){
       this.setIsError(true)
     } finally {
@@ -140,12 +133,12 @@ export class CommsStore {
   }
 
   @action fetchCommunicationHistoryOK = (data) => {
+    this.clearData()
     data.forEach(this.createCommunication)
   }
 
   @action createCommunication = (comm) => {
-    if(this.communications.has(comm.id)) return
-    this.communications.set(comm.id, new Communication(this, comm))
+    this.communications.push(new Communication(this, comm))
   }
 }
 

@@ -119,8 +119,7 @@ export default class StudentCard extends Component {
 
     const {
       student,
-      groupedContacts:      contacts,
-      sortedCommunications: communications
+      groupedContacts: contacts,
     } = store
 
     return (

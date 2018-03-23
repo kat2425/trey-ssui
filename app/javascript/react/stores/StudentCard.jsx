@@ -1,8 +1,7 @@
 import { observable, action, computed } from 'mobx'
 
-import _             from 'lodash'
-import xhr           from 'helpers/XHR'
-import Communication from 'stores/models/Communication'
+import _   from 'lodash'
+import xhr from 'helpers/XHR'
 
 class StudentCardStore {
   @observable isLoading      = false
@@ -11,7 +10,6 @@ class StudentCardStore {
 
   @observable student        = null
   @observable contacts       = []
-  @observable communications = observable.map()
 
   @action
   fetchStudent(id) {
@@ -19,7 +17,6 @@ class StudentCardStore {
     this.visible        = false
     this.student        = null
     this.contacts.clear()
-    this.communications.clear()
 
     xhr.get(`/students/${id}`, {
       params: {
@@ -93,23 +90,9 @@ class StudentCardStore {
     this.fetchStudentContacts(this.student.id)
   }
 
-  @action
-  fetchCommunicationHistory(id) {
-    xhr.get(`/channel/communications/${id}`, {
-      params: {
-        only: [
-          'id', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
-          'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
-          'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'call_status'
-        ].join(',')
-      }
-    }).then(this.fetchCommunicationHistoryOK)
-  }
-
   @action.bound
   fetchStudentOK(res) {
     this.fetchStudentContacts(res.data.id)
-    this.fetchCommunicationHistory(res.data.id)
 
     this.student = res.data
   }
@@ -123,22 +106,11 @@ class StudentCardStore {
     this.visible   = true
   }
 
-  @action.bound
-  fetchCommunicationHistoryOK(res) {
-    res.data.forEach(this.createCommunication)
-  }
-
-  createCommunication = (comm) => {
-    if(this.communications.has(comm.id)) return
-    this.communications.set(comm.id, new Communication(this, comm))
-  }
-
   @action
   hideCard() {
     this.visible = false
     this.student = null
     this.contacts.clear()
-    this.communications.clear()
   }
 
   @computed
@@ -151,11 +123,6 @@ class StudentCardStore {
       })
     )
   }
-
-  @computed
-  get sortedCommunications() {
-    return _.orderBy(this.communications.values(), c => c.createdAt, ['desc'] )
-  }
 }
 
-export default StudentCardStore = new StudentCardStore()
+export default new StudentCardStore()
