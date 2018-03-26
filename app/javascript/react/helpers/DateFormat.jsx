@@ -12,9 +12,9 @@ export default class DateFormat {
   static fullDateWithTime(time) {
     return moment(time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM DD YYYY hh:mm:ss a').toString()
   }
-
-  static shortDateTime(str) {
-    return moment(str, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM D, YYYY h:mm A')
+  
+  static shortDateTime(time) {
+    return moment(time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM D, YYYY h:mm A')
   }
 
   static shortDate(time) {
