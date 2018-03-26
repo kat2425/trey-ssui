@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Modal                from 'react-modal'
-import {scrollStyle}   from 'helpers/modal-style'
+import {scrollStyle}        from 'helpers/modal-style'
 
 import {
   Switch, withRouter, Route, Redirect, Link as RRNavLink
@@ -35,14 +35,14 @@ import Engagement       from './CommsHistory/'
 import SurveyMonkey     from './SurveyMonkey'
 
 // FIXME: needs to be inside StudentCard dir
-import Notes           from '../Notes'
+import Notes            from '../Notes'
 
-import CallingStore    from 'stores/CallingStore'
+import CallingStore     from 'stores/CallingStore'
 
-import renderIf        from 'ui/hoc/renderIf'
-import userStore       from 'stores/UserStore'
-import fireEvent       from 'helpers/FireEvent'
-import _               from 'lodash'
+import renderIf         from 'ui/hoc/renderIf'
+import userStore        from 'stores/UserStore'
+import fireEvent        from 'helpers/FireEvent'
+import _                from 'lodash'
 
 const EFinancialAid = renderIf(FinancialAid)
 const EUserMenuItem = renderIf(UserMenuItem)
@@ -70,9 +70,10 @@ const cardStyle = {
   }
 }
 
-const CloseBtn = ({onClick}) => (
-  <div className='float-right h4 p-1 pr-0 mb-2 mt-3'>
-    <span className='icon icon-cross' onClick={onClick} />
+const CloseBtn = ({handlePrint, handleClose}) => (
+  <div className='float-right h4 p-1 pr-0 mb-2 mt-3' style={{cursor: 'pointer'}}>
+    <span className='icon icon-print mr-2' onClick={handlePrint} />
+    <span className='icon icon-cross' onClick={handleClose} />
   </div>
 )
 
@@ -93,6 +94,12 @@ export default class StudentCard extends Component {
     noteStore.resetNoteForm()
     store.hideCard()
     fireEvent('onCloseStudentCard')
+  }
+
+  printCard = () => {
+    const { store } = this.props
+
+    store.printStudentCard()
   }
 
   render() {
@@ -225,7 +232,7 @@ export default class StudentCard extends Component {
 
         {/* Root Container */}
         <Col xl='10' lg='9' md='9' sm='9'>
-          <CloseBtn onClick={this.closeCard} />
+          <CloseBtn handlePrint={this.printCard} handleClose={this.closeCard} />
 
           <Switch location={location}>
             <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />

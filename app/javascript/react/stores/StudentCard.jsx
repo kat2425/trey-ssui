@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx'
 
-import _   from 'lodash'
-import xhr from 'helpers/XHR'
+import _                                from 'lodash'
+import xhr                              from 'helpers/XHR'
 
 class StudentCardStore {
   @observable isLoading      = false
@@ -83,6 +83,13 @@ class StudentCardStore {
       window.studentCardMailer.location.href = _gmail
       window.studentCardMailer.focus()
     })
+  }
+
+  @action
+  printStudentCard() {
+    const _printURL = `https://jasper.schoolstatus.com/jasperserver-pro/rest_v2/reports/public/VJS/ss_ui/students/printed_student_card.pdf?student_id=${this.student.id}&school_year=2018`
+
+    window.open(_printURL)
   }
 
   @action.bound
