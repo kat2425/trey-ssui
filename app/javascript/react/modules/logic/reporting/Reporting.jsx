@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter }       from 'react-router-dom'
 import Iframe               from 'react-iframe'
 import uiStore              from 'stores/UiStore'
 
+@withRouter
 export default class Reporting extends Component {
   constructor(props) {
     super(props)
@@ -16,13 +18,15 @@ export default class Reporting extends Component {
   }
 
   shouldComponentUpdate() {
-    return !uiStore.isReportingInUse
+    const wasOnStudentCard = !!this.props.location.pathname.match(/\/students\//)
+
+    return !(wasOnStudentCard || uiStore.isStudentCardOpen)
   }
 
   reportingPath = (action) => {
     return {
       viewer: 'flow.html?_flowId=searchFlow&mode=search&filterId=resourceTypeFilter&filterOption=resourceTypeFilter-reports&searchText=&theme=default',
-      adhoc: 'flow.html?_flowId=adhocFlow&mode=browse&theme=default'
+      adhoc:  'flow.html?_flowId=adhocFlow&mode=browse&theme=default'
     }[action]
   }
 
@@ -38,7 +42,7 @@ export default class Reporting extends Component {
     return (
       <Iframe
         url    = {frameLink}
-        styles = {{marginTop:'-1.5rem', paddingBottom:'50px', paddingTop:'8px'}}
+        styles = {{marginTop: '-1.5rem', paddingBottom: '50px', paddingTop: '8px'}}
       />
     )
   }
