@@ -15,7 +15,7 @@ import getError      from 'helpers/ErrorParser'
 
 import { setter }    from 'mobx-decorators'
 import userStore     from 'stores/UserStore'
-import UiStore       from 'stores/UiStore'
+import uiStore       from 'stores/UiStore'
 import _             from 'lodash'
 import uuid          from 'uuid'
 import moment        from 'moment'
@@ -80,7 +80,7 @@ export default class Tag {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
           type:    'error'
@@ -286,7 +286,7 @@ export default class Tag {
         wasActive && this.tagStore.setSelectedTag(this)
 
         this.tagStore.toggleQueryForm()
-        UiStore.addMessage(`${this.name} created successfully`)
+        uiStore.addMessage(`${this.name} created successfully`)
       })
     } catch (e) {
       this.setIsError(getError(e))
@@ -311,7 +311,7 @@ export default class Tag {
       runInAction(() => {
         this.tagStore.deleteTag(this)
 
-        UiStore.addMessage(`${this.name} deleted successfully`)
+        uiStore.addMessage(`${this.name} deleted successfully`)
       })
     } catch(e) {
       this.setIsError(getError(e))
@@ -338,7 +338,7 @@ export default class Tag {
         this.updateFromJson(data)
         this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
 
-        UiStore.addMessage(`${this.name} saved successfully`)
+        uiStore.addMessage(`${this.name} saved successfully`)
       })
     } catch (e) {
       this.setIsError(getError(e))
