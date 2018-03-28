@@ -350,7 +350,8 @@ export default class Tag {
     modifiable,
     system,
     global,
-    groups
+    groups,
+    user
   }) => {
     this.id         = id
     this.name       = name
@@ -361,6 +362,7 @@ export default class Tag {
     this.system     = system
     this.global     = global
     this.groups     = groups
+    this.createdBy  = user
   }
 
   @action setActive = () => {

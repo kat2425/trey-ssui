@@ -50,7 +50,7 @@ const ContactNumber = ({phone, stopped}) => {
   )
 }
 
-const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) => {
+const ContactEntry = observer(({contact, store, student, handleFave, handleSendEmail}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
       <td>
@@ -137,7 +137,7 @@ const ContactEntry = ({contact, store, student, handleFave, handleSendEmail}) =>
       </td>
     </tr>
   )
-}
+})
 
 const Contacts = ({contacts, store, student, handleContactFave, handleSendEmail}) => {
   return (
