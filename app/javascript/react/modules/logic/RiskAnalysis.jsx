@@ -63,31 +63,6 @@ export default class RiskAnalysis extends Component {
     })
   }
 
-  // setYearFilter(val) {
-  //   const jrsValue = val ? val.value : '~NOTHING~'
-  //
-  //   this.setState({
-  //     params:   { ...this.state.params, school_year: [ jrsValue ] },
-  //     selected: { ...this.state.selected, school_year: val }
-  //   })
-  // }
-
-  renderMassEmail() {
-    const { selected } = this.state
-
-    if (!!selected.course_id && !!selected.term) {
-      return (
-        <EMassEmail
-          type     = 'course'
-          name     = {`${selected.course_id.label} | ${selected.teacher_id.label} | ${selected.term.label}`}
-          id       = {selected.course_id.value}
-          label    = 'Email Course'
-          renderIf = {!!selected.course_id && !!selected.term}
-        />
-      )
-    }
-  }
-
   renderCharts() {
     if (!userStore.user.higherEd) {
       return (
@@ -120,8 +95,6 @@ export default class RiskAnalysis extends Component {
     return (
       <div>
         <ModuleHeader title='Risk Analysis'>
-          { this.renderMassEmail() }
-
           <EVJSICSelect
             id            = 'course_id'
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
@@ -153,16 +126,6 @@ export default class RiskAnalysis extends Component {
             placeholder   = 'Teacher'
             width         = {200}
           />
-
-          {/* <EVJSICSelect */}
-          {/*   id            = 'school_year' */}
-          {/*   inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report' */}
-          {/*   selectedValue = {this.state.selected.school_year} */}
-          {/*   handleChange  = {::this.setYearFilter} */}
-          {/*   params        = {this.state.params} */}
-          {/*   placeholder   = 'Year' */}
-          {/*   width         = {100} */}
-          {/* /> */}
         </ModuleHeader>
 
         { this.renderCharts() }
