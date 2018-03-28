@@ -13,7 +13,6 @@ import AppContainer            from 'ui/app/AppContainer'
 import FeedbakLegacy           from 'modules/feedbak/FeedbakLegacy'
 import Reporting               from 'modules/logic/reporting/Reporting'
 import MailWriter              from 'ui/shell/MailWriter'
-import { CallInfo }            from 'ui/shell/Call'
 import StudentCardController   from 'ui/controllers/StudentCardController'
 
 import CallingController       from 'ui/controllers/CallingController'
@@ -177,11 +176,6 @@ class UserMain extends Component {
             />
             <MailWriter store={MailerStore} />
             <SidebarController callStore={callStore} />
-            <CallInfo
-              store    = {callStore}
-              show     = {uiStore.showCallInfo}
-              onGoBack = {() => uiStore.setShowCallInfo(false)}
-            />
           </div>
         </div>
       </VJSContainer>
