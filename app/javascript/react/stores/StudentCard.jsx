@@ -65,7 +65,13 @@ class StudentCardStore {
   toggleContactPrimary(id, bool) {
     xhr.put(`/contacts/${id}/primary`, {
       primary: bool
-    }).then(res => this.fetchStudentContacts(this.student.id))
+    }).then(res => {
+      const index = _.findIndex(this.contacts, function(c) {
+        return c.id == res.data.id 
+      })
+    
+      this.contacts[index].primary = bool
+    })
   }
 
   @action
@@ -90,11 +96,6 @@ class StudentCardStore {
     const _printURL = `https://jasper.schoolstatus.com/jasperserver-pro/rest_v2/reports/public/VJS/ss_ui/students/printed_student_card.pdf?student_id=${this.student.id}&school_year=2018`
 
     window.open(_printURL)
-  }
-
-  @action.bound
-  toggleContactPrimaryOK() {
-    this.fetchStudentContacts(this.student.id)
   }
 
   @action.bound
