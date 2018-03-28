@@ -8726,6 +8726,24 @@ img.zoom-img {
 .mapboxgl-popup-content {
   padding-top: 18px; }
 
+.cursor-auto {
+  cursor: auto; }
+
+.cursor-default {
+  cursor: default; }
+
+.cursor-pointer {
+  cursor: pointer; }
+
+.cursor-wait {
+  cursor: wait; }
+
+.cursor-move {
+  cursor: move; }
+
+.cursor-not-allowed {
+  cursor: not-allowed; }
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
