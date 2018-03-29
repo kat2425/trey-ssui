@@ -94,7 +94,7 @@ export default class RiskAnalysis extends Component {
 
     return (
       <div>
-        <ModuleHeader title='Risk Analysis'>
+        <ModuleHeader title='At Risk'>
           <EVJSICSelect
             id            = 'course_id'
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'

@@ -14,7 +14,7 @@ const EUserMenuItem    = renderIf(UserMenuItem)
 const EUserMenuSection = renderIf(UserMenuSection)
 
 const UserMenu = () => {
-  const _riskItemLabel    = userStore.user.higherEd ? 'Risk Analysis' : 'At-Risk'
+  const _riskItemLabel    = userStore.user.higherEd ? 'At Risk' : 'At Risk'
   const _chanHistoryLabel = userStore.user.hasChannel ? 'History' : 'Call History'
 
   return (
