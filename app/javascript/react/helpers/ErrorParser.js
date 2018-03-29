@@ -1,6 +1,8 @@
 import _ from 'lodash'
 
 export default function ErrorParser(e){
+  console.error(e)
+
   const error = { title: 'Error', message: e.message}
 
   if( _.has(e, 'response.data') && isHTML(e.response.data)) return error
