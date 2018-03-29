@@ -7,6 +7,7 @@ import { ellipsis }          from 'polished'
 import { FaLock }            from 'react-icons/lib/fa'
 import { FaInfo }            from 'react-icons/lib/fa'
 import DateFormat            from 'helpers/DateFormat'
+import _get                  from 'lodash/get'
 import {
   Button,
   Tooltip,
@@ -59,17 +60,22 @@ function showOptions(tagStore) {
 
 function getTagInfo(tagStore) {
   const { createdAt, createdBy } = tagStore.selectedTag
+  const fullName = _get(createdBy, 'full_name')
 
   return (
     <div>
-      <p>
-        <strong>Created by: </strong> 
-        {createdBy.full_name}
-      </p>
-      <p>
-        <strong>Created at: </strong> 
-        {DateFormat.shortDate(createdAt)}
-      </p>
+      {fullName &&
+        <p>
+          <strong>Created by: </strong> 
+          {createdBy.full_name}
+        </p>
+      }
+      {createdAt &&
+        <p>
+          <strong>Created at: </strong> 
+          {DateFormat.shortDate(createdAt)}
+        </p>
+      }
     </div>
   )
 }
