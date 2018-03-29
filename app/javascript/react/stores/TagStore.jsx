@@ -90,13 +90,7 @@ export class TagStore {
         this.pagination.calculateTotalResults()
       })
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
-      console.error(e)
+      this.setIsError(getError(e))
     } finally {
       this.setIsFetchingTags(false)
     }
@@ -113,13 +107,7 @@ export class TagStore {
 
       this.downloadCSV(tag.name, data)
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
-      console.error(e)
+      this.setIsError(getError(e))
     } finally {
       this.setIsFetchingTagCSV(false)
     }
@@ -130,6 +118,7 @@ export class TagStore {
     const targetURI = encodeURI(csvContent)
 
     const link = document.createElement('a')
+
     link.setAttribute('href', targetURI)
     link.setAttribute('download', `${name}.csv`)
     document.body.appendChild(link)
@@ -145,13 +134,7 @@ export class TagStore {
 
       config.fields = data
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
-      console.error(e)
+      this.setIsError(getError(e))
     } finally {
       this.setIsFetchingSchema(false)
     }
