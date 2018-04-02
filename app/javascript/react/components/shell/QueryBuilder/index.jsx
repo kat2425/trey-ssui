@@ -6,22 +6,25 @@ import Builder       from './BuilderWrapper'
 import ActionButtons from './ActionButtons'
 
 
-function QueryBuilder({tag}){ 
+function QueryBuilder({store}){ 
+  const { selectedTag } = store
+
   return (
     <div className='m-0 query-builder'>
       <Query 
-        config      = {tag.config}
-        value       = {tag.treeQuery}
-        onChange    = {tag.setTreeQuery}
+        config      = {selectedTag.config}
+        value       = {selectedTag.treeQuery}
+        onChange    = {selectedTag.setTreeQuery}
         getChildren = {props => <Builder {...props} />}
       />
       <ActionButtons 
-        loadingOnTest = {tag.isFetchingStudents}
-        loadingOnSave = {tag.isCreating || tag.isUpdating}
-        disabled      = {!tag.isValid}
-        onTest        = {tag.testTag}
-        onSave        = {tag.handleOnSave}
-        modifiable    = {tag.modifiable}
+        loadingOnTest = {selectedTag.isFetchingStudents}
+        loadingOnSave = {selectedTag.isCreating || selectedTag.isUpdating}
+        disabled      = {!selectedTag.isValid}
+        onTest        = {selectedTag.testTag}
+        onSave        = {selectedTag.saveOrEdit}
+        modifiable    = {selectedTag.modifiable}
+        isModified    = {selectedTag.isModified}
       />
     </div>
   )

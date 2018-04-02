@@ -1,7 +1,7 @@
-import React                   from 'react'
-import { observer }            from 'mobx-react'
-import { Button }              from 'reactstrap'
-import { Tooltip, Popconfirm } from 'antd'
+import React          from 'react'
+import { observer }   from 'mobx-react'
+import { Button }     from 'reactstrap'
+import { Popconfirm } from 'antd'
 
 function DeleteButton({tagStore}){
   const { selectedTag } = tagStore

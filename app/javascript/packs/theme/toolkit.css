@@ -8706,10 +8706,14 @@ img.zoom-img {
 .btn {
   cursor: pointer; }
 
-.ant-btn-default:hover, .ant-btn-default:focus {
+.ant-btn-default {
   color: #292b2c !important;
-  background-color: #e6e6e6 !important;
-  border-color: #adadad !important; }
+  background-color: #fff !important;
+  border-color: #ccc !important; }
+  .ant-btn-default:hover, .ant-btn-default:focus {
+    color: #292b2c !important;
+    background-color: #e6e6e6 !important;
+    border-color: #adadad !important; }
 
 .ant-btn.disabled, .ant-btn[disabled], .ant-btn.disabled:hover, .ant-btn[disabled]:hover, .ant-btn.disabled:focus, .ant-btn[disabled]:focus, .ant-btn.disabled:active, .ant-btn[disabled]:active, .ant-btn.disabled.active, .ant-btn[disabled].active {
   color: rgba(0, 0, 0, 0.25) !important;

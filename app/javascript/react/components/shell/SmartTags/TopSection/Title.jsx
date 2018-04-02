@@ -9,7 +9,6 @@ import { FaInfo }            from 'react-icons/lib/fa'
 import DateFormat            from 'helpers/DateFormat'
 import _get                  from 'lodash/get'
 import {
-  Button,
   Tooltip,
   Popover
 } from 'antd'
@@ -37,25 +36,16 @@ function Title({tagStore}){
 
 function showOptions(tagStore) {
   const { selectedTag } = tagStore
-  
-  return (
-    selectedTag.modifiable 
-      ? (
-        <Tooltip title='Edit List'>
-          <Button
-            onClick  = {() => tagStore.editTag(selectedTag)}
-            icon     = "edit"
-            style    = {{border: 0, background: 'transparent'}}
-            disabled = {!selectedTag.modifiable}
-          />
-        </Tooltip>  
-      )
-      : (
-        <Tooltip title='You cannot modify this list'>
-          <FaLock className='ml-2' style={{fontSize: 18}} />
-        </Tooltip>
-      )
-  )
+
+  if(!selectedTag.modifiable){
+    return (
+      <Tooltip title='You cannot modify this list'>
+        <FaLock className='ml-2' style={{fontSize: 18}} />
+      </Tooltip>
+    )
+  }
+
+  return null
 }
 
 function getTagInfo(tagStore) {
@@ -82,6 +72,7 @@ function getTagInfo(tagStore) {
 
 const H5 = styled.h5`
   ${ellipsis('100%')}
+  padding-right: 5px;
   ${ifProp('isNew', `
     color: #777;
     font-style: italic;

@@ -43,13 +43,13 @@ class FormWrapper extends Component {
   }
 
   handleSubmit = e => {
-    const { form, tag, store } = this.props
+    const { form, tag } = this.props
 
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
         tag.updateTag({...values, groupIds: this.state.selectedGroups})
-        store.toggleQueryForm()
+        tag.save()
       }
     })
   }
@@ -132,8 +132,9 @@ class FormWrapper extends Component {
             type     = 'primary'
             htmlType = 'submit'
             disabled = {hasErrors(getFieldsError())}
+            loading  = {tag.isCreating || tag.isUpdating}
           >
-            Update
+            Save
           </Button>
           <Button 
             className = 'ml-2'
@@ -169,4 +170,3 @@ function getScopeValue(tag){
 const TagForm = Form.create()(FormWrapper)
 
 export default TagForm
-

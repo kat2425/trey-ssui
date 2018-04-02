@@ -7,6 +7,7 @@ ActionButtons.propTypes = {
   modifiable:    PropTypes.bool,
   loadingOnTest: PropTypes.bool,
   loadingOnSave: PropTypes.bool,
+  isModified:    PropTypes.bool,
   onTest:        PropTypes.func,
   onSave:        PropTypes.func
 }
@@ -15,6 +16,7 @@ export default function ActionButtons({
   modifiable    = true,
   loadingOnTest = false,
   loadingOnSave = false,
+  isModified    = false,
   onTest,
   onSave
 }) {
@@ -25,7 +27,7 @@ export default function ActionButtons({
         disabled = {disabled || !modifiable}
         icon     = 'save'
         loading  = {loadingOnSave}
-        type     = 'default'
+        type     = {isModified ? 'danger' : 'default'}
       >
         Save List
       </Button>

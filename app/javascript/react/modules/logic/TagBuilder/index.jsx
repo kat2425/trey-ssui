@@ -115,7 +115,7 @@ export default class TagBuilder extends Component {
             <Row className='mt-4'>
               {renderIfShowQueryBuilderTab([
                 <Col xs={24} sm={24} md={17} xxl={20} key={uuid()} className='px-4'>
-                  {renderQueryBuilder(<QueryBuilder tag={selectedTag}/>)}
+                  {renderQueryBuilder(<QueryBuilder store={tagStore} />)}
                 </Col>,
                 <Col xs={24} sm={24} md={7} xxl={4} key={uuid()} className='pr-4'>                  
                   {renderContent(

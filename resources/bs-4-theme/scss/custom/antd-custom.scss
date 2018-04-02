@@ -29,6 +29,9 @@ $ant-select-dropdown-max-height: 500px !important;
 
 .ant-btn {
   &-default {
+    color: #292b2c !important;
+    background-color: #fff !important;
+    border-color: #ccc !important;
     &:hover, 
     &:focus {
       color: #292b2c !important;
