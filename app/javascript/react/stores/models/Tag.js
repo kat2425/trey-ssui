@@ -243,7 +243,14 @@ export default class Tag {
         this.hasBeenTested = true
       })
     } catch (e) {
-      this.setIsError(getError(e))
+      this.setIsError( e.message === 'timeout of 300000ms exceeded'
+        ? {
+          title:   'Error',
+          message: 'This query may take some time to complete, please try again in a little while.',
+          type:    'error'
+        }
+        : getError(e)
+      )
       console.error(e)
     } finally {
       this.setIsFetchingStudents(false)
