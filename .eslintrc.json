@@ -47,7 +47,7 @@
       "error",
       "never"
     ],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "error",
     "space-before-function-paren": [
       "error",
       "never"
