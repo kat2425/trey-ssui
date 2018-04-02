@@ -24,7 +24,6 @@ import {
   NaturalLanguageSection,
   StudentSection,
   TopSection,
-  UnsavedPrompt,
   MapView,
   Tabs
 } from 'ui/shell/SmartTags'
@@ -89,7 +88,6 @@ export default class TagBuilder extends Component {
 
     return (
       <Wrapper>
-        {renderIfTag(<UnsavedPrompt tagStore={tagStore} />)}
         {renderIfSchemaError(
           <Alert 
             type='error' 
