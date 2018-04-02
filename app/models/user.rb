@@ -60,7 +60,7 @@ class User < Sequel::Model(:users)
 
   # UI props
   def ui_props
-    self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at).merge(
+    self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at, :beta_tester).merge(
       :accessToken              => last_access_token,
       :api                      => 'https://api.schoolstatus.com',
       :customModules            => district.custom_modules,
