@@ -3,23 +3,32 @@ import {
   Button, Col, Form, FormGroup, Label, Input
 } from 'reactstrap'
 
-import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
-import { observer }        from 'mobx-react'
-import RichTextEditor      from 'react-rte'
-import Modal               from 'react-modal'
-import { notification }    from 'antd'
 
-import Dragger             from './Dragger'
-import DragIcon            from './DragIcon'
+import React, { Component } from 'react'
+import PropTypes            from 'prop-types'
+import { observer }         from 'mobx-react'
+import RichTextEditor       from 'react-rte'
+import Modal                from 'react-modal'
+
+import { isEmptyHTML }      from 'helpers/HTMLParser'
+
+import Dragger              from './Dragger'
+import DragIcon             from './DragIcon'
+
+import TranslationContainer from 'ui/shell/TranslationContainer'
+
+import { STATE }            from 'stores/models/Translator'
+import uiStore              from 'stores/UiStore'
+import userStore            from 'stores/UserStore'
 
 @observer
 export default class MailWriter extends Component {
   state = {
-    subject:  '',
-    body:     RichTextEditor.createEmptyValue(),
-    fileList: [],
-    sending:  false
+    subject:       '',
+    body:          RichTextEditor.createEmptyValue(),
+    fileList:      [],
+    sending:       false,
+    isTranslating: false
   }
 
   static propTypes = {
@@ -31,13 +40,13 @@ export default class MailWriter extends Component {
     this.setState({ subject: e.target.value })
   }
 
-  onBodyChange = (value) => {
-    this.setState({ body: value })
+  onBodyChange = (body) => {
+    this.setState({ body })
   }
 
   onSuccess = () => {
     this.hideMailer()
-    notification.success({message: 'Email sent successfully.'})
+    uiStore.addMessage('Email sent successfully', 'success')
   }
 
   resetValues = () => {
@@ -92,6 +101,18 @@ export default class MailWriter extends Component {
     fileList: this.state.fileList
   })
 
+  handleOnTranslate = (isError, translatedText) => {
+    if(isError) return
+
+    this.setState({
+      body: RichTextEditor.createValueFromString(translatedText, 'html')
+    })
+  }
+
+  handleOnTranslating = (isTranslating) => {
+    this.setState({isTranslating})
+  }
+
   render() {
     const { store } = this.props
 
@@ -125,10 +146,10 @@ export default class MailWriter extends Component {
                   color     = 'info'
                   onClick   = {this.sendEmail}
                   className = 'w-100'
-                  disabled  = {this.props.store.isSendingEmail}
+                  disabled  = {store.isSendingEmail || this.state.isTranslating}
                 >
                   <span className='icon icon-paper-plane mr-2'/>
-                  {this.props.store.isSendingEmail ? 'Sending...' : 'Send'}
+                  {store.isSendingEmail ? 'Sending...' : 'Send'}
                 </Button>
               </Col>
             </FormGroup>
@@ -163,8 +184,17 @@ export default class MailWriter extends Component {
             />
           </div>
         </ModalBody>
-
         <ModalFooter>
+          {userStore.user.hasChannel && (
+            <TranslationContainer
+              textToTranslate = {this.state.body.toString('html')}
+              className       = 'mx-2'
+              onTranslate     = {this.handleOnTranslate}
+              onTranslating   = {this.handleOnTranslating}
+              state           = {STATE.SELECT_ONLY}
+              disabled        = {isEmptyHTML(this.state.body.toString('html'))}
+            />
+          )}
         </ModalFooter>
       </Modal>
     )

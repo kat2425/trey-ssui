@@ -1,59 +1,58 @@
 import React                 from 'react'
+import { observer }          from 'mobx-react'
 import VisibilitySensor      from 'react-visibility-sensor'
-import moment                from 'moment'
 import {UncontrolledTooltip} from 'reactstrap'
 import ChatBubbleMMS         from './ChatBubbleMMS'
+import withCommsTranslator   from 'ui/hoc/withCommsTranslator'
+import styled                from 'styled-components'
 
-const ChatBubble = (props) => {
-  const bubbleDirection = (props.direction === 'outbound') ? 'media-current-user ml-5' : 'mr-5'
-  const footerDirection = (props.direction === 'outbound') ? 'float-right mr-3'        : 'ml-3'
+const Text = styled.span`
+  font-size: 14px;
+  display: inline-block;
+`
+const EText = withCommsTranslator(Text)
 
-  const renderFooter = () => {
-    if (props.time) {
-      return (
-        <div className={`media-footer mb-3 text-muted ${footerDirection}`}>
-          <small id={props.msgID}>sent {timeFromNow()}</small>
-          <UncontrolledTooltip
-            placement = 'left'
-            target    = {props.msgID}
+const ChatBubble = ({message, setRead, time}) => (
+  <li className={`media ${message.bubbleDirection} mb-2`}>
+    <VisibilitySensor onChange={onChange(message, setRead)}>
+      <div className='media-body'>
+        <div className='media-body-text'>
+          { message.mediaUrl && <ChatBubbleMMS src={message.mediaUrl}/> }
+          <EText
+            color     = {message.isOutbound ? '#fff' : '#657786'}
+            store     = {message}
+            className = 'mt-3'
           >
-            {moment(props.time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM DD YYYY hh:mm:ss a').toString()}
-          </UncontrolledTooltip>
+            { message.body }
+          </EText>
         </div>
-      )
-    }
+
+        { renderFooter(time, message) }
+      </div>
+    </VisibilitySensor>
+  </li>
+)
+
+const renderFooter = (time, message) => {
+  if (time) {
+    return (
+      <div className={`media-footer mb-3 text-muted ${message.footerDirection}`}>
+        <small id={message.id}>sent {message.timeFromNow}</small>
+        <UncontrolledTooltip
+          placement = 'left'
+          target    = {message.id}
+        >
+          {message.fullDateWithTime}
+        </UncontrolledTooltip>
+      </div>
+    )
   }
-
-  const timeFromNow = () => {
-    if (props.time) {
-      return moment(props.time, 'YYYY-MM-DD hh:mm:ss +ZZ').fromNow()
-    }
-  }
-
-  const onChange = (isVisible) => {
-    if (!props.isRead && isVisible && (props.direction === 'inbound')) {
-      props.setRead(props.msgID)
-    }
-  }
-
-  return (
-    <li className={`media ${bubbleDirection} mb-2`}>
-      <VisibilitySensor onChange={onChange}>
-        <div className='media-body'>
-          <div className='media-body-text'>
-            { props.media && <ChatBubbleMMS src={props.media}/> }
-            { props.text }
-          </div>
-
-          { renderFooter() }
-        </div>
-      </VisibilitySensor>
-    </li>
-  )
 }
 
-ChatBubble.defaultProps = {}
+const onChange = (message, setRead) => (isVisible) => {
+  if (isVisible && message.shouldSetRead) {
+    setRead(message.id)
+  }
+}
 
-ChatBubble.propTypes = {}
-
-export default ChatBubble
+export default observer(ChatBubble)

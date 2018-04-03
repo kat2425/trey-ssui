@@ -3,9 +3,9 @@ import { setter }                       from 'mobx-decorators'
 import xhr                              from 'helpers/XHR'
 import { pipe, filter, size, orderBy }  from 'lodash/fp'
 
-import Pager                            from 'stores/models/Pager'
-import Call                             from 'stores/models/Call'
-import userStore                        from 'stores/UserStore'
+import Pager            from 'stores/models/Pager'
+import Call             from 'stores/models/Call'
+import userStore        from 'stores/UserStore'
 
 const LIMIT = 30
 
@@ -79,6 +79,10 @@ export class CallStore {
 
     this.pager.increment()
     this.fetchCallLogs()
+  }
+
+  @action dispose = () => {
+    this.calls.values().forEach(c => c.dispose())
   }
 }
 

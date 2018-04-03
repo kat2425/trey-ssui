@@ -2,6 +2,7 @@ import React         from 'react'
 import { observer }  from  'mobx-react'
 import Wrapper       from './Wrapper'
 import { Card }      from 'reactstrap' 
+import uuid          from 'uuid'
 
 const CallNotes = ({ notes }) => {
   return (
@@ -10,7 +11,7 @@ const CallNotes = ({ notes }) => {
       {notes && notes.length > 0
         ? notes.map((note) => {
           return (
-            <Card className='mb-2'>
+            <Card key={uuid()} className='mb-2'>
               <div className='p-3'>
                 <p>{note.body}</p>
               </div>

@@ -28,6 +28,10 @@ export default class CommsHistory extends Component {
     this.fetchCommsHistory()
   }
 
+  componentWillUnmount(){
+    commsStore.dispose()
+  }
+
   fetchCommsHistory = () => {
     const { student } = this.props
 

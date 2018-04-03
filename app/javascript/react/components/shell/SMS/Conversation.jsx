@@ -1,5 +1,4 @@
 import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
 
 import ChatBubble          from './ChatBubble'
@@ -23,28 +22,27 @@ export default class Conversation extends Component {
     uiStore.shouldScrollToBottom && this.scrollToBottom()
   }
 
-  renderMessage(msg, index) {
-    const {id, direction, body, media_url, read_status, created_at} = msg
+  componentWillUnmount() {
+    this.props.messages.forEach(m => m.dispose())
+  }
 
-    // TODO: extract to function
-    const time = do {
-      if ((index + 1) < this.props.messages.length) {
-        (this.props.messages[index + 1].direction !== direction) ? created_at : null
-      } else {
-        created_at
-      }
+  getTime = (msg, index) => {
+    if ((index + 1) < this.props.messages.length) {
+      return (this.props.messages[index + 1].direction !== msg.direction) ? msg.createdAt : null
+    } else {
+      return msg.createdAt
     }
+  }
 
-    return <ChatBubble
-      key       = {id}
-      msgID     = {id}
-      direction = {direction}
-      text      = {body}
-      media     = {media_url}
-      time      = {time}
-      isRead    = {read_status}
-      setRead   = {this.props.setRead}
-    />
+  renderMessage(msg, index) {
+    return (
+      <ChatBubble
+        key     = {msg.id}
+        message = {msg}
+        time    = {this.getTime(msg, index)}
+        setRead = {this.props.setRead}
+      />
+    )
   }
 
   render() {

@@ -19,8 +19,14 @@ CallInfo.propTypes = {
 function CallInfo({store, show, onGoBack}) {
   if(!show) return null
 
-  const {selectedCall} = store
-  const {isLoading, notes, transcript = []} = selectedCall
+  const {selectedCall, isLoading} = store
+  const {
+    notes,
+    transcript = [],
+    handleOnTranslate,
+    handleOnTranslating,
+    originalTranscript
+  } = selectedCall
 
   return (
     <Wrapper show={show}>
@@ -28,7 +34,13 @@ function CallInfo({store, show, onGoBack}) {
       <ScrollView>
         <SubHeader call={selectedCall} />
         <Player src={selectedCall.recordingPath} />
-        <Transcript isLoading={isLoading} transcript={transcript} />
+        <Transcript 
+          isLoading          = {isLoading}
+          transcript         = {transcript}
+          onTranslate        = {handleOnTranslate}
+          onTranslating      = {handleOnTranslating}
+          originalTranscript = {originalTranscript}
+        />
         <CallNotes notes={notes} />
       </ScrollView>
     </Wrapper>

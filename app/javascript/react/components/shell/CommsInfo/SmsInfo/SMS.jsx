@@ -4,6 +4,13 @@ import ReactDOM            from 'react-dom'
 import Time                from './Time'
 import styled, {keyframes} from 'styled-components'
 import {ifProp}            from 'styled-tools'
+import withTranslator      from 'ui/hoc/withTranslator'
+
+const Text = styled.span`
+  font-size: 14px;
+  display: inline-block;
+`
+const EText = withTranslator(Text)
 
 @observer
 export default class SMS extends Component { 
@@ -47,6 +54,7 @@ export default class SMS extends Component {
   render() {
     const {comm} = this.props
     const {id, createdAt, isIncoming, preview, isActive} = comm
+    const color = isIncoming ? '#657786' : '#fff' 
 
     return (
       <li 
@@ -59,7 +67,12 @@ export default class SMS extends Component {
             incoming={isActive && isIncoming} 
             outgoing={isActive && !isIncoming}
           >
-            {preview}
+            <EText
+              color           = {color}
+              textToTranslate = {preview}
+            >
+              {preview}
+            </EText>
           </MediaText>
           <Time time={createdAt} isIncoming={isIncoming} />
         </div>

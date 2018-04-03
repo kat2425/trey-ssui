@@ -15,12 +15,11 @@ class SMSConversationStore {
   @observable pagers        = observable.map()
 
   // Computed Values
-
   @computed
   get descMessages() {
     const conversation = this.getCurrentConversation()
 
-    return conversation ? _.sortBy(conversation.messages, m => m.created_at) : []
+    return conversation ? _.sortBy(conversation.messages.values(), m => m.createdAt) : []
   }
 
   @computed
@@ -32,7 +31,6 @@ class SMSConversationStore {
   }
 
   // Actions
-
   @action
   addMessage = (msg) => {
     const conversation = this.conversations.get(msg.conversation_id)
@@ -62,7 +60,9 @@ class SMSConversationStore {
             'contact.id',
             'contact.name',
             'contact.phone',
-            'contact.relationship'
+            'contact.relationship',
+            'language',
+            'meta'
           ].join(','),
         limit: limit,
         page:  1
@@ -90,7 +90,7 @@ class SMSConversationStore {
     const params       = this.getConversationParams(id, data)
     const conversation = this.conversations.get(id)
 
-    conversation ?  conversation.update(data) : this.conversations.set(id, new Conversation(params))
+    conversation ?  conversation.updateMessages(data) : this.conversations.set(id, new Conversation(params))
   }
 
   @action
@@ -107,27 +107,30 @@ class SMSConversationStore {
   initiateConversationOk = contact => ({id}) => {
     uiStore.setCurrentContact(contact)
     uiStore.setCurrentConversation(id)
-    // uiStore.setSidebarVisibility(true)
     uiStore.setSelectedSidebar(SIDEBAR.SMS)
     uiStore.setShowInbox(false)
     uiStore.setSidebarMaxHeight(true)
   }
 
   @action
-  sendMessage(msg, id, attachment=null) {
+  sendMessage(msg, id, attachment) {
     if (attachment) {
-      let data = new FormData()
-      data.append('contact_id', id)
-      data.append('body',       msg)
-      data.append('attachment', attachment)
+      const data = this.getAttachmentData(msg, id, attachment)
 
-      xhr.post('/commo/sms/send_message/contact', data, { 'Content-Type': 'multipart/form-data' })
+      xhr.post('/commo/sms/send_message/contact', data, { 
+        'Content-Type': 'multipart/form-data' 
+      }).then(this.sendMessageOK)
     } else {
       xhr.post('/commo/sms/send_message/contact', {
         contact_id: id,
         body:       msg
-      })
+      }).then(this.sendMessageOK)
     }
+  }
+
+  @action
+  sendMessageOK = (response) => {
+    this.addMessage(response.data)
   }
 
   @action
@@ -174,6 +177,16 @@ class SMSConversationStore {
       this.pagers.set(id, new Pager(this.limit, total))
     }
   }
+
+  getAttachmentData = (msg, id, attachment) => {
+    const data = new FormData()
+
+    data.append('contact_id', id)
+    data.append('body',       msg)
+    data.append('attachment', attachment)
+
+    return data
+  }
 }
 
-export default SMSConversationStore = new SMSConversationStore()
+export default new SMSConversationStore()

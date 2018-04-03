@@ -27,17 +27,20 @@
 */
 
 import { 
-  observable, 
+  observable,
   action,
-  computed, 
-  reaction, 
-  runInAction 
+  computed,
+  reaction,
+  autorun,
+  runInAction
 } from 'mobx'
 
-import { setter }  from 'mobx-decorators'
-import DateFormat  from 'helpers/DateFormat'
-import _           from 'lodash'
-import xhr         from 'helpers/XHR'
+import { setter } from 'mobx-decorators'
+import DateFormat from 'helpers/DateFormat'
+import _          from 'lodash'
+import xhr        from 'helpers/XHR'
+import uiStore    from 'stores/UiStore'
+import Transcript from 'stores/models/Transcript'
 
 export default class Communication {
   commsStore   = null
@@ -47,25 +50,22 @@ export default class Communication {
   user         = null
   direction    = null
   voicemailUrl = null
+  _transcript  = new Transcript()
 
-  @setter @observable length              = 0
-  @setter @observable preview             = null
-  @setter @observable callStatus          = null
-  @setter @observable callTranscript      = null
-  @setter @observable voiceTranscript     = null
-  @setter @observable email               = null
-  @setter @observable isLoading           = false
-  @setter @observable isError             = null
-  @setter @observable type                = null
+  @setter @observable length        = 0
+  @setter @observable preview       = null
+  @setter @observable callStatus    = null
+  @setter @observable email         = null
+  @setter @observable isLoading     = false
+  @setter @observable isTranslating = false
+  @setter @observable isError       = null
+  @setter @observable type          = null
 
   constructor(store, json){
     this.commsStore = store
     this.update(json)
 
-    this.autoFetchTranscript()
-    this.autoFetchEmail()
-    this.autoFetchVoicemail()
-    this.autoFetchCallNotes()
+    this.initAutoruns()
   }
 
   // Computed
@@ -97,7 +97,7 @@ export default class Communication {
   }
 
   @computed get isVoicemail(){
-    return !!this.voicemailUrl
+    return this._transcript.isVoicemail
   }
 
   @computed get isActive(){
@@ -121,24 +121,43 @@ export default class Communication {
   }
 
   @computed get transcript(){
-    if(this.isVoicemail) return this.voiceTranscript
+    return this._transcript.transcript
+  }
 
-    if(_.isEmpty(this.callTranscript)) return []
+  @computed get isFetchingTranscript(){
+    return this._transcript.isFetchingTranscript
+  }
 
-    return this.callTranscript
-      .split(/Speaker\s/)
-      .slice(1)    
-      .map(t => t.match(/(\d:)(.*)/).slice(1))
-      .map(([speakerNumber, speech]) =>  ({
-        speaker: `Speaker ${speakerNumber}`,
-        speech:  speech
-      }))
+  @computed get originalTranscript(){
+    return this._transcript.originalTranscript
+  }
+
+  // Autoruns
+  initAutoruns = () => {
+    this.autoFetchTranscript()
+    this.autoFetchEmail()
+    this.autoFetchVoicemail()
+    this.autoFetchCallNotes()
+
+    this.autoErrorNotifier()
+  }
+
+  autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if(this.isError && !this.isError.hideNotification){
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    'error'
+        })
+      }
+    })
   }
 
   @action autoFetchTranscript = () => {
     reaction(
       ()        => this.isActive && this.isCall,
-      (isFetch) => isFetch && this.fetchTranscript(),
+      (isFetch) => isFetch && this._transcript.fetchCallTranscript(this.id),
       true
     ) 
   }
@@ -215,40 +234,20 @@ export default class Communication {
     this.callStatus   = callStatus
     this.voicemailUrl = voicemailUrl
     this.type         = voicemailUrl ? 'voicemail' : type
+
+    this._transcript.setIsVoicemail(!!voicemailUrl)
   }
 
   @action handleSelect = () => {
     this.commsStore.setSelectedComm(this)
   }
 
-  // Actions
-  @action fetchTranscript = async(id = this.id) => {
-    try {
-      this.setIsLoading(true)
-      this.setIsError(false)
-
-      const params = { 
-        show_transcript: true,
-        only:            ['call_transcripts.call_transcript'].join(',')
-      } 
-
-
-      const { data } = await this.fetchCallLog(params) 
-
-      this.fetchTranscriptOk(data)
-    } catch (err) {
-      this.setIsError(err)
-    } finally {
-      this.setIsLoading(false)
-    }
+  @action handleOnTranslate = (isError, translatedText) => {
+    !isError && this._transcript.translateTranscript(translatedText)
   }
 
-  @action fetchTranscriptOk = data => {
-    this.updateTranscript(data)
-  }
-
-  @action updateTranscript = ({call_transcripts : callTranscripts}) => {
-    this.callTranscript = callTranscripts && callTranscripts.length ? callTranscripts[0].call_transcript : ''
+  @action handleOnTranslating = (isTranslating) => {
+    this.setIsTranslating(isTranslating)
   }
 
   @action fetchEmail = async(id = this.id) => {
@@ -315,11 +314,15 @@ export default class Communication {
 
       runInAction(() => {
         this.setLength(duration)
-        this.setVoiceTranscript(transcript)
+        this._transcript.setVoiceTranscript(transcript)
       })
     } catch(err){
       this.setIsError(err)
     }   
+  }
+
+  @action dispose = () => {
+    this._transcript.dispose()
   }
 }
 

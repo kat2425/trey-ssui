@@ -64,10 +64,9 @@ export class UiStore {
     })
   }
 
-  @action addMessage(message, type) {
-    message[type](
-      message
-    )
+  @action addMessage(msg, type = 'success') {
+    if(!msg) return
+    return message[type](msg)
   }
 
   @action setSidebarVisibility(show){
