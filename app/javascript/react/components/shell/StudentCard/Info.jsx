@@ -1,5 +1,4 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React      from 'react'
 import DateFormat from 'helpers/DateFormat'
 
 import {
@@ -56,6 +55,12 @@ const Info = ({ student }) => {
         </ul>
       </CardBlock>
 
+      <CardBlock className='text-xs-center p-0 pb-2 mb-0 mt-0'>
+        { student.flags.map(flag => {
+          return <Badge key={ flag } className='mr-1'>{ flag }</Badge>
+        }) }
+      </CardBlock>
+
       <CardBlock style={{marginTop: '-5px'}} className='pt-0 pb-0 mb-0'>
         <ul className='list-unstyled list-spaced mb-2'>
           <li>
@@ -84,12 +89,12 @@ const Info = ({ student }) => {
             <span className='text-info'>{ student.gender }</span>
           </li>
 
-          { student.address && 
+          { student.address &&
             <li>
               <span className='mr-3 text-muted icon icon-map' style={iconStyle}/>
               <span>Address: </span>
               <span className='text-info'>
-                <br/>{ student.address }, 
+                <br/>{ student.address },
                 <br/>{ student.city }, { student.state } {student.zip }
               </span>
             </li>

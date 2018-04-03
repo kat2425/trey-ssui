@@ -27,7 +27,7 @@ class StudentCardStore {
           'id', 'sis_id', 'state_id', 'first_name', 'last_name', 'dob',
           'gender', 'race', 'address', 'city', 'state', 'zip',
           'enrollment_status', 'grade', 'school.school_name', 'data_relations',
-          'major', 'advisor', 'coach', 'channel_stats'
+          'major', 'advisor', 'coach', 'channel_stats', 'flags'
         ].join(',')
       }
     }).then(this.fetchStudentOK)
@@ -52,7 +52,7 @@ class StudentCardStore {
     xhr.post('/commo/validate_number', {
       number: contact.phone
     }).then(res => {
-      const cidx = this.contacts.findIndex(c => c.id == contact.id)
+      // const cidx = this.contacts.findIndex(c => c.id == contact.id)
 
       return this.contacts = this.contacts.map(c => {
         if (c.id === contact.id) { c.number_type = res.data.type }
@@ -67,9 +67,9 @@ class StudentCardStore {
       primary: bool
     }).then(res => {
       const index = _.findIndex(this.contacts, function(c) {
-        return c.id == res.data.id 
+        return c.id === res.data.id
       })
-    
+
       this.contacts[index].primary = bool
     })
   }
