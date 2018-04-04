@@ -87,6 +87,10 @@ export default class Call {
     return this.contact.name
   }
 
+  @computed get studentName(){
+    return this.contact.student.full_name
+  }
+
   @computed get isSelected(){
     return this.callStore.selectedCall === this
   }
@@ -152,7 +156,7 @@ export default class Call {
     this.voicemails         = voicemails
     this.notes              = notes
     this.studentId          = studentId
-
+    this.relationship      = contact.relationship
 
     this._transcript.setIsVoicemail(action === 'voicemail')
     this._transcript.updateFromJSON({call_transcripts})

@@ -1,12 +1,15 @@
-import React      from 'react'
-import PropTypes  from 'prop-types'
-import {observer} from 'mobx-react'
-import IconMore   from 'react-icons/lib/md/chevron-right'
+import React              from 'react'
+import PropTypes          from 'prop-types'
+import { observer }       from 'mobx-react'
+import IconMore           from 'react-icons/lib/md/chevron-right'
 
-import Main       from './Main'
-import Wrapper    from './Wrapper'
+import fireEvent          from 'helpers/FireEvent'
+import TimeFormat         from 'helpers/TimeFormat'
 
-import TimeFormat from 'helpers/TimeFormat'
+import ListItem, { Text } from 'ui/shell/ListItem'
+import PhoneIcon          from './PhoneIcon'
+import userStore          from 'stores/UserStore'
+import { truncate }       from 'lodash/fp'
 
 CallEntry.propTypes = {
   call: PropTypes.shape({
@@ -21,19 +24,78 @@ CallEntry.propTypes = {
   }).isRequired
 }
 
-function CallEntry({call}){
-  const {handleSelect, recordingDuration, isMissedCall, timeAgo} = call
+function CallEntry({ call }) {
+  const {
+    handleSelect,
+    recordingDuration,
+    isMissedCall,
+    timeAgo,
+    studentName,
+    studentId,
+    isVoicemail,
+    isIncoming,
+    relationship
+  } = call
+
+  const _studentName = `${studentName}'s ${relationship || 'Contact'}`
 
   return (
-    <Wrapper onClick={handleSelect}>
-      <Main call={call} />
-      <div className='d-flex flex-column align-items-end ml-auto'>
-        <small>{timeAgo}</small>
-        {!isMissedCall && <small className='text-muted'>{TimeFormat.formatMSS(recordingDuration)}</small>}
-      </div>
-      <IconMore className='mb-0 ml-3 h5'/>
-    </Wrapper>
+    <ListItem
+      onClick={handleSelect}
+      renderLeftIcon={() => <PhoneIcon call={call} />}
+      renderRightIcon={() => <IconMore className="mb-0 ml-2 h5" />}
+      renderTopLeft={() => renderContactName(call)}
+      renderTopRight={() => !userStore.user.higherEd && (
+        <Text
+          onClick={showStudentCard(studentId)}
+          className="text-muted"
+          link
+          fontSize='80%'
+        >
+          {truncate({'length': 25}, _studentName)}
+        </Text>
+      )}
+      renderBottomLeft={() => (
+        <small className="text-muted">
+          {(() => {
+            if (isVoicemail) return 'voicemail'
+            if (isMissedCall) return 'returned'
+            return isIncoming ? 'incoming' : 'outgoing'
+          })()}
+        </small>
+      )}
+      renderBottomRight={() => (
+        <div className="d-flex flex-column">
+          <small>
+            <span style={{color: 'rgba(0,0,0,0.5)'}}>
+              {!isMissedCall && (
+                `${TimeFormat.formatMSS(recordingDuration) + ' | '}`
+              )}
+            </span>
+            {timeAgo}           
+          </small>
+        </div>
+      )}
+    />
   )
+}
+
+function renderContactName(props) {
+  const _props = userStore.user.higherEd ? {
+    link:    true,
+    onClick: showStudentCard(props.studentId)
+  } : {}
+
+  return (
+    <h6 style={{ color: props.isMissedCall ? 'red' : 'inhreit' }}>
+      <Text {..._props}>{props.contactName}</Text>
+    </h6>
+  )
+}
+
+const showStudentCard = id => e => {
+  e.stopPropagation()
+  fireEvent('showStudentCard', { student: id })
 }
 
 export default observer(CallEntry)

@@ -9,14 +9,23 @@ Header.propTypes = {
 }
 export default function Header({ onGoBack, call }) {
   const {contact, studentId} = call
+  const {name, relationship, phone} = contact
 
   return (
     <Wrapper>
       <MdChevronLeft onClick={onGoBack} />
       <div className='d-flex flex-column ml-auto align-items-end'>
-        <ContactLink tag='h4' name={contact.name} studentId={studentId} />
-        <h5 className='font-weight-normal m-0 text-capitalize'>{contact.relationship}</h5>
-        <p className='text-muted m-0'>{contact.phone}</p>
+        <ContactLink 
+          vertical 
+          tag          = 'h4' 
+          relationship = {relationship} 
+          name         = {name} 
+          studentId    = {studentId} 
+          studentName  = {contact.student.full_name}
+          contactName  = {contact.name}
+        />
+        <h5 className='font-weight-normal m-0 text-capitalize'>{relationship}</h5>
+        <p className='text-muted m-0'>{phone}</p>
       </div>
     </Wrapper>
   )

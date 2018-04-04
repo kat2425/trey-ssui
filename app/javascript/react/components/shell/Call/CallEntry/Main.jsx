@@ -12,18 +12,38 @@ Main.propTypes = {
     contactName:  PropTypes.string.isRequired,
     isMissedCall: PropTypes.bool.isRequired,
     isVoicemail:  PropTypes.bool.isRequired,
-    isIncoming:   PropTypes.bool.isRequired
+    isIncoming:   PropTypes.bool.isRequired,
+    studentName:  PropTypes.string.isRequired,
+    relationship: PropTypes.string
   }).isRequired
 }
 
 function Main({call}){
-  const {contactName, studentId, isMissedCall, isVoicemail, isIncoming} = call
+  const {
+    contactName, 
+    studentName, 
+    studentId, 
+    isMissedCall, 
+    isVoicemail, 
+    isIncoming, 
+    relationship
+  } = call
 
   return (
-    <div className='d-flex flex-row align-items-center'>
+    <div 
+      style     = {{ flex: 2 }} 
+      className = 'd-flex flex-row align-items-center'
+    >
       <PhoneIcon call={call} />
       <div className='d-flex flex-column'>
-        <Contact secondary={isMissedCall} name={contactName} studentId={studentId} />
+        <Contact 
+          tag='h6'
+          studentName=  {studentName} 
+          relationship= {relationship}
+          secondary=    {isMissedCall} 
+          name=         {contactName} 
+          studentId=    {studentId} 
+        />
         <small className='text-muted'>
           {(() => {
             if(isVoicemail) return 'voicemail'

@@ -51,6 +51,7 @@ export default class Communication {
   direction    = null
   voicemailUrl = null
   _transcript  = new Transcript()
+  relationship = null
 
   @setter @observable length        = 0
   @setter @observable preview       = null
@@ -120,6 +121,10 @@ export default class Communication {
     return this.contact.name
   }
 
+  @computed get studentName(){
+    return this.contact.student.full_name
+  }
+  
   @computed get transcript(){
     return this._transcript.transcript
   }
@@ -234,6 +239,7 @@ export default class Communication {
     this.callStatus   = callStatus
     this.voicemailUrl = voicemailUrl
     this.type         = voicemailUrl ? 'voicemail' : type
+    this.relationship = contact.relationship
 
     this._transcript.setIsVoicemail(!!voicemailUrl)
   }

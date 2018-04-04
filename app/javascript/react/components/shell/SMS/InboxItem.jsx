@@ -1,49 +1,70 @@
-import React       from 'react'
-import { Media }   from 'reactstrap'
-import DateFormat  from 'helpers/DateFormat'
-import _           from 'lodash'
-import ContactLink from 'ui/shell/ContactLink'
-import {ifProp}    from 'styled-tools'
-import omitStyled  from 'helpers/omitStyled'
+import React              from 'react'
+import DateFormat         from 'helpers/DateFormat'
+import _                  from 'lodash'
+import {ifProp}           from 'styled-tools'
+import ListItem, { Text } from 'ui/shell/ListItem'
+import userStore          from 'stores/UserStore'
+import fireEvent          from 'helpers/FireEvent'
+import omitStyled         from 'helpers/omitStyled'
 
 const InboxItem = (props) => {
   const isUnread = !props.read && props.direction === 'inbound'
+  const _studentName = `${props.studentName}'s ${props.relationship || 'Contact'}`
 
   return (
-    <StyledMedia unread={isUnread}>
+    <StyledMedia 
+      bottomLeftContainerStyle={{flex: 2}}
+      bottomRightContainerStyle={{flex: 1}}
+      unread={!props.read && props.direction === 'inbound'}
+      onClick={props.onClick}
+      renderRightIcon={
+        isUnread 
+          ? () => <ReadableSpan unread={isUnread} />
+          : null
+      }
+      renderTopLeft={() => renderContactName(props)}
+      renderTopRight={() => !userStore.user.higherEd && (
+        <Text
+          onClick={showStudentCard(props.studentId)}
+          ew="200px"
+          className="text-muted"
+          link
+          fontSize='80%'
+        >
+          {_.truncate(_studentName, {'length': 25})}
+        </Text>
+      )}
 
-      <Media className='pr-4 pl-2 pb-2 pt-2' left>
-        {props.avatar}
-      </Media>
+      renderBottomLeft={() => props.media
+        ? <InboxMMS src={props.media} />
+        : _.truncate(props.message, {'length': 30})
+      }
 
-      <Media body>
-        <ContactLink tag='h6' name={props.name} studentId={props.studentId} />
-        <div>
-          { props.media
-            ? <InboxMMS src={props.media} />
-            : _.truncate(props.message, {'length': 45})
-          }
-        </div>
-      </Media>
-
-      <Media right>
+      renderBottomRight={() => 
         <small className='text-muted'>
           { DateFormat.timeAgo(props.time) }
         </small>
-      </Media>
+      }
+    />
+  )
+}
 
-      <Media className='pl-2' right>
-        <small>
-          <ReadableSpan unread={isUnread}/>
-        </small>
-      </Media>
-    </StyledMedia>
+function renderContactName(props) {
+  const _props = userStore.user.higherEd ? {
+    link:    true,
+    onClick: showStudentCard(props.studentId)
+  } : {}
+
+  return (
+    <h6>
+      <Text {..._props}>{props.name}</Text>
+    </h6>
   )
 }
 
 const omitProps = ['unread']
 
-const StyledMedia = omitStyled(Media, omitProps)
+const StyledMedia = omitStyled(ListItem, omitProps)
   .attrs({ className: 'list-group-item' })` 
   border-left:      none;
   border-right:     none;
@@ -51,6 +72,7 @@ const StyledMedia = omitStyled(Media, omitProps)
   border-radius:    0 !important;
   cursor:           pointer;
   background-color: #fff;
+  margin:           0px;
   &:hover {
     background-color: rgba(0, 0, 0, 0.08);
   }
@@ -87,10 +109,16 @@ const InboxMMS = (props) => {
     backgroundImage:  `url("${src}")`,
     backgroundSize:   size,
     backgroundRepeat: 'no-repeat',
-    minHeight:        '27px'
+    minHeight:        '50px',
+    width:            '100%'
   }
 
-  return <div {...props} style={{...style, ...important}} />
+  return <div {...props} style={{...style, ...important}}>&nbsp;</div>
+}
+
+const showStudentCard = id => e => {
+  e.stopPropagation()
+  fireEvent('showStudentCard', { student: id })
 }
 
 export default InboxItem

@@ -7,7 +7,6 @@ import React, { Component} from 'react'
 import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
 import { Col }             from 'reactstrap'
-import _                   from 'lodash'
 import ContactLink         from 'ui/shell/ContactLink'
 
 const headerStyle = {
@@ -27,13 +26,21 @@ export default class ConversationHeader extends Component {
   }
 
   renderHeader() {
-    const {contact} = this.props
-    const studentId = contact.student_id
+    const {contact}    = this.props
+    const studentId    = contact.student_id
+    const studentName  = contact.student.full_name
+    const relationship = contact.relationship
 
     return (
       <div key={ contact.id } className='text-right'>
-        <ContactLink tag='h4' name={contact.name} studentId={studentId} />
-        <h5 className='font-weight-normal m-0'>&nbsp;{ contact.relationship }</h5>
+        <ContactLink 
+          vertical
+          tag          = 'h4' 
+          name         = {contact.name}
+          studentId    = {studentId} 
+          relationship = {relationship} 
+          studentName  = {studentName} 
+        />
         <span className='text-muted m-0'>{ contact.phone }</span>
       </div>
     )
