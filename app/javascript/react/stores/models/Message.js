@@ -2,8 +2,7 @@ import {
   observable, 
   action, 
   computed,
-  autorun,
-  toJS
+  autorun
 } from 'mobx'
 import { setter }       from 'mobx-decorators'
 import DateFormat       from 'helpers/DateFormat'
@@ -15,7 +14,8 @@ import translationStore from 'stores/TranslationStore'
 import { getOr }        from 'lodash/fp'
 
 const LANGUAGE = {
-  EN: 'en'
+  EN:           'en',
+  UNDETERMINED: 'und'
 }
 
 export default class Message {
@@ -189,7 +189,7 @@ export default class Message {
     this.body           = body
     this.readStatus     = readStatus
     this.meta           = meta
-    this.language       = language
+    this.language       = language === LANGUAGE.UNDETERMINED ? LANGUAGE.EN : language
     this.conversationId = conversationId
   }
 
