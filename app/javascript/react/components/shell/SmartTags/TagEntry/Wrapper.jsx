@@ -2,7 +2,7 @@ import styled     from 'styled-components'
 import { ifProp } from 'styled-tools'
 import { darken } from 'polished'
 
-const Wrapper = styled.div.attrs({ className: 'py-3 px-2' })`
+const Wrapper = styled.div.attrs({ className: 'p-3' })`
  display: flex;
  flex-direction: row;
  justify-content: space-between;

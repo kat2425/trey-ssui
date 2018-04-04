@@ -276,7 +276,8 @@ export default class Tag {
         this.tagStore.addTag(this)
         wasActive && this.tagStore.setSelectedTag(this)
 
-        UiStore.addNotification({title: 'List', message: 'created successfully', type: 'success'})
+        this.tagStore.toggleQueryForm()
+        UiStore.addMessage(`${this.name} created successfully`)
       })
     } catch (e) {
       this.setIsError(getError(e))
@@ -301,7 +302,7 @@ export default class Tag {
       runInAction(() => {
         this.tagStore.deleteTag(this)
 
-        UiStore.addNotification({title: 'List', message: 'deleted successfully', type: 'success'})
+        UiStore.addMessage(`${this.name} deleted successfully`)
       })
     } catch(e) {
       this.setIsError(getError(e))
@@ -328,7 +329,7 @@ export default class Tag {
         this.updateFromJson(data)
         this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
 
-        UiStore.addNotification({title: 'List', message: 'saved successfully', type: 'success'})
+        UiStore.addMessage(`${this.name} saved successfully`)
       })
     } catch (e) {
       this.setIsError(getError(e))
@@ -386,9 +387,17 @@ export default class Tag {
     this.testTag()
   }
 
-  @action handleOnSave = () => {
+  @action save = () => {
     if(this.isNew){
       this.createTag()
+    } else {
+      this.saveTag()
+    }
+  }
+
+  @action saveOrEdit = () => {
+    if(this.isNew){
+      this.tagStore.editTag(this)
     } else {
       this.saveTag()
     }

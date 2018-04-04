@@ -1,13 +1,14 @@
-import React                 from 'react'
-import PropTypes             from 'prop-types'
-import {observer}            from 'mobx-react'
-import { Badge }             from 'reactstrap'
-import renderIf              from 'render-if'
+import React       from 'react'
+import PropTypes   from 'prop-types'
+import {observer}  from 'mobx-react'
+import { Badge }   from 'reactstrap'
+import renderIf    from 'render-if'
 
-import Wrapper               from './Wrapper'
-import TagMenu               from './TagMenu'
-import Title                 from './Title'
-import Aside                 from './Aside'
+import Wrapper     from './Wrapper'
+import Title       from './Title'
+import Aside       from './Aside'
+import { Tooltip } from 'antd'
+
 import {
   FaEyeSlash,
   FaGlobe,
@@ -15,10 +16,6 @@ import {
   FaLock
 } from 'react-icons/lib/fa'
 
-import {
-  Tooltip,
-  Icon
-} from 'antd'
 
 TagEntry.propTypes = {
   tag: PropTypes.object.isRequired,
@@ -57,14 +54,14 @@ function TagEntry({tag}){
             <ScopeIcon type='locked' title='This list cannot be modified.'/>
           )}
         </div>
-        <TagMenu tag={tag} className='text-muted' />
       </Aside>
     </Wrapper>
   )
 }
 
 const icStyle = {
-  fontSize: 14
+  fontSize:   14,
+  marginLeft: 10
 }
 const ScopeIcon = ({type, title}) => ( 
   <Tooltip title={title}>

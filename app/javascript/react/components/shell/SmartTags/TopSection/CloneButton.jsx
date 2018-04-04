@@ -1,7 +1,6 @@
 import React        from 'react'
 import { observer } from 'mobx-react'
 import { Button }   from 'reactstrap'
-import { Tooltip }  from 'antd'
 
 function CloneButton({tagStore}){
   const { selectedTag } = tagStore
