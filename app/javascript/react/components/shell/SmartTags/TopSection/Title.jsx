@@ -49,7 +49,7 @@ function showOptions(tagStore) {
 }
 
 function getTagInfo(tagStore) {
-  const { createdAt, createdBy } = tagStore.selectedTag
+  const { createdAt, updatedAt, createdBy } = tagStore.selectedTag
   const fullName = _get(createdBy, 'full_name')
 
   return (
@@ -64,6 +64,12 @@ function getTagInfo(tagStore) {
         <p>
           <strong>Created at: </strong> 
           {DateFormat.shortDate(createdAt)}
+        </p>
+      }
+      {updatedAt &&
+        <p>
+          <strong>Updated at: </strong> 
+          {DateFormat.shortDate(updatedAt)}
         </p>
       }
     </div>

@@ -57,6 +57,7 @@ export default class Tag {
 
   @setter @observable name = null
   @observable createdAt    = null
+  @observable updatedAt    = null
 
   @observable query        = null
   @observable treeQuery    = null
@@ -352,6 +353,7 @@ export default class Tag {
   @action updateFromJson = ({
     id,
     created_at: createdAt,
+    updated_at: updatedAt,
     tag_name: name,
     query,
     tree_query: treeQuery,
@@ -364,6 +366,7 @@ export default class Tag {
     this.id         = id
     this.name       = name
     this.createdAt  = createdAt
+    this.updatedAt  = updatedAt
     this.query      = query
     this.treeQuery  = fromJSOrdered(treeQuery)
     this.modifiable = modifiable
