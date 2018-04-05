@@ -35,7 +35,7 @@ export default function ContactLink({
       <div className={vertical ? 'd-block' : 'd-inline-block'}>
         {name}
       </div>
-      {!userStore.user.higherEd && studentName && 
+      {!userStore.user.higherEd &&
         <_Tag
           onClick={showStudentCard(studentId)}
         >  
