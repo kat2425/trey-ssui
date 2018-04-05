@@ -40,7 +40,7 @@ class StudentCardStore {
         only: [
           'id', 'student_id', 'name', 'phone', 'email', 'primary',
           'relationship', 'resides_with', 'checkout', 'emergency', 'no_contact',
-          'stopped'
+          'stopped', 'student.full_name'
         ].join(',')
       }
     }).then(this.fetchStudentContactsOK)
@@ -93,9 +93,17 @@ class StudentCardStore {
 
   @action
   printStudentCard() {
-    const _printURL = `https://jasper.schoolstatus.com/jasperserver-pro/rest_v2/reports/public/VJS/ss_ui/students/printed_student_card.pdf?student_id=${this.student.id}&school_year=2018`
+    window.open(this.getPrintURL(this.student.id))
+  }
 
-    window.open(_printURL)
+  @action
+  getPrintURL = (id) => {
+    return [
+      'https://jasper.schoolstatus.com/',
+      'jasperserver-pro/rest_v2/reports/public/VJS/',
+      'ss_ui/students/printed_student_card.pdf?',
+      'student_id=', id, '&school_year=2018'
+    ].join('')
   }
 
   @action.bound

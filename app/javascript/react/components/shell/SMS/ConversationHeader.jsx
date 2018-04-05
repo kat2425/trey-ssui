@@ -8,7 +8,6 @@ import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
 import { Col }             from 'reactstrap'
 import ContactLink         from 'ui/shell/ContactLink'
-import _get                from 'lodash/get'
 
 const headerStyle = {
   position: 'absolute',
@@ -29,7 +28,7 @@ export default class ConversationHeader extends Component {
   renderHeader() {
     const {contact}    = this.props
     const studentId    = contact.student_id
-    const studentName  = _get(contact, 'student.full_name')
+    const studentName  = contact.student.full_name
     const relationship = contact.relationship
 
     return (
