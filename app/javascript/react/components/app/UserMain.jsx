@@ -6,7 +6,6 @@ import {
   Switch, Route, withRouter
 } from 'react-router-dom'
 
-import UserMenu                from 'ui/shell/UserMenu/UserMenu'
 import ActionBar               from 'ui/shell/ActionBar'
 import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
@@ -20,7 +19,7 @@ import SidebarController       from 'ui/controllers/SidebarController'
 
 import SMSInboxStore           from 'stores/SMSInbox'
 import CallingStore            from 'stores/CallingStore'
-import WebSocketStore          from 'stores/WebSocket'
+import webSocketStore          from 'stores/WebSocketStore'
 import SMSConversationStore    from 'stores/SMSConversation'
 import MailerStore             from 'stores/MailerStore'
 import callStore               from 'stores/CallStore'
@@ -97,7 +96,7 @@ class UserMain extends Component {
   }
 
   componentDidMount() {
-    WebSocketStore.subscribeUser(window.SSUser.id)
+    webSocketStore.subscribeUser(window.SSUser.id)
 
     window.addEventListener('showStudentCard',    this.showStudentCard)
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
@@ -141,8 +140,6 @@ class UserMain extends Component {
   }
 
   render() {
-    const { uiStore } = this.props
-
     return (
       <VJSContainer className='h-100'>
         <div className='container-fluid pt-4 h-100'>
