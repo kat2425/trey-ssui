@@ -12,24 +12,24 @@ const InboxItem = (props) => {
   const _studentName = `${props.studentName}'s ${props.relationship || 'Contact'}`
 
   return (
-    <StyledMedia 
-      bottomLeftContainerStyle={{flex: 2}}
-      bottomRightContainerStyle={{flex: 1}}
-      unread={!props.read && props.direction === 'inbound'}
-      onClick={props.onClick}
-      renderRightIcon={
-        isUnread 
+    <StyledMedia
+      bottomLeftContainerStyle  = {{flex: 2}}
+      bottomRightContainerStyle = {{flex: 1}}
+      unread                    = {!props.read && props.direction === 'inbound'}
+      onClick                   = {props.onClick}
+      renderRightIcon           = {
+        isUnread
           ? () => <ReadableSpan unread={isUnread} />
           : null
       }
       renderTopLeft={() => renderContactName(props)}
       renderTopRight={() => !userStore.user.higherEd && (
         <Text
-          onClick={showStudentCard(props.studentId)}
-          ew="200px"
-          className="text-muted"
+          onClick   = {showStudentCard(props.studentId)}
+          ew        = "200px"
+          className = "text-muted"
+          fontSize  = '80%'
           link
-          fontSize='80%'
         >
           {_.truncate(_studentName, {'length': 25})}
         </Text>
@@ -40,7 +40,7 @@ const InboxItem = (props) => {
         : _.truncate(props.message, {'length': 30})
       }
 
-      renderBottomRight={() => 
+      renderBottomRight={() =>
         <small className='text-muted'>
           { DateFormat.timeAgo(props.time) }
         </small>
@@ -65,7 +65,7 @@ function renderContactName(props) {
 const omitProps = ['unread']
 
 const StyledMedia = omitStyled(ListItem, omitProps)
-  .attrs({ className: 'list-group-item' })` 
+  .attrs({ className: 'list-group-item' })`
   border-left:      none;
   border-right:     none;
   border-top:       none;

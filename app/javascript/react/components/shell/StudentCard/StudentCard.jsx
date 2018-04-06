@@ -28,6 +28,7 @@ import MAAP             from './Assessments/MAAP'
 import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
 import Contacts         from './Contacts'
+import Attachments      from './Attachments'
 import Grades           from './Grades'
 import CourseAttendance from './CourseAttendance'
 import Attendance       from './Attendance'
@@ -129,6 +130,7 @@ export default class StudentCard extends Component {
 
     const {
       student,
+      attachments,
       groupedContacts: contacts,
     } = store
 
@@ -224,6 +226,13 @@ export default class StudentCard extends Component {
                 link      = {`${match.url}/notes`}
                 location  = {location}
               />
+
+              <UserMenuItem
+                title     = 'Attachments'
+                iconClass = 'icon-attachment'
+                link      = {`${match.url}/attachments`}
+                location  = {location}
+              />
             </UserMenuSection>
           </Card>
 
@@ -309,6 +318,11 @@ export default class StudentCard extends Component {
             <Route
               path   = {`${match.url}/notes`}
               render = {() => <Notes student={student} noteStore={this.props.noteStore}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/attachments`}
+              render = {() => <Attachments student={student} attachments={attachments}/> }
             />
 
             <Route render={() => <div>404</div>} />

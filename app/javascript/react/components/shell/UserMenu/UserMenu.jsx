@@ -1,14 +1,9 @@
 import React                from 'react'
-import { inject, observer } from 'mobx-react'
 
-import {
-  Collapse, Nav, NavItem, NavLink, Badge
-} from 'reactstrap'
-
-import UserMenuSection from './UserMenuSection'
-import UserMenuItem    from './UserMenuItem'
-import userStore       from 'stores/UserStore'
-import renderIf        from 'ui/hoc/renderIf'
+import UserMenuSection      from './UserMenuSection'
+import UserMenuItem         from './UserMenuItem'
+import userStore            from 'stores/UserStore'
+import renderIf             from 'ui/hoc/renderIf'
 
 const EUserMenuItem    = renderIf(UserMenuItem)
 const EUserMenuSection = renderIf(UserMenuSection)
@@ -122,6 +117,13 @@ const UserMenu = () => {
           iconClass = 'icon-magnet'
           link      = '/r/growth_cusp'
           renderIf  = {userStore.hasModules('vjs_growth_cusp')}
+        />
+
+        <EUserMenuItem
+          title     = 'AIMSWeb/iReady'
+          iconClass = 'icon-light-bulb'
+          link      = '/r/aimsweb_iready'
+          renderIf  = {userStore.hasModules('vjs_aw_ir')}
         />
       </UserMenuSection>
 

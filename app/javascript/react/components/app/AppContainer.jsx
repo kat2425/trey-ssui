@@ -21,7 +21,10 @@ import ChannelEngagement     from 'modules/channel/Engagement'
 
 // Assessment
 import Assessments           from 'modules/logic/assessment/Assessment'
+
+// Insights/DataScience
 import GrowthCusp            from 'modules/logic/insights/GrowthCusp'
+import AIMSWebiReady         from 'modules/logic/insights/AIMSWebiReady'
 
 import FinalResults          from 'modules/logic/accountability/FinalResults'
 import LPS                   from 'modules/logic/accountability/LPS'
@@ -37,7 +40,7 @@ const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2
   overflow-y: auto;
 `
 
-const AppContainer = ({match}) => {
+const AppContainer = ({ match }) => {
   return (
     <HeightRestrictedDiv>
       <UserMenu />
@@ -66,6 +69,7 @@ const AppContainer = ({match}) => {
 
         {/* Insights */}
         <Route path='/r/growth_cusp' component={GrowthCusp} />
+        <Route path='/r/aimsweb_iready' component={AIMSWebiReady} />
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />

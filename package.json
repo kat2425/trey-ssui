@@ -33,6 +33,7 @@
     "file-loader": "^0.11.2",
     "glob": "^7.1.2",
     "jquery": "^3.2.1",
+    "js-file-download": "^0.4.1",
     "js-yaml": "^3.9.0",
     "keycode": "^2.1.9",
     "less-vars-to-js": "^1.2.1",
@@ -122,8 +123,13 @@
     "sass-watch": "cd ./resources/bs-4-theme && yarn && gulp watch && cd ../../",
     "lint-staged": "lint-staged"
   },
-  "lint-staged":{
-    "app/javascript/react/**/*.{js,jsx}": ["eslint --fix", "git add"]
+  "lint-staged": {
+    "app/javascript/react/**/*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
-  "pre-commit": ["lint-staged"]
+  "pre-commit": [
+    "lint-staged"
+  ]
 }
