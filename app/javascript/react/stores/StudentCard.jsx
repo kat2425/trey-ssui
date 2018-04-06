@@ -10,6 +10,7 @@ class StudentCardStore {
 
   @observable student        = null
   @observable contacts       = []
+  @observable attachments    = []
 
   @action
   fetchStudent(id) {
@@ -61,6 +62,18 @@ class StudentCardStore {
     })
   }
 
+  @action.bound
+  fetchAttachments(id) {
+    xhr.get(`/students/${id}/attachments`, {
+      params: {
+        only: [
+          'id', 'filename', 'public_url', 'created_at', 'thumbnail', 'modifiable',
+          'visibility', 'is_call_recording?', 'size'
+        ].join(',')
+      }
+    }).then(this.fetchAttachmentsOK)
+  }
+
   @action
   toggleContactPrimary(id, bool) {
     xhr.put(`/contacts/${id}/primary`, {
@@ -107,8 +120,23 @@ class StudentCardStore {
   }
 
   @action.bound
+  uploadFile(filename, attachment) {
+    const data = this.getAttachmentData(filename, attachment)
+
+    xhr.post(`/students/${this.student.id}/attachments`, data, {
+      'Content-Type': 'multipart/form-data'
+    }).then(this.uploadFileOK)
+  }
+
+  @action.bound
+  uploadFileOK(res) {
+    this.fetchAttachments(this.student.id)
+  }
+
+  @action.bound
   fetchStudentOK(res) {
     this.fetchStudentContacts(res.data.id)
+    this.fetchAttachments(res.data.id)
 
     this.student = res.data
   }
@@ -120,6 +148,11 @@ class StudentCardStore {
 
     this.isLoading = false
     this.visible   = true
+  }
+
+  @action.bound
+  fetchAttachmentsOK(res) {
+    this.attachments = res.data
   }
 
   @action
@@ -138,6 +171,15 @@ class StudentCardStore {
         refs:         _.map(group, (g, i) => _.merge(g, {index: i}))
       })
     )
+  }
+
+  getAttachmentData = (filename, attachment) => {
+    const data = new FormData()
+
+    data.append('filename', filename)
+    data.append('attachment', attachment)
+
+    return data
   }
 }
 
