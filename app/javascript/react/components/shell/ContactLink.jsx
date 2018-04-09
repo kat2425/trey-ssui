@@ -6,6 +6,7 @@ import userStore        from 'stores/UserStore'
 import { Tag }          from 'antd'
 import {ifProp}         from 'styled-tools'
 import {ellipsis}       from 'polished'
+import {Text}           from 'ui/shell/ListItem'
 
 ContactLink.propTypes = {
   name:         PropTypes.string.isRequired,
@@ -33,7 +34,7 @@ export default function ContactLink({
       {...rest}
     >
       <div className={vertical ? 'd-block' : 'd-inline-block'}>
-        {name}
+        {renderContactName(name, studentId)}
       </div>
       {!userStore.user.higherEd &&
         <_Tag
@@ -47,6 +48,16 @@ export default function ContactLink({
   )
 }
 
+function renderContactName(name, studentId) {
+  const _props = userStore.user.higherEd ? {
+    link:    true,
+    onClick: showStudentCard(studentId)
+  } : {}
+
+  return (
+    <Text {..._props}>{name}</Text>
+  )
+}
 
 const showStudentCard = (id) => (e) => {
   e.stopPropagation()
