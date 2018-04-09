@@ -21,7 +21,7 @@ module.exports = {
     (map, entry) => {
       const localMap = map
       const namespace = relative(join(entryPath), dirname(entry))
-      localMap[join(namespace, basename(entry, extname(entry)))] = resolve(entry)
+      localMap[join(namespace, basename(entry, extname(entry)))] = ['babel-polyfill', 'custom-event-polyfill', resolve(entry)]
       return localMap
     }, {}
   ),
