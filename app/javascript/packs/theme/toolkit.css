@@ -2865,7 +2865,8 @@ tbody.collapse.show {
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
-  white-space: nowrap; }
+  white-space: nowrap;
+  min-width: 145px; }
   .navbar-brand:focus, .navbar-brand:hover {
     text-decoration: none; }
 

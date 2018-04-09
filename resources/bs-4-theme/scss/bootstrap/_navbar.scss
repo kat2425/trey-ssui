@@ -35,7 +35,8 @@
   font-size: $font-size-lg;
   line-height: inherit;
   white-space: nowrap;
-
+  min-width: 145px;
+  
   @include hover-focus {
     text-decoration: none;
   }
