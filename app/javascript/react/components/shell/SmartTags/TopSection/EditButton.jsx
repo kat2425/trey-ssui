@@ -1,6 +1,6 @@
 import React        from 'react'
 import { observer } from 'mobx-react'
-import { Button }   from 'reactstrap'
+import SSButton     from 'ui/shell/SSButton'
 
 function EditButton({tagStore}){
   const { selectedTag } = tagStore
@@ -12,14 +12,14 @@ function EditButton({tagStore}){
   const isLoading     = selectedTag.isCreating || selectedTag.isUpdating || selectedTag.isDeleting
 
   return (
-    <Button
+    <SSButton
       className = 'pl-2 mr-2'
-      disabled  = {isLoading || notModifiable}
+      iconClass = 'icon icon-pencil text-muted'
+      disabled  = {notModifiable || isLoading}
       onClick   = {() => tagStore.editTag(selectedTag)}
     >
-      <span className='icon icon-pencil text-muted' style={{marginRight: '4px'}}/>
       Edit
-    </Button>
+    </SSButton>
   )
 }
 

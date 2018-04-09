@@ -1,6 +1,6 @@
 import React        from 'react'
 import { observer } from 'mobx-react'
-import { Button }   from 'reactstrap'
+import SSButton     from 'ui/shell/SSButton'
 
 function CloneButton({tagStore}){
   const { selectedTag } = tagStore
@@ -8,13 +8,13 @@ function CloneButton({tagStore}){
   if(!selectedTag) return null
 
   return (
-    <Button
+    <SSButton
       className = 'pl-2 mr-2'
+      iconClass = 'icon icon-documents text-muted'
       onClick   = {() => tagStore.cloneTag(selectedTag)}
     >
-      <span className='icon icon-documents text-muted' style={{marginRight: '4px'}}/>
       Clone List
-    </Button>
+    </SSButton>
   )
 }
 
