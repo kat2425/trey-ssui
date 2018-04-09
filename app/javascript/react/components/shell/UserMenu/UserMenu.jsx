@@ -15,7 +15,14 @@ const UserMenu = () => {
   return (
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar pt-0'>
       <UserMenuSection title='Core Data'>
-        <EUserMenuItem title='My Students' iconClass='icon-users' link='/r/my_students' active />
+        <EUserMenuItem
+          title     = 'My Schools'
+          iconClass = 'icon-blackboard'
+          link      = '/r/my_schools'
+          renderIf  = {!userStore.user.isTeacher && !userStore.user.higherEd}
+        />
+
+        <EUserMenuItem title='My Students' iconClass='icon-users' link='/r/my_students' />
 
         <EUserMenuItem
           title     = 'Attendance'

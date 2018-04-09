@@ -13,6 +13,7 @@ import TeacherAttendance     from 'modules/logic/TeacherAttendance'
 import Infractions           from 'modules/logic/Infractions'
 import Financials            from 'modules/logic/Financials'
 import MyStudents            from 'modules/logic/MyStudents'
+import MySchools             from 'modules/logic/Dashboard/MySchools'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 import TagBuilder            from 'modules/logic/TagBuilder/'
 
@@ -33,6 +34,7 @@ import SMSController         from 'ui/controllers/SMSController'
 
 import UserSettings          from 'modules/UserSettings'
 import EmptyMessage          from 'ui/shell/EmptyMessage'
+import userStore             from 'stores/UserStore'
 
 const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2' })`
   height: calc(100vh - 108px) !important;
@@ -40,14 +42,20 @@ const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2
   overflow-y: auto;
 `
 
+
 const AppContainer = ({ match }) => {
+  const defaultRoute = (userStore.user.isTeacher || userStore.user.higherEd)
+    ? '/r/my_students'
+    : '/r/my_schools'
+
   return (
     <HeightRestrictedDiv>
       <UserMenu />
       <Switch>
-        <Redirect exact from='/r/' to='/r/my_students' />
+        <Redirect exact from='/r/' to={defaultRoute} />
 
         {/* Logic */}
+        <Route path='/r/my_schools' component={MySchools} />
         <Route path='/r/my_students' component={MyStudents} />
         <Route path='/r/attendance' component={Attendance} />
         <Route path='/r/teacher_attendance' component={TeacherAttendance} />
