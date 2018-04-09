@@ -37,15 +37,17 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
   return (
     <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
       <Nav className='d-flex flex-row justify-content-end p-3' navbar>
+        {callBarVisible &&
         <NavItem className='mr-auto'>
           <ReactCSSTransitionGroup
             transitionName         = "callBar"
             transitionEnterTimeout = {500}
             transitionLeaveTimeout = {300}
           >
-            {callBarVisible && <CallBar callingStore={callingStore}/>}
+            <CallBar callingStore={callingStore}/>
           </ReactCSSTransitionGroup>
         </NavItem>
+        }
 
         <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.REMINDER)}>
           <span className='icon icon-clock mr-2' style={{opacity: '0.6'}}/>
