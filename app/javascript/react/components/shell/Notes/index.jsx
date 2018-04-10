@@ -1,63 +1,81 @@
-import React, {Component} from 'react'
-import SubmoduleHeader    from 'ui/shell/SubmoduleHeader'
-
+import React, {Component}   from 'react'
+import { observer }         from 'mobx-react'
+import SideNav              from './SideNav'
+import noteStore            from 'stores/NoteStore'
+import NoteView             from './NoteView'
+import NoteForm             from './NoteForm'
+import Wrapper              from './NoteView/Wrapper'
+import ActionBar            from './NoteView/ActionBar'
+import _get                 from 'lodash/get'
 import {
-  Container, Button,       Card,  CardBlock,
-  CardTitle, CardSubtitle, CardText,
-  FormGroup, FormFeedback, Label, Input,
-  Row,       Col,          Badge, ListGroup, ListGroupItem
-} from 'reactstrap'
-
-import { observer }  from 'mobx-react'
-import ReactMarkdown from 'react-markdown'
-
-import Picker        from '../Picker'
-import GroupPicker   from '../GroupPicker'
-import NotesForm     from '../NotesForm'
-import NoteView      from '../NoteView'
+  Col, Row
+} from 'antd'
 
 @observer
 export default class Notes extends Component {
-  deleteNote = (note) => {
-    this.props.noteStore.deleteStudentNote(note)
+  componentDidMount() {
+    const { student } = this.props
+
+    noteStore.setStudentID(student.id)
+    noteStore.fetchStudentNotes()
+    noteStore.fetchNoteTags()
   }
 
-  editNote = (note) => {
-    this.props.noteStore.edit = true
-    this.props.noteStore.getEditableNote(note)
+  renderNote = (note) => {
+    if(_get(note, 'isNew')) {
+      return (
+        <NoteForm note={note} store={noteStore} />
+      )
+    } else {
+      return (
+        <NoteView 
+          store={noteStore} 
+          note={noteStore.selectedNote}
+        />
+      )
+    }
+  }
+
+  renderMain = () => {
+    const {selectedNote, isLoading} = noteStore
+
+    if(selectedNote && !isLoading) {
+      return (
+        <Wrapper>
+          <ActionBar note={selectedNote} />
+          {this.renderNote(selectedNote)}
+        </Wrapper>
+      )
+    } else {
+      return null
+    }
   }
 
   render() {
-    const { notes, tags, edit, isCreating } = this.props.noteStore
-
     return (
-      <div>
-        <SubmoduleHeader title='Notes' />
-
-        <Card className='mb-4'>
-          {isCreating
-            ? <NotesForm
-              noteStore   = {this.props.noteStore}
-              currentNote = {notes[this.props.noteStore.selectedNoteIndex]}
-              studentId   = {this.props.student.id}
-            />
-            : <NoteView
-              onEdit    = {(note) => this.editNote(note)}
-              onDelete  = {(note) => this.deleteNote(note)}
-              noteStore = {this.props.noteStore}
-            />
-          }
-        </Card>
-
-        { notes.length > 0 && edit
-          ? <NotesForm
-            noteStore   = {this.props.noteStore}
-            currentNote = {notes[this.props.noteStore.selectedNoteIndex]}
-            studentId   = {this.props.student.id}
-          />
-          : null
-        }
-      </div>
+      <Row type='flex'>
+        <Col 
+          style={{ background: '#fff'}} 
+          xs={24} 
+          sm={24} 
+          md={6} 
+          lg={5}
+        >
+          <SideNav noteStore={noteStore} />
+        </Col>
+        <Col 
+          style={{
+            borderLeft: '1px solid rgba(0,0,0,0.125)', 
+            minHeight:  'calc(100vh - 108px)'
+          }} 
+          xs={24} 
+          sm={24} 
+          md={18} 
+          lg={19}
+        >
+          {this.renderMain()}
+        </Col>
+      </Row>
     )
   }
 }

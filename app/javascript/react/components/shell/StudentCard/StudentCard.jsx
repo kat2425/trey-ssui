@@ -4,27 +4,21 @@ import Modal                from 'react-modal'
 import {scrollStyle}        from 'helpers/modal-style'
 
 import {
-  Switch, withRouter, Route, Redirect, Link as RRNavLink
+  Switch, withRouter, Route, Redirect
 } from 'react-router-dom'
 
 import {
-  Container,  Row,            Col,       Collapse,
-  Button,     Card,           CardBlock, UncontrolledTooltip,
-  Pagination, PaginationItem, PaginationLink,
-  CardHeader, CardImg,        CardTitle, CardSubtitle, Badge, Table,
-  ButtonGroup
+  Row, Col, Card
 } from 'reactstrap'
 
 import UserMenuSection  from 'ui/shell/UserMenu/UserMenuSection'
 import UserMenuItem     from 'ui/shell/UserMenu/UserMenuItem'
-import VJSChart         from 'ui/vjs/VJSChart'
 import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 
 import Info             from './Info'
 import Overview         from './Overview'
 import Assessment       from './Assessment'
 import Assessments      from './Assessments/Assessment'
-import MAAP             from './Assessments/MAAP'
 import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
 import Contacts         from './Contacts'
@@ -43,7 +37,6 @@ import CallingStore     from 'stores/CallingStore'
 import renderIf         from 'ui/hoc/renderIf'
 import userStore        from 'stores/UserStore'
 import fireEvent        from 'helpers/FireEvent'
-import _                from 'lodash'
 
 const EFinancialAid = renderIf(FinancialAid)
 const EUserMenuItem = renderIf(UserMenuItem)
@@ -90,9 +83,8 @@ export default class StudentCard extends Component {
   }
 
   closeCard = () => {
-    const { store, noteStore } = this.props
+    const { store } = this.props
 
-    noteStore.resetNoteForm()
     store.hideCard()
     fireEvent('onCloseStudentCard')
   }
@@ -105,7 +97,7 @@ export default class StudentCard extends Component {
 
   render() {
     const { store } = this.props
-    const { isLoading, student } = store
+    const { student } = store
 
     return (
       <Modal
