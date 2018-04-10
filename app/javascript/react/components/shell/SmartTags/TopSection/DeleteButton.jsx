@@ -16,7 +16,7 @@ function DeleteButton({tagStore}){
     >
       <SSButton
         className = 'pl-2'
-        iconClass = 'icon icon-trash text-white'
+        iconClass = 'icon icon-trash'
         color     = 'danger'
         loading   = {selectedTag.isDeleting}
         disabled  = {!selectedTag.isNew && !selectedTag.modifiable}

@@ -24,11 +24,10 @@ export default function ActionButtons({
   return (
     <div className='d-flex my-4 justify-content-between mr-3'>
       <SSButton
-        type      = 'default'
         className = 'btn btn-secondary'
         onClick   = {() => onSave()}
         disabled  = {disabled || !modifiable}
-        iconClass = {isModified ? 'icon icon-save text-white' : 'icon icon-save text-muted'}
+        iconClass = {isModified ? 'icon icon-save' : 'icon icon-save'}
         loading   = {loadingOnSave}
         color     = {isModified && 'danger'}
       >
@@ -36,11 +35,10 @@ export default function ActionButtons({
       </SSButton>
 
       <SSButton
-        type      = 'default'
         onClick   = {() => onTest()}
         disabled  = {disabled}
         loading   = {loadingOnTest}
-        iconClass = "icon icon-controller-play text-muted"
+        iconClass = "icon icon-controller-play"
       >
         Run
       </SSButton>
