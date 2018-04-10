@@ -1,7 +1,6 @@
 import React        from 'react'
 import { observer } from 'mobx-react'
-import { Button }   from 'reactstrap'
-import { Tooltip }  from 'antd'
+import SSButton     from 'ui/shell/SSButton'
 
 function ExportCSVButton({tagStore}){
   const { selectedTag } = tagStore
@@ -9,13 +8,13 @@ function ExportCSVButton({tagStore}){
   if(!selectedTag || selectedTag.isNew) return null
 
   return (
-    <Button
+    <SSButton
       onClick = {() => tagStore.fetchTagCSV(selectedTag)}
       className = 'pl-2 mr-2'
+      iconClass = 'icon icon-download'
     >
-      <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
       Export CSV
-    </Button>
+    </SSButton>
   )
 }
 

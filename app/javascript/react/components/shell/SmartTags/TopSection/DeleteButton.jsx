@@ -1,7 +1,7 @@
 import React          from 'react'
 import { observer }   from 'mobx-react'
-import { Button }     from 'reactstrap'
 import { Popconfirm } from 'antd'
+import SSButton       from 'ui/shell/SSButton'
 
 function DeleteButton({tagStore}){
   const { selectedTag } = tagStore
@@ -14,14 +14,15 @@ function DeleteButton({tagStore}){
       okText     = 'Delete'
       cancelText = 'Cancel'
     >
-      <Button
+      <SSButton
         className = 'pl-2'
+        iconClass = 'icon icon-trash'
         color     = 'danger'
-        disabled  = {selectedTag.isDeleting || (!selectedTag.isNew && !selectedTag.modifiable)}
+        loading   = {selectedTag.isDeleting}
+        disabled  = {!selectedTag.isNew && !selectedTag.modifiable}
       >
-        <span className='icon icon-trash text-white' style={{marginRight: '4px'}}/>
-        {selectedTag.isDeleting ? 'Deleting...' : 'Delete' }
-      </Button>
+        Delete
+      </SSButton>
     </Popconfirm>
   )
 }

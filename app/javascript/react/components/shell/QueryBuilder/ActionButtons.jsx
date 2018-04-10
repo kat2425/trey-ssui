@@ -1,6 +1,7 @@
 import React      from 'react'
 import PropTypes  from 'prop-types'
-import { Button } from 'antd'
+import SSButton   from 'ui/shell/SSButton'
+
 
 ActionButtons.propTypes = {
   disabled:      PropTypes.bool,
@@ -22,25 +23,25 @@ export default function ActionButtons({
 }) {
   return (
     <div className='d-flex my-4 justify-content-between mr-3'>
-      <Button
-        onClick  = {() => onSave()}
-        disabled = {disabled || !modifiable}
-        icon     = 'save'
-        loading  = {loadingOnSave}
-        type     = {isModified ? 'danger' : 'default'}
+      <SSButton
+        className = 'btn btn-secondary'
+        onClick   = {() => onSave()}
+        disabled  = {disabled || !modifiable}
+        iconClass = {isModified ? 'icon icon-save' : 'icon icon-save'}
+        loading   = {loadingOnSave}
+        color     = {isModified && 'danger'}
       >
         Save List
-      </Button>
+      </SSButton>
 
-      <Button
-        type      = 'default'
+      <SSButton
         onClick   = {() => onTest()}
         disabled  = {disabled}
         loading   = {loadingOnTest}
-        icon      = "play-circle-o"
+        iconClass = "icon icon-controller-play"
       >
         Run
-      </Button>
+      </SSButton>
     </div>
   )
 }
