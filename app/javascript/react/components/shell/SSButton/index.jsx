@@ -11,7 +11,7 @@ const SSButton = ( {loading, iconClass, disabled, ...props} ) => {
     <Button {...props} disabled={disabled || loading}>
       { loading
         ? <Icon style={iconStyle} type='loading' />
-        : <span style={iconStyle} className={iconClass} /> }
+        : <span style={{...iconStyle, color: 'inherit'}} className={iconClass} /> }
       { props.children }
     </Button>
   )

@@ -14,7 +14,7 @@ function EditButton({tagStore}){
   return (
     <SSButton
       className = 'pl-2 mr-2'
-      iconClass = 'icon icon-pencil text-muted'
+      iconClass = 'icon icon-pencil'
       disabled  = {notModifiable || isLoading}
       onClick   = {() => tagStore.editTag(selectedTag)}
     >

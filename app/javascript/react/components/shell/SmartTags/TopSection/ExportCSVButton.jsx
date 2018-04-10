@@ -11,7 +11,7 @@ function ExportCSVButton({tagStore}){
     <SSButton
       onClick = {() => tagStore.fetchTagCSV(selectedTag)}
       className = 'pl-2 mr-2'
-      iconClass = 'icon icon-download text-muted'
+      iconClass = 'icon icon-download'
     >
       Export CSV
     </SSButton>

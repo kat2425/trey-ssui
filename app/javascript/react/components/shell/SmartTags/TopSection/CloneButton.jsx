@@ -10,7 +10,7 @@ function CloneButton({tagStore}){
   return (
     <SSButton
       className = 'pl-2 mr-2'
-      iconClass = 'icon icon-documents text-muted'
+      iconClass = 'icon icon-documents'
       onClick   = {() => tagStore.cloneTag(selectedTag)}
     >
       Clone List
