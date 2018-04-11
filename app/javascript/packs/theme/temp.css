@@ -67,6 +67,10 @@ html, body {
   margin: auto;
 }
 
+.ui-datepicker-month, .ui-datepicker-year {
+  color: rgba(0,0,0,1)
+}
+
 .student-search-container ul.dropdown-menu {
   width: 298px;
   box-shadow: 0 1px 13px 0 rgba(0,0,0,0.275);
