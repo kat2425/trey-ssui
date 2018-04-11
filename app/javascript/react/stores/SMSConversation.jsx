@@ -1,12 +1,12 @@
 import { observable, action, computed } from 'mobx'
 
-import _            from 'lodash'
-import xhr          from 'helpers/XHR'
+import _                                from 'lodash'
+import xhr                              from 'helpers/XHR'
 
-import { SIDEBAR }  from 'stores/UiStore'
-import uiStore      from 'stores/UiStore'
-import Conversation from 'stores/models/Conversation'
-import Pager        from 'stores/models/Pager'
+import { SIDEBAR }                      from 'stores/UiStore'
+import uiStore                          from 'stores/UiStore'
+import Conversation                     from 'stores/models/Conversation'
+import Pager                            from 'stores/models/Pager'
 
 class SMSConversationStore {
   @observable limit         = 20
@@ -69,7 +69,6 @@ class SMSConversationStore {
       }
     }).then(this.fetchConversationOK(id))
   }
-
 
   @action
   fetchConversationOK = id => ({headers, data}) => {
@@ -136,6 +135,11 @@ class SMSConversationStore {
   @action
   setRead(id) {
     xhr.put(`/commo/sms_log/${id}/read`)
+  }
+
+  @action
+  setAllAsRead(conversationID) {
+    xhr.post(`/commo/sms/conversation/${conversationID}/read`)
   }
 
   @action
