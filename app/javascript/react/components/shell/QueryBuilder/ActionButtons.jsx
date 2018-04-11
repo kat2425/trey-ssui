@@ -29,7 +29,7 @@ export default function ActionButtons({
         disabled  = {disabled || !modifiable}
         iconClass = {isModified ? 'icon icon-save' : 'icon icon-save'}
         loading   = {loadingOnSave}
-        color     = {isModified && 'danger'}
+        color     = {isModified ? 'danger' : 'default'}
       >
         Save List
       </SSButton>
