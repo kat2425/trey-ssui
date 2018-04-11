@@ -31,7 +31,9 @@ const AttachmentItem = observer(({ attachment }) => {
 
   // TODO: we need a confirmation modal here before actually firing the action
   const deleteAttachment = (bucketID) => {
-    StudentCardStore.deleteAttachment(bucketID)
+    if (confirm('Are you sure you want to remove this file?')) {
+      StudentCardStore.deleteAttachment(bucketID)
+    }
   }
 
   const thumbnailStyle = {
