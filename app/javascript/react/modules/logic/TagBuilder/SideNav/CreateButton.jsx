@@ -1,18 +1,18 @@
 import React        from 'react'
 import { observer } from 'mobx-react'
-import { Button }   from 'reactstrap'
+import SSButton     from 'ui/shell/SSButton'
 import { Tooltip }  from 'antd'
 
 function CreateButton({tagStore}){
   return (
     <Tooltip title='Create A List'>
-      <Button
+      <SSButton
         onClick   = {tagStore.handleAddTag}
         className = 'pl-2'
+        iconClass = 'icon icon-plus'
       >
-        <span className='icon icon-plus' style={{marginRight: '4px'}}/>
         New
-      </Button>
+      </SSButton>
     </Tooltip>
   )
 }

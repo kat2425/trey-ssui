@@ -23,6 +23,10 @@ html, body {
   margin-bottom: 0.5rem !important;
 }
 
+.badge {
+  line-height: unset
+}
+
 #intercom-container .intercom-launcher-frame,
 .intercom-launcher-frame {
   box-shadow: none !important;
