@@ -39,8 +39,8 @@ export default class Info extends Component {
   }
 
   toggleCollapse = () => {
-    this.setState(prevState => ({ 
-      collapse: !prevState.collapse 
+    this.setState(prevState => ({
+      collapse: !prevState.collapse
     }))
   }
 
@@ -48,7 +48,7 @@ export default class Info extends Component {
     const student = this.props.student
 
     return (
-      <Card className='card-profile mb-3 mt-3'>
+      <Card className='card-profile mb-3 mt-3 pb-3'>
         <CardHeader style={cardHeader}/>
 
         <CardBlock className='text-xs-center mb-0 pb-1'>
@@ -69,6 +69,12 @@ export default class Info extends Component {
               <h6><Badge color='danger'>{ student.enrollment_status }</Badge></h6>
             </li>
           </ul>
+        </CardBlock>
+
+        <CardBlock className='text-xs-center p-0 pb-2 mb-0 mt-0'>
+          { student.flags.map(flag => {
+            return <Badge key={ flag } className='mr-1'>{ flag }</Badge>
+          }) }
         </CardBlock>
 
         <Collapse isOpen={!this.state.collapse}>
@@ -100,12 +106,12 @@ export default class Info extends Component {
                 <span className='text-info'>{ student.gender }</span>
               </li>
 
-              { student.address && 
+              { student.address &&
                 <li>
                   <span className='mr-3 text-muted icon icon-map' style={iconStyle}/>
                   <span>Address: </span>
                   <span className='text-info'>
-                    <br/>{ student.address }, 
+                    <br/>{ student.address },
                     <br/>{ student.city }, { student.state } {student.zip }
                   </span>
                 </li>

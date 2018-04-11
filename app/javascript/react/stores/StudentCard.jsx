@@ -68,7 +68,7 @@ class StudentCardStore {
       params: {
         only: [
           'id', 'filename', 'public_url', 'created_at', 'thumbnail', 'modifiable',
-          'visibility', 'is_call_recording?', 'size'
+          'visibility', 'is_call_recording?', 'size', 'groups.group_name'
         ].join(',')
       }
     }).then(this.fetchAttachmentsOK)
@@ -130,6 +130,16 @@ class StudentCardStore {
 
   @action.bound
   uploadFileOK(res) {
+    this.fetchAttachments(this.student.id)
+  }
+
+  @action.bound
+  deleteAttachment(bucketID) {
+    xhr.delete(`/students/${this.student.id}/attachments/${bucketID}`).then(this.deleteAttachmentOK)
+  }
+
+  @action.bound
+  deleteAttachmentOK(res) {
     this.fetchAttachments(this.student.id)
   }
 
