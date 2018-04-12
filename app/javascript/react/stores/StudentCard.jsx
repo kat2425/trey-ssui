@@ -12,6 +12,10 @@ class StudentCardStore {
   @observable contacts       = []
   @observable attachments    = []
 
+  @action hasDataRelation = (relation) => {
+    return _.includes(this.student.data_relations, relation)
+  }
+
   @action
   fetchStudent(id) {
     this.isLoading      = true

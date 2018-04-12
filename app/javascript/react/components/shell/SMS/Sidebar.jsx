@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import PropTypes            from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
-import SMSInboxStore from 'stores/SMSInbox'
-import SMSInboxController from 'ui/controllers/SMSInboxController'
+import SMSInboxStore        from 'stores/SMSInbox'
+import SMSInboxController   from 'ui/controllers/SMSInboxController'
 
 import SMSConversationStore from 'stores/SMSConversation'
-import SMSController from 'ui/controllers/SMSController'
+import SMSController        from 'ui/controllers/SMSController'
 
-const containerStyle = secondary => ({
+const containerStyle = () => ({
   position:      'fixed',
   top:           0,
   right:         0,
@@ -18,7 +18,7 @@ const containerStyle = secondary => ({
   minWidth:      365
 })
 
-const barStyle = secondary => ({
+const barStyle = () => ({
   backgroundColor: '#e8e8e8',
   zIndex:          1029,
   pointerEvents:   'all',
@@ -47,6 +47,8 @@ export default class Sidebar extends Component {
     uiStore.setShowInbox(false)
     uiStore.setCurrentContact(contact)
     uiStore.setCurrentConversation(conversation)
+
+    SMSConversationStore.setAllAsRead(conversation)
   }
 
   backToInbox = () => {

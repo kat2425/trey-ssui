@@ -29,7 +29,6 @@ const AttachmentItem = observer(({ attachment }) => {
     axios.get(url, { responseType: 'blob' }).then((res) => getFile(res.data, filename))
   }
 
-  // TODO: we need a confirmation modal here before actually firing the action
   const deleteAttachment = (bucketID) => {
     if (confirm('Are you sure you want to remove this file?')) {
       StudentCardStore.deleteAttachment(bucketID)

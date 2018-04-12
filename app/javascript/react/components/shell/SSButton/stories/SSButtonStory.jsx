@@ -1,12 +1,14 @@
-import React         from 'react'
-import { storiesOf } from '@storybook/react'
-import { action }    from '@storybook/addon-actions'
+import React                       from 'react'
+import { storiesOf }               from '@storybook/react'
+import { action }                  from '@storybook/addon-actions'
+import { text, select, withKnobs } from '@storybook/addon-knobs'
 
-import SSButton      from '../'
+import SSButton                    from '../'
 
 const stories = storiesOf('SSButton', module) // eslint-disable-line
 const isLoading = true
 
+stories.addDecorator(withKnobs)
 stories.add('default', () =>
   <div>
     <SSButton>No Icon</SSButton>
@@ -35,4 +37,15 @@ stories.add('default', () =>
       Disabled Danger ghost
     </SSButton>
   </div>
+)
+
+stories.add('tooltip', () => 
+  <SSButton 
+    className = 'mt-5 ml-5'
+    tooltip   = {text('tooltip', 'Tooltip here')}
+    placement = {select('placement', ['top', 'right', 'bottom', 'left'], 'top' )}
+    color     = "primary"
+  >
+    Button With Tooltip
+  </SSButton>
 )

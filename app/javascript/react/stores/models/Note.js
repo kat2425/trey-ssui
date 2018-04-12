@@ -19,6 +19,7 @@ export default class Note {
   @setter @observable isSaving         = false
   @setter @observable isUpdating       = false
   @setter @observable isDeleting       = false
+  @setter @observable isDefaultTitle   = true
   @observable createdAt                = null
   @observable updatedAt                = null
   @observable tags                     = null
@@ -87,6 +88,10 @@ export default class Note {
 
   @computed get showGroupSelector() {
     return this.isSelectingGroup 
+  }
+
+  @computed get shouldFocusTitle() {
+    return this.isNew && this.isDefaultTitle
   }
 
   /* End Computed */
