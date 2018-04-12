@@ -23,10 +23,10 @@ export default class Inbox extends Component {
   renderItem(msg) {
     return (
       <InboxItem
-        onClick = {this.handleSelect(msg)}
+        onClick      = {this.handleSelect(msg)}
         relationship = {msg.broker.contact.relationship}
         key          = {msg.id}
-        read         = {msg.read_status}
+        totalUnread  = {msg.total_unread}
         direction    = {msg.direction}
         name         = {msg.broker.contact.name}
         time         = {msg.created_at}

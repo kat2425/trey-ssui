@@ -8,14 +8,14 @@ import fireEvent          from 'helpers/FireEvent'
 import omitStyled         from 'helpers/omitStyled'
 
 const InboxItem = (props) => {
-  const isUnread = !props.read && props.direction === 'inbound'
+  const isUnread = props.totalUnread > 0
   const _studentName = `${props.studentName}'s ${props.relationship || 'Contact'}`
 
   return (
     <StyledMedia
       bottomLeftContainerStyle  = {{flex: 2}}
       bottomRightContainerStyle = {{flex: 1}}
-      unread                    = {!props.read && props.direction === 'inbound'}
+      unread                    = {isUnread}
       onClick                   = {props.onClick}
       renderRightIcon           = {
         isUnread
