@@ -23,7 +23,7 @@ class NoteStore {
   @setter @observable isSelectingGroup = false
   @setter @observable isMessage        = null
   @setter @observable isError          = null
-
+  
   constructor() {
     this.initAutoruns()
   }
@@ -135,6 +135,7 @@ class NoteStore {
   }
 
   @action editTitleOnChange = event => {
+    this.selectedNote.setIsDefaultTitle(false)
     this.selectedNote.title = event.target.value
   }
 
