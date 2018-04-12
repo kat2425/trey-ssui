@@ -37,9 +37,9 @@ export default class Notes extends Component {
   }
 
   renderMain = () => {
-    const {selectedNote, isLoading} = noteStore
+    const { selectedNote } = noteStore
 
-    if(selectedNote && !isLoading) {
+    if(selectedNote) {
       return (
         <Wrapper>
           <ActionBar note={selectedNote} />
