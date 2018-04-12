@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-import VJSChart     from 'ui/vjs/VJSChart'
-import ModuleHeader from 'ui/shell/ModuleHeader'
-import userStore    from 'stores/UserStore'
-import fireEvent    from 'helpers/FireEvent'
+import VJSChart             from 'ui/vjs/VJSChart'
+import ModuleHeader         from 'ui/shell/ModuleHeader'
+import userStore            from 'stores/UserStore'
+import fireEvent            from 'helpers/FireEvent'
 
 export default class CallHistory extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class CallHistory extends Component {
   }
 
   getHistoryPath = () => {
-    if (UserStore.user.hasChannel) {
+    if (userStore.user.hasChannel) {
       return '/public/VJS/ss_ui/channel/full_history'
     } else {
       return '/public/VJS/ss_ui/channel/call_history'
@@ -21,7 +21,7 @@ export default class CallHistory extends Component {
   render() {
     return (
       <div>
-        <ModuleHeader title='Call History'/>
+        <ModuleHeader title='Engagement History'/>
 
         <div className='row'>
           <VJSChart
