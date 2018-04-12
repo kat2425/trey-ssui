@@ -56,6 +56,7 @@ export default class Tag {
   @setter @observable activeTab          = TABS.STUDENTS
 
   @setter @observable name = null
+  @observable createdBy    = null
   @observable createdAt    = null
   @observable updatedAt    = null
 
