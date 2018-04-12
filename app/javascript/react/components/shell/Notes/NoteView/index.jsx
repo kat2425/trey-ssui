@@ -8,6 +8,8 @@ import renderIf           from 'render-if'
 import NoteInfo           from '../NoteInfo'
 import NoteForm           from '../NoteForm'
 import _                  from 'lodash'
+import {FaInfo}           from 'react-icons/lib/fa'
+import {Popover}          from 'antd'
 
 NoteView.propTypes = {
   store: PropTypes.object.isRequired,
@@ -24,6 +26,7 @@ function NoteView({store, note}) {
           <div>
             <div style={{minHeight: 450}}>
               <Header>     
+                {getCreatedBy(note)}
                 <Title>{note.title}</Title>
                 {renderDate(note)}
               </Header>
@@ -75,6 +78,31 @@ function getUpdatedAt(note) {
       </span> 
     </p>
   )
+}
+
+function getCreatedBy(note) {
+  if(!note.createdBy) return null
+
+  return (
+    <Popover content={note.createdBy}>
+      <div 
+        className = 'mr-2' 
+        style     = {icStyle}
+      >
+        <FaInfo style={{ fontSize: 12 }} />
+      </div>
+    </Popover>
+  )
+}
+
+const icStyle = {
+  backgroundColor: '#DCDCDC',
+  display:         'flex',
+  alignItems:      'center',
+  justifyContent:  'center',
+  width:           16,
+  height:          16,
+  borderRadius:    8
 }
 
 export default observer(NoteView)
