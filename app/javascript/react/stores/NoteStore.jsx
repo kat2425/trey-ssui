@@ -96,7 +96,8 @@ class NoteStore {
             'groups.group_name',
             'created_at',
             'updated_at',
-            'user.full_name'
+            'user.full_name',
+            'modifiable'
           ].join(','),
           page:  this.pagination.current,
           limit: this.pagination.pageSize
