@@ -1,5 +1,6 @@
 import React                from 'react'
 import {observer}           from 'mobx-react'
+import { Alert }            from 'reactstrap'
 import PropTypes            from 'prop-types'
 import uuid                 from 'uuid'
 import _                    from 'lodash'
@@ -7,12 +8,14 @@ import _                    from 'lodash'
 import FormattedScript      from 'ui/shell/FormattedScript/'
 import Wrapper              from './Wrapper'
 import ScriptWrapper        from './ScriptWrapper'
+import Obfuscated           from './Obfuscated'
 import Header               from './Header'
 import Small                from './Small'
 import { STATE }            from 'stores/models/Translator'
 import userStore            from 'stores/UserStore'
 
 import TranslationContainer from 'ui/shell/TranslationContainer'
+import LoadingSpinner       from 'ui/shell/LoadingSpinner'
 
 Transcript.propTypes = {
   isLoading:          PropTypes.bool,
@@ -43,7 +46,6 @@ function Transcript({
     ? renderTranscript(transcript) 
     : <FormattedScript speech={transcript} />
 
-  const empty         = <Small>Transcript not available</Small>
   const hasTranscript = !_.isEmpty(transcript)
 
   return (
@@ -62,11 +64,12 @@ function Transcript({
           />
         )}
       </Header>
-      <ScriptWrapper> {(() => {
-        if(isLoading) return <Small>Loading ...</Small>
-        return hasTranscript ? script :  empty
-      })()} 
-      </ScriptWrapper> 
+      <ScriptWrapper>
+        {userStore.user.hasChannel && getTranscriptOrFallback(isLoading, hasTranscript, script)}
+        {!userStore.user.hasChannel && getUpgrade()}
+        {!userStore.user.hasChannel &&
+        <Obfuscated>{getTranscriptOrFallback(isLoading, hasTranscript, script)}</Obfuscated>}
+      </ScriptWrapper>
     </Wrapper>
   )
 }
@@ -79,5 +82,22 @@ const renderTranscript = (transcript) =>
       speech={t.speech}
     />
   ))
+
+const getUpgrade = () => <Alert color="info" className="text-center h6">
+  {
+    'Call transcription available with our upgraded communications package.\
+    Talk to your district staff about upgrading your subscription today!'
+  }
+</Alert>
+
+const getTranscriptOrFallback = (isLoading, hasTranscript, script) => {
+  if(!isLoading && hasTranscript) {
+    return script
+  } else if(!isLoading && !hasTranscript) {
+    return <Small>Transcript not available</Small>
+  } else {
+    return <LoadingSpinner center />
+  }
+}
 
 export default observer(Transcript)
