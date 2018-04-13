@@ -1,16 +1,19 @@
 import { 
-  observable, 
   action, 
+  autorun,
   computed, 
-  autorun
+  observable, 
+  runInAction
 } from 'mobx'
-import { setter }             from 'mobx-decorators'
-import xhr                    from 'helpers/XHR'
-import _                      from 'lodash'
-import Note                   from 'stores/models/Note'
-import uiStore                from 'stores/UiStore'
-import uuid                   from 'uuid'
-import getError               from 'helpers/ErrorParser'
+
+import { setter } from 'mobx-decorators'
+import xhr        from 'helpers/XHR'
+import _          from 'lodash'
+import Note       from 'stores/models/Note'
+import Pagination from 'stores/models/Pagination'
+import uiStore    from 'stores/UiStore'
+import uuid       from 'uuid'
+import getError   from 'helpers/ErrorParser'
 
 class NoteStore {
   @observable notes                    = observable.map()
@@ -18,6 +21,7 @@ class NoteStore {
   @observable originalNote             = observable.map()
   @observable selectedNote             = null
   @observable noteFilter               = null
+  @observable pagination               = new Pagination(this)
   @setter @observable isLoading        = false
   @setter @observable studentID        = null
   @setter @observable isSelectingGroup = false
@@ -75,7 +79,6 @@ class NoteStore {
   @action
   fetchStudentNotes = async() => {
     try {
-      this.notes.clear()
       this.setIsLoading(true)
       
       const params = {
@@ -94,13 +97,19 @@ class NoteStore {
             'created_at',
             'updated_at',
             'user.full_name'
-          ].join(',')
+          ].join(','),
+          page:  this.pagination.current,
+          limit: this.pagination.pageSize
         }
       }
       
-      const { data } = await xhr.get('/student_notes', params) 
+      const { headers, data } = await xhr.get('/student_notes', params) 
 
-      this.fetchStudentNotesOk(data)
+      runInAction(() => {
+        this.setPagination(headers)
+        this.fetchStudentNotesOk(data)
+        this.pagination.calculateTotalResults()
+      })
     } catch (err) {
       this.setIsError(getError(err))
     } finally {
@@ -110,7 +119,7 @@ class NoteStore {
 
   @action fetchStudentNotesOk = (data) => {
     data.forEach(this.updateNoteFromServer)
-    if (this.orderedNotes) {
+    if (this.orderedNotes && _.isNil(this.selectedNote)) {
       this.setSelectedNote(this.orderedNotes[0])   
     }
   }
@@ -150,6 +159,14 @@ class NoteStore {
 
   @action updateNoteFromServer = note => {
     this.addNote(new Note({}, this, note))
+  }
+
+  @action setPagination = ({total}) => {
+    this.pagination.setTotal(parseInt(total))
+  }
+
+  @action onPageChange = () => {
+    this.fetchStudentNotes()
   }
 }
 
