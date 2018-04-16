@@ -6,6 +6,7 @@ import NoteView             from './NoteView'
 import NoteForm             from './NoteForm'
 import Wrapper              from './NoteView/Wrapper'
 import ActionBar            from './NoteView/ActionBar'
+import PrintAllButton       from './SideNav/PrintAllButton'
 import _get                 from 'lodash/get'
 import {
   Col, Row
@@ -38,7 +39,7 @@ export default class Notes extends Component {
     if(selectedNote) {
       return (
         <Wrapper>
-          <ActionBar note={selectedNote} />
+          <ActionBar store={noteStore} note={selectedNote} />
           {this.renderNote(selectedNote)}
         </Wrapper>
       )
@@ -69,6 +70,9 @@ export default class Notes extends Component {
           md={18} 
           lg={19}
         >
+          <div className='mt-3 mr-2 text-right'>
+            <PrintAllButton store={noteStore} />
+          </div>
           {this.renderMain()}
         </Col>
       </Row>

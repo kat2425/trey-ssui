@@ -6,16 +6,19 @@ import EditButton          from './EditButton'
 import SaveButton          from './SaveButton'
 import UpdateButton        from './UpdateButton'
 import CancelButton        from './CancelButton'
+import PrintButton         from './PrintButton'
 
 ActionBar.propTypes = {
-  note: PropTypes.object.isRequired
+  note:  PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired
 }
 
-function ActionBar({note}){
+function ActionBar({note, store}){
   if(!note) return null
 
   return (
     <div className='d-flex justify-content-end mb-3'>
+      <PrintButton store={store}/>
       {renderIfNew(note)}
       {renderIfEditing(note)}
       {renderIfExists(note)}
