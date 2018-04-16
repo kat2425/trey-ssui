@@ -3,7 +3,6 @@ import {
   action,
   computed,
   autorun,
-  runInAction
 } from 'mobx'
 
 import _             from 'lodash'
@@ -11,7 +10,6 @@ import xhr           from 'helpers/XHR'
 import { setter }    from 'mobx-decorators'
 import getError      from 'helpers/ErrorParser'
 import uiStore       from 'stores/UiStore'
-import intercomEvent from 'helpers/Intercom'
 
 export class StudentCardStore {
   @setter @observable isLoading          = false
@@ -24,9 +22,6 @@ export class StudentCardStore {
   @observable overview                   = []
 
   @setter @observable isError            = null
-  @setter @observable showGroupsModal    = false
-  @setter @observable selectedAttachment = null
-  @setter @observable isUpdating         = false
 
   constructor() {
     this.initAutoruns()
@@ -103,7 +98,6 @@ export class StudentCardStore {
   @action.bound
   fetchStudentOK(res) {
     this.fetchStudentContacts(res.data.id)
-    this.fetchAttachments(res.data.id)
     this.fetchStudentOverview(res.data.id)
 
     this.student = res.data
@@ -246,104 +240,6 @@ export class StudentCardStore {
     this.overview = []
 
     this.contacts.clear()
-  }
-
-  @action
-  uploadFile = async(filename, attachment) => {
-    intercomEvent('web:student_card:attachments:add_attachment', {
-      student_id: this.student.id,
-      filename:   filename
-    })
-
-    const data = this.getAttachmentData(filename, attachment)
-
-    try {
-      await xhr.post(`/students/${this.student.id}/attachments`, data, {
-        'Content-Type': 'multipart/form-data'
-      })
-
-      this.uploadFileOK()
-    } catch(e){
-      this.setIsError(getError(e))
-    }
-  }
-
-  @action.bound
-  uploadFileOK() {
-    this.fetchAttachments(this.student.id)
-  }
-
-  @action
-  deleteAttachment = async(bucketID) => {
-    try {
-      await xhr.delete(`/students/${this.student.id}/attachments/${bucketID}`)
-
-      this.deleteAttachmentOK()
-    } catch(e) {
-      this.setIsError(getError(e))
-    }
-  }
-
-  @action.bound
-  deleteAttachmentOK() {
-    this.fetchAttachments(this.student.id)
-  }
-
-  @action
-  fetchAttachments = async(id) => {
-    try {
-      const res = await xhr.get(`/students/${id}/attachments`, {
-        params: {
-          only: [
-            'id', 'filename', 'public_url', 'created_at', 'thumbnail', 'modifiable',
-            'visibility', 'is_call_recording?', 'size', 'groups'
-          ].join(',')
-        }
-      })
-
-      this.fetchAttachmentsOK(res)
-    } catch(e) {
-      this.setIsError(getError(e))
-    }
-  }
-
-  @action.bound
-  fetchAttachmentsOK(res) {
-    this.attachments = res.data
-  }
-
-  getAttachmentData = (filename, attachment) => {
-    const data = new FormData()
-
-    data.append('filename', filename)
-    data.append('attachment', attachment)
-
-    return data
-  }
-
-  @action
-  changeAttachmentVisibility = async(attachmentId, visibility, groups = []) => {
-    this.setIsUpdating(true)
-
-    const params = visibility === 'groups'
-      ? { visibility: 'groups', groups: groups.join(',') }
-      : { visibility }
-
-    try {
-      const { data } = await xhr.put(`/students/${this.student.id}/attachments/${attachmentId}`, params)
-
-      const changedIndex = _.findIndex(this.attachments, (a) => a.id === data.id)
-
-      this.attachments[changedIndex] = data
-    }
-    catch(e) {
-      this.setIsError(getError(e))
-    } finally {
-      runInAction(() => {
-        this.setIsUpdating(false)
-        this.setShowGroupsModal(false)
-      })
-    }
   }
 }
 

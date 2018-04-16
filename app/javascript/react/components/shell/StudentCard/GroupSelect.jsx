@@ -26,8 +26,8 @@ export default class GroupSelect extends Component {
   }
 
   getDefaultGroups = () => {
-    return this.props.store.selectedAttachment.groups.map((g) => {
-      return { key: g.id || g.key, label: g.group_name || g.label } 
+    return this.props.attachment.groups.map((g) => {
+      return { key: g.id, label: g.group_name || g.label }
     })
   }
 
