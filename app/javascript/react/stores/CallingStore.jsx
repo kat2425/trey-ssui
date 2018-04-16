@@ -177,7 +177,7 @@ class CallingStore {
           type:    'error'
         })
 
-        intercomEvent('web:call:cell_call_error', {message: errorMessage})
+        intercomEvent('web:calling:cell_call_error', {message: errorMessage})
         console.error('Calling Error:', error)
       })
   }
@@ -256,7 +256,7 @@ class CallingStore {
     this.device.error((error) => {
       const message = returnError(error.code)
 
-      intercomEvent('web:call:web_call_error', {message: message, code: error.code})
+      intercomEvent('web:calling:web_call_error', {message: message, code: error.code})
       console.error('Calling Error:', error)
 
       this.setIsError({

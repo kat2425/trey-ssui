@@ -2,6 +2,7 @@ import { observable, action, computed } from 'mobx'
 
 import _                                from 'lodash'
 import xhr                              from 'helpers/XHR'
+import intercomEvent                    from 'helpers/Intercom'
 
 import { SIDEBAR }                      from 'stores/UiStore'
 import uiStore                          from 'stores/UiStore'
@@ -113,6 +114,11 @@ class SMSConversationStore {
 
   @action
   sendMessage(msg, id, attachment) {
+    intercomEvent('web:sms:send', {
+      contact_id: id,
+      attachment: (attachment ? true : false)
+    })
+
     if (attachment) {
       const data = this.getAttachmentData(msg, id, attachment)
 
