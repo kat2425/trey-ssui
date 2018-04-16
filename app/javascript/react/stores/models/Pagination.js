@@ -29,7 +29,7 @@ export default class Pagination {
   }
 
   @computed get totalPages() {
-    const pages = Math.ceil(this.total / LIMIT)
+    const pages = Math.ceil(this.total / this.pageSize)
 
     return parseInt(pages)
   }
@@ -40,19 +40,19 @@ export default class Pagination {
   }
 
   @action clear = () => {
-    this.pageSize = LIMIT
     this.current  = 1
     this.total    = 0
   }
 
-  @action onChange = (page, pageSize = LIMIT) => {
+  @action onChange = (page, pageSize) => {
     this.current  = page
-    this.pageSize = pageSize
+    this.pageSize =  pageSize || this.pageSize
+
     this.store.onPageChange()
   }
 
   @action calculateTotalResults = () => {
-    const t = LIMIT * this.current
+    const t = this.pageSize * this.current
 
     this.currentTotalResults = (t <= this.total) ? t : this.total
   }
