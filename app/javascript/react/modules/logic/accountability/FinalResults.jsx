@@ -4,6 +4,10 @@ import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
+import {
+  Button, ButtonGroup
+} from 'reactstrap'
+
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 
@@ -11,15 +15,15 @@ export default class FinalResults extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { params: {}, selected: {} }
+    this.state = { params: {}, selected: {}, pgBtn: 1, stBtn: 1 }
   }
 
   setTestFilter(val) {
     const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
-      params:     { ...this.state.params, test_type: [ jrsValue ] },
-      selected:   { ...this.state.selected, test_type: val }
+      params:   { ...this.state.params, test_type: [ jrsValue ] },
+      selected: { ...this.state.selected, test_type: val }
     })
   }
 
@@ -27,8 +31,8 @@ export default class FinalResults extends Component {
     const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
-      params:     { ...this.state.params, school_filter: [ jrsValue ] },
-      selected:   { ...this.state.selected, school_filter: val }
+      params:   { ...this.state.params, school_filter: [ jrsValue ] },
+      selected: { ...this.state.selected, school_filter: val }
     })
   }
 
@@ -38,6 +42,18 @@ export default class FinalResults extends Component {
     } else {
       return '/public/VJS/ss_ui/accountability/final/district_totals'
     }
+  }
+
+  getDetailPath = () => {
+    if (this.state.pgBtn === 1) {
+      return '/public/VJS/ss_ui/accountability/final/prof_detail'
+    } else {
+      return '/public/VJS/ss_ui/accountability/final/growth_detail'
+    }
+  }
+
+  setPGButton = (val) => {
+    this.setState({ pgBtn: val })
   }
 
   render() {
@@ -131,7 +147,7 @@ export default class FinalResults extends Component {
         <div className='row'>
           <VJSChart
             id          = 'aa-student-detail'
-            reportPath  = '/public/VJS/ss_ui/accountability/final/prof_detail'
+            reportPath  = {this.getDetailPath()}
             title       = 'Student Detail'
             className   = 'col-md-12'
             isTable     = {true}
@@ -147,7 +163,22 @@ export default class FinalResults extends Component {
                 }
               }
             }}
-          />
+          >
+            <ButtonGroup>
+              <Button
+                onClick = {() => this.setPGButton(1)}
+                active  = {this.state.pgBtn === 1}
+              >
+                Proficiency
+              </Button>
+              <Button
+                onClick = {() => this.setPGButton(2)}
+                active  = {this.state.pgBtn === 2}
+              >
+                Growth
+              </Button>
+            </ButtonGroup>
+          </VJSChart>
         </div>
       </div>
     )
