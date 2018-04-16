@@ -80,6 +80,7 @@ class NoteStore {
   fetchStudentNotes = async() => {
     try {
       this.setIsLoading(true)
+      this.selectedNote = null
       
       const params = {
         params: {
