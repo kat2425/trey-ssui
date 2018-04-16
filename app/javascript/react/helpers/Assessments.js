@@ -32,6 +32,12 @@ const Assessments = [
     dataset: 'vw_cogats',
   },
   {
+    module:  'vjs_cpas',
+    value:   'cpas',
+    label:   'CPAS',
+    dataset: 'cpas',
+  },
+  {
     module:  'vjs_dra',
     value:   'dra',
     label:   'DRA',
@@ -60,6 +66,24 @@ const Assessments = [
     value:   'eduphoria',
     label:   'Eduphoria',
     dataset: 'eduphorias',
+  },
+  {
+    module:  'vjs_els',
+    value:   'els_eztt',
+    label:   'ELS EZ TestTracker',
+    dataset: 'els_ez_test_trackers',
+  },
+  {
+    module:  'vjs_els',
+    value:   'els_ezaa',
+    label:   'ELS EZ Assessments',
+    dataset: 'els_ez_assessments',
+  },
+  {
+    module:  'vjs_iready',
+    value:   'iready',
+    label:   'iReady',
+    dataset: 'ireadys',
   },
   {
     module:  'vjs_las_links',

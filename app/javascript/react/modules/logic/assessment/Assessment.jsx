@@ -16,12 +16,16 @@ import ATI                  from './ATI'
 import AccelReader          from './AccelReader'
 import Case21               from './Case21'
 import CogAT                from './CogAT'
+import CPAS                 from './CPAS'
 import DRA                  from './DRA'
 import DRAWordAnalysis      from './DRAWordAnalysis'
 import DMACSTAAR            from './DMACSTAAR'
 import DMACLocal            from './DMACLocal'
 import Eduphoria            from './Eduphoria'
+import ELSEZTT              from './ELSEZTT'
+import ELSEZAA              from './ELSEZAA'
 import LASLinks             from './LASLinks'
+import IReady               from './IReady'
 import MCT                  from './MCT'
 import MAAP                 from './MAAP'
 import MasteryConnect       from './MasteryConnect'
@@ -102,12 +106,16 @@ class Assessments extends Component {
           <Route path='/r/assessment/ati'             component={ATI}             />
           <Route path='/r/assessment/case21'          component={Case21}          />
           <Route path='/r/assessment/cogat'           component={CogAT}           />
+          <Route path='/r/assessment/cpas'            component={CPAS}            />
           <Route path='/r/assessment/dra'             component={DRA}             />
           <Route path='/r/assessment/dra_wa'          component={DRAWordAnalysis} />
           <Route path='/r/assessment/dmac_staar'      component={DMACSTAAR}       />
           <Route path='/r/assessment/dmac_local'      component={DMACLocal}       />
           <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
+          <Route path='/r/assessment/els_eztt'        component={ELSEZTT}         />
+          <Route path='/r/assessment/els_ezaa'        component={ELSEZAA}         />
           <Route path='/r/assessment/las_links'       component={LASLinks}        />
+          <Route path='/r/assessment/iready'          component={IReady}          />
           <Route path='/r/assessment/maap'            component={MAAP}            />
           <Route path='/r/assessment/mct'             component={MCT}             />
           <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
