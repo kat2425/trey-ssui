@@ -1,4 +1,4 @@
-import { 
+import {
   observable,
   action,
   autorun
@@ -150,7 +150,7 @@ export class CallingStore {
     setTimeout(() =>
       this.setCallBarVisible(false), 5000)
   }
-  
+
 
   // Dialpad
   @action
@@ -270,6 +270,7 @@ export class CallingStore {
       const message = returnError(error.code)
 
       intercomEvent('web:calling:web_call_error', {message: message, code: error.code})
+
       this.setIsError({
         message,
         title: 'Error'
@@ -293,13 +294,13 @@ export class CallingStore {
     try {
       this.setIsError(false)
 
-      if(_isEmpty(this.callNoteText.trim())) { 
+      if(_isEmpty(this.callNoteText.trim())) {
         this.setIsError({
           title:   'Note',
           message: 'Your note cannot be empty!',
           type:    'error'
         })
-        return 
+        return
       }
 
       await xhr.post('/commo/call_log/deferred_note', {
@@ -343,12 +344,12 @@ function getTime(start, end) {
 function returnError(errorCode) {
   switch (errorCode) {
   case 31000:
-    return `We can't complete this call because it is either 
+    return `We can't complete this call because it is either
             blocked by a firewall or you have lost connection to the Internet.`
   case 31002:
     return `This contact's number does not allow communication from SchoolStatus.`
   case 31003:
-    return `We can't complete this call because it is either 
+    return `We can't complete this call because it is either
             blocked by a firewall or you have lost connection to the Internet.`
   case 31205:
     return 'There was an error attempting to place the call. Please refresh the page and try again.'
