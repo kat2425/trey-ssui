@@ -17,7 +17,7 @@ import StudentCardController   from 'ui/controllers/StudentCardController'
 import CallingController       from 'ui/controllers/CallingController'
 import SidebarController       from 'ui/controllers/SidebarController'
 
-import SMSInboxStore           from 'stores/SMSInbox'
+import smsInboxStore           from 'stores/SMSInboxStore'
 import CallingStore            from 'stores/CallingStore'
 import webSocketStore          from 'stores/WebSocketStore'
 import SMSConversationStore    from 'stores/SMSConversation'
@@ -166,7 +166,7 @@ class UserMain extends Component {
             <Route path='*/students/:studentId' component={StudentCardController} />
 
             <ActionBar
-              store         = {SMSInboxStore}
+              store         = {smsInboxStore}
               uiStore       = {this.props.uiStore}
               callingStore  = {CallingStore}
               reminderStore = {reminderStore}
