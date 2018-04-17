@@ -24,6 +24,7 @@ import DMACLocal            from './DMACLocal'
 import Eduphoria            from './Eduphoria'
 import ELSEZTT              from './ELSEZTT'
 import ELSEZAA              from './ELSEZAA'
+import ESGI                 from './ESGI'
 import LASLinks             from './LASLinks'
 import IReady               from './IReady'
 import MCT                  from './MCT'
@@ -114,6 +115,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
           <Route path='/r/assessment/els_eztt'        component={ELSEZTT}         />
           <Route path='/r/assessment/els_ezaa'        component={ELSEZAA}         />
+          <Route path='/r/assessment/esgi'            component={ESGI}            />
           <Route path='/r/assessment/las_links'       component={LASLinks}        />
           <Route path='/r/assessment/iready'          component={IReady}          />
           <Route path='/r/assessment/maap'            component={MAAP}            />

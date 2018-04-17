@@ -25,6 +25,7 @@ import DRAWordAnalysis from './DRAWordAnalysis'
 import Eduphoria       from './Eduphoria'
 import ELSEZTT         from './ELSEZTT'
 import ELSEZAA         from './ELSEZAA'
+import ESGI            from './ESGI'
 import LASLinks        from './LASLinks'
 import IReady          from './IReady'
 import MAAP            from './MAAP'
@@ -260,6 +261,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/els_ezaa`}
             render = {() => <ELSEZAA student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/esgi`}
+            render = {() => <ESGI student={student}/> }
           />
 
           <Route render={() => {

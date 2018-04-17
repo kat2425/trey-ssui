@@ -80,6 +80,12 @@ const Assessments = [
     dataset: 'els_ez_assessments',
   },
   {
+    module:  'vjs_esgi',
+    value:   'esgi',
+    label:   'ESGI',
+    dataset: 'vw_esgi',
+  },
+  {
     module:  'vjs_iready',
     value:   'iready',
     label:   'iReady',
