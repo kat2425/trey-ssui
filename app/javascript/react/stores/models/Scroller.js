@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx'
 
-export default class Pager {
-  ORIG_LIMIT = 1
+export default class Scroller {
+  ORIG_LIMIT = 0
 
   @observable limit = 1
   @observable total = 0

@@ -1,18 +1,24 @@
-import { observable, action, computed } from 'mobx'
+import {
+  observable,
+  action,
+  computed
+} from 'mobx'
 
-import _                                from 'lodash'
-import xhr                              from 'helpers/XHR'
+import _            from 'lodash'
+import xhr          from 'helpers/XHR'
 
-import { SIDEBAR }                      from 'stores/UiStore'
-import uiStore                          from 'stores/UiStore'
-import Conversation                     from 'stores/models/Conversation'
-import Pager                            from 'stores/models/Pager'
+import { SIDEBAR }  from 'stores/UiStore'
+import uiStore      from 'stores/UiStore'
+import { setter }   from 'mobx-decorators'
+import Conversation from 'stores/models/Conversation'
+import Scroller     from 'stores/models/Scroller'
 
-class SMSConversationStore {
-  @observable limit         = 20
-  @observable isLoading     = false
-  @observable conversations = observable.map()
-  @observable pagers        = observable.map()
+export class SMSConversationStore {
+  @observable limit           = 20
+  @observable isLoading       = false
+  @observable conversations   = observable.map()
+  @observable scrollers       = observable.map()
+  @setter @observable isError = null
 
   // Computed Values
   @computed
@@ -24,9 +30,9 @@ class SMSConversationStore {
 
   @computed
   get shouldLoadMore(){
-    const pager = this.getCurrentPager()
+    const scroller = this.getCurrentScroller()
 
-    if(this.isLoading || !pager || pager.isFilled) return false
+    if(this.isLoading || !scroller || scroller.isFilled) return false
     return true
   }
 
@@ -39,9 +45,9 @@ class SMSConversationStore {
   }
 
   @action
-  fetchConversation = (id) => {
-    const pager = this.getCurrentPager()
-    const limit = pager ? pager.limit : this.limit
+  fetchConversation = async(id) => {
+    const scroller = this.getCurrentScroller()
+    const limit = scroller ? scroller.limit : this.limit
 
     this.isLoading = true
 
@@ -75,7 +81,7 @@ class SMSConversationStore {
     this.isLoading = false
 
     this.updateConversation(id, data)
-    this.updatePager(id, headers)
+    this.updateScroller(id, headers)
   }
 
   getConversationParams = (id, data) => ({
@@ -145,7 +151,7 @@ class SMSConversationStore {
   @action
   delete = (id) => {
     this.conversations.delete(id)
-    this.pagers.delete(id)
+    this.scrollers.delete(id)
   }
 
   getCurrentConversation = () => {
@@ -155,11 +161,11 @@ class SMSConversationStore {
   loadMore = () => {
     if(!this.shouldLoadMore) return
 
-    // retrieve pager for the current conversation
-    const pager = this.getCurrentPager()
+    // retrieve scroller for the current conversation
+    const scroller = this.getCurrentScroller()
 
     // increase limit to fetch more data
-    pager.increment()
+    scroller.increment()
 
     // fetch more data
     this.fetchConversation(uiStore.currentConversation)
@@ -167,18 +173,18 @@ class SMSConversationStore {
     uiStore.setShouldScrollToBottom(false)
   }
 
-  getCurrentPager = () => {
-    return this.pagers.get(uiStore.currentConversation)
+  getCurrentScroller = () => {
+    return this.scrollers.get(uiStore.currentConversation)
   }
 
-  updatePager = (id, headers) => {
-    const pager = this.pagers.get(id)
+  updateScroller = (id, headers) => {
+    const scroller = this.scrollers.get(id)
     const total = parseInt(headers.total)
 
-    if(pager){
-      pager.setTotal(total)
+    if(scroller){
+      scroller.setTotal(total)
     } else {
-      this.pagers.set(id, new Pager(this.limit, total))
+      this.scrollers.set(id, new Scroller(this.limit, total))
     }
   }
 

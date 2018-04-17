@@ -1,20 +1,38 @@
-import { observable, action, computed } from 'mobx'
-import { setter }                       from 'mobx-decorators'
-import xhr                              from 'helpers/XHR'
-import { pipe, filter, size, orderBy }  from 'lodash/fp'
+import { setter } from 'mobx-decorators'
+import xhr        from 'helpers/XHR'
 
-import Pager            from 'stores/models/Pager'
-import Call             from 'stores/models/Call'
-import userStore        from 'stores/UserStore'
+import Scroller   from 'stores/models/Scroller'
+import Call       from 'stores/models/Call'
+import userStore  from 'stores/UserStore'
+import getError   from 'helpers/ErrorParser'
+import UiStore    from 'stores/UiStore'
+
+import { 
+  pipe,
+  filter,
+  size,
+  orderBy
+} from 'lodash/fp'
+
+import { 
+  observable,
+  action,
+  computed,
+  autorun
+} from 'mobx'
 
 const LIMIT = 30
 
 export class CallStore {
-  pager                            = new Pager(LIMIT, 0)
+  pager                            = new Scroller(LIMIT, 0)
   @setter @observable isLoading    = false
   @setter @observable isError      = null
   @observable calls                = observable.map()
   @setter @observable selectedCall = null
+
+  constructor() {
+    this.initAutoruns()
+  }
 
   // Computed
   @computed get limit() {
@@ -38,12 +56,31 @@ export class CallStore {
   }
 
   // Actions
+  @action
+  initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action
+  autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if (this.isError && !this.isError.hideNotification) {
+        UiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    this.isError.type || 'error'
+        })
+      }
+    })
+  }
+
+
   @action fetchCallLogs = async() => {
     try {
       this.setIsLoading(true)
       this.setIsError(null)
 
-      const { headers, data } = await xhr.get('/commo/call_log', { 
+      const { headers, data } = await xhr.get('/commo/call_log', {
         params: { 
           user_id:         userStore.user.id,
           show_transcript: true,
@@ -52,10 +89,10 @@ export class CallStore {
         } 
       })
 
-      this.updatePager(headers)
+      this.updateScroller(headers)
       this.fetchCallLogsOk(data)
     } catch (err) {
-      this.setIsError(err)
+      this.setIsError(getError(err))
     } finally {
       this.setIsLoading(false)
     }
@@ -70,7 +107,7 @@ export class CallStore {
     this.calls.set(call.id, new Call(this, call))
   }
 
-  @action updatePager = ({ total }) => {
+  @action updateScroller = ({ total }) => {
     this.pager.setTotal(total)
   }
 
@@ -80,12 +117,6 @@ export class CallStore {
     this.pager.increment()
     this.fetchCallLogs()
   }
-
-  @action dispose = () => {
-    this.calls.values().forEach(c => c.dispose())
-  }
 }
 
-const singleton = new CallStore()
-
-export default singleton
+export default new CallStore()
