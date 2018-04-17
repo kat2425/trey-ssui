@@ -18,7 +18,7 @@ import CallingController       from 'ui/controllers/CallingController'
 import SidebarController       from 'ui/controllers/SidebarController'
 
 import smsInboxStore           from 'stores/SMSInboxStore'
-import CallingStore            from 'stores/CallingStore'
+import callingStore            from 'stores/CallingStore'
 import webSocketStore          from 'stores/WebSocketStore'
 import SMSConversationStore    from 'stores/SMSConversation'
 import MailerStore             from 'stores/MailerStore'
@@ -144,7 +144,7 @@ class UserMain extends Component {
       <VJSContainer className='h-100'>
         <div className='container-fluid pt-4 h-100'>
           <div className='row h-100'>
-            <CallingController store={CallingStore} />
+            <CallingController store={callingStore} />
             <NavBar />
             {/* <UserMenu /> */}
 
@@ -168,7 +168,7 @@ class UserMain extends Component {
             <ActionBar
               store         = {smsInboxStore}
               uiStore       = {this.props.uiStore}
-              callingStore  = {CallingStore}
+              callingStore  = {callingStore}
               reminderStore = {reminderStore}
             />
             <MailWriter store={MailerStore} />
