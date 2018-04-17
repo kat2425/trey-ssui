@@ -1,12 +1,15 @@
-import { setter }       from 'mobx-decorators'
-import moment           from 'moment'
-import xhr              from 'helpers/XHR'
-import Communication    from 'stores/models/Communication'
+import { setter }    from 'mobx-decorators'
+import moment        from 'moment'
+import xhr           from 'helpers/XHR'
+import Communication from 'stores/models/Communication'
+import getError      from 'helpers/ErrorParser'
+import uiStore       from 'stores/UiStore'
 
-import { 
-  observable, 
-  action, 
-  computed 
+import {
+  observable,
+  action,
+  computed,
+  autorun
 } from 'mobx'
 
 import { 
@@ -22,6 +25,10 @@ export class CommsStore {
   @setter @observable isError      = false
   @observable communications       = []
   @setter @observable selectedComm = null
+
+  constructor() {
+    this.initAutoruns()
+  }
 
   @computed get sortedCommunications() {
     return orderBy(c => c.createdAt, ['desc'] )(this.communications)
@@ -111,6 +118,23 @@ export class CommsStore {
     )(this.groupedEmails)
   }
 
+
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if (this.isError && !this.isError.hideNotification) {
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    this.isError.type || 'error'
+        })
+      }
+    })
+  }
+
   @action clearData = () => {
     this.communications.clear()
     this.selectedComm = null
@@ -126,7 +150,7 @@ export class CommsStore {
 
       this.fetchCommunicationHistoryOK(data)
     } catch(e){
-      this.setIsError(true)
+      this.setIsError(getError(e))
     } finally {
       this.setIsLoading(false)
     }
