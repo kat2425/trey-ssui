@@ -7,7 +7,7 @@ import {
 import { some, includes } from 'lodash'
 import {setter}           from 'mobx-decorators'
 
-class UserStore {
+export class UserStore {
   @setter @observable user = null
 
   constructor(user){
@@ -35,6 +35,4 @@ class UserStore {
   }
 }
 
-const singleton = new UserStore()
-
-export default singleton
+export default new UserStore()
