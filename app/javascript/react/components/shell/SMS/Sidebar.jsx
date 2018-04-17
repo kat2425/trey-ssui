@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
-import SMSInboxStore        from 'stores/SMSInbox'
+import smsInboxStore        from 'stores/SMSInboxStore'
 import SMSInboxController   from 'ui/controllers/SMSInboxController'
 
 import SMSConversationStore from 'stores/SMSConversation'
@@ -59,7 +59,7 @@ export default class Sidebar extends Component {
     return (
       <SMSInboxController
         handleSelect     = {this.selectConversation}
-        store            = {SMSInboxStore}
+        store            = {smsInboxStore}
       />
     )
   }
