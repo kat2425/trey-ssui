@@ -8,6 +8,7 @@ import {
 import { setter } from 'mobx-decorators'
 import xhr        from 'helpers/XHR'
 import uiStore    from 'stores/UiStore'
+import getError   from 'helpers/ErrorParser'
 import Group      from 'stores/models/Group'
 import _          from 'lodash'
 
@@ -17,16 +18,7 @@ export class GroupStore {
   @setter @observable groups = observable.map()
 
   contructor(){
-    this.autoErrorNotifier()
-  }
-
-  // Autoruns
-  autoErrorNotifier = () => {
-    this.autoErrorDisposer = autorun('Watch errors', () => {
-      if(this.isError && !this.isError.hideNotification){
-        uiStore.addNotification({title: 'Error', message: this.isError.message, type: 'error'})
-      }
-    })
+    this.initAutoruns()
   }
 
   // Computed
@@ -35,6 +27,22 @@ export class GroupStore {
   }
 
   // Actions
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
+
+  @action autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if (this.isError && !this.isError.hideNotification) {
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    this.isError.type || 'error'
+        })
+      }
+    })
+  }
+
   @action fetchGroups = async() => {
     try{
       this.setIsLoading(true)
@@ -44,8 +52,7 @@ export class GroupStore {
 
       groups.forEach(this.updateFromServer)
     } catch(e){
-      this.setIsError(e)
-      console.error(e)
+      this.setIsError(getError(e))
     } finally {
       this.setIsLoading(false)
     }
@@ -71,6 +78,5 @@ export class GroupStore {
   }
 }
 
-const singleton = new GroupStore()
 
-export default singleton
+export default new GroupStore()
