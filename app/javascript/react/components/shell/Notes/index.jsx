@@ -14,12 +14,7 @@ import {
 @observer
 export default class Notes extends Component {
   componentDidMount() {
-    const { student } = this.props
-    
-    noteStore.notes.clear()
-    noteStore.setStudentID(student.id)
-    noteStore.fetchStudentNotes()
-    noteStore.fetchNoteTags()
+    noteStore.resetNotes(this.props.student.id)
   }
 
   renderNote = (note) => {
