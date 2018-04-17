@@ -17,12 +17,17 @@ import ATI             from './ATI'
 import AccelReader     from './AccelReader'
 import Case21          from './Case21'
 import CogAT           from './CogAT'
+import CPAS            from './CPAS'
 import DMACLocal       from './DMACLocal'
 import DMACSTAAR       from './DMACSTAAR'
 import DRA             from './DRA'
 import DRAWordAnalysis from './DRAWordAnalysis'
 import Eduphoria       from './Eduphoria'
+import ELSEZTT         from './ELSEZTT'
+import ELSEZAA         from './ELSEZAA'
+import ESGI            from './ESGI'
 import LASLinks        from './LASLinks'
+import IReady          from './IReady'
 import MAAP            from './MAAP'
 import MCT             from './MCT'
 import MasteryConnect  from './MasteryConnect'
@@ -236,6 +241,31 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/las_links`}
             render = {() => <LASLinks student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/iready`}
+            render = {() => <IReady student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/cpas`}
+            render = {() => <CPAS student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/els_eztt`}
+            render = {() => <ELSEZTT student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/els_ezaa`}
+            render = {() => <ELSEZAA student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/esgi`}
+            render = {() => <ESGI student={student}/> }
           />
 
           <Route render={() => {

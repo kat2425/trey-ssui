@@ -60,7 +60,7 @@ export default class VJSChart extends Component {
   componentWillReceiveProps(nextProps) {
     const { reportPath, params } = nextProps
 
-    if (!(this.props.params === nextProps.params)) {
+    if ((this.props.params !== nextProps.params) || (this.props.reportPath !== reportPath)) {
       this.setState({ emptyReport: false, resourceLoaded: false, totalPages: 0 })
       this.renderChart(reportPath, params)
     }
@@ -105,7 +105,6 @@ export default class VJSChart extends Component {
       // TODO: fixme with a spread ... operator
       events: Object.assign((this.props.events || this.correctVJSTable()), {
         changeTotalPages: (total) => {
-
           if (this._isMounted) {
             this.setState({
               totalPages: total
