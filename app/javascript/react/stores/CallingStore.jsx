@@ -3,7 +3,7 @@ import { setter }                      from 'mobx-decorators'
 import xhr                             from 'helpers/XHR'
 import moment                          from 'moment'
 import { padCharsStart }               from 'lodash/fp'
-import UiStore                         from 'stores/UiStore'
+import uiStore                         from 'stores/UiStore'
 import intercomEvent                   from 'helpers/Intercom'
 
 class CallingStore {
@@ -47,7 +47,7 @@ class CallingStore {
   @action autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if (this.isError && !this.isError.hideNotification) {
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
           type:    this.isError.type || 'error'
@@ -171,7 +171,7 @@ class CallingStore {
           errorMessage = error.response.data.message
         }
 
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   'Error',
           message: errorMessage,
           type:    'error'
@@ -288,7 +288,7 @@ addCallNote = () => {
       .then(action(() => {
         this.setCallNoteText('')
         
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   'Note',
           message: 'Note successfully added!',
           type:    'success'
@@ -301,7 +301,7 @@ addCallNote = () => {
         })
       })
   } else {
-    UiStore.addNotification({
+    uiStore.addNotification({
       title:   'Note',
       message: 'Your note cannot be empty!',
       type:    'error'

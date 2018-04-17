@@ -141,6 +141,4 @@ function getNotificationStyle(type){
   }[type]
 }
 
-const singleton = new UiStore()
-
-export default singleton
+export default new UiStore()

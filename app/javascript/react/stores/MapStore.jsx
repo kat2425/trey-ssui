@@ -9,7 +9,7 @@ import _                     from 'lodash'
 import { setter }            from 'mobx-decorators'
 import { QUERY_XHR as qxhr } from 'helpers/XHR'
 import getError              from 'helpers/ErrorParser'
-import UiStore               from 'stores/UiStore'
+import uiStore               from 'stores/UiStore'
 import turf                  from 'turf'
 
 const headers = {
@@ -56,7 +56,7 @@ export class MapStore {
   @action autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if (this.isError && !this.isError.hideNotification) {
-        UiStore.addNotification({ 
+        uiStore.addNotification({ 
           title:   this.isError.title,
           message: this.isError.message,
           type:    this.isError.type || 'error'

@@ -7,7 +7,7 @@ import {
 
 import { setter } from 'mobx-decorators'
 import xhr        from 'helpers/XHR'
-import UiStore    from 'stores/UiStore'
+import uiStore    from 'stores/UiStore'
 import Group      from 'stores/models/Group'
 import _          from 'lodash'
 
@@ -24,7 +24,7 @@ export class GroupStore {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification({title: 'Error', message: this.isError.message, type: 'error'})
+        uiStore.addNotification({title: 'Error', message: this.isError.message, type: 'error'})
       }
     })
   }

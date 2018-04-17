@@ -16,7 +16,7 @@ import { setter } from 'mobx-decorators'
 import _          from 'lodash'
 import Tag        from 'stores/models/Tag'
 import Pagination from 'stores/models/Pagination'
-import UiStore    from 'stores/UiStore'
+import uiStore    from 'stores/UiStore'
 import config     from 'ui/shell/QueryBuilder/config/'
 import getError   from 'helpers/ErrorParser'
 
@@ -44,7 +44,7 @@ export class TagStore {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification({title: this.isError.title, message: this.isError.message, type: 'error'})
+        uiStore.addNotification({title: this.isError.title, message: this.isError.message, type: 'error'})
       }
     })
   }
