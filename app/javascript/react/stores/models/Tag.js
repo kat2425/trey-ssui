@@ -124,7 +124,6 @@ export default class Tag {
 
       return stringify(queryBuilderFormat(this.treeQuery, config))
     } catch(e){
-      console.error(e)
       return this.query ? stringify(this.query) : null
     }
   }
@@ -149,7 +148,6 @@ export default class Tag {
 
       return output
     } catch(e){
-      console.warn(e)
       return ''
     }
   }
@@ -253,7 +251,6 @@ export default class Tag {
         }
         : getError(e)
       )
-      console.error(e)
     } finally {
       this.setIsFetchingStudents(false)
     }
@@ -290,7 +287,6 @@ export default class Tag {
       })
     } catch (e) {
       this.setIsError(getError(e))
-      console.error(e)
     } finally {
       this.setIsCreating(false)
     }
@@ -315,7 +311,6 @@ export default class Tag {
       })
     } catch(e) {
       this.setIsError(getError(e))
-      console.error(e)
     } finally {
       this.setIsDeleting(false)
     }
@@ -342,7 +337,6 @@ export default class Tag {
       })
     } catch (e) {
       this.setIsError(getError(e))
-      console.error(e)
     } finally {
       this.setIsUpdating(false)
     }
@@ -486,4 +480,3 @@ export default class Tag {
     }
   }
 }
-

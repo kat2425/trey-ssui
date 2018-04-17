@@ -5,11 +5,12 @@ import {
   computed,
   toJS
 } from 'mobx'
+
 import _                     from 'lodash'
 import { setter }            from 'mobx-decorators'
 import { QUERY_XHR as qxhr } from 'helpers/XHR'
 import getError              from 'helpers/ErrorParser'
-import uiStore               from 'stores/UiStore'
+import UiStore               from 'stores/UiStore'
 import turf                  from 'turf'
 
 const headers = {
@@ -56,7 +57,7 @@ export class MapStore {
   @action autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if (this.isError && !this.isError.hideNotification) {
-        uiStore.addNotification({ 
+        UiStore.addNotification({ 
           title:   this.isError.title,
           message: this.isError.message,
           type:    this.isError.type || 'error'
@@ -64,16 +65,9 @@ export class MapStore {
       }
     })
   }
+
   @action fetchGeoJSON = async(tag) => {
-    if(!tag.isValid){
-      /*
-       *this.setIsError({
-       *  message: 'Please enter valid fields.',
-       *  title:   'Error while fetching students'
-       *})
-       */
-      return
-    }
+    if(!tag.isValid){ return }
 
     try {
       this.setIsFetching(true)
@@ -87,13 +81,7 @@ export class MapStore {
       this.setGeoData(data)
       this.fitBounds()
     } catch (e) {
-      const error = getError(e)
-
-      this.setIsError({
-        message: error.message,
-        title:   error.title
-      })
-      console.error(e)
+      this.setIsError(getError(e))
     } finally {
       this.setIsFetching(false)
     }
@@ -126,7 +114,7 @@ export class MapStore {
     _.isFinite(s.lat)
   )
 
-  fitBounds = () => {
+  @action fitBounds = () => {
     try{
       this.setIsError(false)
 
@@ -134,10 +122,7 @@ export class MapStore {
 
       this.map.fitBounds(turf.bbox(this.geoData), {padding: 20})
     } catch(e){
-      const error = getError(e)
-
-      this.setIsError(error)
-      console.error(error)
+      this.setIsError(getError(e))
     }
   }
 
@@ -147,7 +132,4 @@ export class MapStore {
   }
 }
 
-const singleton = new MapStore()
-
-export default singleton
-
+export default new MapStore()
