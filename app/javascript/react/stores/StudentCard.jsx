@@ -2,6 +2,7 @@ import { observable, action, computed } from 'mobx'
 
 import _                                from 'lodash'
 import xhr                              from 'helpers/XHR'
+import intercomEvent                    from 'helpers/Intercom'
 
 class StudentCardStore {
   @observable isLoading      = false
@@ -125,6 +126,11 @@ class StudentCardStore {
 
   @action.bound
   uploadFile(filename, attachment) {
+    intercomEvent('web:student_card:attachments:add_attachment', {
+      student_id: this.student.id,
+      filename:   filename
+    })
+
     const data = this.getAttachmentData(filename, attachment)
 
     xhr.post(`/students/${this.student.id}/attachments`, data, {
