@@ -83,7 +83,7 @@ const Assessments = [
     module:  'vjs_esgi',
     value:   'esgi',
     label:   'ESGI',
-    dataset: 'vw_esgi',
+    dataset: 'esgi',
   },
   {
     module:  'vjs_iready',
