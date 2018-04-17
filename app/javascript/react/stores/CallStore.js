@@ -5,7 +5,7 @@ import Scroller   from 'stores/models/Scroller'
 import Call       from 'stores/models/Call'
 import userStore  from 'stores/UserStore'
 import getError   from 'helpers/ErrorParser'
-import UiStore    from 'stores/UiStore'
+import uiStore    from 'stores/UiStore'
 
 import { 
   pipe,
@@ -65,7 +65,7 @@ export class CallStore {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if (this.isError && !this.isError.hideNotification) {
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
           type:    this.isError.type || 'error'
@@ -116,6 +116,10 @@ export class CallStore {
 
     this.pager.increment()
     this.fetchCallLogs()
+  }
+
+  @action dispose = () => {	
+    this.calls.values().forEach(c => c.dispose())	
   }
 }
 
