@@ -8,8 +8,8 @@ import renderIf           from 'render-if'
 import NoteInfo           from '../NoteInfo'
 import NoteForm           from '../NoteForm'
 import _                  from 'lodash'
-import {FaInfo}           from 'react-icons/lib/fa'
-import {Popover}          from 'antd'
+import {FaInfo, FaLock}   from 'react-icons/lib/fa'
+import {Popover, Tooltip} from 'antd'
 
 NoteView.propTypes = {
   store: PropTypes.object.isRequired,
@@ -27,7 +27,10 @@ function NoteView({store, note}) {
             <div style={{minHeight: 450}}>
               <Header>     
                 {getCreatedBy(note)}
-                <Title>{note.title}</Title>
+                <Title>
+                  {note.title}
+                  {showIfModifiable(note)}
+                </Title>             
                 {renderDate(note)}
               </Header>
               {note.body}
@@ -92,6 +95,16 @@ function getCreatedBy(note) {
         <FaInfo style={{ fontSize: 12 }} />
       </div>
     </Popover>
+  )
+}
+
+function showIfModifiable(note) {
+  if(note.isModifiable) return null
+
+  return (
+    <Tooltip title='You cannot modify this note'>
+      <FaLock className='ml-2' style={{fontSize: 18}} />
+    </Tooltip>
   )
 }
 
