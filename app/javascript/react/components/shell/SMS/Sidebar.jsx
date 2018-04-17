@@ -5,8 +5,8 @@ import { inject, observer } from 'mobx-react'
 import smsInboxStore        from 'stores/SMSInboxStore'
 import SMSInboxController   from 'ui/controllers/SMSInboxController'
 
-import SMSConversationStore from 'stores/SMSConversation'
 import SMSController        from 'ui/controllers/SMSController'
+import smsConversationStore from 'stores/SMSConversationStore'
 
 const containerStyle = () => ({
   position:      'fixed',
@@ -48,7 +48,7 @@ export default class Sidebar extends Component {
     uiStore.setCurrentContact(contact)
     uiStore.setCurrentConversation(conversation)
 
-    SMSConversationStore.setAllAsRead(conversation)
+    smsConversationStore.setAllAsRead(conversation)
   }
 
   backToInbox = () => {
@@ -72,7 +72,7 @@ export default class Sidebar extends Component {
         handleBack       = {this.backToInbox}
         conversation     = {uiStore.currentConversation}
         contact          = {uiStore.currentContact}
-        store            = {SMSConversationStore}
+        store            = {smsConversationStore}
       />
     )
   }

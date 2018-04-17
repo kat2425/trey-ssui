@@ -1,7 +1,7 @@
 import {  action }          from 'mobx'
 import Faye                 from 'faye'
 
-import smsConversationStore from 'stores/SMSConversation'
+import smsConversationStore from 'stores/SMSConversationStore'
 import smsInboxStore        from 'stores/SMSInboxStore'
 import uiStore              from 'stores/UiStore'
 
