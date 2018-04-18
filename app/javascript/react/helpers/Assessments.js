@@ -164,6 +164,12 @@ const Assessments = [
     dataset: 'vw_tcap',
   },
   {
+    module:  'vjs_tvaas',
+    value:   'tvaas',
+    label:   'TVAAS',
+    dataset: 'vw_tvaas',
+  },
+  {
     module:  'vjs_renplace',
     value:   'accel_reader',
     label:   'Accelerated Reader',

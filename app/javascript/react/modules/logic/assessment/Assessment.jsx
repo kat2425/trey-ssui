@@ -41,6 +41,7 @@ import STARMath             from './STARMath'
 import STARReading          from './STARReading'
 import Scantron             from './Scantron'
 import TCAP                 from './TCAP'
+import TVAAS                from './TVAAS'
 
 import assessments          from 'helpers/Assessments'
 
@@ -132,6 +133,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/star_reading'    component={STARReading}     />
           <Route path='/r/assessment/satp'            component={SATP}            />
           <Route path='/r/assessment/tcap'            component={TCAP}            />
+          <Route path='/r/assessment/tvaas'           component={TVAAS}           />
 
           <Route render={() => {
             return (

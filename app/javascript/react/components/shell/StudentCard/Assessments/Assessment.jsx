@@ -42,6 +42,7 @@ import STARMath        from './STARMath'
 import STARReading     from './STARReading'
 import Scantron        from './Scantron'
 import TCAP            from './TCAP'
+import TVAAS           from './TVAAS'
 
 import assessments     from 'helpers/Assessments'
 
@@ -266,6 +267,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/esgi`}
             render = {() => <ESGI student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/tvaas`}
+            render = {() => <TVAAS student={student}/> }
           />
 
           <Route render={() => {
