@@ -170,6 +170,18 @@ class NoteStore {
   @action onPageChange = () => {
     this.fetchStudentNotes()
   }
+
+  @action clear = () => {
+    this.notes.clear()
+    this.pagination.clear()
+  }
+
+  @action resetNotes = (studentID) => {
+    this.clear()
+    this.setStudentID(studentID)
+    this.fetchStudentNotes()
+    this.fetchNoteTags()
+  }
 }
 
 function getFilterConditions(a, b, c) {
