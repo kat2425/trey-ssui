@@ -6,6 +6,7 @@ import ReactDOM           from 'react-dom'
 
 import QueryBuilder       from 'ui/shell/QueryBuilder'
 import LoadingSpinner     from 'ui/shell/LoadingSpinner'
+import Protip             from 'ui/shell/Protip'
 
 import tagStore           from 'stores/TagStore'
 
@@ -117,7 +118,10 @@ export default class TagBuilder extends Component {
                 </Col>,
                 <Col xs={24} sm={24} md={7} xxl={4} key={uuid()} className='pr-4'>                  
                   {renderContent(
-                    <NaturalLanguageSection tagStore={tagStore} />
+                    <div>
+                      <NaturalLanguageSection tagStore={tagStore} />
+                      <Protip title='query' tips={tips}/>
+                    </div>
                   )}
                 </Col>
               ])}
@@ -189,3 +193,11 @@ const getRenderFunctions = (tagStore) => {
     renderIfSchemaError
   }
 }
+
+const tips = [
+  {
+    label:   'Tip #1', 
+    content: `If you don't select a school year for your data filters, 
+    your list will return results from any year within the SchoolStatus database.`
+  } 
+]
