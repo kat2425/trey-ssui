@@ -20,6 +20,7 @@
 /node_modules
 /yarn-error.log
 /public/assets
+.vscode
 
 /resources/bs-4-theme/node_modules
 /resources/bs-4-theme/dist/*

@@ -111,6 +111,13 @@ const UserMenu = () => {
         />
 
         <EUserMenuItem
+          title     = 'Groups'
+          iconClass = 'icon-slideshare'
+          link      = '/r/groups'
+          renderIf  = {userStore.hasModules('user_group_admin', 'student_group_admin', 'student_groups')}
+        />
+
+        <EUserMenuItem
           title     = 'Reporting'
           iconClass = 'icon-unread'
           link      = '/r/reporting/adhoc'

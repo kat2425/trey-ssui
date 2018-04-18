@@ -238,6 +238,7 @@ export default class Note {
   @action deleteNote = async() => {
     try {
       this.setIsDeleting(true)
+      
       await xhr.delete(`/student_notes/${this.id}`)
 
       runInAction(() => {   
