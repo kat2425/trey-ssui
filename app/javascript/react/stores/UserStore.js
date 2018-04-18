@@ -26,12 +26,20 @@ export class UserStore {
     return !!this.user.impersonated
   }
 
+  @computed get customModules() {
+    return this.user.customModules
+  }
+
   @action hasModules = (...modules) => {
     return some(modules, m => includes(this.modules, m))
   }
 
   @action hasPolicies = (...policies) => {
     return some(policies, p => includes(this.policies, p))
+  }
+
+  @action hasCustomModule = (module) => {
+    return includes(this.customModules, module)
   }
 }
 

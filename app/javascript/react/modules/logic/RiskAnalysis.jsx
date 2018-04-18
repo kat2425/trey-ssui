@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { observer }         from 'mobx'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
@@ -8,6 +9,7 @@ import MassEmail            from 'ui/shell/MassEmail/MassEmail'
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 import renderIf             from 'ui/hoc/renderIf'
+import _                    from 'lodash'
 
 const EMassEmail   = renderIf(MassEmail)
 const EVJSICSelect = renderIf(VJSICSelect)
@@ -63,13 +65,43 @@ export default class RiskAnalysis extends Component {
     })
   }
 
+  getAreaBreakdownPath = () => {
+    const { jasper } = userStore.user
+
+    if (userStore.hasCustomModule('risk_analysis')) {
+      return `${jasper.orgPath}/at_risk_area_breakdown`
+    } else {
+      return '/public/VJS/at_risk_area_breakdown'
+    }
+  }
+
+  getTotalsBreakdownPath = () => {
+    const { jasper } = userStore.user
+
+    if (userStore.hasCustomModule('risk_analysis')) {
+      return `${jasper.orgPath}/at_risk_totals_breakdown`
+    } else {
+      return '/public/VJS/at_risk_totals_breakdown'
+    }
+  }
+
+  getStudentDetailPath = () => {
+    const { jasper } = userStore.user
+
+    if (userStore.hasCustomModule('risk_analysis')) {
+      return `${jasper.orgPath}/at_risk_student_detail`
+    } else {
+      return '/public/VJS/at_risk_student_detail'
+    }
+  }
+
   renderCharts() {
     if (!userStore.user.higherEd) {
       return (
         <div className='row'>
           <VJSChart
             id          = 'risk-area-breakdown'
-            reportPath  = '/public/VJS/at_risk_area_breakdown'
+            reportPath  = {this.getAreaBreakdownPath()}
             params      = {this.state.params}
             title       = 'Area Breakdown'
             className   = 'col-md-6'
@@ -77,7 +109,7 @@ export default class RiskAnalysis extends Component {
 
           <VJSChart
             id          = 'risk-totals-breakdown'
-            reportPath  = '/public/VJS/at_risk_totals_breakdown'
+            reportPath  = {this.getTotalsBreakdownPath()}
             params      = {this.state.params}
             title       = 'Totals'
             className   = 'col-md-6'
@@ -90,7 +122,7 @@ export default class RiskAnalysis extends Component {
   render() {
     const studentDetailPath = (userStore.user.higherEd)
       ? '/public/VJS/ss_ui/risk_analysis/student_detail'
-      : '/public/VJS/at_risk_student_detail'
+      : this.getStudentDetailPath()
 
     return (
       <div>

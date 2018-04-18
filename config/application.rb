@@ -38,6 +38,9 @@ module SchoolStatus
 
     unless ENV['NO_DB']
       config.sequel.after_connect = proc do
+        Sequel::Model.db.extension :pg_array
+        Sequel::Model.db.extension :pg_json
+
         Doorkeeper.configure do
           orm :sequel
 
