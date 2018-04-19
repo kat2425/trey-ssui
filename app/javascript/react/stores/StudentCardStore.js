@@ -292,6 +292,16 @@ export class StudentCardStore {
 
     return data
   }
+
+  @action
+  changeAttachmentVisibility = async(bucketID, visibility) => {
+    try {
+      await xhr.put(`/students/${this.student.id}/attachments/${bucketID}`, {visibility})
+    }
+    catch(e) {
+      this.setIsError(this.getError(e))
+    }
+  }
 }
 
 export default new StudentCardStore()
