@@ -1,22 +1,14 @@
-import React, { Component} from 'react'
-import PropTypes from 'prop-types'
+import React, { Component}  from 'react'
+import { observer }         from 'mobx-react'
 
-import TVAAS from '../../modules/logic/TVAAS'
-import SMSConversationStore from '../../stores/SMSConversation'
+import TVAAS                from '../../modules/logic/TVAAS'
+import smsConversationStore from '../../stores/SMSConversationStore'
 
+@observer
 export default class TVAASController extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-  }
-
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
-      <TVAAS store={SMSConversationStore}/>
+      <TVAAS store={smsConversationStore}/>
     )
   }
 }

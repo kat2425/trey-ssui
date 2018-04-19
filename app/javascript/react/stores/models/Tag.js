@@ -15,7 +15,7 @@ import getError      from 'helpers/ErrorParser'
 
 import { setter }    from 'mobx-decorators'
 import userStore     from 'stores/UserStore'
-import UiStore       from 'stores/UiStore'
+import uiStore       from 'stores/UiStore'
 import _             from 'lodash'
 import uuid          from 'uuid'
 import moment        from 'moment'
@@ -80,7 +80,7 @@ export default class Tag {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
           type:    'error'
@@ -124,7 +124,6 @@ export default class Tag {
 
       return stringify(queryBuilderFormat(this.treeQuery, config))
     } catch(e){
-      console.error(e)
       return this.query ? stringify(this.query) : null
     }
   }
@@ -149,7 +148,6 @@ export default class Tag {
 
       return output
     } catch(e){
-      console.warn(e)
       return ''
     }
   }
@@ -253,7 +251,6 @@ export default class Tag {
         }
         : getError(e)
       )
-      console.error(e)
     } finally {
       this.setIsFetchingStudents(false)
     }
@@ -286,11 +283,10 @@ export default class Tag {
         wasActive && this.tagStore.setSelectedTag(this)
 
         this.tagStore.toggleQueryForm()
-        UiStore.addMessage(`${this.name} created successfully`)
+        uiStore.addMessage(`${this.name} created successfully`)
       })
     } catch (e) {
       this.setIsError(getError(e))
-      console.error(e)
     } finally {
       this.setIsCreating(false)
     }
@@ -311,11 +307,10 @@ export default class Tag {
       runInAction(() => {
         this.tagStore.deleteTag(this)
 
-        UiStore.addMessage(`${this.name} deleted successfully`)
+        uiStore.addMessage(`${this.name} deleted successfully`)
       })
     } catch(e) {
       this.setIsError(getError(e))
-      console.error(e)
     } finally {
       this.setIsDeleting(false)
     }
@@ -338,11 +333,10 @@ export default class Tag {
         this.updateFromJson(data)
         this.tagStore.showQueryForm && this.tagStore.toggleQueryForm()
 
-        UiStore.addMessage(`${this.name} saved successfully`)
+        uiStore.addMessage(`${this.name} saved successfully`)
       })
     } catch (e) {
       this.setIsError(getError(e))
-      console.error(e)
     } finally {
       this.setIsUpdating(false)
     }
@@ -486,4 +480,3 @@ export default class Tag {
     }
   }
 }
-

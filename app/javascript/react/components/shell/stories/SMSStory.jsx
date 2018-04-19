@@ -8,9 +8,6 @@ import Conversation  from '../SMS/Conversation'
 import InboxItem     from '../SMS/InboxItem'
 import Inbox         from '../SMS/Inbox'
 
-import SMSController from '../../controllers/SMSController'
-import SMSConversationStore from '../../../stores/SMSConversation'
-
 const stories = storiesOf('SMS', module)
 
 stories.add('ChatBubble', () => (
@@ -32,23 +29,23 @@ stories.add('ChatBubble', () => (
 const messages = [
   {
     direction: 'incoming',
-    text: 'hello there pal',
-    time: 'now'
+    text:      'hello there pal',
+    time:      'now'
   },
   {
     direction: 'incoming',
-    text: 'what is life?',
-    time: 'now'
+    text:      'what is life?',
+    time:      'now'
   },
   {
     direction: 'outgoing',
-    text: 'i think 47',
-    time: 'now'
+    text:      'i think 47',
+    time:      'now'
   },
   {
     direction: 'incoming',
-    text: 'close enough',
-    time: 'now'
+    text:      'close enough',
+    time:      'now'
   },
 ]
 
@@ -69,9 +66,3 @@ stories.add('Inbox', () => (
     <Inbox/>
   </DumbContainer>
 ))
-
-// stories.add('Controller', () => (
-//   <DumbContainer title='Controller'>
-//     <SMSController store={SMSConversationStore}/>
-//   </DumbContainer>
-// ))

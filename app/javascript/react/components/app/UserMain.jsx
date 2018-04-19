@@ -6,7 +6,6 @@ import {
   Switch, Route, withRouter
 } from 'react-router-dom'
 
-import UserMenu                from 'ui/shell/UserMenu/UserMenu'
 import ActionBar               from 'ui/shell/ActionBar'
 import NavBar                  from 'ui/shell/NavBar'
 import AppContainer            from 'ui/app/AppContainer'
@@ -18,11 +17,11 @@ import StudentCardController   from 'ui/controllers/StudentCardController'
 import CallingController       from 'ui/controllers/CallingController'
 import SidebarController       from 'ui/controllers/SidebarController'
 
-import SMSInboxStore           from 'stores/SMSInbox'
-import CallingStore            from 'stores/CallingStore'
-import WebSocketStore          from 'stores/WebSocket'
-import SMSConversationStore    from 'stores/SMSConversation'
-import MailerStore             from 'stores/MailerStore'
+import smsInboxStore           from 'stores/SMSInboxStore'
+import callingStore            from 'stores/CallingStore'
+import webSocketStore          from 'stores/WebSocketStore'
+import smsConversationStore    from 'stores/SMSConversationStore'
+import mailerStore             from 'stores/MailerStore'
 import callStore               from 'stores/CallStore'
 import reminderStore           from 'stores/ReminderStore'
 
@@ -84,7 +83,7 @@ class UserMain extends Component {
     const contact = _.get(e, 'detail.contact')
 
     if(contact){
-      SMSConversationStore.initiateConversation(contact)
+      smsConversationStore.initiateConversation(contact)
       return
     }
 
@@ -93,11 +92,11 @@ class UserMain extends Component {
   }
 
   showMailer = (e) => {
-    MailerStore.fetchEmailAddress(e.detail.type, e.detail.id, e.detail.name)
+    mailerStore.fetchEmailAddress(e.detail.type, e.detail.id, e.detail.name)
   }
 
   componentDidMount() {
-    WebSocketStore.subscribeUser(window.SSUser.id)
+    webSocketStore.subscribeUser(window.SSUser.id)
 
     window.addEventListener('showStudentCard',    this.showStudentCard)
     window.addEventListener('onCloseStudentCard', this.onCloseStudentCard)
@@ -141,13 +140,11 @@ class UserMain extends Component {
   }
 
   render() {
-    const { uiStore } = this.props
-
     return (
       <VJSContainer className='h-100'>
         <div className='container-fluid pt-4 h-100'>
           <div className='row h-100'>
-            <CallingController store={CallingStore} />
+            <CallingController store={callingStore} />
             <NavBar />
             {/* <UserMenu /> */}
 
@@ -169,12 +166,12 @@ class UserMain extends Component {
             <Route path='*/students/:studentId' component={StudentCardController} />
 
             <ActionBar
-              store         = {SMSInboxStore}
+              store         = {smsInboxStore}
               uiStore       = {this.props.uiStore}
-              callingStore  = {CallingStore}
+              callingStore  = {callingStore}
               reminderStore = {reminderStore}
             />
-            <MailWriter store={MailerStore} />
+            <MailWriter store={mailerStore} />
             <SidebarController callStore={callStore} />
           </div>
         </div>

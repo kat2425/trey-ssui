@@ -1,9 +1,15 @@
-import { observable, action, computed } from 'mobx'
-import { setter }                       from 'mobx-decorators'
-import xhr                              from 'helpers/XHR'
-import userStore                        from 'stores/UserStore'
-import uiStore                          from 'stores/UiStore'
-import _                                from 'lodash'
+import {
+  observable,
+  action,
+  computed,
+  autorun
+} from 'mobx'
+import { setter } from 'mobx-decorators'
+import xhr        from 'helpers/XHR'
+import userStore  from 'stores/UserStore'
+import getError   from 'helpers/ErrorParser'
+import uiStore    from 'stores/UiStore'
+import _          from 'lodash'
 
 const FILTER = {
   ALL:       'all',
@@ -11,7 +17,7 @@ const FILTER = {
   COMPLETED: 'completed'
 }
 
-class ReminderStore {
+export class ReminderStore {
   @observable reminders               = []
   @observable reminderText            = undefined
   @observable selectedFilter          = FILTER.PENDING
@@ -21,11 +27,14 @@ class ReminderStore {
   @observable @setter isError         = null
   @observable @setter isLoading       = null
 
+  constructor() {
+    this.initAutoruns()
+  }
 
   @computed
   get filteredReminders() {
-    if (this.selectedFilter != FILTER.ALL) {
-      return _.filter(this.reminders, (e) => { return e.status == this.selectedFilter })
+    if (this.selectedFilter !== FILTER.ALL) {
+      return _.filter(this.reminders, (e) => { return e.status === this.selectedFilter })
     } else {
       return this.reminders
     }
@@ -39,109 +48,127 @@ class ReminderStore {
     return _.filter(this.reminders, (e) => { return e.status === 'pending' }).length
   }
 
-  @action
-  fetchReminders = () => {
-    this.setIsLoading(true)
+  @action initAutoruns = () => {
+    this.autoErrorNotifier()
+  }
 
-    xhr.get('/tasks', {
-      params: {
-        only: [
-          'id', 'created_at', 'updated_at',
-          'status', 'date', 'description', 'school_year',
-          'user.id', 'user.full_name',
-          'student.id', 'student.full_name',
-          'contact.id', 'contact.name'
-        ].join(',')
+  @action autoErrorNotifier = () => {
+    this.autoErrorDisposer = autorun('Watch errors', () => {
+      if (this.isError && !this.isError.hideNotification) {
+        uiStore.addNotification({
+          title:   this.isError.title,
+          message: this.isError.message,
+          type:    this.isError.type || 'error'
+        })
       }
     })
-      .then((data) => {
-        this.fetchRemindersOK(data)
-      })
-      .catch((error) => {
-        this.setIsError(error)
-      })
   }
 
   @action
-  fetchRemindersOK = ({ data }) => {
-    this.reminders = data
-    this.setIsLoading(false)
+  fetchReminders = async() => {
+    try {
+      this.setIsLoading(true)
+      const res = await xhr.get('/tasks', {
+        params: {
+          only: [
+            'id', 'created_at', 'updated_at',
+            'status', 'date', 'description', 'school_year',
+            'user.id', 'user.full_name',
+            'student.id', 'student.full_name',
+            'contact.id', 'contact.name'
+          ].join(',')
+        }
+      })
+
+      this.reminders = res.data
+    } catch(e) {
+      this.setIsError(getError(e))
+    } finally {
+      this.setIsLoading(false)
+    }
   }
 
   @action
-  addReminder = (reminder) => {
-    this.isValidInput() && (
-      xhr.post('/tasks', {
-        student_id:  this.selectedStudent[0].id,
-        user_id:     userStore.user.id,
-        type:        'reminder',
-        description: reminder,
-        date:        this.dateTime
-      })
-        .then((data) => {
-          this.reminders.unshift(data.data)
-          uiStore.addMessage(
-            'Successfully added reminder!',
-            'success'
-          )
+  addReminder = async(reminder) => {
+    if (this.isValidInput()) {
+      try {
+        const res = await xhr.post('/tasks', {
+          student_id:  this.selectedStudent[0].id,
+          user_id:     userStore.user.id,
+          type:        'reminder',
+          description: reminder,
+          date:        this.dateTime
         })
-        .catch((error) => {
-          uiStore.addMessage(
-            'Error! Failed to add reminder!',
-            'danger'
-          )
-          this.setIsError(error)
-        })
-    )
-  }
 
-  @action
-  completeReminder = (id) => {
-    xhr.put(`/tasks/${id}`, {
-      id,
-      status: 'complete'
-    })
-      .then(() => {
-        const index = _.findIndex(this.reminders, (e) => { return e.id == id })
-
-        this.reminders[index].status = 'complete'
+        this.reminders.unshift(res.data)
         uiStore.addMessage(
-          'Reminder successfully marked as completed!',
+          'Successfully added reminder!',
           'success'
         )
-      })
+      } catch (e) {
+        this.setIsError(getError(e))
+      }
+    } else {
+      this.setIsError({title: 'Invalid Input', message: 'Check your reminder input'})
+    }
   }
 
   @action
-  undoReminder = (id) => {
-    xhr.put(`/tasks/${id}`, {
-      id,
-      status: 'pending'
-    })
-      .then(() => {
-        const index = _.findIndex(this.reminders, (e) => { return e.id == id })
-
-        this.reminders[index].status = 'pending'
+  completeReminder = async(id) => {
+    try {
+      await xhr.put(`/tasks/${id}`, {
+        id,
+        status: 'complete'
       })
+      const index = _.findIndex(this.reminders, (res) => {
+        return res.id === id
+      })
+
+      this.reminders[index].status = 'complete'
+      uiStore.addMessage(
+        'Reminder successfully marked as completed!',
+        'success'
+      )
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
   }
 
   @action
-  removeReminder = (id) => {
-    xhr.delete(`/tasks/${id}`)
-      .then(() => {
-        const index = _.findIndex(this.reminders, (e) => { return e.id == id })
-
-        this.reminders.splice(index, 1)
-        uiStore.addMessage(
-          'Reminder successfully deleted!',
-          'warning'
-        )
-      }).catch((error) => {
-        uiStore.addMessage(
-          'Error! Could not delete reminder!',
-          'danger'
-        )
+  undoReminder = async(id) => {
+    try {
+      await xhr.put(`/tasks/${id}`, {
+        id,
+        status: 'pending'
       })
+      const index = _.findIndex(this.reminders, (res) => {
+        return res.id === id
+      })
+
+      this.reminders[index].status = 'pending'
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action
+  removeReminder = async(id) => {
+    try {
+      await xhr.delete(`/tasks/${id}`)
+        .then(() => {
+          const index = _.findIndex(this.reminders, (res) => {
+            return res.id === id
+          })
+
+          this.reminders.splice(index, 1)
+          uiStore.addMessage(
+            'Reminder successfully deleted!',
+            'warning'
+          )
+        })
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
   }
 
   @action
@@ -174,4 +201,4 @@ class ReminderStore {
   }
 }
 
-export default ReminderStore = new ReminderStore()
+export default new ReminderStore()

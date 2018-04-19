@@ -10,7 +10,6 @@ const EUserMenuSection = renderIf(UserMenuSection)
 
 const UserMenu = () => {
   const _riskItemLabel    = userStore.user.higherEd ? 'At Risk' : 'At Risk'
-  const _chanHistoryLabel = userStore.user.hasChannel ? 'History' : 'Call History'
 
   return (
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar pt-0'>
@@ -83,7 +82,7 @@ const UserMenu = () => {
       <UserMenuSection title='Communication'>
         {/* <EUserMenuItem title='Inbox' iconClass='icon-inbox' link='/r/channel/inbox' /> */}
         <EUserMenuItem title='Engagement' iconClass='icon-power-plug' link='/r/channel/engagement' />
-        <EUserMenuItem title={_chanHistoryLabel} iconClass='icon-phone' link='/r/channel/history' />
+        <EUserMenuItem title='History' iconClass='icon-phone' link='/r/channel/history' />
       </UserMenuSection>
 
       <EUserMenuSection

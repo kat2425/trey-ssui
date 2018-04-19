@@ -10,7 +10,7 @@ EditButton.propTypes = {
 function EditButton({note}){
   return (
     <SSButton 
-      disabled  = {note.isDeleting}
+      disabled  = {note.isDeleting || !note.isModifiable}
       onClick   = {note.handleOnEditClick}
       className = 'pl-2 mr-2'
       iconClass = 'icon icon-pencil'

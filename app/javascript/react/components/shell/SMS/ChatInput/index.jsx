@@ -11,7 +11,7 @@ import AttachmentButton     from './AttachmentButton'
 import Attachment           from 'ui/shell/Attachment'
 import TranslationContainer from 'ui/shell/TranslationContainer'
 
-import smsConversationStore from 'stores/SMSConversation'
+import smsConversationStore from 'stores/SMSConversationStore'
 import { STATE }            from 'stores/models/Translator'
 import userStore            from 'stores/UserStore'
 
@@ -39,7 +39,7 @@ export default class ChatInput extends Component {
   }
 
   handleKeyPress = (e) => {
-    if(e.charCode == 13 && !e.shiftKey) {
+    if(e.charCode === 13 && !e.shiftKey) {
       e.preventDefault()
       this.sendMessage(this.state.message)
     }

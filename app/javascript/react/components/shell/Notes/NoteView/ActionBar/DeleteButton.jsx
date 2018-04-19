@@ -17,6 +17,7 @@ function DeleteButton({note}){
       cancelText = 'Cancel'
     >
       <SSButton
+        disabled  = {!note.isModifiable}
         className = 'pl-2'
         color     = 'danger'
         loading   = {note.isDeleting}

@@ -5,7 +5,7 @@ import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 @observer
-export default class Eduphoria extends Component {
+export default class TVAAS extends Component {
   constructor(props) {
     super(props)
 
@@ -29,10 +29,10 @@ export default class Eduphoria extends Component {
     return (
       <div>
         <VJSChart
-          id               = 'sc-eduphoria'
-          reportPath       = '/public/VJS/ss_ui/assessment/eduphoria/student_card'
+          id               = 'sc-tvaas'
+          reportPath       = '/public/VJS/ss_ui/assessment/tvaas/student_card'
           scale            = 'container'
-          title            = 'Eduphoria'
+          title            = 'TVAAS'
           isTable          = {true}
           ignorePagination = {true}
           params           = {{
@@ -49,7 +49,7 @@ export default class Eduphoria extends Component {
             setDefault    = {true}
             placeholder   = 'Year'
             width         = {100}
-            params        = {{ dataset: ['eduphorias'], student_id: [student.id] }}
+            params        = {{ dataset: ['vw_tvaas'], student_id: [student.id] }}
           />
         </VJSChart>
       </div>

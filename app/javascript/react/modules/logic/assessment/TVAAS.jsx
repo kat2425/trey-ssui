@@ -6,7 +6,7 @@ import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 import fireEvent            from 'helpers/FireEvent'
 
-export default class Eduphoria extends Component {
+export default class TVAAS extends Component {
   constructor(props) {
     super(props)
 
@@ -22,25 +22,15 @@ export default class Eduphoria extends Component {
     })
   }
 
-  setTestTypeFilter(val) {
-    const jrsValue = val ? val.value : '~NOTHING~'
-
-    this.setState({
-      params:   { ...this.state.params, test_type: [ jrsValue ] },
-      selected: { ...this.state.selected, test_type: val }
-    })
-  }
-
   render() {
     return (
       <div>
-
         <div className='row'>
           <VJSChart
-            id          = 'eduphoria-student-detail'
-            reportPath  = '/public/VJS/ss_ui/assessment/eduphoria/student_detail'
+            id          = 'tvaas-student-detail'
+            reportPath  = '/public/VJS/ss_ui/assessment/tvaas/tvaas_student_detail'
             params      = {this.state.params}
-            title       = 'Eduphoria'
+            title       = 'TVAAS'
             className   = 'col-md-12'
             isTable     = {true}
             linkOptions = {{
@@ -51,22 +41,13 @@ export default class Eduphoria extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'assessment/eduphoria'
+                      path:    'assessment/tvaas'
                     })
                   }
                 }
               }
             }}
           >
-            <VJSICSelect
-              id            = 'eduphoria_test_types'
-              inputPath     = '/public/VJS/ss_ui/assessment/eduphoria/eduphoria_test_types'
-              selectedValue = {this.state.selected.test_type}
-              handleChange  = {::this.setTestTypeFilter}
-              placeholder   = 'Test Type'
-              width         = {170}
-            />
-
             <VJSICSelect
               id            = 'school_year'
               inputPath     = '/public/VJS/ss_ui/shared/input_controls/district_dataset_years/report'
@@ -76,7 +57,7 @@ export default class Eduphoria extends Component {
               setDefault    = {true}
               placeholder   = 'Year'
               width         = {100}
-              params        = {{ dataset: ['eduphorias'] }}
+              params        = {{ dataset: ['vw_tvaas'] }}
             />
           </VJSChart>
         </div>

@@ -29,6 +29,7 @@ export default class Note {
   @observable global                   = false
   @observable groups                   = null
   @observable tags                     = null
+  @observable isModifiable             = null
 
 
   constructor(conf = {}, parentStore, json = {}){
@@ -172,18 +173,19 @@ export default class Note {
     updated_at: updatedAt,
     student_note_tags,
     global,
-    user
+    user,
+    modifiable
   }) => {
-    this.id         = id
-    this.title      = title
-    this.groups     = groups
-    this.body       = body
-    this.createdBy  = user ? user.full_name : null
-    this.createdAt  = createdAt
-    this.updatedAt  = updatedAt
-    this.tags       = student_note_tags
-    this.global     = global
-
+    this.id           = id
+    this.title        = title
+    this.groups       = groups
+    this.body         = body
+    this.createdBy    = user ? user.full_name : null
+    this.createdAt    = createdAt
+    this.updatedAt    = updatedAt
+    this.tags         = student_note_tags
+    this.global       = global
+    this.isModifiable = modifiable
     this.setIsSelectingGroup(this.hasGroups)
   }
 

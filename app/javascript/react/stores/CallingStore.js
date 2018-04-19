@@ -1,13 +1,19 @@
-import { observable, action, autorun } from 'mobx'
-import { setter }                      from 'mobx-decorators'
-import xhr                             from 'helpers/XHR'
-import moment                          from 'moment'
-import { padCharsStart }               from 'lodash/fp'
-import UiStore                         from 'stores/UiStore'
-import intercomEvent                   from 'helpers/Intercom'
+import {
+  observable,
+  action,
+  autorun
+} from 'mobx'
 
-class CallingStore {
-  // Observables
+import { setter }        from 'mobx-decorators'
+import xhr               from 'helpers/XHR'
+import moment            from 'moment'
+import { padCharsStart } from 'lodash/fp'
+import uiStore           from 'stores/UiStore'
+import getError          from 'helpers/ErrorParser'
+import _isEmpty          from 'lodash/isEmpty'
+import intercomEvent     from 'helpers/Intercom'
+
+export class CallingStore {
   @setter @observable callBarVisible       = false
   @setter @observable callTime             = null
   @setter @observable isCalling            = false
@@ -47,7 +53,7 @@ class CallingStore {
   @action autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if (this.isError && !this.isError.hideNotification) {
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
           type:    this.isError.type || 'error'
@@ -56,43 +62,47 @@ class CallingStore {
     })
   }
 
-  generateToken = () => {
-    return xhr.get('/commo/capability_token')
-      .then((response) => {
-        return response
-      })
-      .catch((error) => {
-        console.log('generate token error:', error)
-      })
+  generateToken = async() => {
+    try {
+      return await xhr.get('/commo/capability_token')
+    } catch(e){
+      this.setError(getError(e))
+    }
   }
 
   // Browser calling
   @action
   initiateCall = async(contact, studentId) => {
-    this.callStartTime = null
+    try {
+      this.callStartTime = null
+      this.setCallTime(null)
+      this.setSelectConferenceCall(false)
 
-    this.setCallTime(null)
-    this.setSelectConferenceCall(false)
+      const { data } = await this.generateToken()
 
-    const data = await this.generateToken()
+      this.initialCallOK(studentId, data)
+    } catch(e){
+      this.setIsError(getError(e))
+    }
+  }
 
+  @action
+  initialCallOK = (studentId, data) => {
     this.setIsCalling(true)
     this.setCallBarVisible(true)
 
     this.contactName = this.contact.name
     this.studentID   = studentId
     this.phoneNumber = this.contact.phone
-    this.userId      = data.data.user
+    this.userId      = data.user
 
-    const token = data.data.token
-
-    this.setupDevice(token)
+    this.setupDevice(data.token)
 
     setTimeout(() => this.connect(this.phoneNumber), 2000)
   }
 
   @action
-  connect = (number) => {
+  connect = () => {
     const params = {
       contact_id: this.contact.id,
       student_id: this.studentID,
@@ -104,33 +114,43 @@ class CallingStore {
 
     this.connection = Twilio.Device.connect(params)
 
-    this.connection.accept((conn) => {
-      this.callSID = conn.parameters.CallSid
-      this.getOutputDevices()
-      this.isConnected = true
+    this.connection.accept(this.connectionAccept)
 
-      if (this.isConnected) {
-        this.callStartTime = Date.now()
+    this.connection.disconnect(this.connectionDisconnect)
 
-        this.intervalHandler = setInterval(action('SETTING CALL TIME', () => {
-          this.setCallTime(getTime(this.callStartTime, Date.now()))
-        }), 1000)
-      }
-    })
-
-    this.connection.disconnect((conn) => {
-      this.setIsCalling(false)
-      clearInterval(this.intervalHandler)
-      setTimeout(() =>
-        !this.isCalling && this.setCallBarVisible(false), 5000)
-    })
-
-    this.connection.reject((conn) => {
-      this.setIsCalling(false)
-      setTimeout(() =>
-        this.setCallBarVisible(false), 5000)
-    })
+    this.connection.reject(this.connectionReject)
   }
+
+  @action
+  connectionAccept = (conn) => {
+    this.callSID = conn.parameters.CallSid
+    this.getOutputDevices()
+    this.isConnected = true
+
+    if (this.isConnected) {
+      this.callStartTime = Date.now()
+
+      this.intervalHandler = setInterval(action('SETTING CALL TIME', () => {
+        this.setCallTime(getTime(this.callStartTime, Date.now()))
+      }), 1000)
+    }
+  }
+
+  @action
+  connectionDisconnect = () => {
+    this.setIsCalling(false)
+    clearInterval(this.intervalHandler)
+    setTimeout(() =>
+      !this.isCalling && this.setCallBarVisible(false), 5000)
+  }
+
+  @action
+  connectionReject = () => {
+    this.setIsCalling(false)
+    setTimeout(() =>
+      this.setCallBarVisible(false), 5000)
+  }
+
 
   // Dialpad
   @action
@@ -145,59 +165,52 @@ class CallingStore {
 
   // Cell-to-Cell Calling
   @action
-  conferenceCall = () => {
+  conferenceCall = async() => {
     intercomEvent('web:calling:cell', {contact: this.contactID})
+    try {
+      await xhr.post('/commo/voice/mobile_call', { contact_id: this.contactID })
 
-    xhr.post('/commo/voice/mobile_call', {
-      contact_id: this.contactID
-    })
-      .then(() => {
-        this.setIsConferenceCalling(true)
-        this.setCallBarVisible(true)
+      this.conferenceCallOK()
+    } catch(e){
+      intercomEvent('web:calling:cell_call_error', {message: getError(e).message})
+      this.setIsError(getError(e))
+    }
+  }
 
-        setTimeout(() => {
-          this.setIsDisabled(false)
-          this.setIsConferenceCalling(false)
-          this.setCallBarVisible(false)
-        }, 6000)
-      })
-      .catch((error) => {
-        this.setIsDisabled(false)
-        let errorMessage = 'We experienced an unknown error.'  // default error message
+  @action
+  conferenceCallOK = () => {
+    this.setIsConferenceCalling(true)
+    this.setCallBarVisible(true)
 
-        if (error.response.data && error.response.data.message) { // specific errors
-          // TODO: if this is a problem of the user not verifying their mobile number,
-          // it'd be nice to give them the option to verify here.
-          errorMessage = error.response.data.message
-        }
-
-        UiStore.addNotification({
-          title:   'Error',
-          message: errorMessage,
-          type:    'error'
-        })
-
-        intercomEvent('web:calling:cell_call_error', {message: errorMessage})
-        console.error('Calling Error:', error)
-      })
+    setTimeout(() => {
+      this.setIsDisabled(false)
+      this.setIsConferenceCalling(false)
+      this.setCallBarVisible(false)
+    }, 6000)
   }
 
   @action
   initiateConferenceCall = async(contact, student_id) => {
     try {
       this.setIsDisabled(true)
-      const data = await this.generateToken()
+      const response = await this.generateToken()
 
-      this.contactID   = contact.id
-      this.contactName = contact.name
-      this.phoneNumber = contact.phone
-      this.studentID   = student_id
-      this.userId      = data.data.user
-
-      this.conferenceCall()
-    } finally {
+      this.initiateConferenceCallOK(contact, student_id, response)
+    } catch(e){
       this.setIsDisabled(false)
+      this.setIsError(getError(e))
     }
+  }
+
+  @action
+  initiateConferenceCallOK = (contact, student_id, response) => {
+    this.contactID   = contact.id
+    this.contactName = contact.name
+    this.phoneNumber = contact.phone
+    this.studentID   = student_id
+    this.userId      = response.data.user
+
+    this.conferenceCall()
   }
 
   @action
@@ -250,14 +263,13 @@ class CallingStore {
       this.device = Twilio.Device.setup(token, { region: 'us1', debug: true })
     }
     catch (e) {
-      console.log(e)
+      this.setError(getError(e))
     }
 
     this.device.error((error) => {
       const message = returnError(error.code)
 
       intercomEvent('web:calling:web_call_error', {message: message, code: error.code})
-      console.error('Calling Error:', error)
 
       this.setIsError({
         message,
@@ -266,49 +278,55 @@ class CallingStore {
     })
   }
 
-/* Call Notes */
-@action
-isCallNotes = (bool) => {
-  this.selectCallNotes = bool
-}
+  /* Call Notes */
+  @action
+  isCallNotes = (bool) => {
+    this.selectCallNotes = bool
+  }
 
-@action
-setCallNoteText = (text) => {
-  this.callNoteText = text
-}
+  @action
+  setCallNoteText = (text) => {
+    this.callNoteText = text
+  }
 
-@action
-addCallNote = () => {
-  this.setIsError(false)
-  if(this.callNoteText.trim() != '') {
-    xhr.post('/commo/call_log/deferred_note', {
-      call_log_sid: this.callSID,
-      body:         this.callNoteText
-    })
-      .then(action(() => {
-        this.setCallNoteText('')
-        
-        UiStore.addNotification({
-          title:   'Note',
-          message: 'Note successfully added!',
-          type:    'success'
-        })
-      }))
-      .catch((error) => {
+  @action
+  addCallNote = async() => {
+    try {
+      this.setIsError(false)
+
+      if(_isEmpty(this.callNoteText.trim())) {
         this.setIsError({
-          message: 'Something went wrong! We were unable to save the note',
-          title:   'Error'
+          title:   'Note',
+          message: 'Your note cannot be empty!',
+          type:    'error'
         })
+        return
+      }
+
+      await xhr.post('/commo/call_log/deferred_note', {
+        call_log_sid: this.callSID,
+        body:         this.callNoteText
       })
-  } else {
-    UiStore.addNotification({
+
+      this.addCallNoteOK()
+    } catch(e){
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action
+  addCallNoteOK = () => {
+    this.setCallNoteText('')
+
+    uiStore.addNotification({
       title:   'Note',
-      message: 'Your note cannot be empty!',
-      type:    'error'
+      message: 'Note successfully added!',
+      type:    'success'
     })
   }
 }
-}
+
+
 
 function getTime(start, end) {
   const startTime = moment(start)
@@ -326,25 +344,22 @@ function getTime(start, end) {
 function returnError(errorCode) {
   switch (errorCode) {
   case 31000:
-    return `We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet.`
-    break
+    return `We can't complete this call because it is either
+            blocked by a firewall or you have lost connection to the Internet.`
   case 31002:
     return `This contact's number does not allow communication from SchoolStatus.`
-    break
   case 31003:
-    return `We can't complete this call because it is either blocked by a firewall or you have lost connection to the Internet.`
-    break
+    return `We can't complete this call because it is either
+            blocked by a firewall or you have lost connection to the Internet.`
   case 31205:
-    return `There was an error attempting to place the call. Please refresh the page and try again.`
-    break
+    return 'There was an error attempting to place the call. Please refresh the page and try again.'
   case 31208:
-    return `We require access to your microphone.`
-    break
+    return 'We require access to your microphone.'
+  case 31201:
+    return `We can't access your microphone. Please check your permissions.`
   default:
-    return `We experienced an unknown error.`
+    return 'We experienced an unknown error.'
   }
-
-  return errorMessage
 }
 
-export default CallingStore = new CallingStore()
+export default new CallingStore()

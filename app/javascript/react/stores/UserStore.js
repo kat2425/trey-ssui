@@ -7,7 +7,7 @@ import {
 import { some, includes } from 'lodash'
 import {setter}           from 'mobx-decorators'
 
-class UserStore {
+export class UserStore {
   @setter @observable user = null
 
   constructor(user){
@@ -26,6 +26,10 @@ class UserStore {
     return !!this.user.impersonated
   }
 
+  @computed get customModules() {
+    return this.user.customModules
+  }
+
   @action hasModules = (...modules) => {
     return some(modules, m => includes(this.modules, m))
   }
@@ -33,8 +37,10 @@ class UserStore {
   @action hasPolicies = (...policies) => {
     return some(policies, p => includes(this.policies, p))
   }
+
+  @action hasCustomModule = (module) => {
+    return includes(this.customModules, module)
+  }
 }
 
-const singleton = new UserStore()
-
-export default singleton
+export default new UserStore()

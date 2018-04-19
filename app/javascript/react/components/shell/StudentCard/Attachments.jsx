@@ -9,7 +9,7 @@ import {
 
 import SubmoduleHeader                    from 'ui/shell/SubmoduleHeader'
 import DateFormat                         from 'helpers/DateFormat'
-import StudentCardStore                   from 'stores/StudentCard'
+import StudentCardStore                   from 'stores/StudentCardStore'
 
 import axios                              from 'axios'
 import getFile                            from 'js-file-download'

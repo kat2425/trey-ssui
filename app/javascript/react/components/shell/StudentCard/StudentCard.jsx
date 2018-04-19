@@ -32,7 +32,7 @@ import SurveyMonkey     from './SurveyMonkey'
 // FIXME: needs to be inside StudentCard dir
 import Notes            from '../Notes'
 
-import CallingStore     from 'stores/CallingStore'
+import callingStore     from 'stores/CallingStore'
 
 import renderIf         from 'ui/hoc/renderIf'
 import userStore        from 'stores/UserStore'
@@ -253,7 +253,7 @@ export default class StudentCard extends Component {
               path   = {`${match.url}/contacts`}
               render = {() =>
                 <Contacts
-                  store             = {CallingStore}
+                  store             = {callingStore}
                   student           = {student}
                   contacts          = {contacts}
                   handleContactFave = {::this.props.store.toggleContactPrimary}

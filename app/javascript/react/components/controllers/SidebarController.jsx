@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import callStore            from 'stores/CallStore'
-import ReminderStore        from 'stores/ReminderStore'
+import reminderStore        from 'stores/ReminderStore'
 import Sidebar              from 'ui/shell/SMS/Sidebar'
 import {CallSidebar}        from 'ui/shell/Call'
 import ReminderSidebar      from 'ui/shell/Reminders/ReminderSidebar'
@@ -41,7 +41,7 @@ export default class SidebarController extends Component {
       handleReminderSidebar()
       return (
         <ReminderSidebar
-          store   = {ReminderStore}
+          store   = {reminderStore}
           show
           onClose = {() => setSelectedSidebar(null)}
         />

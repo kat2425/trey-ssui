@@ -1,11 +1,10 @@
-import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
-import { observer, inject }         from 'mobx-react'
+import React, { Component}  from 'react'
+import PropTypes            from 'prop-types'
+import { observer, inject } from 'mobx-react'
 
-import SMSInboxStore       from 'stores/SMSInbox'
-import Inbox from 'ui/shell/SMS/Inbox'
+import smsInboxStore        from 'stores/SMSInboxStore'
+import Inbox                from 'ui/shell/SMS/Inbox'
 
-import fireEvent from 'helpers/FireEvent'
 
 const inboxStyle = {
   backgroundColor: 'white',
@@ -15,7 +14,7 @@ const inboxStyle = {
   overflow:        'auto'
 }
 
-const headerStyle = secondary => ({
+const headerStyle = () => ({
   position:        'absolute',
   width:           '100%',
   height:          '65px',
@@ -24,7 +23,7 @@ const headerStyle = secondary => ({
   top:             57
 })
 
-const listStyle = secondary => ({
+const listStyle = () => ({
   position: 'absolute',
   width:    '100%',
   top:      122,
@@ -45,7 +44,7 @@ export default class SMSInboxController extends Component {
   }
 
   componentDidMount() {
-    SMSInboxStore.fetchInbox()
+    smsInboxStore.fetchInbox()
   }
 
   render() {
@@ -57,15 +56,18 @@ export default class SMSInboxController extends Component {
     return (
       <div style={inboxStyle}>
         <div className='p-0 pl-4 pr-3' style={headerStyle(isSecondary)}>
-          <h4 className='m-0' style={{lineHeight:'22px',top:'18px',position:'absolute'}}>
+          <h4 className='m-0' style={{lineHeight: '22px',top: '18px',position: 'absolute'}}>
             <span className='icon icon-chat text-muted mr-4'/>
             Messages
           </h4>
 
-          <div className='float-right' style={{lineHeight:'22px',top:'21px',position:'relative',fontSize:18}}>
+          <div 
+            className='float-right' 
+            style={{lineHeight: '22px',top: '21px',position: 'relative',fontSize: 18}}
+          >
             <span
               className = 'icon icon-cross text-muted'
-              style     = {{lineHeight:'22px'}}
+              style     = {{lineHeight: '22px'}}
               onClick   = {() => setSelectedSidebar(null)}
             />
           </div>

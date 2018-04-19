@@ -1,5 +1,5 @@
 import { setter }                    from 'mobx-decorators'
-import SMSConversationStore          from 'stores/SMSConversation'
+import SMSConversationStore          from 'stores/SMSConversationStore'
 import callStore                     from 'stores/CallStore'
 import ReminderStore                 from 'stores/ReminderStore'
 import { notification, message }     from 'antd'
@@ -141,6 +141,4 @@ function getNotificationStyle(type){
   }[type]
 }
 
-const singleton = new UiStore()
-
-export default singleton
+export default new UiStore()

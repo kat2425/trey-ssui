@@ -1,8 +1,8 @@
 import {  action }          from 'mobx'
 import Faye                 from 'faye'
 
-import smsConversationStore from 'stores/SMSConversation'
-import smsInboxStore        from 'stores/SMSInbox'
+import smsConversationStore from 'stores/SMSConversationStore'
+import smsInboxStore        from 'stores/SMSInboxStore'
 import uiStore              from 'stores/UiStore'
 
 const fayeURL = 'https://api.schoolstatus.com/rt'

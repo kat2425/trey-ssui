@@ -1,10 +1,10 @@
 import { observable, action, autorun } from 'mobx'
 
-import { setter }      from 'mobx-decorators'
-import xhr             from 'helpers/XHR'
-import UiStore         from 'stores/UiStore'
-import getError        from 'helpers/ErrorParser'
-import cachedLanguages from 'helpers/languages'
+import { setter }                      from 'mobx-decorators'
+import xhr                             from 'helpers/XHR'
+import uiStore                         from 'stores/UiStore'
+import getError                        from 'helpers/ErrorParser'
+import cachedLanguages                 from 'helpers/languages'
 
 const API = '/commo/translate'
 
@@ -35,7 +35,7 @@ export class TranslationStore {
   autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if(this.isError && !this.isError.hideNotification){
-        UiStore.addNotification({
+        uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
           type:    'error'
