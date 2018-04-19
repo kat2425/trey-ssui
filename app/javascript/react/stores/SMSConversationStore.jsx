@@ -217,8 +217,12 @@ export class SMSConversationStore {
   }
 
   @action
-  setAllAsRead(conversationID) {
-    xhr.post(`/commo/sms/conversation/${conversationID}/read`)
+  setAllAsRead = async(conversationID) => {
+    try {
+      await xhr.post(`/commo/sms/conversation/${conversationID}/read`)
+    } catch(e) {
+      this.setIsError(getError(e))
+    }
   }
 
   @action
