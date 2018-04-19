@@ -53,7 +53,7 @@ export default class ConversationHeader extends Component {
           <span
             onClick   = {this.props.handleBack}
             style     = {{lineHeight: '20px'}}
-            className = 'icon icon-chevron-thin-left'
+            className = 'icon icon-chevron-thin-left cursor-pointer'
           />
         </Col>
 
