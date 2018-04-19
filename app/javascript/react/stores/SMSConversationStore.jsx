@@ -129,21 +129,21 @@ export class SMSConversationStore {
   @action
   initiateConversation = async(contact) => {
     try {
-      await xhr.post('/commo/conversations', {
+      const {data} = await xhr.post('/commo/conversations', {
         number:     contact.phone,
         contact_id: contact.id
       })
 
-      this.initiateConversationOk(contact, contact.id)
+      this.initiateConversationOk(contact, data)
     } catch(e) {
       this.setIsError(getError(e))
     }
   }
 
   @action
-  initiateConversationOk = (contact, id) => {
+  initiateConversationOk = (contact, data) => {
     uiStore.setCurrentContact(contact)
-    uiStore.setCurrentConversation(id)
+    uiStore.setCurrentConversation(data.id)
     uiStore.setSelectedSidebar(SIDEBAR.SMS)
     uiStore.setShowInbox(false)
     uiStore.setSidebarMaxHeight(true)
