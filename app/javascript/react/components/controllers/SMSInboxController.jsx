@@ -66,7 +66,7 @@ export default class SMSInboxController extends Component {
             style={{lineHeight: '22px',top: '21px',position: 'relative',fontSize: 18}}
           >
             <span
-              className = 'icon icon-cross text-muted'
+              className = 'icon icon-cross text-muted cursor-pointer'
               style     = {{lineHeight: '22px'}}
               onClick   = {() => setSelectedSidebar(null)}
             />
