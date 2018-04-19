@@ -186,12 +186,16 @@ class NoteStore {
   }
 
   @action editBodyOnChange = event => {
-    this.selectedNote.body = event.target.value
+    this.setSelectedBody(event.target.value)
   }
 
   @action editTitleOnChange = event => {
     this.selectedNote.setIsDefaultTitle(false)
     this.selectedNote.title = event.target.value
+  }
+
+  @action setSelectedBody = body => {
+    this.selectedNote.body = body
   }
 
   @action handleNoteFilter = ({target}) => {
