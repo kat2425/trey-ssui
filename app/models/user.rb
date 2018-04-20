@@ -61,21 +61,23 @@ class User < Sequel::Model(:users)
   # UI props
   def ui_props
     self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at).merge(
-      :accessToken       => last_access_token,
-      :api               => 'https://api.schoolstatus.com',
-      :customModules     => district.custom_modules,
-      :districtID        => district_id,
-      :districtName      => district&.district_name,
-      :isDistrictLevel   => is_district_level?,
-      :isTeacher         => is_teacher?,
-      :currentSchoolYear => CURRENT_SCHOOL_YEAR,
-      :has_channel       => has_channel?,
-      :higherEd          => district&.higher_ed,
-      :intercomUserHash  => intercom_user_hash,
-      :jasper            => jasper_user_creds,
-      :modules           => modules.map(&:symbol),
-      :policies          => policies.map(&:name),
-      :schoolFilter      => school_filter
+      :accessToken              => last_access_token,
+      :api                      => 'https://api.schoolstatus.com',
+      :customModules            => district.custom_modules,
+      :districtID               => district_id,
+      :districtName             => district&.district_name,
+      :districtExpirationStatus => district&.expiration_status,
+      :daysUntilExpiration      => district&.days_until_expiration,
+      :isDistrictLevel          => is_district_level?,
+      :isTeacher                => is_teacher?,
+      :currentSchoolYear        => CURRENT_SCHOOL_YEAR,
+      :has_channel              => has_channel?,
+      :higherEd                 => district&.higher_ed,
+      :intercomUserHash         => intercom_user_hash,
+      :jasper                   => jasper_user_creds,
+      :modules                  => modules.map(&:symbol),
+      :policies                 => policies.map(&:name),
+      :schoolFilter             => school_filter
     )
   end
 

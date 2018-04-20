@@ -8,10 +8,11 @@ import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
 
 import {
-  Navbar,
+  Alert,
+  Badge,
   Nav,
   NavItem as NavItm,
-  Badge
+  Navbar
 } from 'reactstrap'
 
 
@@ -28,6 +29,36 @@ const channelCheck = (caller, item) => {
   }
 }
 
+const expirationStatusNag = () => {
+  const { user } = userStore
+  const { 
+    districtExpirationStatus,
+    daysUntilExpiration 
+  } = user
+  let message = ''
+
+  if (districtExpirationStatus === 'warning') {
+    message = `Looks like it's time to renew! Your account expires in ${daysUntilExpiration} days.`
+  } else if (districtExpirationStatus === 'grace') {
+    message = 'Your district has expired. You are now in a grace period.'
+  }
+
+  if (districtExpirationStatus === 'warning' || districtExpirationStatus === 'grace') {
+    return (
+      <div>
+        <Alert color="warning">
+          <a 
+            href="mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote" 
+            target='_blank'
+          >Request Renewal Quote</a>
+        </Alert>
+
+        <p>{ message }</p>
+      </div>
+    )
+  }
+}
+
 function ActionBar({callingStore, uiStore, reminderStore, store}) {
   const { callBarVisible }     = callingStore
   const { setSelectedSidebar } = uiStore
@@ -37,6 +68,9 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
   return (
     <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
       <Nav className='d-flex flex-row justify-content-end p-3' navbar>
+
+        {!callBarVisible && expirationStatusNag()}
+
         {callBarVisible &&
         <NavItem className='mr-auto'>
           <ReactCSSTransitionGroup
