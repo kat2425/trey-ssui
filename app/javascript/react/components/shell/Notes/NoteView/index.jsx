@@ -86,8 +86,10 @@ function getUpdatedAt(note) {
 function getCreatedBy(note) {
   if(!note.createdBy) return null
 
+  const content = <span>{`Created by: ${note.createdBy}`}</span>
+
   return (
-    <Popover content={note.createdBy}>
+    <Popover content={content}>
       <div 
         className = 'mr-2' 
         style     = {icStyle}
