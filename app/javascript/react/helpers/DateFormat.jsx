@@ -28,4 +28,8 @@ export default class DateFormat {
   static slashDate(time) {
     return moment(time, 'YYYY-MM-DD').format('MM/DD/YYYY')
   }
+  
+  static currentDateTime() {
+    return moment().format('MMM D, YYYY h:mm A')
+  }
 }
