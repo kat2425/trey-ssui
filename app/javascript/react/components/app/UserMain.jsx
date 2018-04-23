@@ -1,6 +1,8 @@
-import React, { Component }    from 'react'
-import { inject, observer }    from 'mobx-react'
-import _                       from 'lodash'
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
+import _                    from 'lodash'
+
+import BrowserMessage       from 'ui/shell/BrowserMessage'
 
 import {
   Switch, Route, withRouter
@@ -173,6 +175,7 @@ class UserMain extends Component {
             />
             <MailWriter store={mailerStore} />
             <SidebarController callStore={callStore} />
+            <BrowserMessage />
           </div>
         </div>
       </VJSContainer>

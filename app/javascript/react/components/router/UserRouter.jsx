@@ -5,6 +5,7 @@ import { Provider as MobxProvider } from 'mobx-react'
 import { notification, message }    from 'antd'
 
 import UserMain                     from 'ui/app/UserMain'
+
 import uiStore                      from 'stores/UiStore'
 import userStore                    from 'stores/UserStore'
 import tagStore                     from 'stores/TagStore'
