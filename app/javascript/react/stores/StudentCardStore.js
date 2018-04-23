@@ -77,7 +77,7 @@ export class StudentCardStore {
             'id', 'sis_id', 'state_id', 'first_name', 'last_name', 'dob',
             'gender', 'race', 'address', 'city', 'state', 'zip',
             'enrollment_status', 'grade', 'school.school_name', 'data_relations',
-            'major', 'advisor', 'coach', 'channel_stats', 'flags'
+            'major', 'advisor', 'coach', 'channel_stats', 'flags', 'full_name'
           ].join(',')
         }
       })
