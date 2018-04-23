@@ -6,6 +6,7 @@ import chrome               from './chrome.svg'
 import ie                   from './ie.png'
 import firefox              from './firefox.svg'
 import safari               from './safari.svg'
+import uuid                 from 'uuid'
 
 
 class BrowserMessage extends Component {
@@ -37,7 +38,7 @@ class BrowserMessage extends Component {
   }
 
   renderBrowser = (browser) => (
-    <Browser {...browser}/>
+    <Browser key={uuid()} {...browser}/>
   )
 
   render(){
