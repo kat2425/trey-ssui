@@ -8,8 +8,8 @@ import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
 
 import {
-  Alert,
   Badge,
+  Button,
   Nav,
   NavItem as NavItm,
   Navbar
@@ -31,30 +31,39 @@ const channelCheck = (caller, item) => {
 
 const expirationStatusNag = () => {
   const { user } = userStore
-  const { 
+  const {
     districtExpirationStatus,
-    daysUntilExpiration 
+    daysUntilExpiration,
+    isDistrictLevel
   } = user
-  let message = ''
 
-  if (districtExpirationStatus === 'warning') {
-    message = `Looks like it's time to renew! Your account expires in ${daysUntilExpiration} days.`
-  } else if (districtExpirationStatus === 'grace') {
-    message = 'Your district has expired. You are now in a grace period.'
+  const message = do {
+    if (districtExpirationStatus === 'warning') {
+      `It looks like it's time to renew! Your account expires in ${daysUntilExpiration} days.`
+    } else if (districtExpirationStatus === 'grace') {
+      'Your district has expired. You are now in a grace period.'
+    }
   }
 
   if (districtExpirationStatus === 'warning' || districtExpirationStatus === 'grace') {
     return (
-      <div>
-        <Alert color="warning">
-          <a 
-            href="mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote" 
-            target='_blank'
-          >Request Renewal Quote</a>
-        </Alert>
+      <NavItem className='mr-auto'>
+          <span style={{color: '#c36b69'}} className='icon icon-warning mr-2'/>
+          <span>{ message }</span>
 
-        <p>{ message }</p>
-      </div>
+          {isDistrictLevel &&
+            <a href='mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote' target='_blank'>
+              <Button
+                className = 'ml-2'
+                size      = 'sm'
+                color     = 'warning'
+                style     = {{marginBottom: '1px'}}
+              >
+                Request Renewal Quote
+              </Button>
+            </a>
+          }
+      </NavItem>
     )
   }
 }
@@ -156,7 +165,16 @@ const getActionBarStyle = ({isCalling, isConferenceCalling, callBarVisible}) => 
   color:           (isCalling ? '#ffffff' : ((!isCalling && callBarVisible) ? '#ffffff' : '#292b2c')),
 })
 
-const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) =>
-  ((isCalling || isConferenceCalling) ? '#5cb85c' : ((!isCalling && callBarVisible) ? '#d9534f' : '#e8e8e8'))
+const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) => {
+  const { user }                     = userStore
+  const { districtExpirationStatus } = user
+  const showExpirationStatus         = (districtExpirationStatus === 'warning' || districtExpirationStatus === 'grace')
+
+  if (showExpirationStatus && !callBarVisible) {
+    return '#f3dc9a'
+  } else {
+    return ((isCalling || isConferenceCalling) ? '#5cb85c' : ((!isCalling && callBarVisible) ? '#d9534f' : '#e8e8e8'))
+  }
+}
 
 export default observer(ActionBar)
