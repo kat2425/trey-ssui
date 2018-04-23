@@ -9,48 +9,22 @@ import {
 
 import SubmoduleHeader                    from 'ui/shell/SubmoduleHeader'
 import DateFormat                         from 'helpers/DateFormat'
-import StudentCardStore                   from 'stores/StudentCardStore'
+import studentCardStore                   from 'stores/StudentCardStore'
+import PrivacyDropdown                    from './PrivacyDropdown'
 
 import axios                              from 'axios'
 import getFile                            from 'js-file-download'
 
+const visibilityOptions = [
+  { label: 'Only Me',  visibility: 'private' }, 
+  { label: 'Everyone', visibility: 'public'  }
+]
+
 const AttachmentItem = observer(({ attachment }) => {
-  const bytesToSize = (bytes) => {
-    const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB']
-
-    if (bytes === 0) return 'n/a'
-
-    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
-
-    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i]
-  }
-
-  const downloadFile = (url, filename) => {
-    axios.get(url, { responseType: 'blob' }).then((res) => getFile(res.data, filename))
-  }
-
-  const deleteAttachment = (bucketID) => {
-    if (confirm('Are you sure you want to remove this file?')) {
-      StudentCardStore.deleteAttachment(bucketID)
-    }
-  }
-
-  const thumbnailStyle = {
-    background:       `url("${attachment.thumbnail}") no-repeat center`,
-    backgroundOrigin: 'content-box',
-    backgroundSize:   'contain',
-    height:           '64px',
-    width:            '54px',
-    padding:          2,
-    margin:           '0 auto',
-    border:           '1px solid #cacaca',
-    boxShadow:        '0 1px 1px rgba(0,0,0,0.15)'
-  }
-
   if (!attachment['is_call_recording?']) {
     return (
       <tr>
-        <td style={{width: 70}}><div style={thumbnailStyle}/></td>
+        <td style={{width: 70}}><div style={thumbnailStyle(attachment.thumbnail)}/></td>
         <td><strong>{ attachment.filename }</strong></td>
         <td className='text-right text-muted'>{ bytesToSize(attachment.size) }</td>
         <td>{ DateFormat.timeAgo(attachment.created_at) }</td>
@@ -60,35 +34,14 @@ const AttachmentItem = observer(({ attachment }) => {
         </td>
 
         <td className='text-right'>
-          <Button
-            size      = 'sm'
-            className = 'ml-1'
-            style     = {{height: 28}}
-            title     = 'Private'
-            hidden    = {!(attachment.visibility === 'private')}
-          >
-            <span className='icon icon-lock' style={{color: '#ca5b54'}}/>
-          </Button>
-
-          <Button
-            size      = 'sm'
-            className = 'ml-1'
-            style     = {{height: 28}}
-            title     = 'Public'
-            hidden    = {!(attachment.visibility === 'public')}
-          >
-            <span className='icon icon-eye text-muted'/>
-          </Button>
-
-          <Button
-            size      = 'sm'
-            className = 'ml-1'
-            style     = {{height: 28}}
-            title     = 'Shared'
-            hidden    = {!(attachment.visibility === 'groups')}
-          >
-            <span className='icon icon-users'/>
-          </Button>
+          <PrivacyDropdown 
+            labelKey     = 'label'
+            valueKey     = 'visibility'
+            onSelect     = {changeAttachmentVisibility(attachment)}
+            isModifiable = {attachment.modifiable}  
+            options      = {visibilityOptions}
+            visibility   = {attachment.visibility}
+          />
 
           <Button
             size      = 'sm'
@@ -135,7 +88,7 @@ export default class Attachments extends Component {
   }
 
   uploadFile = ({ file }) => {
-    StudentCardStore.uploadFile(file.name, file)
+    studentCardStore.uploadFile(file.name, file)
   }
 
   render() {
@@ -171,4 +124,47 @@ export default class Attachments extends Component {
       </div>
     )
   }
+}
+
+const changeAttachmentVisibility = (bucket) => (newPrivacy) => {
+  if (bucket.visibility !== newPrivacy) {
+    bucket.visibility = newPrivacy
+    studentCardStore.changeAttachmentVisibility(bucket.id, newPrivacy)
+  }
+}
+
+function bytesToSize(bytes) {
+  const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB']
+
+  if (bytes === 0) return 'n/a'
+
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i]
+}
+
+function downloadFile(url, filename) {
+  axios.get(url, { responseType: 'blob' }).then((res) => getFile(res.data, filename))
+}
+
+function deleteAttachment(bucketID) {
+  if (confirm('Are you sure you want to remove this file?')) {
+    studentCardStore.deleteAttachment(bucketID)
+  }
+}
+
+function thumbnailStyle(thumbnail) {
+  return (
+    {
+      background:       `url("${thumbnail}") no-repeat center`,
+      backgroundOrigin: 'content-box',
+      backgroundSize:   'contain',
+      height:           '64px',
+      width:            '54px',
+      padding:          2,
+      margin:           '0 auto',
+      border:           '1px solid #cacaca',
+      boxShadow:        '0 1px 1px rgba(0,0,0,0.15)'
+    }
+  )
 }
