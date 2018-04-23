@@ -16,6 +16,7 @@ import userStore            from 'stores/UserStore'
 
 import TranslationContainer from 'ui/shell/TranslationContainer'
 import LoadingSpinner       from 'ui/shell/LoadingSpinner'
+import { UPGRADE }          from 'helpers/UserAlerts'
 
 Transcript.propTypes = {
   isLoading:          PropTypes.bool,
@@ -83,12 +84,7 @@ const renderTranscript = (transcript) =>
     />
   ))
 
-const getUpgrade = () => <Alert color="info" className="text-center h6">
-  {
-    'Call transcription available with our upgraded communications package.\
-    Talk to your district staff about upgrading your subscription today!'
-  }
-</Alert>
+const getUpgrade = () => <Alert color="info" className="text-center h6">{UPGRADE.TRANSCRIPT}</Alert>
 
 const getTranscriptOrFallback = (isLoading, hasTranscript, script) => {
   if(!isLoading && hasTranscript) {
