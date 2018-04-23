@@ -5,7 +5,7 @@ import {ifProp} from 'styled-tools'
 const Wrapper = styled.span`
   border-radius: 50%;
   margin-left: -30px;
-  width: 28px;
+  min-width: 28px;
   height: 28px;
   line-height: 29px;
   vertical-align: top;
