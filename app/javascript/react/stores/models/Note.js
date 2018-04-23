@@ -93,7 +93,7 @@ export default class Note {
   }
 
   @computed get shouldFocusTitle() {
-    return this.isNew && this.isDefaultTitle
+    return this.isNew && this.isDefaultTitle && _.isEmpty(this.body)
   }
 
   /* End Computed */
