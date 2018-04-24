@@ -26,6 +26,7 @@ import Assessments           from 'modules/logic/assessment/Assessment'
 // Insights/DataScience
 import GrowthCusp            from 'modules/logic/insights/GrowthCusp'
 import AIMSWebiReady         from 'modules/logic/insights/AIMSWebiReady'
+import JCJCBinary            from 'modules/logic/insights/JCJCBinary'
 
 import FinalResults          from 'modules/logic/accountability/FinalResults'
 import LPS                   from 'modules/logic/accountability/LPS'
@@ -78,6 +79,7 @@ const AppContainer = ({ match }) => {
         {/* Insights */}
         <Route path='/r/growth_cusp' component={GrowthCusp} />
         <Route path='/r/aimsweb_iready' component={AIMSWebiReady} />
+        <Route path='/r/jcjc_binary' component={JCJCBinary} />
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />
