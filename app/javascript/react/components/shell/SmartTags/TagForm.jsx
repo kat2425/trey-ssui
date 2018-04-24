@@ -1,6 +1,6 @@
-import React, { Component }   from 'react'
-import PropTypes              from 'prop-types'
-import { observer }           from 'mobx-react'
+import React, { Component } from 'react'
+import PropTypes            from 'prop-types'
+import { observer }         from 'mobx-react'
 
 import {
   Form, 
@@ -26,7 +26,7 @@ class FormWrapper extends Component {
 
     this.state = {
       showSelectGroup: tag.isGroup,
-      selectedGroups:  tag.groupIds.join(',')
+      selectedGroups:  tag.groupIds
     }
   }
 
@@ -48,14 +48,14 @@ class FormWrapper extends Component {
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
-        tag.updateTag({...values, groupIds: this.state.selectedGroups})
+        tag.updateTag({ ...values, groups: this.state.selectedGroups })
         tag.save()
       }
     })
   }
 
   handleOnGroupChange = (groups) => {
-    this.setState({selectedGroups: groups.join(',')})
+    this.setState({selectedGroups: groups})
   }
 
   handleOnSelectScopeChange = (value) => {
