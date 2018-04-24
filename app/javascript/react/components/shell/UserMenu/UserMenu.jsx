@@ -119,6 +119,13 @@ const UserMenu = () => {
         />
 
         <EUserMenuItem
+          title     = 'Binary At-Risk'
+          iconClass = 'icon-light-bulb'
+          link      = '/r/jcjc_binary'
+          renderIf  = {userStore.hasModules('vjs_jcjc_binary')}
+        />
+
+        <EUserMenuItem
           title     = 'Growth Cusp'
           iconClass = 'icon-magnet'
           link      = '/r/growth_cusp'
