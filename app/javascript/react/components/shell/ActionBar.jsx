@@ -6,6 +6,7 @@ import CallNotesDialog         from 'ui/shell/ActionBar/Calling/CallNotesDialog'
 import intercomIcon            from 'images/intercom-icon.svg'
 import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
+import { UPGRADE }             from 'helpers/UserAlerts'
 
 import {
   Badge,
@@ -25,7 +26,7 @@ const channelCheck = (caller, item) => {
   if (user.hasChannel) {
     caller(item)
   } else {
-    alert('You must have communications enabled to utilize this feature')
+    alert(UPGRADE[item])
   }
 }
 
@@ -48,21 +49,21 @@ const expirationStatusNag = () => {
   if (districtExpirationStatus === 'warning' || districtExpirationStatus === 'grace') {
     return (
       <NavItem className='mr-auto'>
-          <span style={{color: '#c36b69'}} className='icon icon-warning mr-2'/>
-          <span>{ message }</span>
+        <span style={{color: '#c36b69'}} className='icon icon-warning mr-2'/>
+        <span>{ message }</span>
 
-          {isDistrictLevel &&
-            <a href='mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote' target='_blank'>
-              <Button
-                className = 'ml-2'
-                size      = 'sm'
-                color     = 'warning'
-                style     = {{marginBottom: '1px'}}
-              >
-                Request Renewal Quote
-              </Button>
-            </a>
-          }
+        {isDistrictLevel &&
+          <a href='mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote' target='_blank'>
+            <Button
+              className = 'ml-2'
+              size      = 'sm'
+              color     = 'warning'
+              style     = {{marginBottom: '1px'}}
+            >
+              Request Renewal Quote
+            </Button>
+          </a>
+        }
       </NavItem>
     )
   }
@@ -168,12 +169,19 @@ const getActionBarStyle = ({isCalling, isConferenceCalling, callBarVisible}) => 
 const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) => {
   const { user }                     = userStore
   const { districtExpirationStatus } = user
-  const showExpirationStatus         = (districtExpirationStatus === 'warning' || districtExpirationStatus === 'grace')
+  const showExpirationStatus         = (
+    districtExpirationStatus === 'warning' ||
+    districtExpirationStatus === 'grace'
+  )
 
   if (showExpirationStatus && !callBarVisible) {
     return '#f3dc9a'
   } else {
-    return ((isCalling || isConferenceCalling) ? '#5cb85c' : ((!isCalling && callBarVisible) ? '#d9534f' : '#e8e8e8'))
+    return (isCalling || isConferenceCalling)
+      ? '#5cb85c'
+      : (!isCalling && callBarVisible)
+        ? '#d9534f'
+        : '#e8e8e8'
   }
 }
 
