@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import { observer }         from 'mobx-react'
 import groupStore           from 'stores/GroupStore'
+import { isEmpty }          from 'lodash'
 
 import {
   Spin,
@@ -19,8 +20,10 @@ export default class GroupSelect extends Component {
     onChange: PropTypes.func.isRequired
   }
 
-  handleOnChange = values => {
-    this.props.onChange(values)
+  handleOnChange = groupIds => {
+    const groups = isEmpty(groupIds) ? [] : this.props.tag.toGroup(groupIds)
+
+    this.props.onChange(groups)
   }
 
   render(){
