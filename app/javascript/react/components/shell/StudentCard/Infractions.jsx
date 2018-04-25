@@ -11,7 +11,7 @@ export default class Infractions extends Component {
     super(props)
 
     this.state = {
-      params: {}, selected: {}
+      params:   {}, selected: {}
     }
   }
 
@@ -19,8 +19,8 @@ export default class Infractions extends Component {
     const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
-      params:     { ...this.state.params, school_year: [ jrsValue ] },
-      selected:   { ...this.state.selected, school_year: val }
+      params:   { ...this.state.params, school_year: [ jrsValue ] },
+      selected: { ...this.state.selected, school_year: val }
     })
   }
 
@@ -35,11 +35,25 @@ export default class Infractions extends Component {
       <div>
         <SubmoduleHeader title='Infractions'/>
 
-        <div>
+        <div className='row'>
+          <VJSChart
+            id               = 'sc-ada-days'
+            reportPath       = '/public/VJS/ss_ui/infractions/daily_breakdown_student_card'
+            scale            = 'container'
+            title            = 'Daily Breakdown'
+            className        = 'col-md-3'
+            ignorePagination = {true}
+            params           = {{
+              ...this.state.params,
+              student_id: [ student.id ]
+            }}
+          />
+
           <VJSChart
             id               = 'sc-maap'
             reportPath       = '/public/VJS/ss_ui/infractions/student_card'
             scale            = 'container'
+            className        = 'col-md-9'
             title            = 'Details'
             isTable          = {true}
             ignorePagination = {true}
