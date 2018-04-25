@@ -1,15 +1,19 @@
-import React                 from 'react'
-import { observer }          from 'mobx-react'
+import React              from 'react'
+import { observer }       from 'mobx-react'
 
-import styled                from 'styled-components'
-import { ifProp }            from 'styled-tools'
-import { ellipsis }          from 'polished'
-import { FaLock, FaInfo }    from 'react-icons/lib/fa'
-import DateFormat            from 'helpers/DateFormat'
-import _get                  from 'lodash/get'
+import styled             from 'styled-components'
+import { ifProp }         from 'styled-tools'
+import { ellipsis }       from 'polished'
+import { FaLock, FaInfo } from 'react-icons/lib/fa'
+import DateFormat         from 'helpers/DateFormat'
+import { get, isEmpty }   from 'lodash'
+import uuid               from 'uuid'
 import {
+  Row,
+  Col as _Col,
   Tooltip,
-  Popover
+  Popover,
+  Tag
 } from 'antd'
 
 function Title({tagStore}){
@@ -48,32 +52,67 @@ function showOptions(tagStore) {
 }
 
 function getTagInfo(tagStore) {
-  const { createdAt, updatedAt, createdBy } = tagStore.selectedTag
-  const fullName = _get(createdBy, 'full_name')
+  const { createdAt, updatedAt, createdBy, groupNames } = tagStore.selectedTag
+  const fullName = get(createdBy, 'full_name')
 
   return (
     <div>
       {fullName &&
-        <p>
-          <strong>Created by: </strong> 
-          {createdBy.full_name}
-        </p>
+        <Row type='flex'>
+          <Label>Created by: </Label>
+          <Col nowrap>{createdBy.full_name}</Col>
+        </Row>
       }
       {createdAt &&
-        <p>
-          <strong>Created at: </strong> 
-          {DateFormat.shortDate(createdAt)}
-        </p>
+        <Row type='flex' className='mt-1'>
+          <Label>Created at: </Label>
+          <Col nowrap>{DateFormat.shortDate(createdAt)}</Col>
+        </Row>
       }
       {updatedAt &&
-        <p>
-          <strong>Updated at: </strong> 
-          {DateFormat.shortDate(updatedAt)}
-        </p>
+        <Row type='flex' className='mt-1'>
+          <Label>Updated at: </Label>
+          <Col nowrap>{DateFormat.shortDate(updatedAt)}</Col>
+        </Row>
+      }
+      {!isEmpty(groupNames) &&
+        <Row type='flex' className='mt-2'>
+          <Label>Groups: </Label>
+          <Col>{renderGroups(groupNames)}</Col>
+        </Row>
       }
     </div>
   )
 }
+
+function renderGroups(groupNames){
+  return groupNames.map(g => 
+    <Tag 
+      className='mb-1 text-truncate' 
+      title={g} 
+      key={uuid()}
+    >
+      {g}
+    </Tag>
+  )
+}
+
+const Label = styled.div`
+  width: 80px;
+  text-align: right;
+  font-weight: bold;
+  white-space: nowrap;
+`
+
+const Col = styled(_Col)`
+  margin-left: 10px;
+  display: inline-flex;
+  flex-flow: column wrap;
+  align-content: flex-start;
+  ${ifProp('nowrap', `
+    white-space: nowrap;
+  `)}
+`
 
 const H5 = styled.h5`
   ${ellipsis('100%')}

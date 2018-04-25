@@ -156,6 +156,11 @@ export default class Tag {
     return this.groups.map(g => g.id)
   }
 
+
+  @computed get groupNames(){
+    return this.groups.map(g => g.group_name)
+  }
+
   @computed get hasStudents(){
     return !this.isFetchingStudents && !_.isEmpty(this.students)
   }
