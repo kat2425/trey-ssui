@@ -2,11 +2,11 @@ import React          from 'react'
 import PropTypes      from 'prop-types'
 import {observer}     from 'mobx-react'
 
-import LoadingSpinner from 'ui/shell/LoadingSpinner'
-import TagEntry         from '../TagEntry'
-import Wrapper          from './Wrapper'
-import ScrollView       from './ScrollView'
-import { Button, List } from 'antd'
+import TagEntry       from '../TagEntry'
+import Wrapper        from './Wrapper'
+import ScrollView     from './ScrollView'
+import { List }       from 'antd'
+import SSButton       from 'ui/shell/SSButton'
 
 TagList.propTypes = {
   store: PropTypes.object.isRequired
@@ -30,9 +30,13 @@ function TagList({store}) {
 
 const loadMore = (store) => {
   return store.pagination.showLoadingMore ? (
-    <div style={{ textAlign: 'center', marginTop: 12, height: 50, lineHeight: '50px' }}>
-      {store.isFetchingTags && <LoadingSpinner center />}
-      {!store.isFetchingTags && <Button onClick={store.pagination.loadMore}>Load More</Button>}
+    <div className='text-center my-4'>
+      <SSButton 
+        loading = {store.isFetchingTags}
+        onClick = {store.pagination.loadMore}
+      >
+        Load More
+      </SSButton>
     </div>
   ) : null
 }
