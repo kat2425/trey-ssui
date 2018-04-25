@@ -53,16 +53,16 @@ const expirationStatusNag = () => {
         <span>{ message }</span>
 
         {isDistrictLevel &&
-          <a href='mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote' target='_blank'>
-            <Button
-              className = 'ml-2'
-              size      = 'sm'
-              color     = 'warning'
-              style     = {{marginBottom: '1px'}}
-            >
-              Request Renewal Quote
-            </Button>
-          </a>
+            <a href='mailto:renewal@schoolstatus.com?Subject=Renewal%20Quote' target='_blank'>
+              <Button
+                className = 'ml-2'
+                size      = 'sm'
+                color     = 'warning'
+                style     = {{marginBottom: '1px'}}
+              >
+                Request Renewal Quote
+              </Button>
+            </a>
         }
       </NavItem>
     )
@@ -155,8 +155,8 @@ const actionBarNotification = {
   boxShadow:     '0 1px 2px 0 rgba(0,0,0,0.2)'
 }
 
-const getActionBarStyle = ({isCalling, isConferenceCalling, callBarVisible}) => ({
-  backgroundColor: getActionBarStyleBg({isCalling, isConferenceCalling, callBarVisible}),
+const getActionBarStyle = ({isCalling, isCellCalling, callBarVisible}) => ({
+  backgroundColor: getActionBarStyleBg({isCalling, isCellCalling, callBarVisible}),
   boxShadow:       '1px 0px 2px 0 rgba(0,0,0,0.25), 1px 0 6px 0 rgba(0,0,0,0.175)',
   padding:         0,
   zIndex:          9999,
@@ -166,7 +166,7 @@ const getActionBarStyle = ({isCalling, isConferenceCalling, callBarVisible}) => 
   color:           (isCalling ? '#ffffff' : ((!isCalling && callBarVisible) ? '#ffffff' : '#292b2c')),
 })
 
-const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) => {
+const getActionBarStyleBg = ({isCalling, isCellCalling, callBarVisible}) => {
   const { user }                     = userStore
   const { districtExpirationStatus } = user
   const showExpirationStatus         = (
@@ -177,12 +177,16 @@ const getActionBarStyleBg = ({isCalling, isConferenceCalling, callBarVisible}) =
   if (showExpirationStatus && !callBarVisible) {
     return '#f3dc9a'
   } else {
-    return (isCalling || isConferenceCalling)
-      ? '#5cb85c'
-      : (!isCalling && callBarVisible)
-        ? '#d9534f'
-        : '#e8e8e8'
+    return getCallBarColor(isCalling, isCellCalling, callBarVisible)
   }
+}
+
+function getCallBarColor(isCalling, isCellCalling, callBarVisible) {
+  if(isCalling || isCellCalling) return '#5cb85c'
+
+  if(!isCalling && callBarVisible) return '#d9534f'
+
+  return '#e8e8e8'
 }
 
 export default observer(ActionBar)

@@ -21,7 +21,7 @@ export default class CallBar extends Component {
     }
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({ dropdownOpen: !this.state.dropdownOpen })
   }
 
@@ -29,73 +29,85 @@ export default class CallBar extends Component {
     const {
       isCalling,
       isConnected,
-      selectMute,
-      isMute,
+      isMuteSelected,
       currentOutputDevice,
       changeOutput,
       outputDevices,
+      toggleMute
     } = this.props.callingStore
 
+    if(!isCalling || !isConnected) return null
+
     return (
-      isCalling && isConnected
-        ? <ButtonGroup>
-          <ButtonDropdown isOpen={this.state.dropdownOpen} dropup toggle={::this.toggle}>
-            <DropdownToggle style={callBarBtn} size='sm' color='success' outline caret>
-              {currentOutputDevice ? currentOutputDevice : 'Output Devices'}
-            </DropdownToggle>
+      <ButtonGroup>
+        <ButtonDropdown isOpen={this.state.dropdownOpen} dropup toggle={this.toggle}>
+          <DropdownToggle style={callBarBtn} size='sm' color='success' outline caret>
+            {currentOutputDevice ? currentOutputDevice : 'Output Devices'}
+          </DropdownToggle>
 
-            <DropdownMenu>
-              {outputDevices
-                ? outputDevices.map((device) =>
-                  <DropdownItem key={device.id} onClick={() => changeOutput(device.id, device.label)} >
-                    {device.label}
-                  </DropdownItem>)
-                : null}
-            </DropdownMenu>
-          </ButtonDropdown>
+          <DropdownMenu>
+            {outputDevices
+              ? outputDevices.map((device) =>
+                <DropdownItem key={device.id} onClick={() => changeOutput(device.id, device.label)} >
+                  {device.label}
+                </DropdownItem>)
+              : null}
+          </DropdownMenu>
+        </ButtonDropdown>
 
-          <Button
-            id      = 'Popover1'
-            size    = 'sm'
-            color   = 'success'
-            style   = {callBarBtn}
-            onClick = {() => this.props.callingStore.isDialPad(true)}
-            outline
-          >
-          Dialpad
-          </Button>
+        <Button
+          id      = 'Popover1'
+          size    = 'sm'
+          color   = 'success'
+          style   = {callBarBtn}
+          onClick = {() => this.props.callingStore.setIsDialPadSelected(true)}
+          outline
+        >
+        Dialpad
+        </Button>
 
-          <Button
-            size    = 'sm'
-            color   = 'success'
-            style   = {callBarBtn}
-            onClick = {() => isMute(!selectMute)}
-            active  = {selectMute}
-            outline = {!selectMute}
-          >
-            {selectMute ? 'Unmute' : 'Mute'}
-          </Button>
+        <Button
+          size    = 'sm'
+          color   = 'success'
+          style   = {callBarBtn}
+          onClick = {toggleMute}
+          active  = {isMuteSelected}
+          outline = {!isMuteSelected}
+        >
+          {isMuteSelected ? 'Unmute' : 'Mute'}
+        </Button>
 
-          <Button
-            size    = 'sm'
-            color   = 'success'
-            style   = {callBarBtn}
-            onClick = {() => this.props.callingStore.hangUp()}
-            outline
-          >
-          End Call
-          </Button>
-        </ButtonGroup>
-        : null
+        <Button
+          size    = 'sm'
+          color   = 'success'
+          style   = {callBarBtn}
+          onClick = {() => this.props.callingStore.hangUp()}
+          outline
+        >
+        End Call
+        </Button>
+      </ButtonGroup>
+        
     )
+  }
+
+  showCallingMessage = () => {
+    const {isCalling, isCellCalling, contactName} = this.props.callingStore
+
+    if(isCalling && contactName) {
+      return `Calling ${contactName}`
+    } else if(isCellCalling) {
+      return 'Expect a call shortly...'
+    } else {
+      return 'Call Ended'
+    }
   }
 
   render() {
     const {
       isCalling,
-      isConferenceCalling,
+      isCellCalling,
       callTime,
-      contactName,
       isConnected
     } = this.props.callingStore
 
@@ -104,12 +116,9 @@ export default class CallBar extends Component {
         <Col md='8' style={{ minWidth: 300 }}>
           <span className='icon icon-phone mr-2' />
           <span>
-            {(isCalling
-              ? `Calling ${contactName}`
-              : (isConferenceCalling ? 'Expect a call shortly...' : 'Call Ended'))
-            }
+            {this.showCallingMessage()}
           </span>
-          <span style={{ float: 'right' }}>{!isConferenceCalling && callTime ? callTime : null}</span>
+          <span style={{ float: 'right' }}>{!isCellCalling && callTime ? callTime : null}</span>
           <ReactCSSTransitionGroup
             transitionName         = 'callBar'
             transitionEnterTimeout = {500}
@@ -121,7 +130,7 @@ export default class CallBar extends Component {
                 size    = 'sm'
                 color   = 'success'
                 style   = {Object.assign({}, callBarBtn, { marginLeft: 35 })}
-                onClick = {() => this.props.callingStore.isCallNotes(true)}
+                onClick = {() => this.props.callingStore.setIsCallNotesSelected(true)}
                 outline
               >
                 Notes

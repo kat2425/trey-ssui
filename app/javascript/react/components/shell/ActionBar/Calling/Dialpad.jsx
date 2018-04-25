@@ -6,13 +6,13 @@ import {
 } from 'reactstrap'
 
 const Dialpad = observer(({callingStore}) => {
-  const { selectDialPad, sendDigit, isDialPad } = callingStore
+  const { sendDigit, isDialPadSelected } = callingStore
 
   return (
-    <Popover placement="bottom" isOpen={selectDialPad} target="Popover1">
+    <Popover placement="bottom" isOpen={isDialPadSelected} target="Popover1">
       <span 
         style     = {{ padding: 5, fontSize: '1em' }} 
-        onClick   = {()      => isDialPad(false)} 
+        onClick   = {()      => callingStore.setIsDialPadSelected(false)} 
         className = "icon icon-cross float-right"
       >
       </span>
