@@ -1,18 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes          from 'prop-types'
 import uuid               from 'uuid'
-
 import {
   Dropdown, DropdownMenu, DropdownItem, Button
 } from 'reactstrap'
 
 export default class PrivacyDropdown extends Component {
   static propTypes = {
-    dropdownLabel: PropTypes.string.isRequired,
-    options:       PropTypes.arrayOf(PropTypes.object).isRequired,
-    onSelect:      PropTypes.func,
-    labelKey:      PropTypes.string.isRequired,
-    valueKey:      PropTypes.string.isRequired
+    options:  PropTypes.arrayOf(PropTypes.object).isRequired,
+    onSelect: PropTypes.func,
+    labelKey: PropTypes.string.isRequired,
+    valueKey: PropTypes.string.isRequired
   }
 
   constructor(props) {
@@ -40,6 +38,7 @@ export default class PrivacyDropdown extends Component {
 
   handleSelect = (option) => () => {
     this.props.onSelect(option[this.props.valueKey])
+    this.props.store.setSelectedAttachment(this.props.attachment)
     this.setState({ dropdownOpen: false })
   }
 
@@ -52,6 +51,9 @@ export default class PrivacyDropdown extends Component {
       break
     case 'private':
       this.setState({ privacyIcon: 'icon-lock'}) 
+      break
+    case 'groups':
+      this.setState({ privacyIcon: 'icon-users'}) 
       break
     default:
       this.setState({ privacyIcon: 'icon-lock'})

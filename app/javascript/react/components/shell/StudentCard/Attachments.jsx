@@ -11,13 +11,15 @@ import SubmoduleHeader                    from 'ui/shell/SubmoduleHeader'
 import DateFormat                         from 'helpers/DateFormat'
 import studentCardStore                   from 'stores/StudentCardStore'
 import PrivacyDropdown                    from './PrivacyDropdown'
+import GroupModal                         from './GroupModal'
 
 import axios                              from 'axios'
 import getFile                            from 'js-file-download'
 
 const visibilityOptions = [
   { label: 'Only Me',  visibility: 'private' }, 
-  { label: 'Everyone', visibility: 'public'  }
+  { label: 'Everyone', visibility: 'public'  },
+  { label: 'Groups',   visibility: 'groups'  }
 ]
 
 const AttachmentItem = observer(({ attachment }) => {
@@ -30,7 +32,9 @@ const AttachmentItem = observer(({ attachment }) => {
         <td>{ DateFormat.timeAgo(attachment.created_at) }</td>
 
         <td>
-          { attachment.groups.map(g => <Badge color='info' className='mr-1'>{g.group_name}</Badge>)}
+          { attachment.groups.map(g => 
+            <Badge key={g.id} color='info' className='mr-1'>{g.group_name}</Badge>
+          )}
         </td>
 
         <td className='text-right'>
@@ -41,6 +45,8 @@ const AttachmentItem = observer(({ attachment }) => {
             isModifiable = {attachment.modifiable}  
             options      = {visibilityOptions}
             visibility   = {attachment.visibility}
+            attachment   = {attachment}
+            store        = {studentCardStore}
           />
 
           <Button
@@ -116,7 +122,7 @@ export default class Attachments extends Component {
                   <td className='border-0 text-right'></td>
                 </tr>
               </thead>
-
+              {studentCardStore.showGroupsModal && <GroupModal store={studentCardStore} />}
               { this.renderList(this.props.attachments) }
             </Table>
           </CardBlock>
@@ -126,10 +132,14 @@ export default class Attachments extends Component {
   }
 }
 
-const changeAttachmentVisibility = (bucket) => (newPrivacy) => {
-  if (bucket.visibility !== newPrivacy) {
-    bucket.visibility = newPrivacy
-    studentCardStore.changeAttachmentVisibility(bucket.id, newPrivacy)
+const changeAttachmentVisibility = (attachment) => (newPrivacy) => {
+  if(newPrivacy === 'groups'){
+    studentCardStore.setShowGroupsModal(true)
+    return
+  }
+
+  if (attachment.visibility !== newPrivacy) {
+    studentCardStore.changeAttachmentVisibility(attachment.id, newPrivacy)
   }
 }
 
@@ -147,9 +157,9 @@ function downloadFile(url, filename) {
   axios.get(url, { responseType: 'blob' }).then((res) => getFile(res.data, filename))
 }
 
-function deleteAttachment(bucketID) {
+function deleteAttachment(attachmentID) {
   if (confirm('Are you sure you want to remove this file?')) {
-    studentCardStore.deleteAttachment(bucketID)
+    studentCardStore.deleteAttachment(attachmentID)
   }
 }
 

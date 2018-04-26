@@ -2,7 +2,8 @@ import {
   observable,
   action,
   computed,
-  autorun
+  autorun,
+  runInAction
 } from 'mobx'
 
 import _             from 'lodash'
@@ -13,14 +14,17 @@ import uiStore       from 'stores/UiStore'
 import intercomEvent from 'helpers/Intercom'
 
 export class StudentCardStore {
-  @setter @observable isLoading = false
-  @observable visible           = false
-  @observable viewport          = 'overview'
+  @setter @observable isLoading          = false
+  @observable visible                    = false
+  @observable viewport                   = 'overview'
 
-  @observable student           = null
-  @observable contacts          = []
-  @observable attachments       = []
-  @setter @observable isError   = null
+  @observable student                    = null
+  @observable contacts                   = []
+  @observable attachments                = []
+  @setter @observable isError            = null
+  @setter @observable showGroupsModal    = false
+  @setter @observable selectedAttachment = null
+  @setter @observable isUpdating         = false
 
   constructor() {
     this.initAutoruns()
@@ -268,7 +272,7 @@ export class StudentCardStore {
         params: {
           only: [
             'id', 'filename', 'public_url', 'created_at', 'thumbnail', 'modifiable',
-            'visibility', 'is_call_recording?', 'size', 'groups.group_name'
+            'visibility', 'is_call_recording?', 'size', 'groups'
           ].join(',')
         }
       })
@@ -294,12 +298,27 @@ export class StudentCardStore {
   }
 
   @action
-  changeAttachmentVisibility = async(bucketID, visibility) => {
+  changeAttachmentVisibility = async(attachmentId, visibility, groups = []) => {
+    this.setIsUpdating(true)
+
+    const params = visibility === 'groups' 
+      ? { visibility: 'groups', groups: groups.join(',') } 
+      : { visibility }
+
     try {
-      await xhr.put(`/students/${this.student.id}/attachments/${bucketID}`, {visibility})
+      const { data } = await xhr.put(`/students/${this.student.id}/attachments/${attachmentId}`, params)
+
+      const changedIndex = _.findIndex(this.attachments, (a) => a.id === data.id)
+
+      this.attachments[changedIndex] = data
     }
     catch(e) {
-      this.setIsError(this.getError(e))
+      this.setIsError(getError(e))
+    } finally {
+      runInAction(() => {
+        this.setIsUpdating(false)
+        this.setShowGroupsModal(false)
+      })  
     }
   }
 }
