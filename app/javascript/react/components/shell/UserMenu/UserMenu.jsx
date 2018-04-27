@@ -31,6 +31,13 @@ const UserMenu = () => {
         />
 
         <EUserMenuItem
+          title     = 'Course Attendance'
+          iconClass = 'icon-sweden'
+          link      = '/r/course_attendance'
+          renderIf  = {userStore.hasModules('vjs_course_attendance')}
+        />
+
+        <EUserMenuItem
           title     = 'Teacher Attendance'
           iconClass = 'icon-ticket'
           link      = '/r/teacher_attendance'

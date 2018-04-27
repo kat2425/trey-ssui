@@ -14,7 +14,7 @@ import SideNav            from './SideNav'
 import Wrapper            from './Wrapper'
 import Content            from './Content'
 import { Button }         from 'reactstrap'
-import { 
+import {
   Row,
   Col,
   Alert
@@ -66,7 +66,7 @@ export default class TagBuilder extends Component {
 
   handleOnResize = () => {
     this.calculateDimensions(this.container)
-  }  
+  }
 
   setContainerRef = (node) => {
     this.container = node
@@ -90,14 +90,14 @@ export default class TagBuilder extends Component {
     return (
       <Wrapper>
         {renderIfSchemaError(
-          <Alert 
-            type='error' 
+          <Alert
+            type='error'
             message='Error'
-            description={<SchemaErrorMessage onRetry={tagStore.fetchSchema} />} 
+            description={<SchemaErrorMessage onRetry={tagStore.fetchSchema} />}
             banner
           />
         )}
-        
+
         <Row type='flex'>
           <Col style={{ background: '#fff' }} xs={24} sm={24} md={6} lg={5}>
             <SideNav tagStore={tagStore} />
@@ -116,7 +116,7 @@ export default class TagBuilder extends Component {
                 <Col xs={24} sm={24} md={17} xxl={20} key={uuid()} className='px-4'>
                   {renderQueryBuilder(<QueryBuilder store={tagStore} />)}
                 </Col>,
-                <Col xs={24} sm={24} md={7} xxl={4} key={uuid()} className='pr-4'>                  
+                <Col xs={24} sm={24} md={7} xxl={4} key={uuid()} className='pr-4'>
                   {renderContent(
                     <div>
                       <NaturalLanguageSection tagStore={tagStore} />
@@ -127,7 +127,7 @@ export default class TagBuilder extends Component {
               ])}
 
               {renderIfShowStudentsTab(
-                <Col className='px-4 mx-4 mb-4'>                  
+                <Col className='px-4 mx-4 mb-4'>
                   <StudentSection tagStore={tagStore} />
                 </Col>
               )}
@@ -148,7 +148,7 @@ export default class TagBuilder extends Component {
 
 const SchemaErrorMessage = ({onRetry}) => (
   <span>
-    An error occured while trying to retrieve query fields. Please refresh the page or click 
+    An error occured while trying to retrieve query fields. Please refresh the page or click
     <Button className='p-0 ml-1' style={{marginTop: -1}} onClick={onRetry} color='link'>retry</Button>.
   </span>
 )
@@ -196,8 +196,9 @@ const getRenderFunctions = (tagStore) => {
 
 const tips = [
   {
-    label:   'Tip #1', 
-    content: `If you don't select a school year for your data filters, 
-    your list will return results from any year within the SchoolStatus database.`
-  } 
+    label:   'Tip #1',
+    content: `If you don't select a school year for each of your data filters,
+    your list will return results from any year for each filter within the
+    SchoolStatus database.`
+  }
 ]

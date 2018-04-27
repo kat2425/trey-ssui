@@ -9,6 +9,7 @@ import styled                from 'styled-components'
 import UserMenu              from 'ui/shell/UserMenu/UserMenu'
 
 import Attendance            from 'modules/logic/Attendance'
+import CourseAttendance      from 'modules/logic/CourseAttendance'
 import TeacherAttendance     from 'modules/logic/TeacherAttendance'
 import Infractions           from 'modules/logic/Infractions'
 import Financials            from 'modules/logic/Financials'
@@ -59,6 +60,7 @@ const AppContainer = ({ match }) => {
         <Route path='/r/my_schools' component={MySchools} />
         <Route path='/r/my_students' component={MyStudents} />
         <Route path='/r/attendance' component={Attendance} />
+        <Route path='/r/course_attendance' component={CourseAttendance} />
         <Route path='/r/teacher_attendance' component={TeacherAttendance} />
         <Route path='/r/infractions' component={Infractions} />
 
