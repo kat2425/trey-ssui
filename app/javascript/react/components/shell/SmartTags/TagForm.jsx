@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import { observer }         from 'mobx-react'
+import SSButton             from 'ui/shell/SSButton'
 
 import {
   Form, 
   Input, 
-  Button,
   Select
 } from 'antd'
+
 const Option = Select.Option
+const FormItem = Form.Item
 
 import {GroupSelect} from 'ui/shell/SmartTags'
 
@@ -124,33 +126,25 @@ class FormWrapper extends Component {
             />
           )}
         </FormItem>
-        <FormItem 
-          tail 
-          className='mb-2 text-center'
-        >
-          <Button 
-            type     = 'primary'
-            htmlType = 'submit'
+        <FormItem className='mb-2 text-right'>
+          <SSButton 
+            className = 'btn btn-secondary mr-2'
+            onClick   = {this.props.onCancel}
+          >
+            Cancel
+          </SSButton>
+          <SSButton 
+            color    = 'primary'
             disabled = {hasErrors(getFieldsError())}
             loading  = {tag.isCreating || tag.isUpdating}
           >
             Save
-          </Button>
-          <Button 
-            className = 'ml-2'
-            onClick   = {this.props.onCancel}
-          >
-            Cancel
-          </Button>
+          </SSButton>
         </FormItem>
       </Form>
     )
   }
 }
-
-const FormItem = ({tail, ...props}) => tail 
-  ? <Form.Item {...props} /> 
-  : <Form.Item {...props} />
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
