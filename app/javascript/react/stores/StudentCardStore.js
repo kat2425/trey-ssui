@@ -11,6 +11,7 @@ import xhr           from 'helpers/XHR'
 import { setter }    from 'mobx-decorators'
 import getError      from 'helpers/ErrorParser'
 import uiStore       from 'stores/UiStore'
+import userStore     from 'stores/UserStore'
 import intercomEvent from 'helpers/Intercom'
 
 export class StudentCardStore {
@@ -135,6 +136,8 @@ export class StudentCardStore {
   @action
   fetchNumberCapability = async(contact) => {
     try {
+      if (!userStore.user.hasChannel) { return }
+
       const res = await xhr.post('/commo/validate_number', {
         number: contact.phone
       })
