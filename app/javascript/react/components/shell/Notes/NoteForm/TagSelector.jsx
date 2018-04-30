@@ -6,12 +6,12 @@ function TagSelector({ store, note }){
   return (
     <Select
       labelInValue
-      className='mb-3'
-      onChange={(e) => note.handleSelectTag(e)}
-      defaultValue={note.defaultTags}
-      mode="tags"
-      style={{ width: '100%' }}
-      placeholder="Select tags..."
+      className    = 'mb-3'
+      onChange     = {(e) => note.handleSelectTag(e)}
+      defaultValue = {note.defaultTags}
+      mode         = 'multiple'
+      style        = {{ width: '100%' }}
+      placeholder  = 'Select tags...'
     >
       {
         store.tags.map((tag) => { 
