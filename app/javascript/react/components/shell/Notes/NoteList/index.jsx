@@ -1,14 +1,15 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import {observer}       from 'mobx-react'
-import _                from 'lodash'
+import React          from 'react'
+import PropTypes      from 'prop-types'
+import {observer}     from 'mobx-react'
+import _              from 'lodash'
 
-import NoteEntry        from '../NoteEntry'
-import Wrapper          from './Wrapper'
-import ScrollView       from './ScrollView'
-import LoadingSpinner   from 'ui/shell/LoadingSpinner'
-import { Button, List } from 'antd'
-import styled           from 'styled-components'
+import NoteEntry      from '../NoteEntry'
+import Wrapper        from './Wrapper'
+import ScrollView     from './ScrollView'
+import LoadingSpinner from 'ui/shell/LoadingSpinner'
+import { List }       from 'antd'
+import styled         from 'styled-components'
+import SSButton       from 'ui/shell/SSButton'
 
 NoteList.propTypes = {
   store: PropTypes.object.isRequired
@@ -38,20 +39,14 @@ const loading = (store) => ({
 })
 
 const loadMore = store => {
-  const showSpinner = !_.isEmpty(store.orderedNotes) && store.isLoading
-  const loadingStyle = {
-    textAlign:  'center',
-    marginTop:  12,
-    height:     50,
-    lineHeight: '50px'
-  }
-
   return store.pagination.showLoadingMore ? (
-    <div style={loadingStyle}>
-      {showSpinner && <LoadingSpinner center />}
-      {!store.isLoading && (
-        <Button onClick={store.pagination.loadMore}>Load More</Button>
-      )}
+    <div className='text-center my-4'>
+      <SSButton 
+        loading = {store.isLoading}
+        onClick = {store.pagination.loadMore}
+      >
+        Load More
+      </SSButton>
     </div>
   ) : null
 }
