@@ -30,6 +30,7 @@ import IReady               from './IReady'
 import MCT                  from './MCT'
 import MAAP                 from './MAAP'
 import MasteryConnect       from './MasteryConnect'
+import MKASThird            from './MKASThird'
 import NWEA                 from './NWEA'
 import OSTP                 from './OSTP'
 import PARCC                from './PARCC'
@@ -122,6 +123,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/maap'            component={MAAP}            />
           <Route path='/r/assessment/mct'             component={MCT}             />
           <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
+          <Route path='/r/assessment/mkas_third'      component={MKASThird}       />
           <Route path='/r/assessment/nwea'            component={NWEA}            />
           <Route path='/r/assessment/ostp'            component={OSTP}            />
           <Route path='/r/assessment/parcc'           component={PARCC}           />

@@ -116,6 +116,12 @@ const Assessments = [
     dataset: 'mcts',
   },
   {
+    module:  'vjs_mkas',
+    value:   'mkas_third',
+    label:   'MKAS 3rd',
+    dataset: 'mkas_thirds',
+  },
+  {
     module:  'vjs_nwea',
     value:   'nwea',
     label:   'NWEA',

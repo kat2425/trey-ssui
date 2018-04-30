@@ -1,7 +1,7 @@
 import React, { Component }    from 'react'
 import { observer }            from 'mobx-react'
 import {
-  Row, Col, Button, ButtonGroup, ButtonDropdown, 
+  Row, Col, Button, ButtonGroup, ButtonDropdown,
   DropdownItem, DropdownMenu, DropdownToggle
 } from 'reactstrap'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'

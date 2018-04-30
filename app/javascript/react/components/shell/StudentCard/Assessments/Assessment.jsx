@@ -31,6 +31,7 @@ import IReady          from './IReady'
 import MAAP            from './MAAP'
 import MCT             from './MCT'
 import MasteryConnect  from './MasteryConnect'
+import MKASThird       from './MKASThird'
 import NWEA            from './NWEA'
 import OSTP            from './OSTP'
 import PARCC           from './PARCC'
@@ -272,6 +273,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/tvaas`}
             render = {() => <TVAAS student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/mkas_third`}
+            render = {() => <MKASThird student={student}/> }
           />
 
           <Route render={() => {
