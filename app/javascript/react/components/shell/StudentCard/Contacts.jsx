@@ -4,8 +4,7 @@ import _               from 'lodash'
 import SubmoduleHeader from 'ui/shell/SubmoduleHeader'
 
 import {
-  ButtonGroup, ButtonDropdown, Button, Card, Table, Alert,
-  DropdownToggle, DropdownMenu, DropdownItem,
+  ButtonGroup, Button, Card, Table,
   UncontrolledTooltip
 } from 'reactstrap'
 
@@ -50,7 +49,7 @@ const ContactNumber = ({phone, stopped}) => {
   )
 }
 
-const ContactEntry = observer(({contact, store, student, handleFave, handleSendEmail}) => {
+const ContactEntry = observer(({contact, store, student, handleFave}) => {
   return (
     <tr key={`${contact.name}_${contact.relationship}`}>
       <td>
@@ -70,7 +69,7 @@ const ContactEntry = observer(({contact, store, student, handleFave, handleSendE
               <ButtonGroup className='mr-2'>
                 <Button
                   onClick = {() => {
-                    store.isCall(true)
+                    store.setShowCallDialog(true)
                     store.contact   = ref
                     store.studentId = student.id
                   }}
@@ -164,14 +163,16 @@ const Contacts = ({contacts, store, student, handleContactFave, handleSendEmail}
           </thead>
 
           <tbody>
-            { contacts.map(c => <ContactEntry
-              store           = {store}
-              student         = {student}
-              key             = {c.name}
-              contact         = {c}
-              handleFave      = {handleContactFave}
-              handleSendEmail = {handleSendEmail}
-            />) }
+            { contacts.map(c => 
+              <ContactEntry
+                store           = {store}
+                student         = {student}
+                key             = {c.name}
+                contact         = {c}
+                handleFave      = {handleContactFave}
+                handleSendEmail = {handleSendEmail}
+              />
+            )}
           </tbody>
         </Table>
       </Card>

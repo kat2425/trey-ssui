@@ -9,15 +9,15 @@ import {
 
 const CallDialog = observer(({ callingStore }) => {
   const { 
-    selectCall, 
-    selectConferenceCall, 
-    isConferenceCall, 
+    cancelCallSelection,
+    showCallDialog,
+    isCellSelected, 
     contact, 
     studentID 
   } = callingStore
 
   return (
-    <Modal style={{ zIndex: 99999 }} isOpen={selectCall}>
+    <Modal style={{ zIndex: 99999 }} isOpen={showCallDialog}>
       <ModalHeader style={{ justifyContent: 'center' }}>Place a Call</ModalHeader>
       <ModalBody style={{ textAlign: 'center' }}>
         <ButtonGroup vertical>
@@ -30,12 +30,12 @@ const CallDialog = observer(({ callingStore }) => {
           </Button>
           <Button 
             color="secondary" 
-            onClick={() => { isConferenceCall(!selectConferenceCall) }}
+            onClick={() => callingStore.setIsCellSelected(!isCellSelected)}
           >
             Call Using My Cell Phone
           </Button>
         </ButtonGroup>
-        <Collapse isOpen={selectConferenceCall}>
+        <Collapse isOpen={isCellSelected}>
           <Card className='mt-4'>
             <CardBlock>
               SchoolStatus will connect this call free of charge. We will call your chosen phone number, 
@@ -47,7 +47,7 @@ const CallDialog = observer(({ callingStore }) => {
             <CardBlock>
               <Button
                 disabled={callingStore.isDisabled}
-                onClick={() => callingStore.initiateConferenceCall(contact, studentID)}
+                onClick={() => callingStore.initiateCellCall(contact, studentID)}
                 color="primary"
               >
                 Proceed
@@ -58,7 +58,7 @@ const CallDialog = observer(({ callingStore }) => {
       </ModalBody>
       <ModalFooter>
         <Button
-          onClick={() => handleCancel(callingStore)}
+          onClick={cancelCallSelection}
           color="secondary"
         >
           Cancel
@@ -72,12 +72,10 @@ function handleWebCall(store){
   if(!hasWebRTC(store)) return
 
   const { 
-    isCall, 
     contact, 
     studentID 
   } = store
 
-  isCall(false)
   store.initiateCall(contact, studentID)
 }
 
@@ -101,16 +99,6 @@ function hasWebRTC(store) {
   } else {
     return true
   }
-}
-
-function handleCancel(store) {
-  const { 
-    isCall, 
-    isConferenceCall 
-  } = store
-
-  isCall(false)
-  isConferenceCall(false)
 }
 
 export default CallDialog

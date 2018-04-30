@@ -5,7 +5,6 @@ import CallNotesForm           from './CallNotesForm'
 
 @observer
 export default class CallNotesDialog extends Component {
-
   handleChange = (e) => {
     const { setCallNoteText } = this.props.callingStore
 
@@ -19,19 +18,19 @@ export default class CallNotesDialog extends Component {
   }
 
   handleCancel = () => {
-    const { isCallNotes, setCallNoteText } = this.props.callingStore
+    const { callingStore } = this.props
 
-    isCallNotes(false)
-    setCallNoteText('')
+    callingStore.setIsCallNotesSelected(false)
+    callingStore.setCallNoteText('')
   }
 
   renderNotesForm = () => {
     const { 
-      selectCallNotes, 
+      isCallNotesSelected, 
       contactName,
       callNoteText 
     } = this.props.callingStore
-    const position = selectCallNotes ? '100%' : '-200px'
+    const position = isCallNotesSelected ? '100%' : '-200px'
 
     return (
       <CallNotesForm 
@@ -47,7 +46,7 @@ export default class CallNotesDialog extends Component {
 
   render() {
     const { 
-      selectCallNotes
+      isCallNotesSelected
     } = this.props.callingStore
 
     return (
@@ -56,7 +55,7 @@ export default class CallNotesDialog extends Component {
         transitionEnterTimeout = {300}
         transitionLeaveTimeout = {300}
       >
-        {selectCallNotes &&
+        {isCallNotesSelected &&
           this.renderNotesForm()
         }
       </ReactCSSTransitionGroup>

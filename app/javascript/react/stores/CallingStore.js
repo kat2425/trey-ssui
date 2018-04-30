@@ -1,7 +1,8 @@
 import {
   observable,
   action,
-  autorun
+  autorun,
+  runInAction
 } from 'mobx'
 
 import { setter }        from 'mobx-decorators'
@@ -17,12 +18,12 @@ export class CallingStore {
   @setter @observable callBarVisible       = false
   @setter @observable callTime             = null
   @setter @observable isCalling            = false
-  @setter @observable isConferenceCalling  = false
-  @setter @observable selectCallNotes      = false
-  @setter @observable selectCall           = false
-  @setter @observable selectConferenceCall = false
-  @setter @observable selectDialPad        = false
-  @setter @observable selectMute           = false
+  @setter @observable isCellCalling        = false
+  @setter @observable isCellSelected       = false
+  @setter @observable showCallDialog       = false
+  @setter @observable isCallNotesSelected  = false
+  @setter @observable isDialPadSelected    = false
+  @setter @observable isMuteSelected       = false
   @setter @observable isError              = null
   @setter @observable isSaved              = null
   @setter @observable isDisabled           = false
@@ -72,11 +73,14 @@ export class CallingStore {
 
   // Browser calling
   @action
-  initiateCall = async(contact, studentId) => {
+  initiateCall = async(studentId) => {
     try {
       this.callStartTime = null
+      this.setCallBarVisible(true)
       this.setCallTime(null)
-      this.setSelectConferenceCall(false)
+      this.setIsCalling(true)
+      this.setIsCellSelected(false)
+      this.setShowCallDialog(false)
 
       const { data } = await this.generateToken()
 
@@ -87,10 +91,7 @@ export class CallingStore {
   }
 
   @action
-  initialCallOK = (studentId, data) => {
-    this.setIsCalling(true)
-    this.setCallBarVisible(true)
-
+  initialCallOK = (studentId, data) => {    
     this.contactName = this.contact.name
     this.studentID   = studentId
     this.phoneNumber = this.contact.phone
@@ -126,38 +127,32 @@ export class CallingStore {
     this.callSID = conn.parameters.CallSid
     this.getOutputDevices()
     this.isConnected = true
+    this.callStartTime = Date.now()
 
-    if (this.isConnected) {
-      this.callStartTime = Date.now()
-
-      this.intervalHandler = setInterval(action('SETTING CALL TIME', () => {
-        this.setCallTime(getTime(this.callStartTime, Date.now()))
-      }), 1000)
-    }
+    this.intervalHandler = setInterval(action('SETTING CALL TIME', () => {
+      this.setCallTime(getTime(this.callStartTime, Date.now()))
+    }), 1000)
   }
 
   @action
   connectionDisconnect = () => {
+    this.isConnected = false
     this.setIsCalling(false)
     clearInterval(this.intervalHandler)
-    setTimeout(() =>
-      !this.isCalling && this.setCallBarVisible(false), 5000)
+    setTimeout(action(() =>
+      !this.isCalling && this.setCallBarVisible(false)), 5000)
   }
 
   @action
   connectionReject = () => {
+    this.isConnected = false
     this.setIsCalling(false)
-    setTimeout(() =>
-      this.setCallBarVisible(false), 5000)
+    setTimeout(action(() =>
+      !this.isCalling && this.setCallBarVisible(false)), 5000)
   }
 
 
   // Dialpad
-  @action
-  isDialPad = (bool) => {
-    this.setSelectDialPad(bool)
-  }
-
   @action
   sendDigit = (digit) => {
     this.connection.sendDigits(digit)
@@ -165,52 +160,57 @@ export class CallingStore {
 
   // Cell-to-Cell Calling
   @action
-  conferenceCall = async() => {
-    intercomEvent('web:calling:cell', {contact: this.contactID})
-    try {
-      await xhr.post('/commo/voice/mobile_call', { contact_id: this.contactID })
-
-      this.conferenceCallOK()
-    } catch(e){
-      intercomEvent('web:calling:cell_call_error', {message: getError(e).message})
-      this.setIsError(getError(e))
-    }
-  }
-
-  @action
-  conferenceCallOK = () => {
-    this.setIsConferenceCalling(true)
-    this.setCallBarVisible(true)
-
-    setTimeout(() => {
-      this.setIsDisabled(false)
-      this.setIsConferenceCalling(false)
-      this.setCallBarVisible(false)
-    }, 6000)
-  }
-
-  @action
-  initiateConferenceCall = async(contact, student_id) => {
+  initiateCellCall = async(contact, student_id) => {
     try {
       this.setIsDisabled(true)
       const response = await this.generateToken()
 
-      this.initiateConferenceCallOK(contact, student_id, response)
-    } catch(e){
-      this.setIsDisabled(false)
-      this.setIsError(getError(e))
+      this.initiateCellCallOK(contact, student_id, response)
+    } catch(e) {
+      runInAction(() => {
+        this.setIsError(getError(e))
+        this.setIsDisabled(false)
+      })
     }
   }
 
   @action
-  initiateConferenceCallOK = (contact, student_id, response) => {
+  initiateCellCallOK = (contact, student_id, response) => {
     this.contactID   = contact.id
     this.contactName = contact.name
     this.phoneNumber = contact.phone
     this.studentID   = student_id
     this.userId      = response.data.user
 
-    this.conferenceCall()
+    this.completeCellCall()
+  }
+
+  @action
+  completeCellCall = async() => {
+    intercomEvent('web:calling:cell', {contact: this.contactID})
+    try {
+      await xhr.post('/commo/voice/mobile_call', { contact_id: this.contactID })
+
+      this.completeCellCallOK()
+    } catch(e){
+      intercomEvent('web:calling:cell_call_error', {message: getError(e).message})
+      runInAction(() => {
+        this.setIsError(getError(e))
+        this.setIsDisabled(false)
+      })
+    }
+  }
+
+  @action
+  completeCellCallOK = () => {
+    this.setIsCellCalling(true)
+    this.setCallBarVisible(true)
+
+    setTimeout(action(() => {
+      this.setIsDisabled(false)
+      this.setIsCellCalling(false)
+      !this.isCalling && this.setCallBarVisible(false)
+    }), 6000)
   }
 
   @action
@@ -231,30 +231,13 @@ export class CallingStore {
     this.isConnected = false
     this.connection.disconnect()
     this.setIsCalling(false)
-    this.setIsConferenceCalling(false)
-
-    setTimeout(() => {
-      !this.isCalling && this.setCallBarVisible(false)
-    }, 5000)
-
-    this.isDialPad(false)
+    this.setIsCellCalling(false)
+    this.setIsDialPadSelected(false)
     this.outputDevices = []
-  }
 
-  @action.bound
-  isCall(bool) {
-    this.setSelectCall(bool)
-  }
-
-  @action.bound
-  isConferenceCall(bool) {
-    this.setSelectConferenceCall(bool)
-  }
-
-  @action
-  isMute = (bool) => {
-    this.setSelectMute(bool)
-    this.connection.mute(bool)
+    setTimeout(action(() => {
+      !this.isCalling && this.setCallBarVisible(false)
+    }), 5000)
   }
 
   @action
@@ -278,12 +261,13 @@ export class CallingStore {
     })
   }
 
-  /* Call Notes */
   @action
-  isCallNotes = (bool) => {
-    this.selectCallNotes = bool
+  toggleMute = () => {
+    this.setIsMuteSelected(!this.isMuteSelected)
+    this.connection.mute(this.isMuteSelected)
   }
 
+  /* Call Notes */
   @action
   setCallNoteText = (text) => {
     this.callNoteText = text
@@ -324,9 +308,12 @@ export class CallingStore {
       type:    'success'
     })
   }
+
+  @action
+  cancelCallSelection = () => {
+    this.setShowCallDialog(false)
+  }
 }
-
-
 
 function getTime(start, end) {
   const startTime = moment(start)
