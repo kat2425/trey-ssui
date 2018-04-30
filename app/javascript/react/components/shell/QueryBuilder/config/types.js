@@ -8,10 +8,11 @@ const types = {
           'not_equal',
           'is_empty',
           'is_not_empty',
-          'proximity'
+          'proximity',
+          'contains'
         ],
         widgetProps: {
-          formatValue:      (val, fieldDef, wgtDef, isForDisplay) => '_' + JSON.stringify(val),
+          formatValue:      (val, fieldDef, wgtDef, isForDisplay) => JSON.stringify(val),
           valueLabel:       'Text',
           valuePlaceholder: 'Enter text'
         }
@@ -148,7 +149,7 @@ const types = {
         operators:   ['equal'],
         widgetProps: {
           //you can enable this if you don't use fields as value sources
-          hideOperator: true,
+          hideOperator:        true,
           operatorInlineLabel: 'is'
         }
       },

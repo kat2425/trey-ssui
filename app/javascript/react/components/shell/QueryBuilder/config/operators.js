@@ -101,6 +101,22 @@ const operators = {
       return `${field} is greater than or equal to ${value}`
     }
   },
+  contains: {
+    label:          'contains',
+    labelForFormat: 'contains',
+    formatOp:       (
+      field,
+      op,
+      value,
+      valueSrc,
+      valueType,
+      opDef,
+      operatorOptions,
+      isForDisplay
+    ) => {
+      return `${field} contains the text ${value}`
+    }
+  },
 
   //between: {
   //label: 'Between',
@@ -137,12 +153,12 @@ const operators = {
   //},
 
   is_empty: {
-    isUnary: true,
-    label: 'Is Empty',
+    isUnary:        true,
+    label:          'Is Empty',
     labelForFormat: 'IS EMPTY',
-    cardinality: 0,
-    reversedOp: 'is_not_empty',
-    formatOp: (
+    cardinality:    0,
+    reversedOp:     'is_not_empty',
+    formatOp:       (
       field,
       op,
       value,
@@ -156,12 +172,12 @@ const operators = {
     }
   },
   is_not_empty: {
-    isUnary: true,
-    label: 'Is not empty',
+    isUnary:        true,
+    label:          'Is not empty',
     labelForFormat: 'IS NOT EMPTY',
-    cardinality: 0,
-    reversedOp: 'is_empty',
-    formatOp: (
+    cardinality:    0,
+    reversedOp:     'is_empty',
+    formatOp:       (
       field,
       op,
       value,
@@ -175,9 +191,9 @@ const operators = {
     }
   },
   select_equals: {
-    label: 'is',
+    label:          'is',
     labelForFormat: '==',
-    formatOp: (
+    formatOp:       (
       field,
       op,
       value,
@@ -192,9 +208,9 @@ const operators = {
     reversedOp: 'select_not_equals'
   },
   select_not_equals: {
-    label: 'is not',
+    label:          'is not',
     labelForFormat: '!=',
-    formatOp: (
+    formatOp:       (
       field,
       op,
       value,
@@ -209,9 +225,9 @@ const operators = {
     reversedOp: 'select_equals'
   },
   select_any_in: {
-    label: 'is any of',
+    label:          'is any of',
     labelForFormat: 'IN',
-    formatOp: (
+    formatOp:       (
       field,
       op,
       values,
@@ -227,9 +243,9 @@ const operators = {
     reversedOp: 'select_not_any_in'
   },
   select_not_any_in: {
-    label: 'not any of',
+    label:          'not any of',
     labelForFormat: 'NOT IN',
-    formatOp: (
+    formatOp:       (
       field,
       op,
       values,
@@ -245,9 +261,9 @@ const operators = {
     reversedOp: 'select_any_in'
   },
   multiselect_equals: {
-    label: 'is one of',
+    label:          'is one of',
     labelForFormat: '==',
-    formatOp: (
+    formatOp:       (
       field,
       op,
       values,
