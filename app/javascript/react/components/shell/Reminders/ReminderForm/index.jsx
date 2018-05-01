@@ -1,25 +1,19 @@
-import React                                                          from 'react'
-import Datetime                                                       from 'react-datetime'
-import StudentSearch                                                  from '../../StudentSearch'
-import {Input, InputGroup, InputGroupAddon, InputGroupButton, Button} from 'reactstrap'
-import Wrapper                                                        from './Wrapper'
-import { observer }                                                   from 'mobx-react'
+import React                                        from 'react'
+import Datetime                                     from 'react-datetime'
+import StudentSearch                                from '../../StudentSearch'
+import {Input, InputGroup, InputGroupAddon, Button} from 'reactstrap'
+import Wrapper                                      from './Wrapper'
+import { observer }                                 from 'mobx-react'
 
 const ReminderForm = observer(({reminderStore}) => {
   return (
     <Wrapper>
       <div className='reminder-form' style={{ marginBottom: 10 }}>
-        <InputGroup style={{ marginTop: 10, width: '100%' }}>
-          <InputGroupAddon>
-            <span className="icon icon-user"></span>
-          </InputGroupAddon>
-          <StudentSearch style={{ width: '100%' }} onChange={(e) => reminderStore.selectStudent(e)} dropup />
+        <InputGroup className='reminder-student-search-container'>
+          <StudentSearch style={{width: '100%'}} onChange={(e) => reminderStore.selectStudent(e)} dropup />
         </InputGroup>
         <InputGroup style={{ marginTop: 10 }}>
-          <InputGroupAddon>
-            <span className="icon icon-calendar"></span>
-          </InputGroupAddon>
-          <Datetime 
+          <Datetime
             onChange   = {(e)         => reminderStore.selectDateTime(e)} 
             inputProps = {{ placeholder: 'Pick a Date...' }} 
             input 
@@ -34,11 +28,13 @@ const ReminderForm = observer(({reminderStore}) => {
           style       = {{ width: '100%' }} 
           type='text' 
         />
-        <InputGroupButton>
-          <Button onClick={() => { reminderStore.addReminder(reminderStore.reminderText) }}>
-            <span className="icon icon-add-to-list"></span>
+        <InputGroupAddon addonType='append'>
+          <Button
+            className="icon icon-add-to-list"
+            onClick={() => { reminderStore.addReminder(reminderStore.reminderText) }}
+          >
           </Button>
-        </InputGroupButton>
+        </InputGroupAddon>
       </InputGroup>
     </Wrapper>
   )

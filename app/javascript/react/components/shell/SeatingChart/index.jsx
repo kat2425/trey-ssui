@@ -17,7 +17,7 @@ import {
 } from 'antd'
 
 import {
-  Card, CardBlock
+  Card, CardBody
 } from 'reactstrap'
 
 //Breaks antd when placed in its own component
@@ -203,11 +203,11 @@ export default class SeatingChart extends Component {
         </ModuleHeader>
 
         <Card>
-          <CardBlock>
+          <CardBody>
             <h5 className='mb-2'>{this.getCourseName()}</h5>
 
             {!_isEmpty(layout) && this.renderLayout()}
-          </CardBlock>
+          </CardBody>
         </Card>
       </div>
     )

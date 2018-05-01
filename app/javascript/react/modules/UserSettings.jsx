@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
-import VJSChart             from 'ui/vjs/VJSChart'
 
 import xhr                  from 'helpers/XHR'
 
 import Datetime             from 'react-datetime'
 
 import {
-  Container,  Row,            Col,         Collapse,
-  Button,     Card,           CardBlock,   UncontrolledTooltip,
-  CardHeader, CardImg,        CardTitle,   CardSubtitle,
-  Badge,      Table,          ButtonGroup, Form,
-  FormGroup,  Label,          Input,       FormText,
-  InputGroup, InputGroupAddon
+  Button,     Card,           CardBody,   
+  FormGroup,  Label,          Input,       
+  InputGroup, InputGroupAddon, ButtonGroup, 
 } from 'reactstrap'
 
 export default class UserSettings extends Component {
@@ -38,7 +34,7 @@ export default class UserSettings extends Component {
 
     xhr.put(`/users/${window.SSUser.id}/mobile_number`, {
       mobile_number: _number
-    }).then(res => this.fetchSettings)
+    }).then(this.fetchSettings)
   }
 
   handleChange = (e) => {
@@ -51,7 +47,7 @@ export default class UserSettings extends Component {
         <ModuleHeader title='My Settings'/>
 
         <Card className='mb-4'>
-          <CardBlock>
+          <CardBody>
             <h4 className='mb-2'>General Settings</h4>
             <div className='row mb-4' style={{borderBottom: '1px dashed rgba(0,0,0,0.1)'}}>
               <div className='col-md-6'>
@@ -120,7 +116,10 @@ export default class UserSettings extends Component {
             <h4 className='mb-2'>Email Preferences</h4>
             <div className='row mb-4'>
               <div className='alert alert-info w-100'>
-                SchoolStatus sends a daily aggregate of attendance and discipline data to your mailbox each morning. If you'd like to opt out of receiving this email, you may do so here.
+                {`SchoolStatus sends a daily aggregate of attendance and discipline\
+                  data to your mailbox each morning.\
+                  If you'd like to opt out of receiving this email, you may do so here.`
+                }
               </div>
 
               <div className='w-100 d-flex justify-content-end'>
@@ -138,7 +137,7 @@ export default class UserSettings extends Component {
                 </Button>
               </div>
             </div>
-          </CardBlock>
+          </CardBody>
         </Card>
       </div>
     )

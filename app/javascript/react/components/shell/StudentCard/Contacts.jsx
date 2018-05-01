@@ -63,7 +63,7 @@ const ContactEntry = observer(({contact, store, student, handleFave}) => {
         {/* TODO: extract to function */}
         {contact.refs.map(ref => {
           return (
-            <div key={ref.id} id={ref.id} className='mb-1'>
+            <div key={ref.id} id={`id-${ref.id}`} className='mb-1'>
               <ContactFaveIcon handleClick={handleFave} id={ref.id} primary={ref.primary}/>
 
               <ButtonGroup className='mr-2'>
@@ -93,7 +93,7 @@ const ContactEntry = observer(({contact, store, student, handleFave}) => {
               <ContactNumber phone={ref.phone} stopped={ref.stopped}/>
               <UncontrolledTooltip
                 placement = 'top'
-                target    = {ref.id}
+                target    = {`id-${ref.id}`}
                 hidden    = {!ref.stopped}
               >
                 This number has requested no communication via SchoolStatus

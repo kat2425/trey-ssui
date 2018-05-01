@@ -2619,6 +2619,9 @@ tbody.collapse.show {
     .input-group-btn:not(:first-child) > .btn-group:hover {
       z-index: 3; }
 
+.reminder-student-search-container .form-control {
+  width: 100%; }
+
 .custom-control {
   position: relative;
   display: -webkit-inline-box;

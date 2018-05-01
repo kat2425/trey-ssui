@@ -2,7 +2,11 @@ import React, {Component} from 'react'
 import PropTypes          from 'prop-types'
 import uuid               from 'uuid'
 import {
-  Dropdown, DropdownMenu, DropdownItem, Button
+  Dropdown, 
+  DropdownMenu, 
+  DropdownItem, 
+  DropdownToggle,
+  Button
 } from 'reactstrap'
 
 export default class PrivacyDropdown extends Component {
@@ -92,7 +96,12 @@ export default class PrivacyDropdown extends Component {
           direction='left' 
           toggle={() => null} 
           isOpen={this.state.dropdownOpen}
+          style={{height: 0, width: 0}} /* react 16 fix */
         >
+
+          {/*Added below code for this dropdown to work*/}
+          <DropdownToggle className='invisible'>Click</DropdownToggle>
+
           <DropdownMenu right>
             {this.props.options.map(this.renderItem)}
           </DropdownMenu>

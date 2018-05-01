@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import PropTypes            from 'prop-types'
 
 import {
-  Collapse,            Button,         Card,           CardBlock,
-  UncontrolledTooltip, Pagination,     PaginationItem, PaginationLink,
+  Collapse,            Card,           CardBody,
+  UncontrolledTooltip, PaginationItem, PaginationLink, Pagination,
   ButtonDropdown,      DropdownToggle, DropdownMenu,   DropdownItem
 } from 'reactstrap'
 
@@ -112,7 +111,7 @@ export default class VJSChart extends Component {
           }
         },
 
-        reportCompleted: (status) => {
+        reportCompleted: () => {
           // TODO: can we use an await here to check if component is mounted, if not,
           // wait until it is, and then complete the function?
 
@@ -122,7 +121,7 @@ export default class VJSChart extends Component {
 
             // Show empty message if table has no data
             if (!this.report.data().components.length &&
-                !(this.report.data().totalPages == undefined) &&
+                !(this.report.data().totalPages === undefined) &&
                 this.props.isTable) {
               this.setState({ emptyReport: true })
             }
@@ -313,7 +312,8 @@ export default class VJSChart extends Component {
     if (this.props.isTable) {
       return {
         beforeRender: (html) => {
-          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%').css('margin-bottom', '0').css('-webkit-transform', 'scale(1.0)')
+          $(html).find('table.jrPage').addClass('table table-hover')
+            .css('width', '100%').css('margin-bottom', '0').css('-webkit-transform', 'scale(1.0)')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(1)').css('display', 'none')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(2) > td').css('border-top', 'none')
           $(html).find('table.jrPage.table > tbody > tr').css('height', '')
@@ -323,7 +323,8 @@ export default class VJSChart extends Component {
     } else if (this.props.isCrosstab) {
       return {
         beforeRender: (html) => {
-          $(html).find('table.jrPage').addClass('table table-hover').css('width', '100%').css('margin-bottom', '0')
+          $(html).find('table.jrPage').addClass('table table-hover')
+            .css('width', '100%').css('margin-bottom', '0')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(1)').css('display', 'none')
           $(html).find('table.jrPage.table > tbody > tr:nth-child(2) > td').css('border-top', 'none')
           $(html).find('table.jrPage.table > tbody > tr').css('height', '')
@@ -365,7 +366,7 @@ export default class VJSChart extends Component {
     return (
       <div className={this.props.className}>
         <Card className={`${cardHeight} mb-3`}>
-          <CardBlock className='no-flex-grow p-0 pl-2 pb-2 pt-2'>
+          <CardBody className='no-flex-grow p-0 pl-2 pb-2 pt-2'>
             <div className='row mr-2 ml-1'>
               <div>
                 <h5 className='mt-2'>
@@ -388,7 +389,7 @@ export default class VJSChart extends Component {
                   <DropdownToggle
                     style = {{padding: 0, width: 44, height: 36}}
                     size  = 'sm'
-                    id    = {`${this.reportID}-export-data`}
+                    id    = {`id-${this.reportID}-export-data`}
                     caret
                   >
                     <span className='icon icon-download text-muted' style={{marginRight: '4px'}}/>
@@ -427,13 +428,13 @@ export default class VJSChart extends Component {
 
                 <UncontrolledTooltip
                   placement = 'left'
-                  target    = {`${this.reportID}-export-data`}
+                  target    = {`id-${this.reportID}-export-data`}
                 >
                   Export data
                 </UncontrolledTooltip>
               </div>
             </div>
-          </CardBlock>
+          </CardBody>
 
           <Collapse isOpen={!this.state.collapse}>
             <div className='text-center' style={chartContainer}>

@@ -4,10 +4,8 @@ import { AsyncTypeahead }   from 'react-bootstrap-typeahead'
 import StudentAvatar        from './StudentAvatar'
 
 import xhr                  from '../../helpers/XHR'
-import fireEvent            from '../../helpers/FireEvent'
 import _                    from 'lodash'
 
-// import 'react-bootstrap-typeahead/css/Typeahead.css'
 
 const StudentSearchItem = ({ student, search }) => {
   const formatResults = (search, value) => {
@@ -23,7 +21,6 @@ const StudentSearchItem = ({ student, search }) => {
     return newValue
   }
 
-  // Custom menu item for search results
   return (
     <div key={ student.id } className='row pr-2 pl-2 mb-1'>
       <div className='col-xs-3'>
@@ -31,7 +28,12 @@ const StudentSearchItem = ({ student, search }) => {
       </div>
 
       <div className='col-sm-9 ml-1'>
-        <span dangerouslySetInnerHTML={{__html: formatResults(search, `${ student.last_name }, ${ student.first_name }`)}}></span>
+        <span
+          dangerouslySetInnerHTML={{__html: formatResults(
+            search, `${ student.last_name }, ${ student.first_name }`
+          )}}
+        >
+        </span>
         <br/>
         <small>{ student.school_name }</small>
         <br/>
@@ -76,11 +78,11 @@ export default class StudentSearch extends Component {
 
   // NOTE: we do this because we're guarenteed to only get good results back from
   // the server, so any filtering we do here messes up those result.
-  filterByCallback(option, text) {
+  filterByCallback() {
     return true
   }
 
-  renderResults(student, props, index) {
+  renderResults(student, props) {
     return <StudentSearchItem student={student} search={props.text}/>
   }
 
@@ -88,11 +90,12 @@ export default class StudentSearch extends Component {
     return (
       <div style={this.props.style} className='student-search-container'>
         <AsyncTypeahead
+          isLoading              = {false}
           dropup                 = {this.props.dropup}
           labelKey               = {student => `${ student.last_name }, ${ student.first_name }`}
           multiple               = {false}
           clearButton            = {true}
-          maxHeight              = {435}
+          maxHeight              = '435px'
           filterBy               = {::this.filterByCallback}
           options                = {this.state.students}
           onSearch               = {::this.lookupStudent}
