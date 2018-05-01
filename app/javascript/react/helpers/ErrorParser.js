@@ -1,22 +1,28 @@
-import React       from 'react'
-import _           from 'lodash'
-import CustomError from 'ui/shell/CustomError'
+import React             from 'react'
+import _                 from 'lodash'
+import CustomError       from 'ui/shell/CustomError'
+import { bugsnagClient } from 'helpers/bugsnag'
 
 export default function ErrorParser(e){
-  console.log(e)
+  console.error(e)
+  bugsnagClient.notify(e)
+
   if(_.has(e, 'response.data.message') && _.has(e, 'response.data.errors')) {
     return {
       title:   e.response.data.message,
       message: e.response.data.errors
     }
   }
+
   return {
     title:   'Oh No! 😳',
-    message: <CustomError
-      status={e.response.status}
-      endpoint={e.request.responseURL.slice(28)}
-      customText={returnErrorMessage(e.response.status)}
-    />
+    message: (
+      <CustomError
+        status     = {e.response.status}
+        endpoint   = {e.request.responseURL.slice(28)}
+        customText = {returnErrorMessage(e.response.status)}
+      />
+    )
   }
 }
 
