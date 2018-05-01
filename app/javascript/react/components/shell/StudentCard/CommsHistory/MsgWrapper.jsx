@@ -1,11 +1,11 @@
 import React             from 'react'
-import {Card, CardBlock} from 'reactstrap'
+import {Card, CardBody}  from 'reactstrap'
 
 const MsgWrapper = ({children}) => (
   <Card className='mt-5'>
-    <CardBlock>
+    <CardBody>
       <p className='text-center m-0'>{children}</p>
-    </CardBlock>
+    </CardBody>
   </Card>
 )
 

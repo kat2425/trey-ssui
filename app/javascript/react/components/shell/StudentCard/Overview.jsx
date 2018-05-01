@@ -5,7 +5,7 @@ import renderIf        from 'ui/hoc/renderIf'
 import Courses         from './Courses'
 
 import {
-  Card, CardBlock
+  Card, CardBody
 } from 'reactstrap'
 
 
@@ -51,7 +51,7 @@ const Overview = ({student, overview, higherEd}) => {
       <SubmoduleHeader title='Overview' />
 
       <Card>
-        <CardBlock>
+        <CardBody>
           <div className='row justify-content-center'>
             <EOverviewBadge
               color = '#ecf3fb'
@@ -72,7 +72,7 @@ const Overview = ({student, overview, higherEd}) => {
             <OverviewBadge color='#a3c8e6' title='texts (received)' value={ overview.sms_incoming} />
             <OverviewBadge color='#ead9f2' title='emails' value={ overview.emails } />
           </div>
-        </CardBlock>
+        </CardBody>
       </Card>
 
       <SubmoduleHeader title='Schedule' />

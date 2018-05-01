@@ -1,9 +1,8 @@
 import React      from 'react'
-import PropTypes  from 'prop-types'
 import DateFormat from 'helpers/DateFormat'
 
 import {
-  Card, CardBlock
+  Card, CardBody
 } from 'reactstrap'
 
 const iconStyle = { fontSize: '16px' }
@@ -27,7 +26,7 @@ const renderDOB = (dob) => {
 const Demographics = ({ student }) => {
   return (
     <Card className='mb-4'>
-      <CardBlock>
+      <CardBody>
         <h5>Demographics</h5>
 
         <ul className='list-unstyled list-spaced'>
@@ -53,7 +52,7 @@ const Demographics = ({ student }) => {
           {renderItem(student.coach,   'Coach',   'icon-feather')}
           {renderItem(student.major,   'Major',   'icon-trophy')}
         </ul>
-      </CardBlock>
+      </CardBody>
     </Card>
   )
 }

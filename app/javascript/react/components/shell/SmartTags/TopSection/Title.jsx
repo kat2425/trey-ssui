@@ -8,6 +8,7 @@ import { FaLock, FaInfo } from 'react-icons/lib/fa'
 import DateFormat         from 'helpers/DateFormat'
 import { get, isEmpty }   from 'lodash'
 import uuid               from 'uuid'
+import omitStyled         from 'helpers/omitStyled'
 import {
   Row,
   Col as _Col,
@@ -104,7 +105,7 @@ const Label = styled.div`
   white-space: nowrap;
 `
 
-const Col = styled(_Col)`
+const Col = omitStyled(_Col, ['nowrap'])`
   margin-left: 10px;
   display: inline-flex;
   flex-flow: column wrap;

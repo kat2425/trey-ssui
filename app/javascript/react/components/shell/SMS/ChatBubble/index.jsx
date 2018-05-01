@@ -37,10 +37,10 @@ const renderFooter = (time, message) => {
   if (time) {
     return (
       <div className={`media-footer mb-3 text-muted ${message.footerDirection}`}>
-        <small id={message.id}>sent {message.timeFromNow}</small>
+        <small id={`id-${message.id}`}>sent {message.timeFromNow}</small>
         <UncontrolledTooltip
           placement = 'left'
-          target    = {message.id}
+          target    = {`id-${message.id}`}
         >
           {message.fullDateWithTime}
         </UncontrolledTooltip>

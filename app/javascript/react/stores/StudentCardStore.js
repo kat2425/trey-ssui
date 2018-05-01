@@ -193,6 +193,8 @@ export class StudentCardStore {
       return c.id === res.data.id
     })
 
+    if(!this.contacts[index]) return
+
     this.contacts[index].primary = bool
   }
 

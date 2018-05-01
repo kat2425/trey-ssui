@@ -8,6 +8,8 @@ import {
 const Dialpad = observer(({callingStore}) => {
   const { sendDigit, isDialPadSelected } = callingStore
 
+  if(!isDialPadSelected) return null
+
   return (
     <Popover placement="bottom" isOpen={isDialPadSelected} target="Popover1">
       <span 
@@ -44,7 +46,7 @@ const Dialpad = observer(({callingStore}) => {
           <Button onClick={() => sendDigit('#')}>#</Button>
         </ButtonGroup>
       </PopoverContent>
-    </Popover >
+    </Popover>
   )
 })
 
