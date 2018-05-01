@@ -14,6 +14,18 @@ const Assessments = [
     dataset: '',
   },
   {
+    module:  'vjs_aimsweb',
+    value:   'aimsweb',
+    label:   'AIMSWeb',
+    dataset: 'aimswebs',
+  },
+  {
+    module:  'vjs_amplify',
+    value:   'amplify',
+    label:   'DIBELS Next',
+    dataset: 'dibels_next',
+  },
+  {
     module:  'vjs_ati',
     value:   'ati',
     label:   'ATI',
