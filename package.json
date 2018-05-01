@@ -121,6 +121,8 @@
     "webpack-dev-server": "^2.5.1"
   },
   "scripts": {
+    "start": "bundle && yarn && foreman s",
+    "start:webpack": "./bin/webpack-dev-server --host 127.0.0.1",
     "storybook": "start-storybook -p 3220 -c .storybook",
     "sass": "cd ./resources/bs-4-theme && yarn && gulp && cd ../../",
     "sass-watch": "cd ./resources/bs-4-theme && yarn && gulp watch && cd ../../",
