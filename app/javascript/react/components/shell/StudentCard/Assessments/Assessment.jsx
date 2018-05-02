@@ -13,6 +13,8 @@ import EmptyMessage    from 'ui/shell/EmptyMessage'
 
 import ACT             from './ACT'
 import ACTAspire       from './ACTAspire'
+import AIMSWeb         from './AIMSWeb'
+import Amplify         from './Amplify'
 import ATI             from './ATI'
 import AccelReader     from './AccelReader'
 import Case21          from './Case21'
@@ -278,6 +280,16 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/mkas_third`}
             render = {() => <MKASThird student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/aimsweb`}
+            render = {() => <AIMSWeb student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/amplify`}
+            render = {() => <Amplify student={student}/> }
           />
 
           <Route render={() => {

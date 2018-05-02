@@ -12,6 +12,8 @@ import EmptyMessage         from 'ui/shell/EmptyMessage'
 
 import ACT                  from './ACT'
 import ACTAspire            from './ACTAspire'
+import AIMSWeb              from './AIMSWeb'
+import Amplify              from './Amplify'
 import ATI                  from './ATI'
 import AccelReader          from './AccelReader'
 import Case21               from './Case21'
@@ -106,6 +108,8 @@ class Assessments extends Component {
           <Route path='/r/assessment/accel_reader'    component={AccelReader}     />
           <Route path='/r/assessment/act'             component={ACT}             />
           <Route path='/r/assessment/act_aspire'      component={ACTAspire}       />
+          <Route path='/r/assessment/aimsweb'         component={AIMSWeb}         />
+          <Route path='/r/assessment/amplify'         component={Amplify}         />
           <Route path='/r/assessment/ati'             component={ATI}             />
           <Route path='/r/assessment/case21'          component={Case21}          />
           <Route path='/r/assessment/cogat'           component={CogAT}           />
