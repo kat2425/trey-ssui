@@ -47,7 +47,13 @@ export class GroupStore {
     try{
       this.setIsLoading(true)
       const {data:groups} = await xhr.get('/groups', {params: {
-        type: 'user'
+        type:         'user',
+        show_members: true,
+        only:         [
+          'id', 'group_name', 'group_type', 'description', 'group_id', 
+          'created_at', 'updated_at',
+          'members.id'
+        ].join(',')
       }})
 
       groups.forEach(this.updateFromServer)
