@@ -110,6 +110,12 @@ const Assessments = [
     dataset: 'las_links',
   },
   {
+    module:  'vjs_leap_360',
+    value:   'leap360',
+    label:   'LEAP360',
+    dataset: 'vw_leap_360',
+  },
+  {
     module:  'vjs_maap',
     value:   'maap',
     label:   'MAAP',

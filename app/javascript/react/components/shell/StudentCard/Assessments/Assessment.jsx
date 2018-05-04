@@ -29,6 +29,7 @@ import ELSEZTT         from './ELSEZTT'
 import ELSEZAA         from './ELSEZAA'
 import ESGI            from './ESGI'
 import LASLinks        from './LASLinks'
+import LEAP360         from './LEAP360'
 import IReady          from './IReady'
 import MAAP            from './MAAP'
 import MCT             from './MCT'
@@ -290,6 +291,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/amplify`}
             render = {() => <Amplify student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/leap360`}
+            render = {() => <LEAP360 student={student}/> }
           />
 
           <Route render={() => {

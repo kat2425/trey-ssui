@@ -28,6 +28,7 @@ import ELSEZTT              from './ELSEZTT'
 import ELSEZAA              from './ELSEZAA'
 import ESGI                 from './ESGI'
 import LASLinks             from './LASLinks'
+import LEAP360              from './LEAP360'
 import IReady               from './IReady'
 import MCT                  from './MCT'
 import MAAP                 from './MAAP'
@@ -123,6 +124,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/els_ezaa'        component={ELSEZAA}         />
           <Route path='/r/assessment/esgi'            component={ESGI}            />
           <Route path='/r/assessment/las_links'       component={LASLinks}        />
+          <Route path='/r/assessment/leap360'         component={LEAP360}         />
           <Route path='/r/assessment/iready'          component={IReady}          />
           <Route path='/r/assessment/maap'            component={MAAP}            />
           <Route path='/r/assessment/mct'             component={MCT}             />
