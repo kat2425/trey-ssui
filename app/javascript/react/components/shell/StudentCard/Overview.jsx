@@ -69,7 +69,7 @@ const Overview = ({student, overview, higherEd}) => {
 
             <OverviewBadge color='#daefbd' title='calls completed' value={ overview.calls_completed } />
             <OverviewBadge color='#c4e0f2' title='texts (sent)' value={ overview.sms_outgoing } />
-            <OverviewBadge color='#a3c8e6' title='text (received)' value={ overview.sms_incoming} />
+            <OverviewBadge color='#a3c8e6' title='texts (received)' value={ overview.sms_incoming} />
             <OverviewBadge color='#ead9f2' title='emails' value={ overview.emails } />
           </div>
         </CardBlock>
