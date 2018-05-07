@@ -16,6 +16,7 @@ import UserMenuItem     from 'ui/shell/UserMenu/UserMenuItem'
 import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 
 import Info             from './Info'
+import Schedule         from './Schedule'
 import Overview         from './Overview'
 import Assessment       from './Assessment'
 import Assessments      from './Assessments/Assessment'
@@ -123,6 +124,7 @@ export default class StudentCard extends Component {
     const {
       student,
       attachments,
+      overview,
       groupedContacts: contacts,
     } = store
 
@@ -136,7 +138,7 @@ export default class StudentCard extends Component {
 
             <UserMenuSection>
               <UserMenuItem
-                title     = 'Schedule'
+                title     = 'Overview / Schedule'
                 iconClass = 'icon-list'
                 link      = {`${match.url}/overview`}
                 location  = {location}
@@ -242,9 +244,9 @@ export default class StudentCard extends Component {
               path   = {`${match.url}/overview`}
               render = {() =>
                 <Overview
-                  student     = {student}
-                  higherEd    = {userStore.user.higherEd}
-                  handleClick = {this.closeCard}
+                  student  = {student}
+                  overview = {overview}
+                  higherEd = {userStore.user.higherEd}
                 />
               }
             />

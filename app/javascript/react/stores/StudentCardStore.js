@@ -21,6 +21,8 @@ export class StudentCardStore {
   @observable student                    = null
   @observable contacts                   = []
   @observable attachments                = []
+  @observable overview                   = []
+
   @setter @observable isError            = null
   @setter @observable showGroupsModal    = false
   @setter @observable selectedAttachment = null
@@ -67,8 +69,11 @@ export class StudentCardStore {
   @action
   fetchStudent = async(id) => {
     this.setIsLoading(true)
-    this.visible        = false
-    this.student        = null
+
+    this.visible  = false
+    this.student  = null
+    this.overview = []
+
     this.contacts.clear()
 
     try {
@@ -99,6 +104,7 @@ export class StudentCardStore {
   fetchStudentOK(res) {
     this.fetchStudentContacts(res.data.id)
     this.fetchAttachments(res.data.id)
+    this.fetchStudentOverview(res.data.id)
 
     this.student = res.data
   }
@@ -121,7 +127,6 @@ export class StudentCardStore {
       this.setIsError(getError(e))
     }
   }
-
 
   @action.bound
   fetchStudentContactsOK(res) {
@@ -154,6 +159,23 @@ export class StudentCardStore {
   }
 
   @action
+  fetchStudentOverview = async(id) => {
+    try {
+      const res = await xhr.get(`/students/${id}/overview_stats`, {
+      })
+
+      this.fetchStudentOverviewOK(res)
+    } catch (e) {
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action.bound
+  fetchStudentOverviewOK(res) {
+    this.overview = res.data
+  }
+
+  @action
   toggleContactPrimary = async(id, bool) => {
     try {
       const res = await xhr.put(`/contacts/${id}/primary`, {
@@ -169,9 +191,9 @@ export class StudentCardStore {
   @action.bound
   toggleContactPrimaryOK(res, bool) {
     const index = _.findIndex(this.contacts, function(c) {
-      return c.id === res.data.id 
+      return c.id === res.data.id
     })
-    
+
     this.contacts[index].primary = bool
   }
 
@@ -219,8 +241,10 @@ export class StudentCardStore {
 
   @action
   hideCard() {
-    this.visible = false
-    this.student = null
+    this.visible  = false
+    this.student  = null
+    this.overview = []
+
     this.contacts.clear()
   }
 
@@ -301,8 +325,8 @@ export class StudentCardStore {
   changeAttachmentVisibility = async(attachmentId, visibility, groups = []) => {
     this.setIsUpdating(true)
 
-    const params = visibility === 'groups' 
-      ? { visibility: 'groups', groups: groups.join(',') } 
+    const params = visibility === 'groups'
+      ? { visibility: 'groups', groups: groups.join(',') }
       : { visibility }
 
     try {
@@ -318,7 +342,7 @@ export class StudentCardStore {
       runInAction(() => {
         this.setIsUpdating(false)
         this.setShowGroupsModal(false)
-      })  
+      })
     }
   }
 }
