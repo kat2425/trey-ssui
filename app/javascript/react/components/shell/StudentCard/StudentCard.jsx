@@ -138,7 +138,7 @@ export default class StudentCard extends Component {
 
             <UserMenuSection>
               <UserMenuItem
-                title     = 'Overview / Schedule'
+                title     = 'Overview'
                 iconClass = 'icon-list'
                 link      = {`${match.url}/overview`}
                 location  = {location}
