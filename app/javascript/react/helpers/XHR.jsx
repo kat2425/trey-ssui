@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const XHR = axios.create({
-  baseURL: 'https://api.schoolstatus.com'
+  baseURL: process.env.TURBINE_BASE
 })
 
 const config = (uri, timeout) => ({

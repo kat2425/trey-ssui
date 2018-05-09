@@ -11,12 +11,9 @@ const SSButton = ({
   disabled,
   tooltip,
   placement = 'top',
+  iconStyle = {marginRight: '4px'},
   ...props
 }) => {
-  const iconStyle = {
-    marginRight: '4px'
-  }
-
   const _id = id || `button-${uuid()}`
 
   return (
