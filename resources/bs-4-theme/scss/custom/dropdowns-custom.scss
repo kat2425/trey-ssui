@@ -6,3 +6,7 @@
     padding: $dropdown-anchor-padding;
   }
 }
+
+.ant-select-selection__placeholder, .ant-select-search__field__placeholder, .Select-placeholder {
+  color: rgba(0,0,0,0.6) !important;
+}
