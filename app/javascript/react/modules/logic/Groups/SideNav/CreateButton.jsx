@@ -6,7 +6,7 @@ import userStore    from 'stores/UserStore'
 
 function CreateButton({groupStore}){
   return (
-    <Tooltip title='Create A List'>
+    <Tooltip title='Create A Group'>
       <SSButton
         disabled  = {!userStore.canCreateGroup}
         onClick   = {groupStore.handleAddGroup}
