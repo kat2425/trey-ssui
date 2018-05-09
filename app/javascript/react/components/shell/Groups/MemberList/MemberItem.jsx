@@ -10,13 +10,13 @@ import StudentAvatar  from 'ui/shell/StudentAvatar'
 
 const MemberItem = ({group, member}) => {
   return (
-    <ListItem onClick={() => handleOnClick(group, member)}>
+    <ListItem onClick={showStudentCard(group, member)}>
       <ListItemMeta
         style       = {{ flex: 3 }}
         avatar      = {showAvatar(group, member)}
         title       = {<Title type={group.groupType} member={member} />}
         description = {<Description group={group} member={member} />}
-      />
+      />    
       {showRemoveButton(group, member)}
     </ListItem>
   )
@@ -24,16 +24,10 @@ const MemberItem = ({group, member}) => {
 
 function showAvatar(group, member) {
   if(group.groupType !== 'student') return null
-  console.log('showavatar')
+
   return (
     <StudentAvatar id={member.id} size={42}/>
   )
-}
-
-function handleOnClick(group, member) {
-  if(group.groupType !== 'student') return null
-
-  return showStudentCard(member)
 }
 
 function showRemoveButton(group, member) {
@@ -50,7 +44,9 @@ function showRemoveButton(group, member) {
   )
 }
 
-const showStudentCard = (student) => (e) => {
+const showStudentCard = (group, student) => (e) => {
+  if(group.groupType !== 'student') return null
+
   e.preventDefault()
   fireEvent('showStudentCard', { student: student.id })
 }
