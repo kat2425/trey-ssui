@@ -6,6 +6,7 @@ import { Input }    from 'antd'
 import ActionBar    from '../ActionBar'
 import renderIf     from 'render-if'
 import GroupForm    from '../GroupForm'
+import GroupInfo    from '../GroupInfo'
 
 function GroupView({ group, store }){
   return (
@@ -17,7 +18,7 @@ function GroupView({ group, store }){
       {renderIf(!group.isEditing) (
         <Panel
           className    = 'mt-2'
-          title        = {`${ group.groupName } Members`}
+          title        = {showGroupTitle(group)}
           contentStyle = {{ minHeight: 'auto' }}
           titleRight   = {() => (
             <div className='d-flex justify-content-end'>
@@ -35,6 +36,15 @@ function GroupView({ group, store }){
           <MemberList group={group} store={store} />
         </Panel>
       )}
+    </div>
+  )
+}
+
+function showGroupTitle(group) {
+  return (
+    <div className='d-flex align-items-center'>
+      <span className='mr-2'><GroupInfo group={group} /></span>
+      {`${ group.groupName } Members`}
     </div>
   )
 }
