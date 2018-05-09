@@ -6909,6 +6909,9 @@ textarea {
   .dropdown-menu > li > a {
     padding: 5px 20px; }
 
+.ant-select-selection__placeholder, .ant-select-search__field__placeholder, .Select-placeholder {
+  color: rgba(0, 0, 0, 0.6) !important; }
+
 @font-face {
   font-family: "toolkit-entypo";
   src: url("/packs/toolkit-entypo.eot");
