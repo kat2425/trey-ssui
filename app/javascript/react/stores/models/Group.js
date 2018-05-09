@@ -26,7 +26,6 @@ export default class Group {
   @observable memberIDs                     = null
 
   @setter @observable groupType             = null
-  @setter @observable global                = false
   @setter @observable description           = ''
   @setter @observable memberCount           = null
   @setter @observable members               = observable.map()
@@ -187,7 +186,7 @@ export default class Group {
       group_name:  this.groupName,
       group_type:  this.groupType,
       description: this.description,
-      group_id:    this.parentGroup ? (this.parentGroup || this.parentGroup.key) : null,
+      group_id:    this.parentGroup ? this.parentGroup.key : this.parentGroup,
       member_id:   this.memberIDList
     }
 
@@ -228,8 +227,9 @@ export default class Group {
     const params = {
       group_name:  this.groupName,
       description: this.description, 
-      group_id:    this.parentGroup ? (this.parentGroup || this.parentGroup.key) : null,
-      member_id:   this.memberIDList
+      group_id:    this.parentGroup ? this.parentGroup.key : this.parentGroup,
+      member_id:   this.memberIDList,
+      group_type:  this.groupType
     }
 
     try {

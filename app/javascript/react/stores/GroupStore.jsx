@@ -76,7 +76,6 @@ class GroupStore {
 
   // Actions
   @action initAutoruns = () => {
-    console.log('autonotifiers')
     this.autoErrorNotifier()
     this.autoMessager()
   }
@@ -84,7 +83,6 @@ class GroupStore {
   @action autoErrorNotifier = () => {
     this.autoErrorDisposer = autorun('Watch errors', () => {
       if (this.isError && !this.isError.hideNotification) {
-        console.log('error')
         uiStore.addNotification({
           title:   this.isError.title,
           message: this.isError.message,
@@ -173,7 +171,7 @@ class GroupStore {
 
       this.setSearchResults(data)
     } catch (e) {
-      console.error(e)
+      this.setIsError(getError(e))
     } finally {
       this.setIsSearching(false)
     }
