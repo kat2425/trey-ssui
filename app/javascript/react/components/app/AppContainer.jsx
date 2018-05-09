@@ -17,6 +17,7 @@ import MyStudents            from 'modules/logic/MyStudents'
 import MySchools             from 'modules/logic/Dashboard/MySchools'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 import TagBuilder            from 'modules/logic/TagBuilder/'
+import Groups                from 'modules/logic/Groups'
 
 import CallHistory           from 'modules/channel/History'
 import ChannelEngagement     from 'modules/channel/Engagement'
@@ -69,6 +70,8 @@ const AppContainer = ({ match }) => {
         <Route path='/r/financials' component={Financials} />
         <Route path='/r/risk_analysis' component={RiskAnalysis} />
         <Route path='/r/searchlight' component={TagBuilder} />
+
+        <Route path='/r/groups' component={Groups} />
 
         <Route path='/r/accountability/final_results' component={FinalResults} />
         <Route path='/r/accountability/lps' component={LPS} />

@@ -38,7 +38,7 @@ export default class GroupSelect extends Component {
           onChange     = {this.handleOnChange}
           showSearch
         >
-          {groupStore.orderedGroups.map(group => 
+          {groupStore.userGroups.map(group => 
             <Option key={group.id}>{group.groupName}</Option>
           )}
         </Select>

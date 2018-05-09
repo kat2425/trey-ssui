@@ -30,6 +30,10 @@ export class UserStore {
     return this.user.customModules
   }
 
+  @computed get canCreateGroup() {
+    return this.hasModules('user_group_admin', 'student_group_admin')
+  }
+
   @action hasModules = (...modules) => {
     return some(modules, m => includes(this.modules, m))
   }

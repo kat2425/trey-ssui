@@ -1,0 +1,9 @@
+.git
+.gitignore
+docker-compose.yml
+README.md
+tmp/*
+log/*
+gems.tags
+node_modules
+node_modules/*

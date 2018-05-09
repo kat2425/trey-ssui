@@ -98,7 +98,7 @@ export default class NoteForm extends Component {
               placeholder  = "Select groups..."
             >
               {
-                groupStore.groups.values().map((g) => {
+                groupStore.userGroups.map((g) => {
                   return <Select.Option key={g.id} value={g.id}>{g.groupName}</Select.Option>
                 })
               }
