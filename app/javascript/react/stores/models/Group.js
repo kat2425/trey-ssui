@@ -124,12 +124,13 @@ export default class Group {
   @action addMembers = (members) => {
     members.forEach((member) => {
       if (this.members.has(member.id)) return
+
       this.members.set(member.id, 
         {
           id:          member.id, 
           full_name:   member.full_name || `${member.first_name} ${member.last_name}`, 
           grade:       member.grade || null, 
-          school_name: member.school_name || null,
+          school_name: member.school_name ? member.school_name : null,
           username:    member.username || null
         }
       )
