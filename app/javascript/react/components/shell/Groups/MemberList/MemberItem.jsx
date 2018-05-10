@@ -10,8 +10,9 @@ import StudentAvatar  from 'ui/shell/StudentAvatar'
 
 const MemberItem = ({group, member}) => {
   return (
-    <ListItem onClick={showStudentCard(group, member)}>
+    <ListItem>
       <ListItemMeta
+        onClick     = {showStudentCard(group, member)}
         style       = {{ flex: 3 }}
         avatar      = {showAvatar(group, member)}
         title       = {<Title type={group.groupType} member={member} />}
