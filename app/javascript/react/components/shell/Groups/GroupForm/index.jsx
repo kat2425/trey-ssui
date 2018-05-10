@@ -41,7 +41,7 @@ export default class GroupForm extends Component {
               value={store.selectedGroup.description}
             />
             <TypeSelector group={store.selectedGroup} />
-            <MemberSearchInput className='mt-2' group={group} />
+            <MemberSearchInput className='mt-2' store={store} group={group} />
             <div className='d-flex align-items-center mt-4'>
               <ScopeSelector group={group} />
               <GroupSelector group={group} />
