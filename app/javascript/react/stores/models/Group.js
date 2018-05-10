@@ -16,8 +16,13 @@ import getError      from 'helpers/ErrorParser'
 import userStore     from 'stores/UserStore'
 
 export default class Group {
-  id         = null
-  groupStore = null
+  id                  = null
+  groupStore          = null
+  originalName        = null
+  originalDescription = null
+  originalType        = null
+  originalMembers     = null
+  originalScope       = null
 
   @observable groupName                     = null
   @observable parentGroup                   = null
@@ -166,17 +171,40 @@ export default class Group {
 
   @action handleOnEditClick = () => {
     this.setIsEditing(true)
-    this.groupStore.originalGroup.set(this.id, this)
+    this.setOriginal()
   }
 
   @action handleOnCancelEdit = () => {
+    this.setIsEditing(false)
+    this.revertToOriginal()
+  }
+
+  @action setOriginal = () => {
+    const {originalGroup} = this.groupStore
+
+    originalGroup.set(this.id, this)
+
+    this.originalName        = originalGroup.get(this.id).groupName
+    this.originalDescription = originalGroup.get(this.id).description
+    this.originalType        = originalGroup.get(this.id).groupType
+    this.originalMembers     = originalGroup.get(this.id).members.values()
+    this.originalScope       = originalGroup.get(this.id).selectedScope
+  }
+
+  @action revertToOriginal = () => {
     const {selectedGroup, originalGroup} = this.groupStore
 
-    selectedGroup.groupName = originalGroup.get(this.id).groupName
-    selectedGroup.description  = originalGroup.get(this.id).description
+    selectedGroup.groupName     = this.originalName
+    selectedGroup.description   = this.originalDescription
+    selectedGroup.selectedScope = this.originalScope
+
+    selectedGroup.setGroupType(this.originalType)
+
+    this.originalMembers.forEach((m) => {
+      selectedGroup.members.set(m.id, m)
+    })
 
     originalGroup.delete(this.id)
-    this.setIsEditing(false)
   }
 
   @action saveGroup = async() => { 
