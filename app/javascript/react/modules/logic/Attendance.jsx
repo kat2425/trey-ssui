@@ -98,7 +98,7 @@ export default class Attendance extends Component {
             scale       = 'container'
             className   = 'col-md-9'
             fullHeight  = {true}
-            title       = 'Attendance for Year'
+            title       = 'Daily Totals'
             params      = {this.state.params}
             linkOptions = {{
               events: {

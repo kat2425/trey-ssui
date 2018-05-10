@@ -83,7 +83,7 @@ export default class Infractions extends Component {
             className  = 'col-md-9'
             fullHeight = {true}
             params     = {this.state.params}
-            title      = 'Totals Over Year'
+            title      = 'Daily Totals'
             linkOptions = {{
               events: {
                 click: (ev, link) => {
