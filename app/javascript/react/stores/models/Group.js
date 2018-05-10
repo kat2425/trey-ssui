@@ -151,8 +151,9 @@ export default class Group {
       this.setUnconfirmedTypeChange(true)
       return
     }
-
+    
     this.setGroupType(this.selectedType)  
+    this.setSelectedScope(null)
   }
 
   @action handleScopeOnChange = (e) => {
@@ -308,8 +309,14 @@ export default class Group {
     this.parentGroup = parentGroup
     this.memberIDs   = memberIDs
     this.createdBy   = createdBy ? createdBy.full_name : null
-    this.selectedScope = this.parentGroup ? 'group' : 'owner-and-members'
+    
     this.setGroupType(groupType)
+    
+    this.selectedScope = this.parentGroup
+      ? 'group' 
+      : !this.isNew
+        ? 'owner-and-members'
+        : null
   }
 
   @action setPagination = ({total}) => {

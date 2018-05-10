@@ -32,13 +32,13 @@ export default class GroupForm extends Component {
               className='mb-4'
               type="text"
               onChange={store.editTitleOnChange}
-              value={store.selectedGroup.groupName}
+              value={group.groupName}
             />
             <EditDescription 
               placeholder='Enter a description...'
               className='mb-4'
               onChange={store.editDescriptionOnChange}
-              value={store.selectedGroup.description}
+              value={group.description}
             />
             <TypeSelector group={store.selectedGroup} />
             <MemberSearchInput className='mt-2' store={store} group={group} />
