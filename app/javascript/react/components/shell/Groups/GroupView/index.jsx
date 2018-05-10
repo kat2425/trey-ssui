@@ -10,7 +10,7 @@ import GroupInfo    from '../GroupInfo'
 
 function GroupView({ group, store }){
   return (
-    <div>
+    <div className='p-3'>
       {renderIf(group.isEditing) (
         <GroupForm store={store} group={group} />
       )}
