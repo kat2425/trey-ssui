@@ -20,7 +20,7 @@ export default class GroupSelector extends Component {
     const {group} = this.props
 
     if(!group.isSelectingParentGroup) return null
-    console.log(group.parentGroup)
+
     return (
       <Select
         labelInValue
