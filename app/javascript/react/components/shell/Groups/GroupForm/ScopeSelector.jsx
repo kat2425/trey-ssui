@@ -17,7 +17,7 @@ const ScopeSelector = ({group}) => {
       filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
     >
       <Option value="owner-and-members">Owner & Members</Option>
-      <Option value="group">A Group</Option>
+      { group.groupType !== 'user' && <Option value="group">A Group</Option>}
     </Select>
   )
 }
