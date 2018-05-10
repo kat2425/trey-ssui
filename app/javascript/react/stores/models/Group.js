@@ -167,7 +167,7 @@ export default class Group {
 
   @action handleOnCancelCreate = () => {
     this.groupStore.groups.delete(this.id)
-    this.groupStore.selectedGroup = this.groupStore.orderedGroups[0]
+    this.groupStore.selectedGroup = null
   }
 
   @action handleOnEditClick = () => {
@@ -301,14 +301,13 @@ export default class Group {
     this.createdAt   = createdAt
     this.updatedAt   = updatedAt
     this.groupName   = groupName
-    this.groupType   = groupType
     this.description = description
     this.memberCount = memberCount
     this.parentGroup = parentGroup
     this.memberIDs   = memberIDs
     this.createdBy   = createdBy ? createdBy.full_name : null
-
     this.selectedScope = this.parentGroup ? 'group' : 'owner-and-members'
+    this.setGroupType(groupType)
   }
 
   @action setPagination = ({total}) => {
