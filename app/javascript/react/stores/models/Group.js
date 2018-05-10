@@ -28,11 +28,12 @@ export default class Group {
   @observable parentGroup                   = null
   @observable createdBy                     = null
   @observable createdAt                     = null
+  @observable updatedAt                     = null
   @observable memberIDs                     = null
+  @observable memberCount                   = null
 
   @setter @observable groupType             = null
   @setter @observable description           = ''
-  @setter @observable memberCount           = null
   @setter @observable members               = observable.map()
   @setter @observable isSaving              = false
   @setter @observable isUpdating            = false
@@ -287,6 +288,8 @@ export default class Group {
   @action updateFromJson = ({
     id,
     created_at:   createdAt,
+    updated_at:   updatedAt,
+    creator:      createdBy,
     group_name:   groupName,
     group_type:   groupType,
     member_count: memberCount,
@@ -296,12 +299,14 @@ export default class Group {
   }) => {
     this.id          = id
     this.createdAt   = createdAt
+    this.updatedAt   = updatedAt
     this.groupName   = groupName
     this.groupType   = groupType
     this.description = description
     this.memberCount = memberCount
     this.parentGroup = parentGroup
     this.memberIDs   = memberIDs
+    this.createdBy   = createdBy ? createdBy.full_name : null
 
     this.selectedScope = this.parentGroup ? 'group' : 'owner-and-members'
   }
