@@ -52,7 +52,11 @@ class GroupStore {
     }
 
     if (this.activeTab !== 'all') {
-      groups = groups.filter(g => g.groupType.toLowerCase() === this.activeTab)
+      groups = groups.filter(g => {
+        if(!g.groupType) return false
+
+        return g.groupType.toLowerCase() === this.activeTab
+      })
     }
    
     return groups
@@ -149,6 +153,8 @@ class GroupStore {
       group_name:  null, 
       description: ''
     }))
+
+    this.setActiveTab('all')
   }
 
   @action handleSearchOnChange = (event) => {
