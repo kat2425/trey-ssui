@@ -1,12 +1,12 @@
-import React        from 'react'
-import { observer } from 'mobx-react'
-import Panel        from 'ui/shell/Panel'
-import MemberList   from '../MemberList'
-import { Input }    from 'antd'
 import ActionBar    from '../ActionBar'
-import renderIf     from 'render-if'
 import GroupForm    from '../GroupForm'
 import GroupInfo    from '../GroupInfo'
+import MemberList   from '../MemberList'
+import Panel        from 'ui/shell/Panel'
+import React        from 'react'
+import renderIf     from 'render-if'
+import { Input }    from 'antd'
+import { observer } from 'mobx-react'
 
 function GroupView({ group, store }){
   return (
