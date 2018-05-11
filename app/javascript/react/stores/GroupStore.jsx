@@ -151,7 +151,8 @@ class GroupStore {
       id:          uuid(), 
       group_type:  null, 
       group_name:  null, 
-      description: ''
+      description: '',
+      group_id:    null
     }))
 
     this.setActiveTab('all')

@@ -25,13 +25,12 @@ export default class GroupSelector extends Component {
       <Select
         labelInValue
         style        = {{flex: 1}}
-        placeholder  = 'Please select group'
-        defaultValue = {{key: group.parentGroup}}
+        placeholder  = 'Select a group'
+        defaultValue = {group.parentGroup ? {key: group.parentGroup.key || group.parentGroup} : undefined}
         onChange     = {group.handleOnParentGroupChange}
-        showSearch
       >
         {groupStore.userGroups.map(group => 
-          <Option key={group.id}>{group.groupName}</Option>
+          <Option value={group.id}>{group.groupName}</Option>
         )}
       </Select>
     )}

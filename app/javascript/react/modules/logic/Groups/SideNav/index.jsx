@@ -7,7 +7,6 @@ import CreateButton                from './CreateButton'
 import Search                      from './Search'
 
 import GroupList                   from 'ui/shell/Groups/GroupList'
-import groupStore                  from 'stores/GroupStore'
 import Tabs                        from 'ui/shell/Groups/GroupList/Tabs'
 
 export default function SideNav({groupStore}) {
@@ -26,6 +25,6 @@ export default function SideNav({groupStore}) {
 }
 
 const setSelectedGroup = (group) => {
-  groupStore.selectedGroup = group
+  group.setActive(group)
   group.fetchMembers()
 }
