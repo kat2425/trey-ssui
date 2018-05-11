@@ -198,8 +198,10 @@ export default class Group {
     selectedGroup.groupName     = this.originalName
     selectedGroup.description   = this.originalDescription
     selectedGroup.selectedScope = this.originalScope
-
+    
     selectedGroup.setGroupType(this.originalType)
+
+    selectedGroup.members.clear()
 
     this.originalMembers.forEach((m) => {
       selectedGroup.members.set(m.id, m)
