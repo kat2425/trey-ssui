@@ -1,12 +1,13 @@
-import ActionBar    from '../ActionBar'
-import GroupForm    from '../GroupForm'
-import GroupInfo    from '../GroupInfo'
-import MemberList   from '../MemberList'
-import Panel        from 'ui/shell/Panel'
-import React        from 'react'
-import renderIf     from 'render-if'
-import { Input }    from 'antd'
-import { observer } from 'mobx-react'
+import React           from 'react'
+import { observer }    from 'mobx-react'
+import Panel           from 'ui/shell/Panel'
+import MemberList      from '../MemberList'
+import { Input }       from 'antd'
+import ActionBar       from '../ActionBar'
+import renderIf        from 'render-if'
+import GroupForm       from '../GroupForm'
+import GroupInfo       from '../GroupInfo'
+import RelatedGroups   from './RelatedGroup'
 
 function GroupView({ group, store }){
   return (
@@ -24,7 +25,7 @@ function GroupView({ group, store }){
             <div className='d-flex justify-content-end'>
               <div className='mr-4' style={{maxWidth: 200}}>
                 <Input.Search
-                  size        = 'medium'
+                  size        = 'default'
                   placeholder = 'Find a member...'
                   onChange    = {store.handleSearchOnChange}
                 />
@@ -36,6 +37,7 @@ function GroupView({ group, store }){
           <MemberList group={group} store={store} />
         </Panel>
       )}
+      <RelatedGroups group={group} store={store} />
     </div>
   )
 }

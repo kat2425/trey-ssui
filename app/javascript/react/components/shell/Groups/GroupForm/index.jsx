@@ -26,7 +26,7 @@ export default class GroupForm extends Component {
 
     return (
       <Row gutter={5} className='mt-4 ml-2' type='flex'>
-        <Col xs={24} sm={24} md={15} xxl={16}>
+        <Col xs={24} sm={24} md={15} lg={16} xxl={16}>
           <Wrapper className='p-4'>
             <EditTitle
               className='mb-4'
@@ -51,7 +51,7 @@ export default class GroupForm extends Component {
             </div>
           </Wrapper>
         </Col>
-        <Col xs={24} sm={24} md={9} ld={4} xxl={8}>
+        <Col xs={24} sm={24} md={9} lg={8} xxl={8}>
           <MemberAside store={store} group={group} />
         </Col>
       </Row>

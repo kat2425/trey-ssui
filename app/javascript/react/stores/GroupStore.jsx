@@ -104,6 +104,14 @@ class GroupStore {
     })
   }
 
+  @action setSelectedGroup = (group) => {
+    this.selectedGroup = group
+
+    if(this.selectedGroup.members.size < 1) {
+      this.selectedGroup.fetchMembers()
+    }
+  }
+
   @action changeGroupFilter = (e) => {
     this.setActiveTab(e.target.value)
   }
@@ -111,7 +119,15 @@ class GroupStore {
   @action fetchGroups = async() => {
     const params = {
       only: [
-        'id', 'created_at', 'group_name', 'group_type', 'member_count', 'description'
+        'id', 
+        'created_at', 
+        'group_name', 
+        'group_id', 
+        'group_type', 
+        'member_count', 
+        'description', 
+        'child_groups',
+        'parent_group'
       ]
     }
 

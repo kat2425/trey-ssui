@@ -8,8 +8,7 @@ import UpdateButton        from './UpdateButton'
 import CancelButton        from './CancelButton'
 
 ActionBar.propTypes = {
-  group: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
+  group: PropTypes.object.isRequired
 }
 
 function ActionBar({group}){

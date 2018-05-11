@@ -11,7 +11,7 @@ const Wrapper = styled.div.attrs({
 `
 
 Header.propTypes = {
-  title:      PropTypes.string.isRequired,
+  title:      PropTypes.node.isRequired,
   titleRight: PropTypes.func
 }
 

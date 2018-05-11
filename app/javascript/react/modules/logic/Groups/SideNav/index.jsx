@@ -18,13 +18,8 @@ export default function SideNav({groupStore}) {
       <Search groupStore={groupStore}/>
       <Tabs style={{width: '100%'}} store={groupStore}/>
       <Content>
-        <GroupList store={groupStore} onClick={setSelectedGroup} />
+        <GroupList store={groupStore} onClick={groupStore.setSelectedGroup} />
       </Content>
     </Aside>
   )
-}
-
-const setSelectedGroup = (group) => {
-  group.setActive(group)
-  group.fetchMembers()
 }

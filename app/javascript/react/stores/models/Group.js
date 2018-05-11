@@ -26,11 +26,13 @@ export default class Group {
 
   @observable groupName                     = null
   @observable parentGroup                   = null
+  @observable parentGroupID                 = null
   @observable createdBy                     = null
   @observable createdAt                     = null
   @observable updatedAt                     = null
   @observable memberIDs                     = null
   @observable memberCount                   = null
+  @observable childGroups                   = null
 
   @setter @observable groupType             = null
   @setter @observable description           = ''
@@ -219,7 +221,7 @@ export default class Group {
       group_name:  this.groupName,
       group_type:  this.groupType,
       description: this.description,
-      group_id:    this.parentGroup ? this.parentGroup.key : this.parentGroup,
+      group_id:    this.parentGroupID ? this.parentGroupID.key : this.parentGroupID,
       member_id:   this.memberIDList
     }
 
@@ -260,7 +262,7 @@ export default class Group {
     const params = {
       group_name:  this.groupName,
       description: this.description, 
-      group_id:    this.parentGroup ? this.parentGroup.key : this.parentGroup,
+      group_id:    this.parentGroupID ? this.parentGroupID.key : this.parentGroupID,
       member_id:   this.memberIDList,
       group_type:  this.groupType
     }
@@ -285,7 +287,7 @@ export default class Group {
 
 
   @action handleOnParentGroupChange = (id) => {
-    this.parentGroup = id
+    this.parentGroupID = id
   }
 
   @action updateFromJson = ({
@@ -297,19 +299,23 @@ export default class Group {
     group_type:   groupType,
     member_count: memberCount,
     description,
-    group_id:     parentGroup,
-    member_id:    memberIDs
+    group_id:     parentGroupID,
+    member_id:    memberIDs,
+    child_groups: childGroups,
+    parent_group: parentGroup
   }) => {
-    this.id          = id
-    this.createdAt   = createdAt
-    this.updatedAt   = updatedAt
-    this.groupName   = groupName
-    this.description = description
-    this.memberCount = memberCount
-    this.parentGroup = parentGroup
-    this.memberIDs   = memberIDs
-    this.createdBy   = createdBy ? createdBy.full_name : null
-    
+    this.id            = id
+    this.createdAt     = createdAt
+    this.updatedAt     = updatedAt
+    this.groupName     = groupName || ''
+    this.description   = description
+    this.memberCount   = memberCount
+    this.parentGroupID = parentGroupID
+    this.parentGroup   = parentGroup
+    this.childGroups   = childGroups
+    this.memberIDs     = memberIDs
+    this.createdBy     = createdBy ? createdBy.full_name : null
+    this.selectedScope = this.parentGroupID ? 'group' : 'owner-and-members'
     this.setGroupType(groupType)
     
     this.selectedScope = this.parentGroup
