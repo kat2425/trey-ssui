@@ -33,9 +33,15 @@ export default class MemberSearchInput extends Component {
   searchStudents = async(value) => {
     const params = { text_filter: value }
 
-    const {data} = await xhr.get('typeahead/students', {params})
-    
-    return {options: data}
+    if(value.length > 3) {
+      try{
+        const {data} = await xhr.get('typeahead/students', {params})
+      
+        return {options: data}
+      } catch(error) {
+        this.props.store.setIsError({title: 'Error', message: 'There was an error searching for students!'})
+      }
+    }
   }
 
   searchUsers = async(value) => {
@@ -50,13 +56,19 @@ export default class MemberSearchInput extends Component {
         'last_name'
       ].join(',')
     }
-    const {data} = await xhr.get('/users/es_search', {params})
 
-    return {options: data}
+    if(value.length > 3) {
+      try {
+        const {data} = await xhr.get('/users/es_search', {params})
+
+        return {options: data}
+      } catch(error) {
+        this.props.store.setIsError({title: 'Error', message: 'There was an error searching for users!'})
+      } 
+    }
   }
 
   renderSearchItem = (d) => {  
-    console.log(d)  
     return (
       <p>{`${d.first_name} ${d.last_name}`}</p>
     )
@@ -79,7 +91,7 @@ export default class MemberSearchInput extends Component {
         valueKey         = 'id'
         optionRenderer   = {this.renderSearchItem}
         labelKey         = {'first_name'}
-        loadOptions      = {this.fetchResults} 
+        loadOptions      = {this.fetchResults}
       />
     )
   }
