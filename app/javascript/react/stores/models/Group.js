@@ -339,7 +339,7 @@ export default class Group {
       return false
     }
 
-    if(!this.selectedScope) {
+    if(!this.selectedScope && this.groupType === 'student') {
       this.groupStore.setIsError({title: 'Error', message: 'You must select a group visibility!'})
       return false
     }
