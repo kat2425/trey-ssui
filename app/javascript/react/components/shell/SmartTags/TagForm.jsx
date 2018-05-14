@@ -28,7 +28,7 @@ class FormWrapper extends Component {
 
     this.state = {
       showSelectGroup: tag.isGroup,
-      selectedGroups:  tag.groupIds
+      selectedGroups:  tag.groups
     }
   }
 
@@ -64,7 +64,7 @@ class FormWrapper extends Component {
     if(value !== 'group'){
       this.setState({
         showSelectGroup: false,
-        selectedGroups:  ''
+        selectedGroups:  []
       })
     } else {
       this.setState({showSelectGroup: true})
