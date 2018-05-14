@@ -414,7 +414,7 @@ export default class Tag {
   }
 
   // Used by the TagForm to update a tag 
-  @action updateTag = ({ name, scope, groups }) => {
+  @action updateTag = ({ name, scope, groups = [] }) => {
     this.name   = name
     this.global = scope ? scope === 'global' : this.global
     this.system = scope ? scope === 'system' : this.system
