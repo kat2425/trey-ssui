@@ -2,13 +2,14 @@ import React, {Component} from 'react'
 import PropTypes          from 'prop-types'
 import toNumber           from 'lodash.tonumber'
 
-import Wrapper            from './Wrapper'
 import InnerWrapper       from './InnerWrapper'
 import PlayButton         from './PlayButton'
-import Timer              from './Timer'
-import Slider             from './Slider'
-import VolumeBar          from './VolumeBar'
 import Progress           from './Progress'
+import SaveButton         from './SaveButton'
+import Slider             from './Slider'
+import Timer              from './Timer'
+import VolumeBar          from './VolumeBar'
+import Wrapper            from './Wrapper'
 
 export default class Player extends Component{
   static propTypes = {
@@ -39,7 +40,7 @@ export default class Player extends Component{
     this.pause()
     this.audioEl.load()
   }
-
+  
   toggleMute = () => {
     if(this.state.mute){
       this.prevVolume = this.state.volume
@@ -145,6 +146,10 @@ export default class Player extends Component{
           playing          = {play}
           loading          = {loading}
           onTogglePlay     = {this.handleOnTogglePlay}
+        />
+        <SaveButton
+          src              = {this.props.src}
+          size             = '22px'
         />
         <Timer 
           currentTime      = {currentTime}
