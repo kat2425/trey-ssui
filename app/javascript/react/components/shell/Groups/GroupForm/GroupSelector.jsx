@@ -13,7 +13,7 @@ const Option = Select.Option
 export default class GroupSelector extends Component {
   static propTypes = {
     group:    PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func
   }
 
   render(){
@@ -26,7 +26,7 @@ export default class GroupSelector extends Component {
         labelInValue
         style        = {{flex: 1}}
         placeholder  = 'Select a group'
-        defaultValue = {group.parentGroup ? {key: group.parentGroup.key || group.parentGroup} : undefined}
+        defaultValue = {getDefaultValue(group.parentGroupID)}
         onChange     = {group.handleOnParentGroupChange}
       >
         {groupStore.userGroups.map(group => 
@@ -34,4 +34,10 @@ export default class GroupSelector extends Component {
         )}
       </Select>
     )}
+}
+
+function getDefaultValue(parentGroupID) {
+  if(!parentGroupID) return undefined
+
+  return {key: parentGroupID.key || parentGroupID}
 }

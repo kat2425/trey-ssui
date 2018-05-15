@@ -59,10 +59,7 @@ const getRenderFunctions = (groupStore) => {
   
   const renderIfSelectedGroup   = renderIf(selectedGroup && !selectedGroup.isNew)
   const renderIfNew             = renderIf(selectedGroup && (selectedGroup.isNew))
-  const renderIfNoSelectedGroup = renderIf(
-    !selectedGroup &&
-    !groupStore.isSelectingGroup
-  )
+  const renderIfNoSelectedGroup = renderIf(!selectedGroup)
 
   return {
     renderIfNew,
