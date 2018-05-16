@@ -3,17 +3,18 @@ import ModuleHeader           from 'ui/shell/ModuleHeader'
 import RGL, { WidthProvider } from 'react-grid-layout'
 import { toJS }               from 'mobx'
 import { observer }           from 'mobx-react'
-import seatingChartStore      from 'stores/seatingChartStore'
+import seatingChartStore      from 'stores/SeatingChartStore'
 import ItemWrapper            from './ItemWrapper'
 import userStore              from 'stores/UserStore'
 import styled                 from 'styled-components'
 import _isEmpty               from 'lodash/isEmpty'
 import { NavLink }            from 'react-router-dom'
 import renderIf               from 'ui/hoc/renderIf'
+import StudentLink            from './StudentLink'
+import fireEvent              from 'helpers/FireEvent'
 
 import {
-  Icon,
-  Spin
+  Icon
 } from 'antd'
 
 import {
@@ -37,16 +38,6 @@ const StudentAvatar = styled.div`
     border-radius:   500px;
   }
 `
-
-const antIcon =
-  <Icon
-    type='loading'
-    spin
-    style={{
-      fontSize:   24,
-      marginLeft: 8,
-    }}
-  />
 
 const ReactGridLayout = WidthProvider(RGL)
 const _ReactGridLayout = renderIf(ReactGridLayout)
@@ -76,10 +67,7 @@ export default class SeatingChart extends Component {
 
   setInitialOptions = () => {
     const {
-<<<<<<< HEAD
       fetchCourseName,
-=======
->>>>>>> feat: add seating chart
       fetchCourseStudents,
       setSelectedCourse
     } = seatingChartStore
@@ -88,11 +76,7 @@ export default class SeatingChart extends Component {
 
     setSelectedCourse(course_id)
     fetchCourseStudents(course_id)
-<<<<<<< HEAD
     fetchCourseName(course_id)
-=======
-
->>>>>>> feat: add seating chart
 
     this.setState({
       selected: { ...this.state.selected, course_id }
@@ -125,9 +109,14 @@ export default class SeatingChart extends Component {
     return (
       <ItemWrapper key={e.id}>
         <StudentAvatar id={e.id} />
-        <p>{e.full_name}</p>
+        <StudentLink onClick={this.showStudentCard(e.id)}>{e.full_name}</StudentLink>
       </ItemWrapper>
     )
+  }
+
+  showStudentCard = (id) => (e) => {
+    e.stopPropagation()
+    fireEvent('showStudentCard', { student: id })
   }
 
   renderStudents = () => {
@@ -149,7 +138,7 @@ export default class SeatingChart extends Component {
     }
 
     return (
-      <div ref={el => (this.componentRef = el)}>
+      <div className='pt-2' ref={el => (this.componentRef = el)}>
         <_ReactGridLayout
           onDragStart    = {this.setDragged}
           layout         = {toJS(layout)}
@@ -177,12 +166,10 @@ export default class SeatingChart extends Component {
     this.hasDragged && updateSeatingChart(selectedCourse, layout)
   }
 
-<<<<<<< HEAD
   getCourseName = () => {
     const {
       courseName,
-      coursePeriod,
-      layout
+      coursePeriod
     } = seatingChartStore
 
     if(!courseName) return null
@@ -194,15 +181,6 @@ export default class SeatingChart extends Component {
 
   render() {
     const {
-      courseName,
-      coursePeriod,
-=======
-  render() {
-    const {
-      isFetchingLayout,
-      isFetchingStudents,
-      isFetchingCourses,
->>>>>>> feat: add seating chart
       layout
     } = seatingChartStore
 
@@ -217,43 +195,9 @@ export default class SeatingChart extends Component {
           </NavLink>
         </ModuleHeader>
 
-<<<<<<< HEAD
         <Card>
           <CardBlock>
             <h5 className='mb-2'>{this.getCourseName()}</h5>
-=======
-        <div style={{ flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
-          <ReactToPrint
-            trigger={() =>
-              <Icon
-                type      = "printer"
-                className = 'ml-2'
-                style     = {{
-                  fontSize: 24,
-                  color:    '#08c',
-                  cursor:   'pointer'
-                }}
-              />
-            }
-            content={() => this.componentRef}
-          />
-          <Spin
-            indicator={antIcon}
-            spinning={
-              isFetchingLayout
-              || isFetchingStudents
-              || isFetchingCourses
-            }
-          />
-        </div>
-
-        <div className='clearfix'>
-        </div>
-
-        <Card>
-          <CardBlock>
-            <h5>Name of Class</h5>
->>>>>>> feat: add seating chart
 
             {!_isEmpty(layout) && this.renderLayout()}
           </CardBlock>
