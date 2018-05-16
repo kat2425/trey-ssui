@@ -16,7 +16,6 @@ import UserMenuItem     from 'ui/shell/UserMenu/UserMenuItem'
 import LoadingSpinner   from 'ui/shell/LoadingSpinner'
 
 import Info             from './Info'
-import Schedule         from './Schedule'
 import Overview         from './Overview'
 import Assessment       from './Assessment'
 import Assessments      from './Assessments/Assessment'
@@ -30,7 +29,6 @@ import Attendance       from './Attendance'
 import Engagement       from './CommsHistory/'
 import SurveyMonkey     from './SurveyMonkey'
 
-// FIXME: needs to be inside StudentCard dir
 import Notes            from '../Notes'
 
 import callingStore     from 'stores/CallingStore'
@@ -123,7 +121,6 @@ export default class StudentCard extends Component {
 
     const {
       student,
-      attachments,
       overview,
       groupedContacts: contacts,
     } = store
@@ -316,7 +313,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/attachments`}
-              render = {() => <Attachments student={student} attachments={attachments}/> }
+              render = {() => <Attachments student={student} /> }
             />
 
             <Route render={() => <div>404</div>} />

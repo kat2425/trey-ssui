@@ -3,80 +3,87 @@ import { observer }                       from 'mobx-react'
 
 import { Upload }                         from 'antd'
 
-import {
-  Table, Card, CardBlock, Button, Badge
+import {  Table, Card, CardBlock, Badge
 } from 'reactstrap'
 
 import SubmoduleHeader                    from 'ui/shell/SubmoduleHeader'
 import DateFormat                         from 'helpers/DateFormat'
-import studentCardStore                   from 'stores/StudentCardStore'
+import attachmentStore                    from 'stores/AttachmentStore'
 import PrivacyDropdown                    from './PrivacyDropdown'
 import GroupModal                         from './GroupModal'
+import SSButton                           from 'ui/shell/SSButton'
+import { Popconfirm }                     from 'antd'
 
-import axios                              from 'axios'
-import getFile                            from 'js-file-download'
 
 const visibilityOptions = [
-  { label: 'Only Me',  visibility: 'private' }, 
+  { label: 'Only Me',  visibility: 'private' },
   { label: 'Everyone', visibility: 'public'  },
   { label: 'Groups',   visibility: 'groups'  }
 ]
 
 const AttachmentItem = observer(({ attachment }) => {
-  if (!attachment['is_call_recording?']) {
-    return (
-      <tr>
-        <td style={{width: 70}}><div style={thumbnailStyle(attachment.thumbnail)}/></td>
-        <td><strong>{ attachment.filename }</strong></td>
-        <td className='text-right text-muted'>{ bytesToSize(attachment.size) }</td>
-        <td>{ DateFormat.timeAgo(attachment.created_at) }</td>
+  if (attachment.isRecording) return null
 
-        <td>
-          { attachment.groups.map(g => 
-            <Badge key={g.id} color='info' className='mr-1'>{g.group_name}</Badge>
-          )}
-        </td>
+  return (
+    <tr>
+      <td style={{width: 70}}><div style={thumbnailStyle(attachment.thumbnail)}/></td>
+      <td><strong>{ attachment.filename }</strong></td>
+      <td className='text-right text-muted'>{ attachment.humanSize }</td>
+      <td>{ DateFormat.timeAgo(attachment.createdAt) }</td>
 
-        <td className='text-right'>
-          <PrivacyDropdown 
-            labelKey     = 'label'
-            valueKey     = 'visibility'
-            onSelect     = {changeAttachmentVisibility(attachment)}
-            isModifiable = {attachment.modifiable}  
-            options      = {visibilityOptions}
-            visibility   = {attachment.visibility}
-            attachment   = {attachment}
-            store        = {studentCardStore}
-          />
+      <td>
+        { attachment.groups.map(g =>
+          <Badge key={g.id} color='info' className='mr-1'>{g.group_name}</Badge>
+        )}
+      </td>
 
-          <Button
+      <td className='text-right'>
+        <PrivacyDropdown
+          labelKey     = 'label'
+          valueKey     = 'visibility'
+          onSelect     = {changeAttachmentVisibility(attachment)}
+          isModifiable = {attachment.modifiable}
+          options      = {visibilityOptions}
+          visibility   = {attachment.visibility}
+          attachment   = {attachment}
+          store        = {attachmentStore}
+        />
+
+        <Popconfirm
+          title      = 'Are you sure you want to delete this attachment?'
+          onConfirm  = { attachment.deleteAttachment }
+          okText     = 'Delete'
+          cancelText = 'Cancel'
+        >
+          <SSButton
             size      = 'sm'
             className = 'ml-1'
+            iconClass = 'icon icon-trash'
+            loading   = { attachment.isDeleting }
+            disabled  = { attachment.isLoading || attachment.isDownloading}
             color     = 'danger'
             style     = {{height: 28}}
             hidden    = {!attachment.modifiable}
             title     = 'Delete'
-            onClick   = {() => deleteAttachment(attachment.id)}
           >
-            <span className='icon icon-trash'/>
-          </Button>
+          </SSButton>
+        </Popconfirm>
 
-          <Button
-            size      = 'sm'
-            className = 'ml-1'
-            color     = 'success'
-            style     = {{height: 28}}
-            title     = 'Download File'
-            onClick   = {() => downloadFile(attachment.public_url, attachment.filename)}
-          >
-            <span className='icon icon-download'/>
-          </Button>
-        </td>
-      </tr>
-    )
-  } else {
-    return null
-  }
+        <SSButton
+          size      = 'sm'
+          iconClass = 'icon icon-download'
+          loading   = { attachment.isDownloading }
+          disabled  = { attachment.isDeleting || attachment.isLoading }
+          className = 'ml-1'
+          color     = 'success'
+          style     = {{height: 28}}
+          title     = 'Download File'
+          onClick   = { attachment.downloadFile }
+        >
+        </SSButton>
+      </td>
+    </tr>
+  )
 })
 
 @observer
@@ -85,16 +92,22 @@ export default class Attachments extends Component {
     super(props)
   }
 
-  renderList(attachments) {
-    return (
-      <tbody>
-        { attachments.map(a => <AttachmentItem key={a.id} attachment={a}/>) }
-      </tbody>
-    )
+  componentDidMount(){
+    attachmentStore.fetchAttachments(this.props.student.id)
   }
 
   uploadFile = ({ file }) => {
-    studentCardStore.uploadFile(file.name, file)
+    attachmentStore.uploadFile(this.props.student.id, file.name, file)
+  }
+
+  renderList() {
+    return (
+      <tbody>
+        { attachmentStore.orderedAttachments.map(a => {
+          return <AttachmentItem student={this.props.student.id} key={a.id} attachment={a}/>
+        })}
+      </tbody>
+    )
   }
 
   render() {
@@ -102,10 +115,16 @@ export default class Attachments extends Component {
       <div>
         <SubmoduleHeader title='Attachments'>
           <Upload customRequest={this.uploadFile} showUploadList={false}>
-            <Button className='mr-3' size='sm' style={{height: 30}}>
-              <span className='icon icon-upload-to-cloud mr-2'/>
+            <SSButton
+              className='mr-3'
+              iconClass='icon icon-upload-to-cloud mr-2'
+              loading = { attachmentStore.isUploading }
+              disabled = { attachmentStore.isLoading }
+              size='sm'
+              style={{height: 30}}
+            >
               Upload
-            </Button>
+            </SSButton>
           </Upload>
         </SubmoduleHeader>
 
@@ -122,8 +141,9 @@ export default class Attachments extends Component {
                   <td className='border-0 text-right'></td>
                 </tr>
               </thead>
-              {studentCardStore.showGroupsModal && <GroupModal store={studentCardStore} />}
-              { this.renderList(this.props.attachments) }
+              { attachmentStore.showGroupsModal &&
+                <GroupModal attachment={attachmentStore.selectedAttachment} /> }
+              { this.renderList() }
             </Table>
           </CardBlock>
         </Card>
@@ -134,32 +154,14 @@ export default class Attachments extends Component {
 
 const changeAttachmentVisibility = (attachment) => (newPrivacy) => {
   if(newPrivacy === 'groups'){
-    studentCardStore.setShowGroupsModal(true)
+    attachmentStore.setSelectedAttachment(attachment)
+    attachmentStore.setShowGroupsModal(true)
     return
   }
 
   if (attachment.visibility !== newPrivacy) {
-    studentCardStore.changeAttachmentVisibility(attachment.id, newPrivacy)
-  }
-}
-
-function bytesToSize(bytes) {
-  const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB']
-
-  if (bytes === 0) return 'n/a'
-
-  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
-
-  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i]
-}
-
-function downloadFile(url, filename) {
-  axios.get(url, { responseType: 'blob' }).then((res) => getFile(res.data, filename))
-}
-
-function deleteAttachment(attachmentID) {
-  if (confirm('Are you sure you want to remove this file?')) {
-    studentCardStore.deleteAttachment(attachmentID)
+    attachment.visibility = newPrivacy
+    attachment.changeVisibility(newPrivacy)
   }
 }
 

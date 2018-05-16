@@ -38,7 +38,6 @@ export default class PrivacyDropdown extends Component {
 
   handleSelect = (option) => () => {
     this.props.onSelect(option[this.props.valueKey])
-    this.props.store.setSelectedAttachment(this.props.attachment)
     this.setState({ dropdownOpen: false })
   }
 
