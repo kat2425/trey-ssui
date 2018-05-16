@@ -15,7 +15,7 @@ export default class MemberSearchInput extends Component {
   }
 
   onChange = (value) => {
-    this.setState({ value })
+    this.setState({value: value.replace(/[^0-9]/g, '')})
   }
 
   handleSelect = (value) => {
