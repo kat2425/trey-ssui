@@ -1,14 +1,16 @@
-import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
+import React, { Component}      from 'react'
+import PropTypes                from 'prop-types'
 
-import ModuleHeader        from 'ui/shell/ModuleHeader'
-import VJSChart            from 'ui/vjs/VJSChart'
-import VJSICSelect         from 'ui/vjs/VJSICSelect'
-import MassEmail           from 'ui/shell/MassEmail/MassEmail'
-import userStore           from 'stores/UserStore'
-import renderIf            from 'ui/hoc/renderIf'
-
-import fireEvent           from 'helpers/FireEvent'
+import ModuleHeader             from 'ui/shell/ModuleHeader'
+import VJSChart                 from 'ui/vjs/VJSChart'
+import VJSICSelect              from 'ui/vjs/VJSICSelect'
+import MassEmail                from 'ui/shell/MassEmail/MassEmail'
+import userStore                from 'stores/UserStore'
+import renderIf                 from 'ui/hoc/renderIf'
+import fireEvent                from 'helpers/FireEvent'
+import { 
+  Button
+} from 'antd'
 
 const EMassEmail   = renderIf(MassEmail)
 const EVJSICSelect = renderIf(VJSICSelect)
@@ -103,7 +105,7 @@ export default class MyStudents extends Component {
     this.setState({
       params:   { ...this.state.params, school_id: [ jrsValue ] },
       selected: {
-        ...this.state.selected,
+        ...selected,
         school_id: val
       }
     })
@@ -112,17 +114,51 @@ export default class MyStudents extends Component {
   renderMassEmail() {
     const { selected } = this.state
 
-    if (!!selected.course_id && !!selected.term) {
-      return (
-        <EMassEmail
-          type     = 'course'
-          name     = {`${selected.course_id.label} | ${selected.teacher_id.label} | ${selected.term.label}`}
-          id       = {selected.course_id.value}
-          label    = 'Email Course'
-          renderIf = {!!selected.course_id && !!selected.term}
-        />
-      )
+    return (
+      <EMassEmail
+        type     = 'course'
+        name     = {`${selected.course_id.label} | ${selected.teacher_id.label} | ${selected.term.label}`}
+        id       = {selected.course_id.value}
+        label    = 'Email Course'
+        renderIf = {!!selected.course_id && !!selected.term}
+      />
+    )
+  }
+
+  renderSeatingChart() {
+    const { selected } = this.state
+    const { history }  = this.props
+
+    return (
+      <Button
+        type      = 'primary'
+        className = 'pl-2 ml-2'
+        style     = {{marginTop: '1px'}}
+        onClick={() => {
+          history.push({
+            pathname: `/r/seating_chart/${selected.course_id.value}`
+          })
+        }}
+      >
+        <span className='icon icon-grid mr-2' />
+        Seating Chart
+      </Button>
+    )
+  }
+
+  renderCourseActions = () => {
+    const { selected } = this.state
+
+    if (!selected.course_id || !selected.term) {
+      return null
     }
+
+    return (
+      <div className='d-flex'>
+        {this.renderMassEmail()}
+        {userStore.user.isTeacher && this.renderSeatingChart()}
+      </div>
+    )
   }
 
   render() {
@@ -137,8 +173,7 @@ export default class MyStudents extends Component {
     return (
       <div>
         <ModuleHeader title='My Students'>
-          { this.renderMassEmail() }
-
+          {this.renderCourseActions()}
           <EVJSICSelect
             id            = 'course_id'
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'

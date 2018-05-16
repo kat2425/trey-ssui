@@ -1,14 +1,14 @@
 import React      from 'react'
 import PropTypes  from 'prop-types'
 
-import { Button } from 'reactstrap'
+import { Button } from 'antd'
 import fireEvent  from 'helpers/FireEvent'
 
 const MassEmail = ({type, name, id, label}) => {
   return (
     <div>
       <Button
-        color     = 'info'
+        type      = 'primary'
         className = 'pl-2'
         style     = {{marginTop: '1px'}}
         onClick   = {() => {
