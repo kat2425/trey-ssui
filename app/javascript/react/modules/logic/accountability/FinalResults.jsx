@@ -10,6 +10,9 @@ import {
 
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
+import renderIf             from 'ui/hoc/renderIf'
+
+const EButtonGroup = renderIf(ButtonGroup)
 
 export default class FinalResults extends Component {
   constructor(props) {
@@ -45,15 +48,23 @@ export default class FinalResults extends Component {
   }
 
   getDetailPath = () => {
-    if (this.state.pgBtn === 1) {
-      return '/public/VJS/ss_ui/accountability/final/prof_detail'
+    if (this.state.stBtn === 1) {
+      if (this.state.pgBtn === 1) {
+        return '/public/VJS/ss_ui/accountability/final/prof_detail'
+      } else {
+        return '/public/VJS/ss_ui/accountability/final/growth_detail'
+      }
     } else {
-      return '/public/VJS/ss_ui/accountability/final/growth_detail'
+      return '/public/VJS/ss_ui/accountability/final/teacher_stats'
     }
   }
 
   setPGButton = (val) => {
     this.setState({ pgBtn: val })
+  }
+
+  setSTButton = (val) => {
+    this.setState({ stBtn: val })
   }
 
   render() {
@@ -164,7 +175,24 @@ export default class FinalResults extends Component {
               }
             }}
           >
-            <ButtonGroup>
+            {/* teacher/student toggle */}
+            <ButtonGroup className='mr-2'>
+              <Button
+                onClick = {() => this.setSTButton(1)}
+                active  = {this.state.stBtn === 1}
+              >
+                Student View
+              </Button>
+              <Button
+                onClick = {() => this.setSTButton(2)}
+                active  = {this.state.stBtn === 2}
+              >
+                Teacher View
+              </Button>
+            </ButtonGroup>
+
+            {/* prof/growth toggle */}
+            <EButtonGroup renderIf={ this.state.stBtn === 1}>
               <Button
                 onClick = {() => this.setPGButton(1)}
                 active  = {this.state.pgBtn === 1}
@@ -177,7 +205,7 @@ export default class FinalResults extends Component {
               >
                 Growth
               </Button>
-            </ButtonGroup>
+            </EButtonGroup>
           </VJSChart>
         </div>
       </div>
