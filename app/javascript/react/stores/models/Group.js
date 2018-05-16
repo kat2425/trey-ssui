@@ -228,8 +228,7 @@ export default class Group {
     try {
       const { data } = await xhr.post(`/groups`, params)
 
-      this.updateFromJson(data)
-      this.saveGroupOk()
+      this.saveGroupOk(data)
     } catch(error) {
       this.groupStore.setIsError(getError(error))  
     } finally {
@@ -237,8 +236,16 @@ export default class Group {
     }
   }
 
-  @action saveGroupOk = () => {
+  @action saveGroupOk = (data) => {
+    const { selectedGroup, groups } = this.groupStore
+
+    const group = groups.get(this.id)
+    const oldID = selectedGroup.id
+
     this.setIsNew(false)
+    this.updateFromJson(data)
+    groups.delete(oldID)
+    groups.set(group.id, group)
   }
 
   @action deleteGroup = async() => {
