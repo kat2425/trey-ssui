@@ -5,6 +5,7 @@ import {UncontrolledTooltip} from 'reactstrap'
 import ChatBubbleMMS         from './ChatBubbleMMS'
 import withCommsTranslator   from 'ui/hoc/withCommsTranslator'
 import styled                from 'styled-components'
+import {ifProp}              from 'styled-tools'
 
 const Text = styled.span`
   font-size: 14px;
@@ -12,11 +13,18 @@ const Text = styled.span`
 `
 const EText = withCommsTranslator(Text)
 
+const ChatWithBroadcast = styled.div.attrs({ className: 'media-body-text'})`
+  ${ifProp('isBroadcast', `
+    background-color: #FF9800 !important;
+    color:            #fff !important;
+  `)}
+`
+
 const ChatBubble = ({message, setRead, time}) => (
   <li className={`media ${message.bubbleDirection} mb-2`}>
     <VisibilitySensor onChange={onChange(message, setRead)}>
       <div className='media-body'>
-        <div className='media-body-text'>
+        <ChatWithBroadcast isBroadcast={message.broadcastId}>
           { message.mediaUrl && <ChatBubbleMMS src={message.mediaUrl}/> }
           <EText
             color     = {message.isOutbound ? '#fff' : '#657786'}
@@ -25,7 +33,11 @@ const ChatBubble = ({message, setRead, time}) => (
           >
             { message.body }
           </EText>
-        </div>
+          { message.broadcastId
+            ? <small>This message was sent to multiple recipients.</small>
+            : null
+          }
+        </ChatWithBroadcast>
 
         { renderFooter(time, message) }
       </div>

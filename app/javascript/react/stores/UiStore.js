@@ -2,6 +2,7 @@ import { setter }                    from 'mobx-decorators'
 import SMSConversationStore          from 'stores/SMSConversationStore'
 import callStore                     from 'stores/CallStore'
 import ReminderStore                 from 'stores/ReminderStore'
+import broadcastStore                from 'stores/BroadcastStore'
 import { notification, message }     from 'antd'
 import {
   observable,
@@ -11,9 +12,10 @@ import {
 } from 'mobx'
 
 export const SIDEBAR = {
-  SMS:      'SMS',
-  CALL:     'CALL',
-  REMINDER: 'REMINDER'
+  SMS:       'SMS',
+  CALL:      'CALL',
+  REMINDER:  'REMINDER',
+  BROADCAST: 'BROADCAST'
 }
 
 export class UiStore {
@@ -34,6 +36,9 @@ export class UiStore {
 
   @setter @observable
   showCallInfo = false
+
+  @setter @observable
+  showBroadcastInfo = false
 
   @setter @observable
   sidebarMaxHeight = false
@@ -96,6 +101,10 @@ export class UiStore {
 
   @action handleReminderSidebar(){
     ReminderStore.fetchReminders()
+  }
+
+  @action handleBroadcastSidebar(){
+    broadcastStore.fetchBroadcasts()
   }
 
   @action autoHideCallInfo = () => {

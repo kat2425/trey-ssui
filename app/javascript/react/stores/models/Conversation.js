@@ -27,7 +27,7 @@ export default class Conversation {
   }
 
   initTimer = () => {
-    this.intervalId = setInterval(this.timeToLiveChecker, INTERVAL_TIME) 
+    this.intervalId = setInterval(this.timeToLiveChecker, INTERVAL_TIME)
   }
 
   @action
@@ -77,4 +77,3 @@ export default class Conversation {
     this.nonce = Date.now()
   }
 }
-

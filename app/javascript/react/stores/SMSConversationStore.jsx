@@ -81,6 +81,7 @@ export class SMSConversationStore {
             'id',
             'created_at',
             'conversation_id',
+            'broadcast_id',
             'direction',
             'sent_state',
             'body',

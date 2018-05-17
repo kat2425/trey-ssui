@@ -12,12 +12,12 @@ import {
   autorun
 } from 'mobx'
 
-import { 
-  pipe, 
-  map, 
-  orderBy, 
-  reduce, 
-  filter 
+import {
+  pipe,
+  map,
+  orderBy,
+  reduce,
+  filter
 } from 'lodash/fp'
 
 export class CommsStore {
@@ -40,7 +40,7 @@ export class CommsStore {
         'id', 'action', 'created_at', 'type', 'preview', 'link_ref', 'direction', 'media_url',
         'length', 'user.id', 'user.username', 'user.first_name', 'user.last_name',
         'contact.id', 'contact.name', 'contact.relationship', 'contact.email', 'contact.phone',
-        'call_status', 'voicemail_url', 'language', 'meta', 'contact.student.full_name'
+        'call_status', 'voicemail_url', 'language', 'meta', 'contact.student.full_name', 'broadcast_id'
       ].join(',')
     }
   })
@@ -53,13 +53,13 @@ export class CommsStore {
   @computed get groupedSms() {
     return  filter(
       c => c.type === 'sms' && this.isCommEqualToSelectedComm(c)
-    )(this.communications) 
+    )(this.communications)
   }
 
   @computed get groupedEmails() {
     return  filter(
       c => c.type === 'email' && this.isCommEqualToSelectedComm(c)
-    )(this.communications) 
+    )(this.communications)
   }
 
 

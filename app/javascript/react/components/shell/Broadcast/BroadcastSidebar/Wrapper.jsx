@@ -17,7 +17,7 @@ const Wrapper = styled.div.attrs({className: 'col-md-3 p-0'})`
   top: ${NAV_HEIGHT}px;
   right: -100%;
 
-  z-index: 1030;
+  z-index: 1029;
 
   transition: right 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
   will-change: right;
@@ -28,3 +28,4 @@ const Wrapper = styled.div.attrs({className: 'col-md-3 p-0'})`
 `
 
 export default Wrapper
+
