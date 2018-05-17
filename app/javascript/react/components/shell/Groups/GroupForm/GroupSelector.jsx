@@ -30,7 +30,7 @@ export default class GroupSelector extends Component {
         onChange     = {group.handleOnParentGroupChange}
       >
         {groupStore.userGroups.map(group => 
-          <Option value={group.id}>{group.groupName}</Option>
+          <Option key={group.id} value={group.id}>{group.groupName}</Option>
         )}
       </Select>
     )}
