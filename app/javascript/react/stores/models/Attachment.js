@@ -56,12 +56,12 @@ export default class Attachment {
     return Math.round(this.size / Math.pow(1024, i), 2) + ' ' + sizes[i]
   }
 
-  @action downloadFile = async(url = this.publicUrl, filename = this.filename) => {
+  @action downloadFile = async() => {
     try {
       this.setIsDownloading(true)
-      const res = await axios.get(url, {responseType: 'blob'})
+      const res = await axios.get(this.publicUrl, {responseType: 'blob'})
 
-      getFile(res.data, filename)
+      getFile(res.data, this.filename)
       uiStore.addMessage(`${this.filename} downloaded successfully!`)
     } catch (e) {
       this.setIsError(getError(e))
