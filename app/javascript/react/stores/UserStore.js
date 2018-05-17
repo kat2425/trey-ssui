@@ -30,6 +30,10 @@ export class UserStore {
     return this.user.customModules
   }
 
+  @computed get hiddenModules() {
+    return this.user.hiddenModules
+  }
+
   @computed get canCreateGroup() {
     return this.hasModules('user_group_admin', 'student_group_admin')
   }
@@ -44,6 +48,10 @@ export class UserStore {
 
   @action hasCustomModule = (module) => {
     return includes(this.customModules, module)
+  }
+
+  @action hasHiddenModule = (module) => {
+    return includes(this.hiddenModules, module)
   }
 }
 

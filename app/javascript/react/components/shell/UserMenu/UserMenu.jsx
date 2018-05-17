@@ -18,10 +18,15 @@ const UserMenu = () => {
           title     = 'My Schools'
           iconClass = 'icon-blackboard'
           link      = '/r/my_schools'
-          renderIf  = {!userStore.user.isTeacher && !userStore.user.higherEd}
+          renderIf  = {(!userStore.user.isTeacher && !userStore.user.higherEd)}
         />
 
-        <EUserMenuItem title='My Students' iconClass='icon-users' link='/r/my_students' />
+        <EUserMenuItem
+          title     = 'My Students'
+          iconClass = 'icon-users'
+          link      = '/r/my_students'
+          renderIf  = {!(userStore.hasHiddenModule('my_students'))}
+        />
 
         <EUserMenuItem
           title     = 'Attendance'
@@ -130,6 +135,7 @@ const UserMenu = () => {
           title     = {_riskItemLabel}
           iconClass = 'icon-traffic-cone'
           link      = '/r/risk_analysis'
+          renderIf  = {!(userStore.hasHiddenModule('at_risk'))}
         />
 
         <EUserMenuItem

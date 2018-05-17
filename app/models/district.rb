@@ -26,6 +26,16 @@ class District < Sequel::Model(:districts)
     []
   end
 
+  def hidden_modules
+    if meta&.fetch('hidden_modules')
+      meta['hidden_modules']
+    else
+      []
+    end
+  rescue
+    []
+  end
+
   # Expiration Informatoin                                                      {{{
   # -------------------------------------------------------------------------------
   def expiration_status
