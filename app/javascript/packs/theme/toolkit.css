@@ -6915,6 +6915,11 @@ textarea {
 .ant-select-selection__placeholder, .ant-select-search__field__placeholder, .Select-placeholder {
   color: rgba(0, 0, 0, 0.6) !important; }
 
+#call-output-device {
+  -webkit-transform: translate3d(0px, 0px, 0px) !important;
+          transform: translate3d(0px, 0px, 0px) !important;
+  top: auto !important; }
+
 @font-face {
   font-family: "toolkit-entypo";
   src: url("/packs/toolkit-entypo.eot");

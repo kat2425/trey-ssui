@@ -5,19 +5,11 @@ import {
   DropdownItem, DropdownMenu, DropdownToggle
 } from 'reactstrap'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import styled                  from 'styled-components'
 
 const callBarBtn = {
   borderColor: 'rgba(255,255,255,0.4)',
   color:       'white'
 }
-
-const SButtonDropdown =  styled(ButtonDropdown)`
-  & .dropdown-menu {
-    transform: translate3d(0px,0px,0px) !important;
-    top: auto !important;
-  }
-`
 
 @observer
 export default class CallBar extends Component {
@@ -48,12 +40,12 @@ export default class CallBar extends Component {
 
     return (
       <ButtonGroup>
-        <SButtonDropdown isOpen={this.state.dropdownOpen} direction='up' toggle={this.toggle}>
+        <ButtonDropdown isOpen={this.state.dropdownOpen} direction='up' toggle={this.toggle}>
           <DropdownToggle style={callBarBtn} size='sm' color='success' outline caret>
             {currentOutputDevice ? currentOutputDevice : 'Output Devices'}
           </DropdownToggle>
 
-          <DropdownMenu>
+          <DropdownMenu id='call-output-device'>
             {outputDevices
               ? outputDevices.map((device) =>
                 <DropdownItem key={device.id} onClick={() => changeOutput(device.id, device.label)} >
@@ -61,7 +53,7 @@ export default class CallBar extends Component {
                 </DropdownItem>)
               : null}
           </DropdownMenu>
-        </SButtonDropdown>
+        </ButtonDropdown>
 
         <Button
           id      = 'Popover1'
