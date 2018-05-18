@@ -3,17 +3,18 @@ import ModuleHeader           from 'ui/shell/ModuleHeader'
 import RGL, { WidthProvider } from 'react-grid-layout'
 import { toJS }               from 'mobx'
 import { observer }           from 'mobx-react'
-import seatingChartStore      from 'stores/seatingChartStore'
+import seatingChartStore      from 'stores/SeatingChartStore'
 import ItemWrapper            from './ItemWrapper'
 import userStore              from 'stores/UserStore'
 import styled                 from 'styled-components'
 import _isEmpty               from 'lodash/isEmpty'
 import { NavLink }            from 'react-router-dom'
 import renderIf               from 'ui/hoc/renderIf'
+import StudentLink            from './StudentLink'
+import fireEvent              from 'helpers/FireEvent'
 
 import {
-  Icon,
-  Spin
+  Icon
 } from 'antd'
 
 import {
@@ -37,16 +38,6 @@ const StudentAvatar = styled.div`
     border-radius:   500px;
   }
 `
-
-const antIcon =
-  <Icon
-    type='loading'
-    spin
-    style={{
-      fontSize:   24,
-      marginLeft: 8,
-    }}
-  />
 
 const ReactGridLayout = WidthProvider(RGL)
 const _ReactGridLayout = renderIf(ReactGridLayout)
@@ -118,9 +109,14 @@ export default class SeatingChart extends Component {
     return (
       <ItemWrapper key={e.id}>
         <StudentAvatar id={e.id} />
-        <p>{e.full_name}</p>
+        <StudentLink onClick={this.showStudentCard(e.id)}>{e.full_name}</StudentLink>
       </ItemWrapper>
     )
+  }
+
+  showStudentCard = (id) => (e) => {
+    e.stopPropagation()
+    fireEvent('showStudentCard', { student: id })
   }
 
   renderStudents = () => {
@@ -142,7 +138,7 @@ export default class SeatingChart extends Component {
     }
 
     return (
-      <div ref={el => (this.componentRef = el)}>
+      <div className='pt-2' ref={el => (this.componentRef = el)}>
         <_ReactGridLayout
           onDragStart    = {this.setDragged}
           layout         = {toJS(layout)}
@@ -173,8 +169,7 @@ export default class SeatingChart extends Component {
   getCourseName = () => {
     const {
       courseName,
-      coursePeriod,
-      layout
+      coursePeriod
     } = seatingChartStore
 
     if(!courseName) return null
@@ -186,8 +181,6 @@ export default class SeatingChart extends Component {
 
   render() {
     const {
-      courseName,
-      coursePeriod,
       layout
     } = seatingChartStore
 
