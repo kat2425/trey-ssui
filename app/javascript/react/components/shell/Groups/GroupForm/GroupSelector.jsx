@@ -24,7 +24,7 @@ export default class GroupSelector extends Component {
     return (
       <Select
         labelInValue
-        style        = {{flex: 1}}
+        style        = {{flex: 1, marginRight: 15, marginTop: 15, width: '100%'}}
         placeholder  = 'Select a group'
         defaultValue = {getDefaultValue(group.parentGroupID)}
         onChange     = {group.handleOnParentGroupChange}

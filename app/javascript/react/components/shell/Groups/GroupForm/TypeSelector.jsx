@@ -19,7 +19,7 @@ const TypeSelector = ({group}) => {
         onSelect={(e) => group.setSelectedType(e)}
         defaultValue={group.groupType}
         value={group.groupType || undefined}
-        style={{ width: 200 }}
+        style={{ width: '100%' }}
         placeholder="Select a group type"
         onChange={group.handleTypeOnChange}
       >

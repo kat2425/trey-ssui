@@ -24,7 +24,7 @@ function renderSelect(group) {
     return (
       <Select
         value={group.selectedScope ? group.selectedScope : undefined}
-        style={{ flex: 0.5, marginRight: 15 }}
+        style={{ flex: 0.5, marginRight: 15, width: '100%' }}
         placeholder={showPlaceholder(group)}
         optionFilterProp="children"
         onChange={group.handleScopeOnChange}
