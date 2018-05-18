@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import SSButton     from 'ui/shell/SSButton'
 
 PrintButton.propTypes = {
-  note: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired
 }
 
 function PrintButton({store}){
