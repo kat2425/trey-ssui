@@ -8,6 +8,7 @@ function TagFormModal({tagStore}) {
     <Modal
       isOpen={tagStore.showQueryForm}
       toggle={tagStore.toggleQueryForm}
+      backdrop='static'
       size="sm"
       className="h-100 d-flex flex-column justify-content-center my-0"
     >

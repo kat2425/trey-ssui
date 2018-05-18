@@ -2,7 +2,7 @@ import React, { Component }      from 'react'
 import DateFormat                from 'helpers/DateFormat'
 
 import {
-  Card, CardHeader, CardBlock, CardTitle, Badge, Collapse
+  Card, CardHeader, CardBody, CardTitle, Badge, Collapse
 } from 'reactstrap'
 
 import StudentAvatar   from 'ui/shell/StudentAvatar'
@@ -51,7 +51,7 @@ export default class Info extends Component {
       <Card className='card-profile mb-3 mt-3 pb-3'>
         <CardHeader style={cardHeader}/>
 
-        <CardBlock className='text-xs-center mb-0 pb-1'>
+        <CardBody className='text-xs-center mb-0 pb-1'>
           <StudentAvatar id={student.id} size={95} className='card-profile-img mx-auto' />
           <CardTitle>{student.first_name} {student.last_name}</CardTitle>
           <h6>{ student.school.school_name }</h6>
@@ -69,17 +69,17 @@ export default class Info extends Component {
               <h6><Badge color='danger'>{ student.enrollment_status }</Badge></h6>
             </li>
           </ul>
-        </CardBlock>
+        </CardBody>
 
-        <CardBlock className='text-xs-center p-0 pb-2 mb-0 mt-0'>
+        <CardBody className='text-xs-center p-0 pb-2 mb-0 mt-0'>
           { student.flags.map(flag => {
             return <Badge key={ flag } className='mr-1'>{ flag }</Badge>
           }) }
-        </CardBlock>
+        </CardBody>
 
         <Collapse isOpen={!this.state.collapse}>
-          <CardBlock style={{marginTop: '-5px'}} className='pt-0 pb-0 mb-0'>
-            <ul className='list-unstyled list-spaced mb-2'>
+          <CardBody style={{marginTop: '-5px'}} className='pt-0 pb-0 mb-0'>
+            <ul className='list-unstyled list-spaced m-2'>
               <li>
                 <span className='mr-3 text-muted icon icon-share' style={iconStyle}/>
                 <span>ID #: </span>
@@ -121,7 +121,7 @@ export default class Info extends Component {
               {renderItem(student.coach,   'Coach',   'icon-feather')}
               {renderItem(student.major,   'Major',   'icon-trophy')}
             </ul>
-          </CardBlock>
+          </CardBody>
         </Collapse>
 
         <CollapseToggle onClick={this.toggleCollapse} isCollapsed={this.state.collapse} />

@@ -3,7 +3,7 @@ import { observer }                from 'mobx-react'
 
 import { Upload }                  from 'antd'
 
-import {  Table, Card, CardBlock } from 'reactstrap'
+import {  Table, Card, CardBody }  from 'reactstrap'
 
 import SubmoduleHeader             from 'ui/shell/SubmoduleHeader'
 import attachmentStore             from 'stores/AttachmentStore'
@@ -55,7 +55,7 @@ export default class Attachments extends Component {
         </SubmoduleHeader>
 
         <Card>
-          <CardBlock className='p-0'>
+          <CardBody className='p-0'>
             <Table>
               <thead>
                 <tr>
@@ -73,7 +73,7 @@ export default class Attachments extends Component {
               { this.renderList() }
             </Table>
             { attachmentStore.isLoading && <LoadingSpinner center /> }
-          </CardBlock>
+          </CardBody>
         </Card>
       </div>
     )

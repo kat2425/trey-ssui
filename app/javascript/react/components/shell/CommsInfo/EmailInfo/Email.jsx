@@ -1,14 +1,15 @@
-import React, {Component}            from 'react'
-import {observer}                    from 'mobx-react'
-import styled, {keyframes}           from 'styled-components'
-import {ifProp}                      from 'styled-tools'
-import renderHTML                    from 'react-render-html'
-import { Card }                      from 'reactstrap'
-import DateFormat                    from 'helpers/DateFormat'
-import ReactDOM                      from 'react-dom'
-import LoadingSpinner                from 'ui/shell/LoadingSpinner'
-import withTranslator                from 'ui/hoc/withTranslator'
-import { isEmptyHTML, getInnerText } from 'helpers/HTMLParser'
+import React, {Component}  from 'react'
+import {observer}          from 'mobx-react'
+import styled, {keyframes} from 'styled-components'
+import {ifProp}            from 'styled-tools'
+import renderHTML          from 'react-render-html'
+import { Card }            from 'reactstrap'
+import DateFormat          from 'helpers/DateFormat'
+import ReactDOM            from 'react-dom'
+import LoadingSpinner      from 'ui/shell/LoadingSpinner'
+import withTranslator      from 'ui/hoc/withTranslator'
+import { getInnerText }    from 'helpers/HTMLParser'
+import omitStyled          from 'helpers/omitStyled'
 
 
 const Text = styled.span`
@@ -90,7 +91,7 @@ const active = keyframes`
 	}
 `
 
-const Wrapper = styled(Card)`
+const Wrapper = omitStyled(Card, ['active'])`
   background-color: #fff;
   margin-bottom: 20px;
   padding: 15px;

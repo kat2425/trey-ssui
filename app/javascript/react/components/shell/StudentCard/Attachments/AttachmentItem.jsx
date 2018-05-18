@@ -24,7 +24,10 @@ const AttachmentItem = ({ attachment }) => {
         )}
       </td>
 
-      <td className='text-right'>
+      <td 
+        className = 'text-right d-flex align-items-center justify-content-end'
+        style     = {{minWidth: 161}}
+      >
         <PrivacyDropdown
           labelKey     = 'label'
           valueKey     = 'visibility'

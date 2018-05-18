@@ -4,7 +4,7 @@ import DetectRTC    from 'detectrtc'
 import {
   Button, Modal, ModalHeader, 
   ModalBody, ModalFooter, ButtonGroup,
-  Collapse, Card, CardBlock
+  Collapse, Card, CardBody
 } from 'reactstrap'
 
 const CallDialog = observer(({ callingStore }) => {
@@ -37,14 +37,14 @@ const CallDialog = observer(({ callingStore }) => {
         </ButtonGroup>
         <Collapse isOpen={isCellSelected}>
           <Card className='mt-4'>
-            <CardBlock>
+            <CardBody>
               SchoolStatus will connect this call free of charge. We will call your chosen phone number, 
               then connect you to the above contact.This will not reveal your phone number. While the call
               is free to connect, your phone provider will treat this as any other incoming call and will 
               debit your minutes according to your phone plan. SchoolStatus nor your district/school are 
               responsible for these charges.
-            </CardBlock>
-            <CardBlock>
+            </CardBody>
+            <CardBody>
               <Button
                 disabled={callingStore.isDisabled}
                 onClick={() => callingStore.initiateCellCall(contact, studentID)}
@@ -52,7 +52,7 @@ const CallDialog = observer(({ callingStore }) => {
               >
                 Proceed
               </Button>
-            </CardBlock>
+            </CardBody>
           </Card>
         </Collapse>
       </ModalBody>
