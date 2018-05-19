@@ -52,8 +52,13 @@ export class AttachmentStore {
     })
   }
 
+  @action clearData = () => {
+    this.attachments.clear()
+  }
+
   @action fetchAttachments = async(id) => {
-    try{
+    try {
+      this.clearData()
       this.setIsLoading(true)
       this.setIsError(false)
 
