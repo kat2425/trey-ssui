@@ -6,9 +6,6 @@ import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
-import renderIf             from 'ui/hoc/renderIf'
-
-const EVJSChart = renderIf(VJSChart)
 
 export default class CourseAttendance extends Component {
   constructor(props) {
@@ -17,7 +14,7 @@ export default class CourseAttendance extends Component {
     this._currentYear = userStore.user.currentSchoolYear
     this.state        = {
       params: {
-        school_year: [ this._currentYear ]
+        school_year: [ this._currentYear ],
       },
       selected: {
         school_year: { selected: true, label: this._currentYear , value: this._currentYear }
@@ -59,6 +56,15 @@ export default class CourseAttendance extends Component {
     })
   }
 
+  setStatusFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, attendance_status: [ jrsValue ] },
+      selected: { ...this.state.selected, attendance_status: val }
+    })
+  }
+
   setDetailDate(val) {
     this.setState({
       params: { ...this.state.params, attendance_date: [ val ] }
@@ -80,15 +86,6 @@ export default class CourseAttendance extends Component {
           {/*   width         = {300} */}
           {/* /> */}
           {/*  */}
-          {/* <VJSICSelect */}
-          {/*   id            = 'school_year' */}
-          {/*   inputPath     = '/public/VJS/ss_ui/attendance/school_year' */}
-          {/*   selectedValue = {this.state.selected.school_year} */}
-          {/*   handleChange  = {::this.setYearFilter} */}
-          {/*   clearable     = {false} */}
-          {/*   placeholder   = 'Year' */}
-          {/*   width         = {100} */}
-          {/* /> */}
         </ModuleHeader>
 
         <div className='row mb-3'>
@@ -133,7 +130,16 @@ export default class CourseAttendance extends Component {
                 }
               }
             }}
-          />
+          >
+            <VJSICSelect
+              id            = 'absence_status'
+              inputPath     = '/public/VJS/ss_ui/course_attendance/absence_status'
+              selectedValue = {this.state.selected.attendance_status}
+              handleChange  = {::this.setStatusFilter}
+              placeholder   = 'Absence Type'
+              width         = {300}
+            />
+          </VJSChart>
         </div>
       </div>
     )
