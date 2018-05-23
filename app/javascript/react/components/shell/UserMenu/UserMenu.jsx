@@ -196,13 +196,18 @@ const UserMenu = () => {
           renderIf  = {userStore.hasModules('useradmin')}
           noRoute
         />
-
         <EUserMenuItem
           title     = 'Voice Admin'
           iconClass = 'icon-sound'
           link      = '/legacy/voice_admin'
           renderIf  = {userStore.user.isSpoc}
           noRoute
+        />
+        <EUserMenuItem
+          title     = 'Flagged Contacts'
+          iconClass = 'icon-remove-user'
+          link      = '/r/flagged_contacts'
+          renderIf  = {userStore.isSpoc}
         />
       </EUserMenuSection>
     </div>

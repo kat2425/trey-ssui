@@ -58,6 +58,8 @@ class User < Sequel::Model(:users)
 
   def is_teacher? ; !!is_teacher ; end
 
+  def is_spoc? ; !!is_spoc ; end
+
   # UI props
   def ui_props
     self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at, :beta_tester).merge(

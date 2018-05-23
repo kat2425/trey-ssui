@@ -26,6 +26,10 @@ export class UserStore {
     return !!this.user.impersonated
   }
 
+  @computed get isSpoc(){
+    return !!this.user.isSpoc
+  }
+
   @computed get customModules() {
     return this.user.customModules
   }

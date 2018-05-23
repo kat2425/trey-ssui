@@ -4,43 +4,44 @@ import {
   Switch, Route, withRouter, Redirect
 } from 'react-router-dom'
 
-import styled                from 'styled-components'
+import styled            from 'styled-components'
 
-import UserMenu              from 'ui/shell/UserMenu/UserMenu'
+import UserMenu          from 'ui/shell/UserMenu/UserMenu'
 
-import Attendance            from 'modules/logic/Attendance'
-import CourseAttendance      from 'modules/logic/CourseAttendance'
-import TeacherAttendance     from 'modules/logic/TeacherAttendance'
-import Infractions           from 'modules/logic/Infractions'
-import Financials            from 'modules/logic/Financials'
-import MyStudents            from 'modules/logic/MyStudents'
-import MySchools             from 'modules/logic/Dashboard/MySchools'
-import RiskAnalysis          from 'modules/logic/RiskAnalysis'
-import TagBuilder            from 'modules/logic/TagBuilder/'
-import Groups                from 'modules/logic/Groups'
-import SeatingChart          from 'ui/shell/SeatingChart'
+import Attendance        from 'modules/logic/Attendance'
+import CourseAttendance  from 'modules/logic/CourseAttendance'
+import TeacherAttendance from 'modules/logic/TeacherAttendance'
+import Infractions       from 'modules/logic/Infractions'
+import Financials        from 'modules/logic/Financials'
+import MyStudents        from 'modules/logic/MyStudents'
+import MySchools         from 'modules/logic/Dashboard/MySchools'
+import RiskAnalysis      from 'modules/logic/RiskAnalysis'
+import TagBuilder        from 'modules/logic/TagBuilder/'
+import FlaggedContacts   from 'modules/logic/FlaggedContacts/'
+import Groups            from 'modules/logic/Groups'
+import SeatingChart      from 'ui/shell/SeatingChart'
 
-import CallHistory           from 'modules/channel/History'
-import ChannelEngagement     from 'modules/channel/Engagement'
+import CallHistory       from 'modules/channel/History'
+import ChannelEngagement from 'modules/channel/Engagement'
 
 // Assessment
-import Assessments           from 'modules/logic/assessment/Assessment'
+import Assessments       from 'modules/logic/assessment/Assessment'
 
 // Insights/DataScience
-import GrowthCusp            from 'modules/logic/insights/GrowthCusp'
-import AIMSWebiReady         from 'modules/logic/insights/AIMSWebiReady'
-import JCJCBinary            from 'modules/logic/insights/JCJCBinary'
+import GrowthCusp        from 'modules/logic/insights/GrowthCusp'
+import AIMSWebiReady     from 'modules/logic/insights/AIMSWebiReady'
+import JCJCBinary        from 'modules/logic/insights/JCJCBinary'
 
-import SneakPeek             from 'modules/logic/accountability/SneakPeek'
-import FinalResults          from 'modules/logic/accountability/FinalResults'
-import PrelimResults         from 'modules/logic/accountability/PrelimResults'
-import LPS                   from 'modules/logic/accountability/LPS'
+import SneakPeek         from 'modules/logic/accountability/SneakPeek'
+import FinalResults      from 'modules/logic/accountability/FinalResults'
+import PrelimResults     from 'modules/logic/accountability/PrelimResults'
+import LPS               from 'modules/logic/accountability/LPS'
 
-import SMSController         from 'ui/controllers/SMSController'
+import SMSController     from 'ui/controllers/SMSController'
 
-import UserSettings          from 'modules/UserSettings'
-import EmptyMessage          from 'ui/shell/EmptyMessage'
-import userStore             from 'stores/UserStore'
+import UserSettings      from 'modules/UserSettings'
+import EmptyMessage      from 'ui/shell/EmptyMessage'
+import userStore         from 'stores/UserStore'
 
 const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2' })`
   height: calc(100vh - 108px) !important;
@@ -49,7 +50,7 @@ const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2
 `
 
 
-const AppContainer = ({ match }) => {
+const AppContainer = () => {
   const defaultRoute = (userStore.user.isTeacher || userStore.user.higherEd)
     ? '/r/my_students'
     : '/r/my_schools'
@@ -76,6 +77,7 @@ const AppContainer = ({ match }) => {
         <Route path='/r/searchlight' component={TagBuilder} />
 
         <Route path='/r/groups' component={Groups} />
+        <Route path='/r/flagged_contacts' component={FlaggedContacts} />
 
         <Route path='/r/accountability/sneak_peek' component={SneakPeek} />
         <Route path='/r/accountability/prelim_results' component={PrelimResults} />

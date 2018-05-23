@@ -1,8 +1,8 @@
 import React from 'react'
 
-const StudentAvatar = (props) => {
+const ContactAvatar = (props) => {
   const imgSize = (props.size || 30)
-  const imgURL  = `url(https://api.schoolstatus.com/avatars/student/${props.id}.png)`
+  const imgURL  = `url(https://api.schoolstatus.com/avatars/contact/${props.id}.png)`
 
   return (
     <div className={props.className} style={{
@@ -17,4 +17,4 @@ const StudentAvatar = (props) => {
   )
 }
 
-export default StudentAvatar
+export default ContactAvatar

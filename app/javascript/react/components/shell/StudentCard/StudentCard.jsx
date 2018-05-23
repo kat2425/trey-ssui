@@ -21,7 +21,7 @@ import Assessment       from './Assessment'
 import Assessments      from './Assessments/Assessment'
 import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
-import Contacts         from './Contacts'
+import Contacts         from './Contacts/'
 import Attachments      from './Attachments/'
 import Grades           from './Grades'
 import CourseAttendance from './CourseAttendance'
@@ -31,8 +31,6 @@ import Engagement       from './CommsHistory/'
 import SurveyMonkey     from './SurveyMonkey'
 
 import Notes            from '../Notes'
-
-import callingStore     from 'stores/CallingStore'
 
 import renderIf         from 'ui/hoc/renderIf'
 import userStore        from 'stores/UserStore'
@@ -123,7 +121,6 @@ export default class StudentCard extends Component {
     const {
       student,
       overview,
-      groupedContacts: contacts,
     } = store
 
     return (
@@ -259,15 +256,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() =>
-                <Contacts
-                  store             = {callingStore}
-                  student           = {student}
-                  contacts          = {contacts}
-                  handleContactFave = {::this.props.store.toggleContactPrimary}
-                  handleSendEmail   = {::this.props.store.triggerNativeMailTo}
-                />
-              }
+              render = {() => <Contacts student={student} /> }
             />
 
             <Route
