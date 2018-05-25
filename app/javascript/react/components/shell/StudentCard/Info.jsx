@@ -73,13 +73,13 @@ export default class Info extends Component {
 
         <CardBody className='text-xs-center p-0 pb-2 mb-0 mt-0'>
           { student.flags.map(flag => {
-            return <Badge key={ flag } className='mr-1'>{ flag }</Badge>
+            return <Badge key={ flag } color='secondary' className='mr-1'>{ flag }</Badge>
           }) }
         </CardBody>
 
         <Collapse isOpen={!this.state.collapse}>
           <CardBody style={{marginTop: '-5px'}} className='pt-0 pb-0 mb-0'>
-            <ul className='list-unstyled list-spaced m-2'>
+            <ul className='list-unstyled list-spaced m-4'>
               <li>
                 <span className='mr-3 text-muted icon icon-share' style={iconStyle}/>
                 <span>ID #: </span>
@@ -110,10 +110,11 @@ export default class Info extends Component {
                 <li>
                   <span className='mr-3 text-muted icon icon-map' style={iconStyle}/>
                   <span>Address: </span>
-                  <span className='text-info'>
-                    <br/>{ student.address },
-                    <br/>{ student.city }, { student.state } {student.zip }
-                  </span>
+                  <div className='text-info' style={{ marginLeft: '30px' }}>
+                    { student.address },
+                    <br/>
+                    { student.city }, { student.state } {student.zip }
+                  </div>
                 </li>
               }
 

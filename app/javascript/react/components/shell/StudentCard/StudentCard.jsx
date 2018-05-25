@@ -25,6 +25,7 @@ import Contacts         from './Contacts'
 import Attachments      from './Attachments/'
 import Grades           from './Grades'
 import CourseAttendance from './CourseAttendance'
+import PeriodAttendance from './PeriodAttendance'
 import Attendance       from './Attendance'
 import Engagement       from './CommsHistory/'
 import SurveyMonkey     from './SurveyMonkey'
@@ -165,6 +166,14 @@ export default class StudentCard extends Component {
               />
 
               <EUserMenuItem
+                title     = 'Course Attendance'
+                iconClass = 'icon-sweden'
+                link      = {`${match.url}/period_attendance`}
+                location  = {location}
+                renderIf  = {userStore.hasModules('vjs_course_attendance')}
+              />
+
+              <EUserMenuItem
                 title     = 'Discipline'
                 iconClass = 'icon-thermometer'
                 link      = {`${match.url}/infractions`}
@@ -269,6 +278,11 @@ export default class StudentCard extends Component {
             <Route
               path   = {`${match.url}/attendance`}
               render = {() => <Attendance student={student}/> }
+            />
+
+            <Route
+              path   = {`${match.url}/period_attendance`}
+              render = {() => <PeriodAttendance student={student}/> }
             />
 
             <Route

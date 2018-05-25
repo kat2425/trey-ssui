@@ -4,6 +4,10 @@ import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
+import {
+  Button, ButtonGroup
+} from 'reactstrap'
+
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 
@@ -13,6 +17,8 @@ export default class CourseAttendance extends Component {
 
     this._currentYear = userStore.user.currentSchoolYear
     this.state        = {
+      stBtn: 2,
+
       params: {
         school_year: [ this._currentYear ],
       },
@@ -28,6 +34,15 @@ export default class CourseAttendance extends Component {
       { value: 'last_quarter', label: 'Last 3 Months' },
       { value: 'last_six',     label: 'Last 6 Months' },
     ]
+  }
+
+  setSTButton = (val) => {
+    const showTardy = (val === 1) ? '~NOTHING~' : 'T'
+
+    this.setState({
+      stBtn:  val,
+      params: { ...this.state.params, exclude_attendance_status: [ showTardy ] }
+    })
   }
 
   getYearReportPath = () => {
@@ -124,13 +139,28 @@ export default class CourseAttendance extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'attendance'
+                      path:    'period_attendance'
                     })
                   }
                 }
               }
             }}
           >
+            <ButtonGroup className='mr-2'>
+              <Button
+                onClick = {() => this.setSTButton(1)}
+                active  = {this.state.stBtn === 1}
+              >
+                Show Tardies
+              </Button>
+              <Button
+                onClick = {() => this.setSTButton(2)}
+                active  = {this.state.stBtn === 2}
+              >
+                Exclude Tardies
+              </Button>
+            </ButtonGroup>
+
             <VJSICSelect
               id            = 'absence_status'
               inputPath     = '/public/VJS/ss_ui/course_attendance/absence_status'
