@@ -23,6 +23,12 @@ test:
   <<: *default
   database: schoolstatus_staging
 
+staging:
+  <<: *default
+  host: schoolstatus-pg-vpc-aurora.ciwswt54yuhj.us-east-1.rds.amazonaws.com
+  port: 5432
+  database: schoolstatus_staging
+
 production:
   <<: *default
   host: schoolstatus-pg-vpc-aurora.ciwswt54yuhj.us-east-1.rds.amazonaws.com
