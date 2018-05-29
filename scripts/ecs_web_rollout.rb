@@ -5,8 +5,9 @@
 require 'json'
 require 'ansi256'
 
+
 def describe_task
-  JSON.parse `aws ecs describe-task-definition --task-definition ss-ui`
+  JSON.parse `aws ecs describe-task-definition --task-definition #{$cluster}`
 end
 
 def task_definition
@@ -18,7 +19,7 @@ def container_def
 end
 
 def new_revision
-  JSON.parse `aws ecs register-task-definition --family ss-ui --container-definitions '#{container_def.to_json}'`
+  JSON.parse `aws ecs register-task-definition --family #{$cluster} --container-definitions '#{container_def.to_json}'`
 end
 
 def new_revision_id
@@ -28,8 +29,9 @@ end
 def update_service
   _new_revision_id = new_revision_id
 
-  JSON.parse `aws ecs update-service --cluster ss-ui --service ss-ui --task-definition ss-ui:#{_new_revision_id}`
+  JSON.parse `aws ecs update-service --cluster #{$cluster} --service ss-ui --task-definition #{$cluster}:#{_new_revision_id}`
   puts "[x] Updated service to revision #{_new_revision_id.to_s.fg(83)}"
 end
 
+$cluster = (ARGV[0] || 'ss-ui')
 update_service
