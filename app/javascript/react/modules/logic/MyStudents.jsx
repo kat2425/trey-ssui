@@ -8,7 +8,7 @@ import MassEmail                from 'ui/shell/MassEmail/MassEmail'
 import userStore                from 'stores/UserStore'
 import renderIf                 from 'ui/hoc/renderIf'
 import fireEvent                from 'helpers/FireEvent'
-import { 
+import {
   Button
 } from 'antd'
 
@@ -113,14 +113,21 @@ export default class MyStudents extends Component {
 
   renderMassEmail() {
     const { selected } = this.state
+    const _selected    = do {
+      if (selected.course_id) {
+        `${selected.course_id.label} | ${selected.teacher_id.label} | ${selected.term.label}`
+      } else {
+        'n/a'
+      }
+    }
 
     return (
       <EMassEmail
         type     = 'course'
-        name     = {`${selected.course_id.label} | ${selected.teacher_id.label} | ${selected.term.label}`}
-        id       = {selected.course_id.value}
+        name     = { _selected }
+        id       = { selected.course_id ? selected.course_id.value : 'n/a' }
         label    = 'Email Course'
-        renderIf = {!!selected.course_id && !!selected.term}
+        disabled = {!(!!selected.course_id && !!selected.term)}
       />
     )
   }
@@ -128,15 +135,17 @@ export default class MyStudents extends Component {
   renderSeatingChart() {
     const { selected } = this.state
     const { history }  = this.props
+    const _selected_id = selected.course_id ? selected.course_id.value : 'n/a'
 
     return (
       <Button
         type      = 'primary'
         className = 'pl-2 ml-2'
         style     = {{marginTop: '1px'}}
-        onClick={() => {
+        disabled  = {!(!!selected.course_id && !!selected.term)}
+        onClick   = {() => {
           history.push({
-            pathname: `/r/seating_chart/${selected.course_id.value}`
+            pathname: `/r/seating_chart/${_selected_id}`
           })
         }}
       >
@@ -148,10 +157,6 @@ export default class MyStudents extends Component {
 
   renderCourseActions = () => {
     const { selected } = this.state
-
-    if (!selected.course_id || !selected.term) {
-      return null
-    }
 
     return (
       <div className='d-flex'>
@@ -174,6 +179,7 @@ export default class MyStudents extends Component {
       <div>
         <ModuleHeader title='My Students'>
           {this.renderCourseActions()}
+
           <EVJSICSelect
             id            = 'course_id'
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'
