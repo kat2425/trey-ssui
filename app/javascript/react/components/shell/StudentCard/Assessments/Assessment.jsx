@@ -20,6 +20,7 @@ import AccelReader     from './AccelReader'
 import Case21          from './Case21'
 import CogAT           from './CogAT'
 import CPAS            from './CPAS'
+import DIBELS          from './DIBELS'
 import DMACLocal       from './DMACLocal'
 import DMACSTAAR       from './DMACSTAAR'
 import DRA             from './DRA'
@@ -296,6 +297,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/leap360`}
             render = {() => <LEAP360 student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/dibels`}
+            render = {() => <DIBELS student={student}/> }
           />
 
           <Route render={() => {

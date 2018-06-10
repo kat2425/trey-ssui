@@ -50,6 +50,12 @@ const Assessments = [
     dataset: 'cpas',
   },
   {
+    module:  'vjs_dibels',
+    value:   'dibels',
+    label:   'DIBELS',
+    dataset: 'dibels',
+  },
+  {
     module:  'vjs_dra',
     value:   'dra',
     label:   'DRA',
