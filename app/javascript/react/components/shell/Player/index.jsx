@@ -147,10 +147,6 @@ export default class Player extends Component{
           loading          = {loading}
           onTogglePlay     = {this.handleOnTogglePlay}
         />
-        <SaveButton
-          src              = {this.props.src}
-          size             = '22px'
-        />
         <Timer 
           currentTime      = {currentTime}
           duration         = {duration}
@@ -167,6 +163,10 @@ export default class Player extends Component{
               value            = {volume}
               mute             = {mute}
               onToggleMute     = {this.handleOnToggleMute}
+            />
+            <SaveButton
+              src              = {this.props.src}
+              size             = '22px'
             />
           </InnerWrapper>
         )}

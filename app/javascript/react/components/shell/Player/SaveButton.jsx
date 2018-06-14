@@ -1,7 +1,7 @@
-import React                       from 'react'
-import styled                      from 'styled-components'
-import { MdSave }                  from 'react-icons/lib/md'
-import { prop }                    from 'styled-tools'
+import React              from 'react'
+import styled             from 'styled-components'
+import { MdFileDownload } from 'react-icons/lib/md'
+import { prop }           from 'styled-tools'
 
 const SaveButton = ({src, size}) => {
   return (
@@ -14,8 +14,7 @@ const SaveButton = ({src, size}) => {
 const getStyledIcon = (Icon) => styled(Icon)`
  width: ${prop('size', '26px')};
  height: ${prop('size', '26px')};
- margin-left: -2px;
- margin-right: 5px;
+ margin-left: 15px;
 
  cursor: pointer; 
  color: #505050;
@@ -24,6 +23,6 @@ const getStyledIcon = (Icon) => styled(Icon)`
  }
 `
 
-const Save = getStyledIcon(MdSave)
+const Save = getStyledIcon(MdFileDownload)
 
 export default SaveButton
