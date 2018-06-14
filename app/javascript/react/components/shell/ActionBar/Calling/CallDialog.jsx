@@ -36,7 +36,7 @@ const CallDialog = observer(({ callingStore }) => {
           </Button>
         </ButtonGroup>
         <Collapse isOpen={isCellSelected}>
-          <Card className='mt-4'>
+          <Card className='mt-4 p-4'>
             <CardBody>
               SchoolStatus will connect this call free of charge. We will call your chosen phone number, 
               then connect you to the above contact.This will not reveal your phone number. While the call
@@ -44,7 +44,7 @@ const CallDialog = observer(({ callingStore }) => {
               debit your minutes according to your phone plan. SchoolStatus nor your district/school are 
               responsible for these charges.
             </CardBody>
-            <CardBody>
+            <CardBody className='mt-2'>
               <Button
                 disabled={callingStore.isDisabled}
                 onClick={() => callingStore.initiateCellCall(contact, studentID)}
