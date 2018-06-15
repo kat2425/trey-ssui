@@ -13,7 +13,7 @@ import groupStore                   from 'stores/GroupStore'
 import smsInboxStore                from 'stores/SMSInboxStore'
 import reminderStore                from 'stores/ReminderStore'
 import translationStore             from 'stores/TranslationStore'
-import contactStore                 from 'stores/ContactStore'
+import contactStore                 from 'stores/ContactStore'	
 import flaggedContactStore          from 'stores/FlaggedContactStore'
 
 import { 
@@ -45,7 +45,14 @@ const UserRouter = props => {
     duration: 1.5
   })
 
-  const store = {uiStore, userStore, tagStore, translationStore, contactStore, flaggedContactStore}
+  const store = {
+    uiStore, 
+    userStore, 
+    tagStore, 
+    translationStore, 
+    contactStore, 
+    flaggedContactStore
+  }
 
   return (
     <ErrorBoundary>
