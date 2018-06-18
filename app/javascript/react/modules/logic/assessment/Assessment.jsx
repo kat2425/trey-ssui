@@ -19,6 +19,7 @@ import AccelReader          from './AccelReader'
 import Case21               from './Case21'
 import CogAT                from './CogAT'
 import CPAS                 from './CPAS'
+import DIBELS               from './DIBELS'
 import DRA                  from './DRA'
 import DRAWordAnalysis      from './DRAWordAnalysis'
 import DMACSTAAR            from './DMACSTAAR'
@@ -115,6 +116,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/case21'          component={Case21}          />
           <Route path='/r/assessment/cogat'           component={CogAT}           />
           <Route path='/r/assessment/cpas'            component={CPAS}            />
+          <Route path='/r/assessment/dibels'          component={DIBELS}          />
           <Route path='/r/assessment/dra'             component={DRA}             />
           <Route path='/r/assessment/dra_wa'          component={DRAWordAnalysis} />
           <Route path='/r/assessment/dmac_staar'      component={DMACSTAAR}       />

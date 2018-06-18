@@ -40,9 +40,23 @@ export default class ACT extends Component {
     this.setState({ detailBtn: val })
   }
 
+  showMaxInfo = () => {
+    if (this.state.detailBtn !== 1) {
+      return (
+        <div className='alert alert-warning'>
+          <h5>Calculation Details:</h5>
+          <p>
+            These results reflect the highest value attained by a student in each sub category regardless of the test taken. The composite score is the highest composite score a student has attained.
+          </p>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
+        { this.showMaxInfo() }
 
         <div className='row'>
           <VJSChart
