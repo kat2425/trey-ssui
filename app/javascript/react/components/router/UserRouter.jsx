@@ -39,7 +39,7 @@ const UserRouter = props => {
   notification.config({
     top: 75
   })
-  
+
   message.config({
     top:      100,
     duration: 1.5

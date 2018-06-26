@@ -29,5 +29,8 @@ Rails.application.routes.draw do
   get '/r/*path'                                => 'home#index'
 
   # Mobile redirect route
-  get '/mobile/verification/:potential_user_id' => 'verification#index'
+  get '/mobile/verification/:potential_user_id' => 'verification#mobile'
+
+  get '/verification/*path' => 'verification#index'
+  get '/verification' => 'verification#index'
 end
