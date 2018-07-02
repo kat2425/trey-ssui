@@ -2,7 +2,7 @@ import React from 'react'
 
 const ContactAvatar = (props) => {
   const imgSize = (props.size || 30)
-  const imgURL  = `url(https://api.schoolstatus.com/avatars/contact/${props.id}.png)`
+  const imgURL  = `url(${process.env.TURBINE_BASE}/avatars/contact/${props.id}.png)`
 
   return (
     <div className={props.className} style={{
