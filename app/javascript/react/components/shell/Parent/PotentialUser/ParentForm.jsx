@@ -1,10 +1,10 @@
-import React, { Component }         from 'react'
-import { SubmitButton, FormIcon }   from 'ui/shell/Authentication/Common'
-import _                            from 'lodash'
-import styled                       from 'styled-components'
-import { observer }                 from 'mobx-react'
-import { AsyncTypeahead }           from 'react-bootstrap-typeahead'
-import ContactAvatar                from 'ui/shell/ContactAvatar'
+import React, { Component }       from 'react'
+import { SubmitButton, FormIcon } from 'ui/shell/Authentication/Common'
+import _                          from 'lodash'
+import styled                     from 'styled-components'
+import { observer }               from 'mobx-react'
+import { AsyncTypeahead }         from 'react-bootstrap-typeahead'
+import ContactAvatar              from 'ui/shell/ContactAvatar'
 import {
   Col,
   Form,
@@ -39,10 +39,17 @@ class ParentForm extends Component {
   }
 
   handleListClick = (contact) => {
-    const { form, store } = this.props
+    const { form } = this.props
+    const names = contact.name.split(' ')
 
-    form.setFieldsValue(store.getContact(contact.name))
+    form.setFieldsValue({
+      firstName: names[0],
+      lastName:  names[1],
+      email:     contact.email,
+      phone:     contact.phone.replace(/\D/g, '')
+    })
   }
+
 
   renderResults = (item) => (
     <ListItem onClick={() => this.handleListClick(item)} className='w-100'>
@@ -77,9 +84,9 @@ class ParentForm extends Component {
             padding:         '15px 0',
             backgroundColor: 'white'
           }}
-          className = 'w-100 mb-5'
+          className = 'w-100 mb-5 pt-2'
         >
-          <Col span={12}>
+          <Col span={24}>
             <SAsyncTypeahead
               isLoading              = {false}
               maxHeight              = '435px'
@@ -100,7 +107,7 @@ class ParentForm extends Component {
             justify = 'center'
             align   = 'middle'
           >
-            <Col span={12}>
+            <Col span={24}>
               <FormItem>
                 {getFieldDecorator('firstName', {
                   rules: [{

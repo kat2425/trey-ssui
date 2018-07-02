@@ -11,6 +11,7 @@ const EUserMenuSection = renderIf(UserMenuSection)
 const UserMenu = () => {
   const _riskItemLabel    = userStore.user.higherEd ? 'Retention Risk' : 'At Risk'
 
+
   return (
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar pt-0'>
       <UserMenuSection title='Core Data'>
@@ -212,8 +213,8 @@ const UserMenu = () => {
         <EUserMenuItem
           title     = 'Parent Management'
           iconClass = 'icon-add-user'
-          link      = '/r/add_parent'
-          renderIf  = {userStore.hasModules('useradmin')}
+          link      = '/r/parent_management'
+          renderIf  = {userStore.isSpoc}
         />
       </EUserMenuSection>
     </div>

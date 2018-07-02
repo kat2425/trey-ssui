@@ -16,7 +16,7 @@ class ParentManagementStore {
   @setter @observable isCreating   = false
   @setter @observable isError      = null
   @setter @observable isFetching   = false
-  @setter @observable showList     = false
+  @setter @observable showModal    = false
 
   constructor() {
     this.initAutoruns()

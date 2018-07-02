@@ -3,16 +3,26 @@ import { observer }  from 'mobx-react'
 import SSButton      from 'ui/shell/SSButton'
 import Search        from './Search'
 
-const TopBar = ({store}) => (
+const TopBar = ({store, onAddParent}) => (
   <div className='mb-4 d-flex justify-content-between align-items-center'>
     <Search store={store} style={{width: '37.5%'}}/>
-    <SSButton
-      iconClass = 'icon icon-cw'
-      disabled  = {store.isLoading}
-      onClick   = {store.fetchParentValidations}
-    >
-      Reload
-    </SSButton>
+    <div>
+      <SSButton
+        iconClass = 'icon icon-plus'
+        className = 'mr-4'
+        color     = 'primary'
+        onClick   = {onAddParent}
+      >
+        Add Parent
+      </SSButton>
+      <SSButton
+        iconClass = 'icon icon-cw'
+        disabled  = {store.isLoading}
+        onClick   = {store.fetchParentValidations}
+      >
+        Reload
+      </SSButton>
+    </div>
   </div>
 )
 

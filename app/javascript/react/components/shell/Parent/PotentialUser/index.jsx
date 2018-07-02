@@ -1,30 +1,42 @@
 import React           from 'react'
-import ModuleHeader    from 'ui/shell/ModuleHeader'
 import ParentForm      from './ParentForm'
-import styled          from 'styled-components'
+import { Modal }       from 'antd'
 import parentStore     from 'stores/ParentManagementStore'
 import { observer }    from 'mobx-react'
 
-
 const ParentView = () => {
   return (
-    <Wrapper>
-      <ModuleHeader title='Parent Management' />
-      <Content>
-        <ParentForm store={parentStore} />
-      </Content>
-    </Wrapper>
+    <Modal
+      style={cardStyle}
+      visible={parentStore.showModal}
+      onCancel  = {closeModal}
+      footer    = {null}
+      width     = {600}
+      title     = {<h3 className='text-center'>Add Parent</h3>}
+    >
+      <ParentForm store={parentStore} />
+    </Modal>
   )
 }
 
-const Wrapper = styled.div`
- margin: 0px -7.5px 0 -7.5px;
-`
+const cardStyle = {
+  overlay: {
+    zIndex:          1027,
+    backgroundColor: 'rgba(0,0,0,0.75)'
+  },
 
-const Content = styled.div`
-  border-top: 1px solid rgba(0,0,0,0.125);
-  min-height: calc(100vh - 108px);
-  background-color: #fff;
-`
+  content: {
+    zIndex:          1028,
+    backgroundColor: '#f7f9fb',
+    paddingLeft:     '15px',
+    paddingRight:    '15px',
+    paddingTop:      '10px',
+    paddingBottom:   '0px',
+    height:          'calc(100vh - 120px)',
+    marginTop:       '25px'
+  }
+}
+
+const closeModal = () => parentStore.setShowModal(false)
 
 export default observer(ParentView)
