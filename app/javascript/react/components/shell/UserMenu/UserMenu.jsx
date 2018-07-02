@@ -209,14 +209,12 @@ const UserMenu = () => {
           link      = '/r/flagged_contacts'
           renderIf  = {userStore.isSpoc}
         />
-
         <EUserMenuItem
           title     = 'Parent Management'
           iconClass = 'icon-add-user'
           link      = '/r/add_parent'
           renderIf  = {userStore.hasModules('useradmin')}
         />
-
       </EUserMenuSection>
     </div>
   )

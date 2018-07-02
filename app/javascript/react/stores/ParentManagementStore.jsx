@@ -16,6 +16,7 @@ class ParentManagementStore {
   @setter @observable isCreating   = false
   @setter @observable isError      = null
   @setter @observable isFetching   = false
+  @setter @observable showList     = false
 
   constructor() {
     this.initAutoruns()
@@ -26,7 +27,6 @@ class ParentManagementStore {
     if (!_.isEmpty(this.contacts)) { 
       return _.orderBy(this.contacts, c => c.name, 'asc')
     }
-    return []
   }
 
   // Actions
@@ -57,6 +57,7 @@ class ParentManagementStore {
 
     try {
       this.setIsCreating(true)
+      this.setIsError(false)
       await xhr.post('/potential_users', params)
       clear()
       uiStore.addMessage('User Added')
@@ -64,26 +65,6 @@ class ParentManagementStore {
       this.setIsError(getError(e))
     } finally {
       this.setIsCreating(false)
-    }
-  }
-
-  @action getContact = selection => {
-    const contact = _.find(
-      this.contacts,
-      contact => contact.name.toLowerCase() === selection.toLowerCase()
-    )
-
-    if (!_.isEmpty(contact)) {
-      const names = contact.name.split(' ')
-
-      return {
-        firstName: names[0],
-        lastName:  names[1],
-        email:     contact.email,
-        phone:     contact.phone.replace(/\D/g, '')
-      }
-    } else {
-      console.error('Contact not found')
     }
   }
 

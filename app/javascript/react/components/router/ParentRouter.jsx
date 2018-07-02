@@ -5,10 +5,13 @@ import { Provider as MobxProvider }                           from 'mobx-react'
 import { notification, message }                              from 'antd'
 
 import userStore                                              from 'stores/UserStore'
+import uiStore                                                from 'stores/UiStore'
+import contactStore                                           from 'stores/ContactStore'
 
 import Validation                                             from 'ui/shell/Validation'
 import validationStore                                        from 'stores/ValidationStore'
 import ParentAuthenticator                                    from 'ui/shell/ParentAuthenticator'
+import ParentPage                                             from 'ui/shell/Parent/ParentPage'
 
 const ParentRouter = props => {
   window.SSUser = props.user
@@ -24,7 +27,9 @@ const ParentRouter = props => {
   })
 
   const store = {
-    validationStore
+    validationStore,
+    uiStore,
+    contactStore
   }
 
   return (
@@ -35,6 +40,10 @@ const ParentRouter = props => {
             <Route
               path='/validation'
               component={Validation}
+            />
+            <Route
+              path='/r/students'
+              component={ParentPage}
             />
             <Route
               component={ParentAuthenticator}

@@ -62,10 +62,10 @@ const cardStyle = {
   }
 }
 
-const CloseBtn = ({handlePrint, handleClose}) => (
+const CloseBtn = ({embedded, handlePrint, handleClose}) => (
   <div className='float-right h4 p-1 pr-0 mb-2 mt-3' style={{cursor: 'pointer'}}>
     <span className='icon icon-print mr-2' onClick={handlePrint} />
-    <span className='icon icon-cross' onClick={handleClose} />
+    {!embedded ? <span className='icon icon-cross' onClick={handleClose} /> : ''}
   </div>
 )
 
@@ -94,10 +94,14 @@ export default class StudentCard extends Component {
   }
 
   render() {
-    const { store } = this.props
+    const { store, embedded } = this.props
     const { student } = store
 
-    return (
+    const content = embedded ? (
+      <div>
+        {student ? this.renderCard() : this.renderLoader()}
+      </div>
+    ) : (
       <Modal
         style={cardStyle}
         isOpen
@@ -107,6 +111,8 @@ export default class StudentCard extends Component {
         {student ? this.renderCard() : this.renderLoader()}
       </Modal>
     )
+
+    return content
   }
 
   renderLoader = () => {
@@ -238,7 +244,11 @@ export default class StudentCard extends Component {
 
         {/* Root Container */}
         <Col xl='10' lg='9' md='9' sm='9'>
-          <CloseBtn handlePrint={this.printCard} handleClose={this.closeCard} />
+          <CloseBtn 
+            embedded={this.props.embedded}
+            handlePrint={this.printCard}
+            handleClose={this.closeCard}
+          />
 
           <Switch location={location}>
             <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
