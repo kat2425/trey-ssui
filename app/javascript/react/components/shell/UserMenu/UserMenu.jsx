@@ -76,6 +76,18 @@ const UserMenu = () => {
         renderIf = {userStore.hasModules('vjs_aa_2017','vjs_lps')}
       >
         <EUserMenuItem
+          title     = 'Sneak Peek'
+          iconClass = 'icon-calculator'
+          link      = '/r/accountability/sneak_peek'
+          badge     = 'NEW'
+          renderIf  = {
+            !userStore.user.isTeacher &&
+            ((userStore.hasModules('vjs_aa_2017') && userStore.user.isDistrictLevel) ||
+              (userStore.hasModules('vjs_aa_sneak_peek')))
+          }
+        />
+
+        <EUserMenuItem
           title     = 'Final Results'
           iconClass = 'icon-eye'
           link      = '/r/accountability/final_results'

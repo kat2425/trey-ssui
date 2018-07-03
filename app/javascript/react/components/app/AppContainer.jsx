@@ -31,6 +31,7 @@ import GrowthCusp            from 'modules/logic/insights/GrowthCusp'
 import AIMSWebiReady         from 'modules/logic/insights/AIMSWebiReady'
 import JCJCBinary            from 'modules/logic/insights/JCJCBinary'
 
+import SneakPeek             from 'modules/logic/accountability/SneakPeek'
 import FinalResults          from 'modules/logic/accountability/FinalResults'
 import LPS                   from 'modules/logic/accountability/LPS'
 
@@ -75,6 +76,7 @@ const AppContainer = ({ match }) => {
 
         <Route path='/r/groups' component={Groups} />
 
+        <Route path='/r/accountability/sneak_peek' component={SneakPeek} />
         <Route path='/r/accountability/final_results' component={FinalResults} />
         <Route path='/r/accountability/lps' component={LPS} />
 
