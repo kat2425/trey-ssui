@@ -22,7 +22,7 @@ Please delete options that are not relevant.
 - [ ] **IMPORTANT** I have cleared Student's data (if applicable)
 - [ ] I have added a comment to close the issue
 
-## Why Clear Student's Data
+## Why Clear Student's Data ( delete this section )
 
 We don't want a teacher to **EVER** see incorrect data. This could result into a lawsuit.
 
