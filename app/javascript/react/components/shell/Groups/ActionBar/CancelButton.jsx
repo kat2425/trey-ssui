@@ -7,11 +7,11 @@ CancelButton.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-function CancelButton(){
+function CancelButton({onClick}){
   return (
     <SSButton
       className = 'btn btn-secondary mr-2'
-      onClick   = {this.props.onClick}
+      onClick   = {onClick}
       iconClass = 'icon icon-circle-with-cross'
     >
       Cancel
