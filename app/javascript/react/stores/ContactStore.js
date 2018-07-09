@@ -186,7 +186,7 @@ export class ContactStore {
 
   @action resetView = () => {
     this.setFilter(FILTERS.ALL)
-    this.setSelectedView(VIEWS.TABLE)
+    this.setSelectedView(VIEWS.GRID)
   }
 }
 
