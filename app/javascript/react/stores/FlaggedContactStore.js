@@ -43,7 +43,7 @@ export class FlaggedContactStore {
   }
 
   @computed get showTable() {
-    return !this.isLoading 
+    return !this.isLoading
   }
 
   @computed get dataSource(){
@@ -132,7 +132,7 @@ export class FlaggedContactStore {
   @action setSelectedContact = (contact) => {
     const isInvalid = this.selectedContact === contact || !this.contacts.has(contact.id)
 
-    if(isInvalid) return 
+    if(isInvalid) return
 
     this.selectedContact = contact
   }

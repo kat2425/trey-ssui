@@ -38,6 +38,9 @@ import FinalResults          from 'modules/logic/accountability/FinalResults'
 import PrelimResults         from 'modules/logic/accountability/PrelimResults'
 import LPS                   from 'modules/logic/accountability/LPS'
 
+//Management
+import ParentValidations     from 'modules/management/ParentValidations'
+
 import SMSController         from 'ui/controllers/SMSController'
 
 import UserSettings          from 'modules/UserSettings'
@@ -98,6 +101,7 @@ const AppContainer = () => {
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />
+        <Route path='/r/parent_validations' component={ParentValidations} />
 
         <Route render={() => {
           return (

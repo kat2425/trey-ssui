@@ -13,8 +13,9 @@ import groupStore                   from 'stores/GroupStore'
 import smsInboxStore                from 'stores/SMSInboxStore'
 import reminderStore                from 'stores/ReminderStore'
 import translationStore             from 'stores/TranslationStore'
-import contactStore                 from 'stores/ContactStore'	
+import contactStore                 from 'stores/ContactStore'
 import flaggedContactStore          from 'stores/FlaggedContactStore'
+import parentValidationStore        from 'stores/ParentValidationsStore'
 
 import { 
   bugsnagClient, 
@@ -46,12 +47,13 @@ const UserRouter = props => {
   })
 
   const store = {
-    uiStore, 
-    userStore, 
-    tagStore, 
-    translationStore, 
-    contactStore, 
-    flaggedContactStore
+    uiStore,
+    userStore,
+    tagStore,
+    translationStore,
+    contactStore,
+    flaggedContactStore,
+    parentValidationStore
   }
 
   return (

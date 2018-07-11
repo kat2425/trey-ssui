@@ -49,7 +49,7 @@ export default class Contacts extends Component {
             align     = 'middle'
             className = 'mt-3 mb-5'
           >
-            <Col span={12}>
+            <Col span={9}>
               <Search contactStore={contactStore} />
             </Col>
             <Col span={12} className='text-right'>
