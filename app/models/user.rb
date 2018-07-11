@@ -67,6 +67,7 @@ class User < Sequel::Model(:users)
       :hiddenModules            => district.hidden_modules,
       :districtID               => district_id,
       :districtName             => district&.district_name,
+      :districtCode             => district&.district_code,
       :districtExpirationStatus => district&.expiration_status,
       :daysUntilExpiration      => district&.days_until_expiration,
       :isDistrictLevel          => is_district_level?,
