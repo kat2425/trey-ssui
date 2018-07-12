@@ -42,19 +42,27 @@ export default class SneakPeek extends Component {
     })
   }
 
+  getPathRoot = () => {
+    if (userStore.user.districtCode === '9999') {
+      return 'demo'
+    } else {
+      return 'sneak_peek'
+    }
+  }
+
   getTotalsPath = () => {
     if (this.state.selected.school_filter) {
-      return '/public/VJS/ss_ui/accountability/sneak_peek/school_totals'
+      return `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/school_totals`
     } else {
-      return '/public/VJS/ss_ui/accountability/sneak_peek/district_totals'
+      return `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/district_totals`
     }
   }
 
   getDetailPath = () => {
     if (this.state.pgBtn === 1) {
-      return '/public/VJS/ss_ui/accountability/sneak_peek/prof_detail'
+      return `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/prof_detail`
     } else {
-      return '/public/VJS/ss_ui/accountability/sneak_peek/growth_detail'
+      return `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/growth_detail`
     }
   }
 
@@ -72,6 +80,32 @@ export default class SneakPeek extends Component {
         <EmptyMessage title='Unauthorized' icon='circle-with-cross'>
           Your account does not have access to this area
         </EmptyMessage>
+      </div>
+    )
+  }
+
+  renderFileStatus() {
+    return (
+      <div>
+        <div className='row'>
+          <div className='col-md-12'>
+            <VJSChart
+              id          = 'aa-file-status'
+              reportPath  = '/public/VJS/ss_ui/accountability/sneak_peek/file_status'
+              title       = 'File Status'
+              className   = 'col-md-12 p-0 m-0'
+              isTable     = {true}
+            />
+          </div>
+        </div>
+
+        <div className='alert alert-warning'>
+          <ul>
+            <li>
+              If your totals seem off, you may be missing data.  If any of the above boxes are red, we have a problem.  Please go <strong><a href="https://secure.schoolstatus.com/onboarding/accountability" target="_blank">here</a></strong> to make sure your Questar and MDE credentials are up-to-date.
+            </li>
+          </ul>
+        </div>
       </div>
     )
   }
@@ -112,25 +146,7 @@ export default class SneakPeek extends Component {
           </ul>
         </div>
 
-        <div className='row'>
-          <div className='col-md-12'>
-            <VJSChart
-              id          = 'aa-file-status'
-              reportPath  = '/public/VJS/ss_ui/accountability/sneak_peek/file_status'
-              title       = 'File Status'
-              className   = 'col-md-12 p-0 m-0'
-              isTable     = {true}
-            />
-          </div>
-        </div>
-
-        <div className='alert alert-warning'>
-          <ul>
-            <li>
-              If your totals seem off, you may be missing data.  If any of the above boxes are red, we have a problem.  Please go <strong><a href="https://secure.schoolstatus.com/onboarding/accountability" target="_blank">here</a></strong> to make sure your Questar and MDE credentials are up-to-date.
-            </li>
-          </ul>
-        </div>
+        { userStore.user.districtCode === '9999' ? null : this.renderFileStatus() }
 
         <div className='row'>
           <div className='col-md-4'>
@@ -153,10 +169,8 @@ export default class SneakPeek extends Component {
               linkOptions = {{
                 events: {
                   click: (ev, link) => {
-                    console.log('-- clicked --', link)
-
                     const testType   = link.parameters._test_type
-                    const detailPath = '/public/VJS/ss_ui/accountability/sneak_peek/' + link.parameters._detail_type
+                    const detailPath = `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/` + link.parameters._detail_type
 
                     this.setTestFilter({ value: testType })
                   }
@@ -168,7 +182,7 @@ export default class SneakPeek extends Component {
           <div className='col-md-4'>
             <VJSChart
               id          = 'aa-growth-totals'
-              reportPath  = '/public/VJS/ss_ui/accountability/sneak_peek/growth_table'
+              reportPath  = {`/public/VJS/ss_ui/accountability/${this.getPathRoot()}/growth_table`}
               title       = 'Growth'
               className   = 'col-md-12 p-0 m-0'
               params      = {this.state.params}

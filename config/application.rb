@@ -20,7 +20,7 @@ Bundler.require(*Rails.groups)
 CURRENT_SCHOOL_YEAR = begin
   t = Time.now.to_date
 
-  if t.month >= 7 && t.month <= 12
+  if t.month >= 8 && t.month <= 12
     t.year + 1
   else
     t.year
