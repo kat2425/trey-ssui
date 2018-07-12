@@ -4,9 +4,8 @@ import { Route, withRouter }    from 'react-router-dom'
 import { inject, observer }     from 'mobx-react'
 
 import {
-  Collapse, Navbar,  NavbarToggler, NavbarBrand,
-  Nav,      NavItem, NavLink, Badge,
-  Form, Input
+  Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Navbar, 
+  NavbarBrand, UncontrolledDropdown
 } from 'reactstrap'
 
 
@@ -23,6 +22,7 @@ const brandLogo = { height: '35px' }
 class RouteMonitor extends Component {
   componentDidMount() {
     const { uiStore, status, location } = this.props
+
     uiStore.isReportingInUse            = status
 
     this.trackEvent(location.pathname)
@@ -30,6 +30,7 @@ class RouteMonitor extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { uiStore, status, location } = nextProps
+
     uiStore.isReportingInUse            = status
 
     this.trackEvent(location.pathname)
@@ -38,12 +39,13 @@ class RouteMonitor extends Component {
   trackEvent(path) {
     if (path !== '/r') {
       const data = this.untangleRoute(path)
+
       intercomEvent(data.event, data.params)
     }
   }
 
   untangleRoute(path) {
-    if (!!path.match(/\/students\//)) {
+    if (path.match(/\/students\//)) {
       return this.studentCardEvent(path)
     } else {
       return this.moduleEvent(path)
@@ -96,7 +98,16 @@ export default class NavBar extends Component {
   }
 
   render() {
-    const { uiStore } = this.props
+    const learningCenterLink = () => {
+      return(
+        <DropdownItem>
+          <a target="_blank" href='/redirects/learning_academy'>Learning Academy</a>
+        </DropdownItem>
+      )
+    }
+
+    const { uiStore }        = this.props
+    const LearningCenterItem = renderIf(learningCenterLink)
 
     return (
       <Navbar
@@ -104,7 +115,10 @@ export default class NavBar extends Component {
         className = 'navbar-toggleable-sm navbar-inverse bg-navbar app-navbar'
       >
         <NavbarBrand tag={RRNavLink} className='pt-0' to='/r'>
-          <img src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' style={brandLogo}/>
+          <img 
+            src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' 
+            style={brandLogo}
+          />
         </NavbarBrand>
 
         <Collapse isOpen={this.state.isOpen} navbar>
@@ -142,12 +156,20 @@ export default class NavBar extends Component {
               </NavLink>
             </NavItem>
 
-            <NavItem>
-              <NavLink href='/legacy/settings'>Settings</NavLink>
-            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Help
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  <a target="_blank" href='http://help.schoolstatus.com/'>Help Center</a>
+                </DropdownItem>
+                <LearningCenterItem renderIf={window.SSUser.betaTester} />
+              </DropdownMenu>
+            </UncontrolledDropdown>
 
             <NavItem>
-              <NavLink target="_blank" href='http://help.schoolstatus.com/'>Help</NavLink>
+              <NavLink href='/legacy/settings'>Settings</NavLink>
             </NavItem>
 
             <NavItem>
