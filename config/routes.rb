@@ -33,4 +33,7 @@ Rails.application.routes.draw do
 
   get '/verification/*path' => 'verification#index'
   get '/verification' => 'verification#index'
+
+  #Parents
+  get '/validation'       => redirect('/home')
 end

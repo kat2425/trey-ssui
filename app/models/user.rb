@@ -83,7 +83,8 @@ class User < Sequel::Model(:users)
       :jasper                   => jasper_user_creds,
       :modules                  => modules.map(&:symbol),
       :policies                 => policies.map(&:name),
-      :schoolFilter             => school_filter
+      :schoolFilter             => school_filter,
+      :userType                 => user_type
     )
   end
 

@@ -1,5 +1,4 @@
-import styled     from 'styled-components'
-import { ifProp } from 'styled-tools'
+import styled from 'styled-components'
 
 /* eslint max-len: 0 */
 
@@ -8,11 +7,12 @@ const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(-7deg, #6187ad, #557798, #506f8e, #4e6d8c, #3a5877, #192734, #16232f, #192734, #3a5877, #4e6d8c, #506f8e, #557798, #6187ad);
   background-size: 400% 400%;
-
+  margin-top: -49px;
   &::before {
     content: '';
     position: absolute;
@@ -24,8 +24,6 @@ const Wrapper = styled.div`
     background-size: contain;
     opacity: 0.2;
   }
-
-  ${ifProp('noNav', `margin-top: -49px;`)}
 `
 
 export default Wrapper

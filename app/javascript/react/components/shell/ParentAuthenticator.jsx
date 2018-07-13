@@ -1,0 +1,50 @@
+
+import React, { Component } from 'react'
+import { observer }         from 'mobx-react'
+
+import SSAlert              from 'ui/shell/SSAlert'
+import LoadingSpinner       from 'ui/shell/LoadingSpinner'
+import userStore            from 'stores/UserStore'
+import parentStore          from 'stores/ParentStore'
+
+@observer
+class ParentAuthenticator extends Component {
+  async componentDidMount() {
+    this.routeIfApproved()
+  }
+
+  routeIfApproved = async() => {
+    const { history } = this.props
+    const { id } = userStore.user
+    const {
+      verified_validations,
+      unattempted_validations
+    } = await parentStore.checkApproval(id)
+
+    if (verified_validations && !unattempted_validations) {
+      await parentStore.fetchStudents(id)
+      history.push(`/r/students/${parentStore.currentStudentId}`)
+    } else {
+      history.push('/validation')
+    }
+  }
+
+  render() {
+    const { isFetchingUser, isError } = parentStore
+
+    return (
+      <div className='d-flex align-items-center justify-content-center h-100'>
+        {isFetchingUser && <LoadingSpinner />}
+        {isError && 
+          <SSAlert
+            message='Error'
+            description='There was an error retrieving your account from our server!'
+            type='error'
+          />
+        }
+      </div>
+    )
+  }
+}
+
+export default ParentAuthenticator
