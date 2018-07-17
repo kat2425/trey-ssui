@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/legacy/settings'  => 'legacy#settings'
 
   # Redirects
-  get '/redirects/learning_academy' => 'redirects#learning_academy'
+  get '/redirects/learning_lab' => 'redirects#learning_lab'
 
   # React UserApp
   get 'home'     => redirect('/r')

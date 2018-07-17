@@ -4,7 +4,7 @@ import { Route, withRouter }    from 'react-router-dom'
 import { inject, observer }     from 'mobx-react'
 
 import {
-  Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Navbar, 
+  Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Navbar,
   NavbarBrand, UncontrolledDropdown
 } from 'reactstrap'
 
@@ -101,7 +101,7 @@ export default class NavBar extends Component {
     const learningCenterLink = () => {
       return(
         <DropdownItem>
-          <a target="_blank" href='/redirects/learning_academy'>Learning Academy</a>
+          <a target="_blank" href='/redirects/learning_lab'>Learning Lab</a>
         </DropdownItem>
       )
     }
@@ -115,8 +115,8 @@ export default class NavBar extends Component {
         className = 'navbar-toggleable-sm navbar-inverse bg-navbar app-navbar'
       >
         <NavbarBrand tag={RRNavLink} className='pt-0' to='/r'>
-          <img 
-            src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' 
+          <img
+            src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg'
             style={brandLogo}
           />
         </NavbarBrand>

@@ -1,5 +1,5 @@
 class RedirectsController < ApplicationController
-  def learning_academy
+  def learning_lab
     authenticate!
 
     token = Digest::MD5.hexdigest([
