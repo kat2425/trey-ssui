@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { observer }         from 'mobx-react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
@@ -15,6 +16,7 @@ import renderIf             from 'ui/hoc/renderIf'
 
 const EButtonGroup = renderIf(ButtonGroup)
 
+@observer
 export default class SneakPeek extends Component {
   constructor(props) {
     super(props)
