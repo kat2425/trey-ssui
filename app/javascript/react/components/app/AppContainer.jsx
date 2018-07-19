@@ -17,7 +17,7 @@ import MyStudents            from 'modules/logic/MyStudents'
 import MySchools             from 'modules/logic/Dashboard/MySchools'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 import TagBuilder            from 'modules/logic/TagBuilder/'
-import FlaggedContacts       from 'modules/logic/FlaggedContacts'
+import FlaggedContacts       from 'modules/management/FlaggedContacts'
 import Groups                from 'modules/logic/Groups'
 import SeatingChart          from 'ui/shell/SeatingChart'
 

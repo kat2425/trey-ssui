@@ -43,7 +43,7 @@ export default class FlaggedContacts extends Component {
     return (
       <Wrapper>
         <ModuleHeader title='Flagged Contacts' />
-        <Content className='p-4'>
+        <Content className='m-2 p-4'>
           {store.showTable && <TopBar store={store} />}
           {store.showTable && (
             <Table
