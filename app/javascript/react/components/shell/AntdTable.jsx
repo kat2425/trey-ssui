@@ -9,6 +9,10 @@ const AntdTable = styled(Table)`
     border-top: 1px solid #eceeef;
   }
 
+  & .ant-table-tbody > tr > td {
+    padding: 0.75rem;
+  }
+
   & .ant-table-thead > tr.ant-table-row-hover > td,
   .ant-table-tbody > tr.ant-table-row-hover > td,
   .ant-table-thead > tr:hover > td,
