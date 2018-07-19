@@ -3,7 +3,7 @@ import {
   action,
   computed
 } from 'mobx'
-import xhr        from 'helpers/xhr'
+import xhr        from 'helpers/XHR'
 import _          from 'lodash'
 import { setter } from 'mobx-decorators'
 import uiStore    from 'stores/UiStore'

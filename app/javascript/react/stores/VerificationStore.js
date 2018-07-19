@@ -4,7 +4,7 @@ import {
   action
 } from 'mobx'
 import { setter } from 'mobx-decorators'
-import xhr        from 'helpers/xhr'
+import xhr        from 'helpers/XHR'
 import _          from 'lodash'
 import uiStore    from 'stores/UiStore'
 import getError   from 'helpers/ErrorParser'
