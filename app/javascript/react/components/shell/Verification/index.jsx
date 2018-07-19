@@ -1,20 +1,18 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component }           from 'react'
 import { observer }                   from 'mobx-react'
-import ContentWrapper                 from 'ui/shell/Authentication/Common/ContentWrapper'
-import Wrapper                        from './Wrapper'
+import { ContentWrapper, Wrapper }    from 'ui/shell/Authentication/Common'
 import StepIndicator                  from './StepIndicator'
 import PasswordForm                   from './PasswordForm'
 import CodeForm                       from './CodeForm'
 import verificationStore              from 'stores/VerificationStore'
 import LoadingSpinner                 from 'ui/shell/LoadingSpinner'
-import ExplainerText                  from './ExplainerText'
 
 @observer
 export default class Verification extends Component {
   componentDidMount() {
-    const id = window.location.pathname.split('/').pop()
-
-    verificationStore.getPotentialUser(id)
+    verificationStore.getPotentialUser(this.props.match.params.id, () =>
+      this.props.history.push('/verification')
+    )
   }
 
   showVerification = () => {
@@ -50,23 +48,11 @@ export default class Verification extends Component {
   }
 
   showContent = () => {
-    const { stepIndex, isFetchingUser, isUserInvalid } = verificationStore
+    const { stepIndex, isFetchingUser } = verificationStore
 
     if (isFetchingUser) {
       return (
         <LoadingSpinner />
-      )
-    }
-
-    if (isUserInvalid) {
-      return (
-        <Fragment>
-          <ExplainerText>Oops! Looks like you followed an invalid link.</ExplainerText>
-          <ExplainerText>
-            If you've already submitted your verification codes, you can 
-            click <a href='/login'>here</a> to login or reset your password.
-          </ExplainerText>
-        </Fragment>
       )
     }
 
@@ -84,9 +70,11 @@ export default class Verification extends Component {
     return (
       <Wrapper>
         <ContentWrapper size='lg'>
-          <div className='px-4 py-2'>
-            <StepIndicator />
-          </div>
+          {!verificationStore.isFetchingUser && (
+            <div className='px-4 py-2'>
+              <StepIndicator />
+            </div>
+          )}
           <div className='d-flex flex-column justify-content-center align-items-center' style={{ flex: 1 }}>
             {this.showContent()}
           </div>

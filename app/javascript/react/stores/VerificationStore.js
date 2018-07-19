@@ -24,7 +24,6 @@ export class VerificationStore {
   @setter @observable inProgress          = false
   @setter @observable isSaving            = false
   @setter @observable isFetchingUser      = false
-  @setter @observable isUserInvalid       = false
   @setter @observable verificationSuccess = false
   @setter @observable currentStep         = STEPS.VERIFICATION
 
@@ -102,20 +101,15 @@ export class VerificationStore {
     }, 1000)
   }
 
-  @action getPotentialUser = async(id) => {
+  @action getPotentialUser = async(id, callback) => {
     try {
       this.setIsFetchingUser(true)
-      this.setIsUserInvalid(null)
 
       const { data } = await xhr.get(`/potential_users/${id}`)
 
-      if (!data) {
-        return this.setIsUserInvalid(true)
-      }
-
       this.getPotentialUserOk(data)
-    } catch (err) {
-      this.setIsUserInvalid(true)
+    } catch(e) {
+      callback()
     } finally {
       this.setIsFetchingUser(false)
     }
