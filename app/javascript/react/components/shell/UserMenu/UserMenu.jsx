@@ -158,7 +158,7 @@ const UserMenu = () => {
         />
 
         <EUserMenuItem
-          title     = 'Growth Cusp'
+          title     = 'Growth Cusp (2017)'
           iconClass = 'icon-magnet'
           link      = '/r/growth_cusp'
           renderIf  = {userStore.hasModules('vjs_growth_cusp')}
