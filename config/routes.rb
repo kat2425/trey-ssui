@@ -28,17 +28,11 @@ Rails.application.routes.draw do
   get '/r'                                      => 'home#index'
   get '/r/*path'                                => 'home#index'
 
-  # Mobile redirect route
+  get '/verification/*path'                     => 'verification#index'
+  get '/verification'                           => 'verification#index'
+
+  get '/validation'                             => redirect('/r')
+
+   # Mobile redirect route
   get '/mobile/verification/:potential_user_id' => 'verification#mobile'
-
-  get '/verification/*path' => 'verification#index'
-  get '/verification' => 'verification#index'
-
-  # React UserApp
-  get 'home'     => redirect('/r')
-  get '/r'       => 'home#index'
-  get '/r/*path' => 'home#index'
-
-  # Mobile redirect route
-  get '/mobile/verification/:potential_user_id' => 'verification#index'
 end
