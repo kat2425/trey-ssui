@@ -173,7 +173,7 @@ export default class NavBar extends Component {
             </NavItem>
 
             <NavItem>
-              <NavLink href='/logout'>Logout</NavLink>
+              <NavLink href='/session/logout'>Logout</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
