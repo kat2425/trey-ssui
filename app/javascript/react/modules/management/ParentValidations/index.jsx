@@ -1,10 +1,12 @@
 import React, { Component}  from 'react'
 import { observer, inject } from 'mobx-react'
+import { isEmpty }          from 'lodash/fp'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import Table                from 'ui/shell/AntdTable'
 import LoadingSpinner       from 'ui/shell/LoadingSpinner'
 import AddParent            from 'ui/shell/Parent/PotentialUser'
+import Paginatron           from 'ui/shell/Paginatron'
 
 import parentStore          from 'stores/ParentManagementStore'
 
@@ -35,6 +37,7 @@ export default class ParentValidations extends Component {
 
   render(){
     const { parentValidationStore: store } = this.props
+    const { pagination, filter } = store
 
     return(
       <Wrapper>
@@ -45,13 +48,21 @@ export default class ParentValidations extends Component {
             <TopBar store={store} onAddParent={this.addParent}/>
             {store.showTable && (
               <Table
+                className  = 'pb-3'
                 columns = {getColumns()}
                 dataSource = {store.dataSource}
                 pagination = {false}
               />
             )}
-            { store.isLoading && <LoadingSpinner center /> }
-            <AddParent /> 
+            {store.isLoading && <LoadingSpinner center /> }
+            <AddParent />
+            {isEmpty(filter) && (
+              <Paginatron
+                totalPages  = {pagination.totalPages}
+                currentPage = {pagination.current}
+                onChange    = {pagination.onChange}
+              />
+            )}
           </CardBody>
         </Card>
       </Wrapper>

@@ -4,6 +4,7 @@ import xhr                  from 'helpers/XHR'
 import ParentValidation     from 'stores/models/ParentValidation'
 import getError             from 'helpers/ErrorParser'
 import uiStore              from 'stores/UiStore'
+import Pagination           from 'stores/models/Pagination'
 
 import {
   orderBy,
@@ -43,7 +44,8 @@ export class ParentValidationStore {
   @setter @observable searchFilter              = ''
   @observable validations                       = observable.map()
   @setter @observable selectedParentValidation  = null
-  @setter @observable filter                    = 'all'
+  @setter @observable filter                    = ''
+  @observable pagination                        = new Pagination(this)
 
   constructor() {
     this.initAutoruns()
@@ -90,6 +92,18 @@ export class ParentValidationStore {
     return !this.isLoading
   }
 
+  @computed get paginationParams(){
+    return {
+      page:  this.pagination.current,
+      limit: this.pagination.pageSize
+    }
+  }
+
+  @action setPagination = ({total}) => {
+    this.pagination.setTotal(parseInt(total))
+    this.pagination.calculateTotalResults()
+  }
+
   @action
    initAutoruns = () => {
      this.autoErrorNotifier()
@@ -115,14 +129,19 @@ export class ParentValidationStore {
 
    @action fetchParentValidations = async() => {
      try {
+       const params = {
+         params: {
+           only: only,
+           ...this.paginationParams
+         }
+       }
+
        this.setIsLoading(true)
        this.setIsError(null)
 
-       const { data } = await xhr.get('parent_user_validations', {
-         params: { only }
-       })
+       const { headers, data } = await xhr.get('parent_user_validations', params)
 
-       this.fetchParentValidationsOk(data)
+       this.fetchParentValidationsOk(headers, data)
      } catch (err) {
        this.setIsError(getError(err))
      } finally {
@@ -130,7 +149,9 @@ export class ParentValidationStore {
      }
    }
 
-   @action fetchParentValidationsOk = validations => {
+   @action fetchParentValidationsOk = (headers, validations) => {
+     this.setPagination(headers)
+     this.validations.clear()
      validations.forEach(this.createValidation)
    }
 
@@ -139,9 +160,35 @@ export class ParentValidationStore {
 
      this.validations.set(validation.id, new ParentValidation(this, validation))
    }
+   @action handleContactSearch = async(filter) => {
+     this.filter = filter
+     try {
+       const params = {
+         params: {
+           only: only,
+         }
+       }
 
-   @action handleSearchFilter = (e) => {
-     this.setSearchFilter(e.target.value)
+       this.setIsError(null)
+
+       const response = await xhr.get('parent_user_validations', params)
+       const data = response.data.filter(
+         v => v.user.full_name.toLowerCase().indexOf(filter.toLowerCase()) > -1
+       )
+
+       this.handleContactSearchOk(data)
+     } catch (err) {
+       this.setIsError(getError(err))
+     }
+   }
+
+   @action handleContactSearchOk = (validations) => {
+     this.validations.clear()
+     validations.forEach(this.createValidation)
+   }
+
+   @action onPageChange = () => {
+     this.fetchParentValidations()
    }
 }
 
