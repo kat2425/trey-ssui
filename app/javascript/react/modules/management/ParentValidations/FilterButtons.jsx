@@ -1,23 +1,46 @@
-import React        from 'react'
+import React, { Component } from 'react'
+import { isEmpty }          from 'lodash/fp'
 import {
   Radio
-}                   from 'antd'
-import { observer } from 'mobx-react'
+}                           from 'antd'
+import uuid                 from 'uuid'
+import { capitalize }       from 'lodash/fp'
+import { STATUS }           from 'stores/ParentValidationsStore'
+import { observer }         from 'mobx-react'
 
-const FilterButtons = ({store}) => (
-  <div
-    className='d-flex justify-content-center align-items-center mb-4'
-  >
-    <Radio.Group
-      value={store.filter}
-      onChange={(e) => store.setFilter(e.target.value)}
-    >
-      <Radio.Button value='all'>All</Radio.Button>
-      <Radio.Button value='pending'>Pending</Radio.Button>
-      <Radio.Button value='verified'>Approved</Radio.Button>
-      <Radio.Button value='rejected'>Rejected</Radio.Button>
-    </Radio.Group>
-  </div>
-)
+@observer
+class FilterButtons extends Component {
+  handleChange = ({target}) => {
+    const { store } = this.props
 
-export default observer(FilterButtons)
+    store.setStatus(STATUS[target.value.toUpperCase()])
+    if (isEmpty(store.filter)) {
+      store.fetchParentValidations()
+    } else {
+      store.handleContactSearch(store.filter)
+    }
+  }
+
+  render() {
+    const { store } = this.props
+
+    return (
+      <div
+        className='d-flex justify-content-center align-items-center mb-4'
+      >
+        <Radio.Group
+          value={store.status}
+          onChange={this.handleChange}
+        >
+          {
+            Object.values(STATUS).map(val => (
+              <Radio.Button key={uuid()} value={val}>{capitalize(val)}</Radio.Button>
+            ))
+          }
+        </Radio.Group>
+      </div>
+    )
+  }
+}
+
+export default FilterButtons

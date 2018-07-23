@@ -8,7 +8,8 @@ import Pagination           from 'stores/models/Pagination'
 
 import {
   orderBy,
-  groupBy
+  groupBy,
+  isEmpty
 } from 'lodash/fp'
 
 import {
@@ -38,13 +39,20 @@ export const only = [
 ].join(',')
 
 
+export const STATUS = {
+  ALL:      'all',
+  PENDING:  'pending',
+  REJECTED: 'rejected',
+  VERIFIED: 'verified'
+}
+
 export class ParentValidationStore {
   @setter @observable isLoading                 = false
   @setter @observable isError                   = null
-  @setter @observable searchFilter              = ''
   @observable validations                       = observable.map()
   @setter @observable selectedParentValidation  = null
   @setter @observable filter                    = ''
+  @setter @observable status                    = STATUS.ALL
   @observable pagination                        = new Pagination(this)
 
   constructor() {
@@ -67,25 +75,17 @@ export class ParentValidationStore {
     return groupBy(v => v.validationStatus)(this.validations.values()).pending
   }
 
-  getFilteredValidations = (validations, filter) => {
-    if(!filter) return validations
-
-    return validations.filter(
-      v => v.user.full_name.toLowerCase().indexOf(filter.toLowerCase()) > -1
-    )
-  }
-
   @computed get visibleValidations(){
-    if(this.filter === 'rejected') return this.rejectedValidations
-    if(this.filter === 'pending')   return this.pendingValidations
-    if(this.filter === 'verified') return this.verifiedValidations
+    if(this.status === STATUS.REJECTED) return this.rejectedValidations
+    if(this.status === STATUS.PENDING)   return this.pendingValidations
+    if(this.status === STATUS.VERIFIED) return this.verifiedValidations
     return this.descValidations
   }
 
   @computed get dataSource(){
-    const filteredValidations = this.getFilteredValidations(this.visibleValidations, this.searchFilter)
+    const validations = this.visibleValidations
 
-    return filteredValidations && filteredValidations.map(v => ({key: v.id, validation: v}))
+    return !isEmpty(validations) ? validations.map(v => ({key: v.id, validation: v})) : []
   }
 
   @computed get showTable() {
@@ -136,6 +136,8 @@ export class ParentValidationStore {
          }
        }
 
+       if (this.status !== 'all') params.params.status = this.status
+
        this.setIsLoading(true)
        this.setIsError(null)
 
@@ -165,16 +167,16 @@ export class ParentValidationStore {
      try {
        const params = {
          params: {
-           only: only,
+           query: filter,
+           only:  only
          }
        }
 
+       if (this.status !== 'all') params.params.status = this.status
+
        this.setIsError(null)
 
-       const response = await xhr.get('parent_user_validations', params)
-       const data = response.data.filter(
-         v => v.user.full_name.toLowerCase().indexOf(filter.toLowerCase()) > -1
-       )
+       const { data } = await xhr.get('parent_user_validations/search', params)
 
        this.handleContactSearchOk(data)
      } catch (err) {
@@ -182,9 +184,9 @@ export class ParentValidationStore {
      }
    }
 
-   @action handleContactSearchOk = (validations) => {
+   @action handleContactSearchOk = (data) => {
      this.validations.clear()
-     validations.forEach(this.createValidation)
+     data.forEach(this.createValidation)
    }
 
    @action onPageChange = () => {

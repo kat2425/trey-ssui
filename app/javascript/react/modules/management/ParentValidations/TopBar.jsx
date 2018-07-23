@@ -11,7 +11,7 @@ class TopBar extends Component {
     const { store } = this.props
 
     if (isEmpty(filter)) {
-      store.filter = filter
+      store.setFilter('')
       store.fetchParentValidations()
     }
   }
