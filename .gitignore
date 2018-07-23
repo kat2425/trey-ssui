@@ -41,4 +41,7 @@ config/secrets.yml.key
 # Ignore Desktop Service Store
 *.DS_Store
 
+# Ignore package lock since we are using yarn
+.package_lock.json
+
 /.idea
