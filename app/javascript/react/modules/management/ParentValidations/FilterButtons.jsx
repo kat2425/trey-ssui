@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { isEmpty }          from 'lodash/fp'
 import {
   Radio
 }                           from 'antd'
@@ -10,17 +9,6 @@ import { observer }         from 'mobx-react'
 
 @observer
 class FilterButtons extends Component {
-  handleChange = ({target}) => {
-    const { store } = this.props
-
-    store.setStatus(STATUS[target.value.toUpperCase()])
-    if (isEmpty(store.filter)) {
-      store.fetchParentValidations()
-    } else {
-      store.handleContactSearch(store.filter)
-    }
-  }
-
   render() {
     const { store } = this.props
 
@@ -30,7 +18,7 @@ class FilterButtons extends Component {
       >
         <Radio.Group
           value={store.status}
-          onChange={this.handleChange}
+          onChange={store.handleFilterChange}
         >
           {
             Object.values(STATUS).map(val => (

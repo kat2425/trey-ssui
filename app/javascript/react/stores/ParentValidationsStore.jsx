@@ -43,7 +43,8 @@ export const STATUS = {
   ALL:      'all',
   PENDING:  'pending',
   REJECTED: 'rejected',
-  VERIFIED: 'verified'
+  VERIFIED: 'verified',
+  SKIPPED:  'skipped'
 }
 
 export class ParentValidationStore {
@@ -75,10 +76,23 @@ export class ParentValidationStore {
     return groupBy(v => v.validationStatus)(this.validations.values()).pending
   }
 
+  @computed get skippedValidations(){
+    return groupBy(v => v.validationStatus)(this.validations.values()).skipped
+  }
+
+  getFilteredValidations = (validations, filter) => {
+    if(!filter) return validations
+
+    return validations.filter(
+      v => v.user.full_name.toLowerCase().indexOf(filter.toLowerCase()) > -1
+    )
+  }
+
   @computed get visibleValidations(){
     if(this.status === STATUS.REJECTED) return this.rejectedValidations
-    if(this.status === STATUS.PENDING)   return this.pendingValidations
+    if(this.status === STATUS.PENDING)  return this.pendingValidations
     if(this.status === STATUS.VERIFIED) return this.verifiedValidations
+    if(this.status === STATUS.SKIPPED)  return this.skippedValidations
     return this.descValidations
   }
 
@@ -131,12 +145,12 @@ export class ParentValidationStore {
      try {
        const params = {
          params: {
-           only: only,
+           only,
            ...this.paginationParams
          }
        }
 
-       if (this.status !== 'all') params.params.status = this.status
+       if(this.status !== STATUS.ALL) params.params.status = this.status
 
        this.setIsLoading(true)
        this.setIsError(null)
@@ -172,7 +186,7 @@ export class ParentValidationStore {
          }
        }
 
-       if (this.status !== 'all') params.params.status = this.status
+       if (this.status !== STATUS.ALL) params.params.status = this.status
 
        this.setIsError(null)
 
@@ -190,6 +204,11 @@ export class ParentValidationStore {
    }
 
    @action onPageChange = () => {
+     this.fetchParentValidations()
+   }
+
+   @action handleFilterChange = ({target}) => {
+     this.setStatus(STATUS[target.value.toUpperCase()])
      this.fetchParentValidations()
    }
 }
