@@ -16,14 +16,13 @@ class ParentAuthenticator extends Component {
     const { history } = this.props
     const { id } = userStore.user
     const {
-      verified_validations,
-      unattempted_validations
+      verified_validations
     } = await parentStore.checkApproval(id)
 
-    if (verified_validations && !unattempted_validations) {
+    if (verified_validations) {
       history.push('/r/students')
     } else {
-      history.push('/validation')
+      history.push('/r/validation')
     }
   }
 

@@ -38,7 +38,7 @@ const ParentRouter = props => {
         <LastLocationProvider>
           <Switch>
             <Route
-              path='/validation'
+              path='/r/validation'
               component={Validation}
             />
             <Route

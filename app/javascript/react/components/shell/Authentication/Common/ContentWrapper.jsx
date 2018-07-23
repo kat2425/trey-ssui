@@ -43,7 +43,8 @@ const Wrapper = styled.div`
     `,
     lg: css`
       width: 70%;
-      height: 70vh;
+      min-height: 70vh;
+      height: 100%;
       padding: 2rem;
     `
   })}

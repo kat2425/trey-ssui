@@ -9,22 +9,34 @@ import { setter } from 'mobx-decorators'
 import uiStore    from 'stores/UiStore'
 
 export class ValidationStore {
-  @observable questions               = observable.map()
-  @observable addressAnswer           = null
-  @observable dateAnswer              = null
-  @observable steps                   = null
-  @observable user                    = null
+  @observable questions                    = observable.map()
+  @observable addressAnswer                = null
+  @observable dateAnswer                   = null
 
-  @observable @setter isFetchingUser  = false
-  @observable @setter isSaving        = false
-  @observable @setter validationID    = null
-  @observable @setter currentQuestion = 0
-  @observable @setter isFetching      = false
-  @observable @setter isFinished      = false
-  @observable @setter isFetchError    = false
+  @observable @setter justAttempted        = false
+  @observable @setter isFetchingUser       = false
+  @observable @setter isSaving             = false
+  @observable @setter isSkipping           = false
+  @observable @setter validationID         = null
+  @observable @setter currentIndex         = 0
+  @observable @setter isFetching           = false
+  @observable @setter isFetchError         = false
+  @observable @setter hasVerified          = false
+
+  @computed get isSubmitting() {
+    return this.isSaving || this.isSkipping
+  }
 
   @computed get isEmpty() {
     return !this.questions.size
+  }
+
+  @computed get orderedValidations() {
+    return _.orderBy(this.questions.values(), t => t.validation_status === 'pending', 'desc')
+  }
+
+  @computed get currentQuestion() {
+    return this.orderedValidations[this.currentIndex]
   }
 
   @action fetchQuestions = async() => {
@@ -35,14 +47,17 @@ export class ValidationStore {
       const { data } = await xhr.get('/parent_user_validations', {
         params: {
           only_unattempted: true,
-          only:             ['id', 'questions'].join(',')
+          only:             [
+            'id',
+            'questions',
+            'validation_status',
+            'user.unattempted_validations',
+            'user.verified_validations',
+            'unattempted'
+          ].join(',')
         }
       })
-
-      if (_.isEmpty(data)) {
-        this.setIsFinished(true)
-      }
-
+      
       this.setQuestions(data)
     } catch (err) {
       this.setIsFetchError(true)
@@ -51,12 +66,15 @@ export class ValidationStore {
     }
   }
 
-  @action setQuestions = (data) => {
+  @action setQuestions = (data) => {  
+    if(!_.isEmpty(data)) {
+      this.setHasVerified(data[0].user.verified_validations)
+    }
+
     data.forEach((q) => {
       this.questions.set(q.id, q)
     })
   }
-
 
   @action onSubmit = async({ addressId, dateId }) => {
     this.setIsSaving(true)
@@ -68,14 +86,10 @@ export class ValidationStore {
         date_of_birth_id: dateId
       })
 
-      if (!data.user.unattempted_validations) {
-        return this.setIsFinished(true)
-      }
-
-      this.onSubmitOk()
-    } catch(err) { 
-      uiStore.addNotification({ 
-        title:   'Error', 
+      this.onSubmitOk(data)
+    } catch (err) {
+      uiStore.addNotification({
+        title:   'Error',
         message: `Looks like we're having trouble submitting your answers! Try again later!`
       })
     } finally {
@@ -83,8 +97,42 @@ export class ValidationStore {
     }
   }
 
-  @action onSubmitOk = () => {
-    this.setCurrentQuestion(this.currentQuestion + 1)
+
+  @action onSkip = async() => {
+    this.setIsSkipping(true)
+
+    try {
+      const { data } = await xhr.put(`/parent_user_validations/${this.validationID}/skip`, {
+        id: this.validationID
+      })
+
+      this.onSkipOk(data)
+    } catch (err) {
+      uiStore.addNotification({
+        title:   'Error',
+        message: `Looks like we're having trouble submitting your answers! Try again later!`
+      })
+    } finally {
+      this.setIsSkipping(false)
+    }
+  }
+
+  @action onSubmitOk = ({id}, callback) => {
+    this.setJustAttempted(true)
+    this.goToNext(id)
+    uiStore.addMessage('Successfully submitted validation!')
+
+    callback()
+  }
+
+  @action onSkipOk = ({id}) => {
+    this.goToNext(id)
+    uiStore.addMessage('Successfully skipped validation!')
+  }
+
+  @action goToNext = (id) => {
+    this.questions.delete(id)
+    if(!this.isEmpty) this.setCurrentIndex(0)
   }
 }
 

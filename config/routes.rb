@@ -30,9 +30,7 @@ Rails.application.routes.draw do
 
   get '/verification/*path'                     => 'verification#index'
   get '/verification'                           => 'verification#index'
-
-  get '/validation'                             => redirect('/r')
-
+  
    # Mobile redirect route
   get '/mobile/verification/:potential_user_id' => 'verification#mobile'
 end
