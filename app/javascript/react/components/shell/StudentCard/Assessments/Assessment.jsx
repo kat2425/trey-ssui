@@ -155,12 +155,12 @@ class Assessments extends Component {
           />
 
           <Route
-            path   = {`${match.url}/psat89`}
+            path   = {`${match.url}/psat_89`}
             render = {() => <PSAT89 student={student}/> }
           />
 
           <Route
-            path   = {`${match.url}/psatnm`}
+            path   = {`${match.url}/psat_nm`}
             render = {() => <PSATNM student={student}/> }
           />
 

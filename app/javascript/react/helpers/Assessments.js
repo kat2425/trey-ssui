@@ -167,7 +167,7 @@ const Assessments = [
     module:  'vjs_psat',
     value:   'psat_89',
     label:   'PSAT 8/9',
-    dataset: 'vw_psat_89',
+    dataset: 'vw_psat89',
   },
   {
     module:  'vjs_psat',

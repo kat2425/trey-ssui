@@ -33,7 +33,7 @@ export default class PSAT89 extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'assessment/psat89'
+                      path:    'assessment/psat_89'
                     })
                   }
                 }
