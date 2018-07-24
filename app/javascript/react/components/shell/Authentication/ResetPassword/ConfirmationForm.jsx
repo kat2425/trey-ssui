@@ -32,6 +32,13 @@ class ConfirmationForm extends React.Component {
       }
     })
   }
+
+  onChangeCode = (event) => {
+    const { value } = event.target
+
+    return value.replace(/\D/, '')
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form
 
@@ -42,8 +49,9 @@ class ConfirmationForm extends React.Component {
         </p>
         <FormItem extra={`7 digit code sent to your ${store.deliveryMethod}`}>
           {getFieldDecorator('confirmationCode', {
-            validateTrigger: ['onSubmit'],
-            rules:           [
+            getValueFromEvent: this.onChangeCode,
+            validateTrigger:   ['onSubmit'],
+            rules:             [
               {
                 required: true,
                 pattern:  /^[0-9]{7}$/,
