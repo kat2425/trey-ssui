@@ -1,17 +1,18 @@
-import React                                                  from 'react'
-import { BrowserRouter, Switch, Route }                       from 'react-router-dom'
-import { LastLocationProvider }                               from 'react-router-last-location'
-import { Provider as MobxProvider }                           from 'mobx-react'
-import { notification, message }                              from 'antd'
+import React                            from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { LastLocationProvider }         from 'react-router-last-location'
+import { Provider as MobxProvider }     from 'mobx-react'
+import { notification, message }        from 'antd'
 
-import userStore                                              from 'stores/UserStore'
-import uiStore                                                from 'stores/UiStore'
-import contactStore                                           from 'stores/ContactStore'
+import userStore                        from 'stores/UserStore'
+import uiStore                          from 'stores/UiStore'
+import contactStore                     from 'stores/ContactStore'
 
-import Validation                                             from 'ui/shell/Validation'
-import validationStore                                        from 'stores/ValidationStore'
-import ParentAuthenticator                                    from 'ui/shell/ParentAuthenticator'
-import ParentPage                                             from 'ui/shell/Parent/ParentPage'
+import Validation                       from 'ui/shell/Validation'
+import validationStore                  from 'stores/ValidationStore'
+import translationStore                 from 'stores/TranslationStore'
+import ParentAuthenticator              from 'ui/shell/ParentAuthenticator'
+import ParentPage                       from 'ui/shell/Parent/ParentPage'
 
 const ParentRouter = props => {
   window.SSUser = props.user
@@ -29,7 +30,8 @@ const ParentRouter = props => {
   const store = {
     validationStore,
     uiStore,
-    contactStore
+    contactStore,
+    translationStore
   }
 
   return (
