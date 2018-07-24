@@ -5,6 +5,7 @@ import Time                from './Time'
 import styled, {keyframes} from 'styled-components'
 import {ifProp}            from 'styled-tools'
 import withTranslator      from 'ui/hoc/withTranslator'
+import ChatBubbleMMS       from 'ui/shell/SMS/ChatBubble/ChatBubbleMMS'
 
 const Text = styled.span`
   font-size: 14px;
@@ -53,7 +54,14 @@ export default class SMS extends Component {
 
   render() {
     const {comm} = this.props
-    const {id, createdAt, isIncoming, preview, isActive, isBroadcast} = comm
+    const {id,
+      createdAt,
+      isIncoming,
+      preview,
+      isActive,
+      isBroadcast,
+      mediaUrl
+    }           = comm
     const color = isIncoming ? '#657786' : '#fff'
 
     return (
@@ -69,6 +77,7 @@ export default class SMS extends Component {
             broadcast       = {!isIncoming && isBroadcast}
             activeBroadcast = {isActive && isBroadcast}
           >
+            { mediaUrl && <ChatBubbleMMS src={mediaUrl} /> }
             <EText
               color           = {color}
               textToTranslate = {preview}

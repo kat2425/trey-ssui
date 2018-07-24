@@ -50,6 +50,7 @@ export default class Communication {
   user         = null
   direction    = null
   voicemailUrl = null
+  mediaUrl     = null
   _transcript  = new Transcript()
   relationship = null
   broadcastId  = null
@@ -227,6 +228,7 @@ export default class Communication {
     broadcast_id:  broadcastId,
     created_at:    createdAt,
     call_status:   callStatus,
+    media_url:     mediaUrl,
     voicemail_url: voicemailUrl,
     contact,
     user,
@@ -239,6 +241,7 @@ export default class Communication {
     this.broadcastId  = broadcastId
     this.createdAt    = createdAt
     this.contact      = contact
+    this.mediaUrl     = mediaUrl
     this.user         = user
     this.length       = length ? length.length : 0
     this.preview      = voicemailUrl ? voicemailUrl : preview
