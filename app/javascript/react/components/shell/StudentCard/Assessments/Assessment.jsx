@@ -32,6 +32,7 @@ import ESGI            from './ESGI'
 import LASLinks        from './LASLinks'
 import LEAP360         from './LEAP360'
 import IReady          from './IReady'
+import IStation        from './IStation'
 import MAAP            from './MAAP'
 import MCT             from './MCT'
 import MasteryConnect  from './MasteryConnect'
@@ -302,6 +303,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/dibels`}
             render = {() => <DIBELS student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/istation`}
+            render = {() => <IStation student={student}/> }
           />
 
           <Route render={() => {

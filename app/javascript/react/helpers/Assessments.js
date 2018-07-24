@@ -110,6 +110,12 @@ const Assessments = [
     dataset: 'ireadys',
   },
   {
+    module:  'vjs_istation',
+    value:   'istation',
+    label:   'iStation',
+    dataset: 'vw_istation',
+  },
+  {
     module:  'vjs_las_links',
     value:   'las_links',
     label:   'LASLinks',

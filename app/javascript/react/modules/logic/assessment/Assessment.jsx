@@ -31,6 +31,7 @@ import ESGI                 from './ESGI'
 import LASLinks             from './LASLinks'
 import LEAP360              from './LEAP360'
 import IReady               from './IReady'
+import IStation             from './IStation'
 import MCT                  from './MCT'
 import MAAP                 from './MAAP'
 import MasteryConnect       from './MasteryConnect'
@@ -128,6 +129,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/las_links'       component={LASLinks}        />
           <Route path='/r/assessment/leap360'         component={LEAP360}         />
           <Route path='/r/assessment/iready'          component={IReady}          />
+          <Route path='/r/assessment/istation'        component={IStation}        />
           <Route path='/r/assessment/maap'            component={MAAP}            />
           <Route path='/r/assessment/mct'             component={MCT}             />
           <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
