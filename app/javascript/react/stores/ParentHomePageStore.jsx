@@ -1,6 +1,7 @@
 import _          from 'lodash'
 import getError   from 'helpers/ErrorParser'
 import uiStore    from 'stores/UiStore'
+import userStore  from 'stores/UserStore'
 import Student    from 'stores/models/Student'
 import xhr        from 'helpers/XHR'
 import { setter } from 'mobx-decorators'
@@ -21,6 +22,7 @@ class ParentHomePageStore {
   @setter @observable isFetchingUser      = false
   @setter @observable isFetchingStudents  = false
   @setter @observable toggleStudentList   = true
+  @setter @observable validationStatus    = false
 
 
   constructor() {
@@ -61,6 +63,15 @@ class ParentHomePageStore {
       }
     })
   }
+
+  @action fetchValidationStatus = async() => {
+    if (!_.isEmpty(userStore.user.id)) {
+      const { data } = await xhr.get('users/self', {params: {only: 'unattempted_validations'}})
+
+      this.setValidationStatus(data.unattempted_validations)
+    }
+  }
+
 
   @action fetchStudents = async(id) => {
     const params = {

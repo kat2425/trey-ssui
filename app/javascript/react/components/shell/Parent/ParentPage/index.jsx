@@ -13,7 +13,7 @@ import { Route }              from 'react-router-dom'
 import { observer }           from 'mobx-react'
 
 import {
-  Row, Col, Icon
+  Row, Col, Icon, Alert
 } from 'antd'
 
 
@@ -22,6 +22,7 @@ class ParentPage extends Component {
   async componentDidMount() {
     await parentStore.fetchStudents(userStore.user.id)
     this.props.history.push(`/r/students/${parentStore.currentStudent.id}/overview`)
+    parentStore.fetchValidationStatus()
   }
 
   handleHideList = () => {
@@ -36,6 +37,18 @@ class ParentPage extends Component {
           {renderIf(parentStore.toggleStudentList)(
             <Col span={4} className='h-100'>
               <SideNav store={parentStore}/>
+              {parentStore.validationStatus && (
+                <SAlert
+                  message='Unattemped Validation Questions'
+                  description={
+                    <p>
+                      You have unattempted validation questions.
+                      Click <a href='/r/validation'>here</a> to attempt those questions.
+                    </p>
+                  }
+                  closable
+                />
+              )}
             </Col>
           )}
           <Col 
@@ -69,6 +82,12 @@ class ParentPage extends Component {
   }
 }
 
+const SAlert = styled(Alert)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`
+
 const ToggleIcon = styled(Icon)`
   margin-left: 10px;
   cursor: pointer;
@@ -81,7 +100,8 @@ const Wrapper = styled.div`
   margin-right: 10px;
   padding: 15px;
   background-color: white;
-  outline: 1px solid rgb(0,0,0,.25);
+  border: 1px solid rgb(0,0,0,.25);
+  border-radius: 5px;
   overflow: auto;
 `
 
