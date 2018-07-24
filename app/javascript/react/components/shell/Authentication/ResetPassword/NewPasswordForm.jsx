@@ -3,6 +3,7 @@ import { observer }             from 'mobx-react'
 import store                    from 'stores/ResetPasswordStore'
 import {SubmitButton, FormIcon} from '../Common'
 import { Form, Input }          from 'antd'
+import SSAlert                  from 'ui/shell/SSAlert'
 
 const FormItem = Form.Item
 
@@ -18,7 +19,7 @@ class NewPasswordForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(['password', 'passwordConfirm'], { force: true }, (err, values) => {
       if (!err) {
         store.sendNewPassword(values.password, values.confirm)
       }
@@ -64,6 +65,15 @@ class NewPasswordForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {store.showError && (
+          <SSAlert
+            message     = {store.errorTitle}
+            description = {store.errorMessage}
+            type        = 'error'
+            className   = 'mb-4'
+            closable
+          />
+        )}
         <FormItem extra='Must be minimum of 8 characters and contain letters and numbers'>
           {getFieldDecorator('password', {
             validateTrigger: ['onSubmit'],

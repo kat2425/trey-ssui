@@ -2,6 +2,7 @@ import React          from 'react'
 import { observer }   from 'mobx-react'
 import store          from 'stores/ResetPasswordStore'
 import {SubmitButton} from '../Common'
+import SSAlert        from 'ui/shell/SSAlert'
 import { 
   Form, 
   Input
@@ -39,15 +40,27 @@ class ConfirmationForm extends React.Component {
     return value.replace(/\D/, '')
   }
 
+  getDeliveryMethod = () => {
+    return store.deliveryMethod === 'sms' ? 'phone' : store.deliveryMethod
+  }
   render() {
     const { getFieldDecorator } = this.props.form
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {store.showError && (
+          <SSAlert
+            message     = {store.errorTitle}
+            description = {store.errorMessage}
+            type        = 'error'
+            className   = 'mb-4'
+            closable
+          />
+        )}
         <p className='h4 mb-4 text-center'>
-          Your text message is on the way.<br/> Enter its confirmation code to proceed.
+          Enter the confirmation code to proceed.
         </p>
-        <FormItem extra={`7 digit code sent to your ${store.deliveryMethod}`}>
+        <FormItem extra={`Enter the 7 digit code sent to your ${this.getDeliveryMethod()}`}>
           {getFieldDecorator('confirmationCode', {
             getValueFromEvent: this.onChangeCode,
             validateTrigger:   ['onSubmit'],

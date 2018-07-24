@@ -2,13 +2,12 @@ import React                    from 'react'
 import { observer }             from 'mobx-react'
 import styled                   from 'styled-components'
 import store                    from 'stores/ResetPasswordStore'
-import SSAlert                  from 'ui/shell/SSAlert'
 
 import UsernameVerificationForm from './UsernameVerificationForm'
 import NewPasswordForm          from './NewPasswordForm'
 import ConfirmationForm         from './ConfirmationForm'
 import DeliveryForm             from './DeliveryForm'
-import ResetSteps               from './ResetSteps'
+import StepsIndicator           from './StepsIndicator'
 import FailedRoute              from './FailedRoute'
 
 import { 
@@ -31,16 +30,7 @@ class ResetPassword extends React.Component{
     return (
       <Wrapper>
         <ContentWrapper size='lg'>
-          <ResetSteps {...this.props} />
-          {store.showError && (
-            <SSAlert
-              message     = {store.errorTitle}
-              description = {store.errorMessage}
-              type        = 'error'
-              className   = 'mt-5 mb-2'
-              closable
-            />
-          )}
+          <StepsIndicator {...this.props} />
           <Content>
             <Switch>
               <Route

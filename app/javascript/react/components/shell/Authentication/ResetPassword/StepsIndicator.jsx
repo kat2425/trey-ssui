@@ -19,7 +19,7 @@ const steps = Object.values(STEPS).map(step => ({
   icon: stepIcons[step]
 }))
 
-const ResetSteps = ({location}) => (
+const StepsIndicator = ({location}) => (
   <Steps current={getCurrentFromPath(location.pathname)}>
     {steps.map(({ icon, step }) => (
       <Step key={uuid()} title={<Title icon={icon} step={step} />} icon={icon}/>
@@ -46,4 +46,4 @@ function getCurrentFromPath(path){
     return 0
   }
 }
-export default observer(ResetSteps)
+export default observer(StepsIndicator)

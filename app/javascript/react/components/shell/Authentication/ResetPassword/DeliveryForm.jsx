@@ -2,6 +2,7 @@ import React          from 'react'
 import { observer }   from 'mobx-react'
 import {SubmitButton} from '../Common'
 import store          from 'stores/ResetPasswordStore'
+import SSAlert        from 'ui/shell/SSAlert'
 import { 
   Form, 
   Radio
@@ -29,6 +30,15 @@ class DeliveryForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {store.showError && (
+          <SSAlert
+            message     = {store.errorTitle}
+            description = {store.errorMessage}
+            type        = 'error'
+            className   = 'mb-4'
+            closable
+          />
+        )}
         <p className='mb-4 h4 text-center'>
           Select a delivery method for your temporary password
         </p>
