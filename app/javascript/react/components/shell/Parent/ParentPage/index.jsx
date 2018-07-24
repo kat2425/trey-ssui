@@ -68,6 +68,13 @@ class ParentPage extends Component {
               <Col span={24}>
                 <Wrapper>
                   {renderIf(studentCardStore.isLoading)(<LoadingSpinner center/>)}
+                  {renderIf(studentCardStore.isError)(
+                    <Error>
+                      <h3>Couldn't load Student Card</h3>
+                      <p>Looks like we're having trouble loading your student's Student Card.</p>
+                      <p>Try refreshing the page or try again later!</p>
+                    </Error>
+                  )}
                   <Route 
                     path='/r/students/:studentId'
                     render={() => <StudentCardController embedded />}
@@ -81,6 +88,15 @@ class ParentPage extends Component {
     )
   }
 }
+
+const Error = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-text: center;
+`
 
 const SAlert = styled(Alert)`
   position: absolute;

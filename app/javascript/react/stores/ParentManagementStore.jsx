@@ -71,8 +71,8 @@ class ParentManagementStore {
   @action handleContactSearch = async(searchFilter) => {
     const params = {
       params: {
-        filter: searchFilter,
-        only:   'id,name,email,phone'
+        query: searchFilter,
+        only:  'id,name,email,phone'
       }
     }
 
