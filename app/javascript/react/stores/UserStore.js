@@ -34,6 +34,10 @@ export class UserStore {
     return this.user.customModules
   }
 
+  @computed get isParent(){
+    return this.user.userType === 'parent'
+  }
+
   @computed get hiddenModules() {
     return this.user.hiddenModules
   }
