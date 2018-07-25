@@ -333,7 +333,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/attachments`}
-              render = {() => <Attachments student={student} /> }
+              render = {() => <Attachments student={student} userStore={userStore} /> }
             />
 
             <Route render={() => <div>404</div>} />
