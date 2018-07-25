@@ -145,11 +145,12 @@ export default class StudentCard extends Component {
                 location  = {location}
               />
 
-              <UserMenuItem
+              <EUserMenuItem
                 title     = 'Contacts'
                 iconClass = 'icon-users'
                 link      = {`${match.url}/contacts`}
                 location  = {location}
+                renderIf  = {!userStore.isParent}
               />
 
               <EUserMenuItem
