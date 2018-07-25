@@ -23,11 +23,11 @@ export default class MyStudents extends Component {
 
   constructor(props) {
     super(props)
-    const _currentYear = userStore.user.currentSchoolYear.toString()
+    const _currentYear = (userStore.user.districtCode === '7320' ? 2019 : 2018).toString()
 
     this.state = {
       params: {
-        school_year: [_currentYear ]
+        school_year: [ _currentYear ]
       },
       selected: {
         school_year: { selected: true, label: _currentYear , value: _currentYear }

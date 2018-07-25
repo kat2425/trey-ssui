@@ -48,6 +48,22 @@ export default class Courses extends Component {
     })
   }
 
+  setCourseYear(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params: {
+        ...this.state.params,
+        school_year: [ jrsValue ]
+      },
+
+      selected: {
+        ...this.state.selected,
+        school_year: val
+      }
+    })
+  }
+
   render() {
     const coursePath = (this.props.higherEd) ? '' : '_k12'
 
@@ -82,6 +98,19 @@ export default class Courses extends Component {
           placeholder   = 'Course Term'
           width         = {250}
           renderIf      = {this.props.higherEd}
+        />
+
+        <EVJSICSelect
+          id            = 'school_year'
+          inputPath     = '/public/VJS/ss_ui/courses/student_course_years'
+          selectedValue = {this.state.selected.school_year}
+          handleChange  = {::this.setCourseYear}
+          placeholder   = 'Year'
+          width         = {100}
+          clearable     = {false}
+          setDefault    = {true}
+          renderIf      = {!this.props.higherEd}
+          params        = {{ student_id: [ this.props.student.id ] }}
         />
       </VJSChart>
     )
