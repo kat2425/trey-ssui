@@ -11,7 +11,13 @@ const Assessments = [
     module:  'vjs_act_aspire',
     value:   'act_aspire',
     label:   'ACT Aspire',
-    dataset: '',
+    dataset: 'act_aspires',
+  },
+  {
+    module:  'vjs_act_aspire_interim',
+    value:   'act_aspire_interim',
+    label:   'ACT Aspire Interim',
+    dataset: 'act_aspire_interims',
   },
   {
     module:  'vjs_aimsweb',

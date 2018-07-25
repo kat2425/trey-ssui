@@ -12,6 +12,7 @@ import EmptyMessage         from 'ui/shell/EmptyMessage'
 
 import ACT                  from './ACT'
 import ACTAspire            from './ACTAspire'
+import ACTAspireInterim     from './ACTAspireInterim'
 import AIMSWeb              from './AIMSWeb'
 import Amplify              from './Amplify'
 import ATI                  from './ATI'
@@ -108,44 +109,45 @@ class Assessments extends Component {
         </ModuleHeader>
 
         <Switch>
-          <Route path='/r/assessment/accel_reader'    component={AccelReader}     />
-          <Route path='/r/assessment/act'             component={ACT}             />
-          <Route path='/r/assessment/act_aspire'      component={ACTAspire}       />
-          <Route path='/r/assessment/aimsweb'         component={AIMSWeb}         />
-          <Route path='/r/assessment/amplify'         component={Amplify}         />
-          <Route path='/r/assessment/ati'             component={ATI}             />
-          <Route path='/r/assessment/case21'          component={Case21}          />
-          <Route path='/r/assessment/cogat'           component={CogAT}           />
-          <Route path='/r/assessment/cpas'            component={CPAS}            />
-          <Route path='/r/assessment/dibels'          component={DIBELS}          />
-          <Route path='/r/assessment/dra'             component={DRA}             />
-          <Route path='/r/assessment/dra_wa'          component={DRAWordAnalysis} />
-          <Route path='/r/assessment/dmac_staar'      component={DMACSTAAR}       />
-          <Route path='/r/assessment/dmac_local'      component={DMACLocal}       />
-          <Route path='/r/assessment/eduphoria'       component={Eduphoria}       />
-          <Route path='/r/assessment/els_eztt'        component={ELSEZTT}         />
-          <Route path='/r/assessment/els_ezaa'        component={ELSEZAA}         />
-          <Route path='/r/assessment/esgi'            component={ESGI}            />
-          <Route path='/r/assessment/las_links'       component={LASLinks}        />
-          <Route path='/r/assessment/leap360'         component={LEAP360}         />
-          <Route path='/r/assessment/iready'          component={IReady}          />
-          <Route path='/r/assessment/istation'        component={IStation}        />
-          <Route path='/r/assessment/maap'            component={MAAP}            />
-          <Route path='/r/assessment/mct'             component={MCT}             />
-          <Route path='/r/assessment/mastery_connect' component={MasteryConnect}  />
-          <Route path='/r/assessment/mkas_third'      component={MKASThird}       />
-          <Route path='/r/assessment/nwea'            component={NWEA}            />
-          <Route path='/r/assessment/ostp'            component={OSTP}            />
-          <Route path='/r/assessment/parcc'           component={PARCC}           />
-          <Route path='/r/assessment/psat_89'         component={PSAT89}          />
-          <Route path='/r/assessment/psat_nm'         component={PSATNM}          />
-          <Route path='/r/assessment/scantron'        component={Scantron}        />
-          <Route path='/r/assessment/star_early_lit'  component={STAREarlyLit}    />
-          <Route path='/r/assessment/star_math'       component={STARMath}        />
-          <Route path='/r/assessment/star_reading'    component={STARReading}     />
-          <Route path='/r/assessment/satp'            component={SATP}            />
-          <Route path='/r/assessment/tcap'            component={TCAP}            />
-          <Route path='/r/assessment/tvaas'           component={TVAAS}           />
+          <Route path='/r/assessment/accel_reader'       component={AccelReader}      />
+          <Route path='/r/assessment/act'                component={ACT}              />
+          <Route path='/r/assessment/act_aspire'         component={ACTAspire}        />
+          <Route path='/r/assessment/act_aspire_interim' component={ACTAspireInterim} />
+          <Route path='/r/assessment/aimsweb'            component={AIMSWeb}          />
+          <Route path='/r/assessment/amplify'            component={Amplify}          />
+          <Route path='/r/assessment/ati'                component={ATI}              />
+          <Route path='/r/assessment/case21'             component={Case21}           />
+          <Route path='/r/assessment/cogat'              component={CogAT}            />
+          <Route path='/r/assessment/cpas'               component={CPAS}             />
+          <Route path='/r/assessment/dibels'             component={DIBELS}           />
+          <Route path='/r/assessment/dra'                component={DRA}              />
+          <Route path='/r/assessment/dra_wa'             component={DRAWordAnalysis}  />
+          <Route path='/r/assessment/dmac_staar'         component={DMACSTAAR}        />
+          <Route path='/r/assessment/dmac_local'         component={DMACLocal}        />
+          <Route path='/r/assessment/eduphoria'          component={Eduphoria}        />
+          <Route path='/r/assessment/els_eztt'           component={ELSEZTT}          />
+          <Route path='/r/assessment/els_ezaa'           component={ELSEZAA}          />
+          <Route path='/r/assessment/esgi'               component={ESGI}             />
+          <Route path='/r/assessment/las_links'          component={LASLinks}         />
+          <Route path='/r/assessment/leap360'            component={LEAP360}          />
+          <Route path='/r/assessment/iready'             component={IReady}           />
+          <Route path='/r/assessment/istation'           component={IStation}         />
+          <Route path='/r/assessment/maap'               component={MAAP}             />
+          <Route path='/r/assessment/mct'                component={MCT}              />
+          <Route path='/r/assessment/mastery_connect'    component={MasteryConnect}   />
+          <Route path='/r/assessment/mkas_third'         component={MKASThird}        />
+          <Route path='/r/assessment/nwea'               component={NWEA}             />
+          <Route path='/r/assessment/ostp'               component={OSTP}             />
+          <Route path='/r/assessment/parcc'              component={PARCC}            />
+          <Route path='/r/assessment/psat_89'            component={PSAT89}           />
+          <Route path='/r/assessment/psat_nm'            component={PSATNM}           />
+          <Route path='/r/assessment/scantron'           component={Scantron}         />
+          <Route path='/r/assessment/star_early_lit'     component={STAREarlyLit}     />
+          <Route path='/r/assessment/star_math'          component={STARMath}         />
+          <Route path='/r/assessment/star_reading'       component={STARReading}      />
+          <Route path='/r/assessment/satp'               component={SATP}             />
+          <Route path='/r/assessment/tcap'               component={TCAP}             />
+          <Route path='/r/assessment/tvaas'              component={TVAAS}            />
 
           <Route render={() => {
             return (
