@@ -9,25 +9,26 @@ import CancelButton        from './CancelButton'
 import PrintButton         from './PrintButton'
 
 ActionBar.propTypes = {
-  note:  PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
+  note:      PropTypes.object.isRequired,
+  store:     PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired
 }
 
-function ActionBar({note, store}){
+function ActionBar({note, store, userStore}){
   if(!note) return null
 
   return (
     <div className='d-flex justify-content-end mb-3'>
       <PrintButton store={store}/>
-      {renderIfNew(note)}
-      {renderIfEditing(note)}
-      {renderIfExists(note)}
+      {renderIfNew(note,userStore)}
+      {renderIfEditing(note,userStore)}
+      {renderIfExists(note,userStore)}
     </div>
   )
 }
 
-function renderIfNew(note){
-  if(!note.isNew || note.isEditing) return null
+function renderIfNew(note,userStore){
+  if(!note.isNew || note.isEditing || userStore.isParent) return null
 
   return (
     <div>
@@ -37,8 +38,8 @@ function renderIfNew(note){
   )
 }
 
-function renderIfExists(note){
-  if(note.isNew || note.isEditing) return null
+function renderIfExists(note,userStore){
+  if(note.isNew || note.isEditing || userStore.isParent) return null
 
   return (
     <div>
@@ -48,8 +49,8 @@ function renderIfExists(note){
   )
 }
 
-function renderIfEditing(note){
-  if(!note.isEditing || note.isNew) return null
+function renderIfEditing(note,userStore){
+  if(!note.isEditing || note.isNew || userStore.isParent) return null
 
   return (
     <div>

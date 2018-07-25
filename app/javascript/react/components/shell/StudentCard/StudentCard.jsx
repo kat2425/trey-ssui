@@ -322,7 +322,13 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/notes`}
-              render = {() => <Notes student={student} noteStore={this.props.noteStore}/> }
+              render = {() => 
+                <Notes 
+                  student={student} 
+                  noteStore={this.props.noteStore}
+                  userStore={userStore}
+                /> 
+              }
             />
 
             <Route
