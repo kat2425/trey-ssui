@@ -113,6 +113,10 @@ export class ParentValidationStore {
     }
   }
 
+  @computed get showPagination(){
+    return isEmpty(this.filter) && !this.isLoading && this.validations.size > 0
+  }
+
   @action setPagination = ({total}) => {
     this.pagination.setTotal(parseInt(total))
     this.pagination.calculateTotalResults()
@@ -208,6 +212,7 @@ export class ParentValidationStore {
    }
 
    @action handleFilterChange = ({target}) => {
+     this.pagination.clear()
      this.setStatus(STATUS[target.value.toUpperCase()])
      this.fetchParentValidations()
    }

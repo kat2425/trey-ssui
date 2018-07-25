@@ -1,6 +1,5 @@
 import React, { Component}  from 'react'
 import { observer, inject } from 'mobx-react'
-import { isEmpty }          from 'lodash/fp'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import Table                from 'ui/shell/AntdTable'
@@ -37,7 +36,7 @@ export default class ParentValidations extends Component {
 
   render(){
     const { parentValidationStore: store } = this.props
-    const { pagination, filter } = store
+    const { pagination, showPagination } = store
 
     return(
       <Wrapper>
@@ -56,7 +55,7 @@ export default class ParentValidations extends Component {
             )}
             {store.isLoading && <LoadingSpinner center /> }
             <AddParent />
-            {isEmpty(filter) && (
+            { showPagination && (
               <Paginatron
                 totalPages  = {pagination.totalPages}
                 currentPage = {pagination.current}
