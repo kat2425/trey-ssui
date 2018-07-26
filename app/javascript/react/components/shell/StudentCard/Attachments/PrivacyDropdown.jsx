@@ -80,6 +80,7 @@ export default class PrivacyDropdown extends Component {
     return (
       <div className='d-inline-block'> 
         <Button
+          hidden    = {this.props.hidden}
           onClick   = {this.toggleDropdown}
           size      = 'sm'
           className = 'ml-1'

@@ -36,6 +36,7 @@ const AttachmentItem = ({ attachment, userStore }) => {
           options      = {visibilityOptions}
           visibility   = {attachment.visibility}
           attachment   = {attachment}
+          hidden       = {userStore.isParent}
           store        = {attachmentStore}
         />
 
