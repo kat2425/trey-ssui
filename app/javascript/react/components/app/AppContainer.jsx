@@ -99,7 +99,7 @@ const AppContainer = () => {
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />
-        <Route path='/r/parent_management' component={ParentValidations} />
+        <Route path='/r/parent_access_management' component={ParentValidations} />
 
         <Route render={() => {
           return (

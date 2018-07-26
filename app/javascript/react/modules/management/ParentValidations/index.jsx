@@ -7,7 +7,7 @@ import LoadingSpinner       from 'ui/shell/LoadingSpinner'
 import AddParent            from 'ui/shell/Parent/PotentialUser'
 import Paginatron           from 'ui/shell/Paginatron'
 
-import parentStore          from 'stores/ParentManagementStore'
+import parentStore          from 'stores/ParentAccessManagementStore'
 
 import Wrapper              from './Wrapper'
 import TopBar               from './TopBar'
@@ -40,7 +40,7 @@ export default class ParentValidations extends Component {
 
     return(
       <Wrapper>
-        <ModuleHeader title='Parent Management'/>
+        <ModuleHeader title='Parent Access Management'/>
         <Card className='mx-2 mb-2'>
           <CardBody className='p-4'>
             <FilterButtons store={store} />

@@ -211,9 +211,9 @@ const UserMenu = () => {
           renderIf  = {userStore.isSpoc}
         />
         <EUserMenuItem
-          title     = 'Parent Management'
+          title     = 'Parent Access Management'
           iconClass = 'icon-add-user'
-          link      = '/r/parent_management'
+          link      = '/r/parent_access_management'
           renderIf  = {userStore.isSpoc}
         />
       </EUserMenuSection>

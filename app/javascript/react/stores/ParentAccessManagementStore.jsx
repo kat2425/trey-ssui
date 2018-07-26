@@ -11,7 +11,7 @@ import {
 } from 'mobx'
 
 
-class ParentManagementStore {
+class ParentAccessManagementStore {
   @setter @observable contacts     = []
   @setter @observable isCreating   = false
   @setter @observable isError      = null
@@ -104,4 +104,4 @@ class ParentManagementStore {
   }
 }
 
-export default new ParentManagementStore()
+export default new ParentAccessManagementStore()

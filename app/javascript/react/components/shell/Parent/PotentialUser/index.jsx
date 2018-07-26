@@ -1,7 +1,7 @@
 import React           from 'react'
 import ParentForm      from './ParentForm'
 import { Modal }       from 'antd'
-import parentStore     from 'stores/ParentManagementStore'
+import parentStore     from 'stores/ParentAccessManagementStore'
 import { observer }    from 'mobx-react'
 
 const ParentView = () => {
