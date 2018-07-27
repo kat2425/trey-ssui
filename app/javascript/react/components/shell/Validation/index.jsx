@@ -45,8 +45,8 @@ export default class Validation extends Component {
 
     if (isFetching) {
       return (
-        <div 
-          style={{ flex: 1, backgroundColor: 'white' }} 
+        <div
+          style={{ flex: 1, backgroundColor: 'white' }}
           className='d-flex align-items-center justify-content-center'
         >
           <LoadingSpinner center />
@@ -87,18 +87,18 @@ export default class Validation extends Component {
     if(!isEmpty || isFetching) return null
 
     return (
-      <div 
-        style={{ flex: 1 }} 
+      <div
+        style={{ flex: 1 }}
         className='d-flex flex-column justify-content-center align-items-center'
       >
         <Icon
           className='mb-2'
-          style={{ fontSize: 42, color: 'seagreen'}}
+          style={{ fontSize: 42, color: 'seagreen' }}
           type='check-circle'
           color='seagreen'
         />
         <p className='text-center text-muted mt-2' style={{ fontSize: 20 }}>
-          Validation(s) submitted! Your account is now pending approval from the district.<br/> 
+          Validation(s) submitted! Your account is now pending approval from the district.<br/>
           You will be notified by email upon approval.
         </p>
         { hasVerified && <SSButton href='/r' color='link'>Go to Dashboard</SSButton> }
@@ -129,10 +129,18 @@ export default class Validation extends Component {
     )
   }
 
-  render() {    
+  render() {
     return (
       <Wrapper noNav>
         <ContentWrapper size='lg'>
+          <SSButton
+            className='align-self-end'
+            href='/session/logout'
+            color='link'
+            size={'lg'}
+          >
+            Log Out
+          </SSButton>
           {this.renderFinished()}
           {this.renderSuccess()}
           {this.renderContent()}
