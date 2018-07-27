@@ -46,8 +46,7 @@ export class ValidationStore {
     try {
       const { data } = await xhr.get('/parent_user_validations', {
         params: {
-          only_unattempted: true,
-          only:             [
+          only: [
             'id',
             'questions',
             'validation_status',
@@ -71,9 +70,11 @@ export class ValidationStore {
       this.setHasVerified(data[0].user.verified_validations)
     }
 
-    data.forEach((q) => {
-      this.questions.set(q.id, q)
-    })
+    data
+      .filter((q) => q.unattempted_validations)
+      .forEach((q) => {
+        this.questions.set(q.id, q)
+      })
   }
 
   @action onSubmit = async({ addressId, dateId }) => {

@@ -1,14 +1,14 @@
-import React, { Component }                        from 'react'
-import { observer }                                from 'mobx-react'
-import Wrapper                                     from 'ui/shell/Authentication/Common/Wrapper'
-import ContentWrapper                              from 'ui/shell/Authentication/Common/ContentWrapper'
-import { Icon, Alert }                             from 'antd'
-import styled                                      from 'styled-components'
-import ValidationForm                              from './ValidationForm'
-import LoadingSpinner                              from 'ui/shell/LoadingSpinner'
-import validationStore                             from 'stores/ValidationStore'
-import SSAlert                                     from 'ui/shell/SSAlert'
-import SSButton                                    from 'ui/shell/SSButton'
+import React, { Component, Fragment }   from 'react'
+import { observer }                     from 'mobx-react'
+import Wrapper                          from 'ui/shell/Authentication/Common/Wrapper'
+import ContentWrapper                   from 'ui/shell/Authentication/Common/ContentWrapper'
+import { Icon, Alert }                  from 'antd'
+import styled                           from 'styled-components'
+import ValidationForm                   from './ValidationForm'
+import LoadingSpinner                   from 'ui/shell/LoadingSpinner'
+import validationStore                  from 'stores/ValidationStore'
+import SSAlert                          from 'ui/shell/SSAlert'
+import SSButton                         from 'ui/shell/SSButton'
 
 @observer
 export default class Validation extends Component {
@@ -82,7 +82,7 @@ export default class Validation extends Component {
   }
 
   renderFinished = () => {
-    const { isEmpty, isFetching, hasVerified } = validationStore
+    const { isEmpty, isFetching } = validationStore
 
     if(!isEmpty || isFetching) return null
 
@@ -97,12 +97,26 @@ export default class Validation extends Component {
           type='check-circle'
           color='seagreen'
         />
-        <p className='text-center text-muted mt-2' style={{ fontSize: 20 }}>
-          Validation(s) submitted! Your account is now pending approval from the district.<br/>
-          You will be notified by email upon approval.
-        </p>
-        { hasVerified && <SSButton href='/r' color='link'>Go to Dashboard</SSButton> }
+        {this.renderFinishedText()}
       </div>
+    )
+  }
+
+  renderFinishedText = () => {
+    const { hasVerified } = validationStore
+
+    if(hasVerified) {
+      return (
+        <Fragment>
+          <Text>Looks like you don't have any remaining validations and are good to go!</Text>
+          <SSButton href='/r' size='lg' color='link'>Go to Dashboard</SSButton>
+        </Fragment>
+      )
+    }
+
+    return (
+      <Text>Validation(s) submitted! Your submission(s) are pending approval from the district.<br/>
+      You will be notified by email upon approval.</Text>
     )
   }
 
@@ -155,4 +169,10 @@ const Header = styled.p`
   font-weight: bold;
   font-size: 1.6em;
   margin-bottom: 15px;
+`
+
+const Text = styled.p.attrs({
+  class: 'text-center text-muted mt-2'
+})`
+font-size: 20px;
 `
