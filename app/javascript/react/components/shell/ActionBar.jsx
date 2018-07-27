@@ -75,6 +75,27 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
   const { totalUnread }        = store
   const { totalPending }       = reminderStore
 
+  if (this.props.parent) {
+    return (
+      <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
+        <Nav className='d-flex flex-row justify-content-end p-3' navbar>
+          <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.SMS)}>
+            <span className='icon icon-chat mr-2' style={{opacity: '0.6'}}/>
+            <span>Messages</span>
+            <Badge
+              color  = 'danger'
+              style  = {actionBarNotification}
+              hidden = {totalUnread < 1}
+              pill
+            >
+              {totalUnread}
+            </Badge>
+          </NavItem>
+        </Nav>
+      </Navbar>
+    )
+  }
+
   return (
     <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
       <Nav className='d-flex flex-row justify-content-end p-3' navbar>

@@ -8,7 +8,17 @@ import parentStore            from 'stores/ParentHomePageStore'
 import userStore              from 'stores/UserStore'
 import renderIf               from 'render-if'
 import studentCardStore       from 'stores/StudentCardStore'
+import smsInboxStore          from 'stores/SMSInboxStore'
+import smsConversationStore   from 'stores/SMSConversationStore'
+import uiStore                from 'stores/UiStore'
+import webSocketStore         from 'stores/WebSocketStore'
+import callingStore           from 'stores/CallingStore'
+import reminderStore          from 'stores/ReminderStore'
+import callStore              from 'stores/CallStore'
+import ActionBar              from 'ui/shell/ActionBar'
+import SidebarController      from 'ui/controllers/SidebarController'
 import styled                 from 'styled-components'
+import _                      from 'lodash'
 import { Route }              from 'react-router-dom'
 import { observer }           from 'mobx-react'
 
@@ -19,10 +29,31 @@ import {
 
 @observer
 class ParentPage extends Component {
+  toggleSidebar = (e) => {
+    const { uiStore }  = this.props
+    const contact = _.get(e, 'detail.contact')
+
+    if(contact){
+      smsConversationStore.initiateConversation(contact)
+      return
+    }
+
+    uiStore.setSidebarMaxHeight(false)
+    uiStore.toggleSidebar()
+  }
+
   async componentDidMount() {
     await parentStore.fetchStudents(userStore.user.id)
     this.props.history.push(`/r/students/${parentStore.currentStudent.id}/overview`)
     parentStore.fetchValidationStatus()
+
+    webSocketStore.subscribeUser(window.SSUser.id)
+
+    window.addEventListener('toggleSidebar',      this.toggleSidebar)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('toggleSidebar',      this.toggleSidebar)
   }
 
   handleHideList = () => {
@@ -33,7 +64,12 @@ class ParentPage extends Component {
     return (
       <VJSContainer className='h-100'>
         <NavBar />
-        <Row className='h-100 w-100 mt-2'>
+        <Wrapper 
+          style={{
+            height: 'calc(100vh - 102px)',
+            width:  '100%'
+          }}
+        >
           {renderIf(parentStore.toggleStudentList)(
             <Col span={4} className='h-100'>
               <SideNav store={parentStore}/>
@@ -66,7 +102,7 @@ class ParentPage extends Component {
               style={{marginTop: '10px'}}
             >
               <Col span={24}>
-                <Wrapper>
+                <StudentCardWrapper>
                   {renderIf(studentCardStore.isLoading)(<LoadingSpinner center/>)}
                   {renderIf(studentCardStore.isError)(
                     <Error>
@@ -79,10 +115,20 @@ class ParentPage extends Component {
                     path='/r/students/:studentId'
                     render={() => <StudentCardController embedded />}
                   />
-                </Wrapper>
+                </StudentCardWrapper>
               </Col>
             </Row>
           </Col>
+        </Wrapper>
+        <Row>
+          <ActionBar 
+            parent        = {true}
+            store         = {smsInboxStore}
+            uiStore       = {uiStore}
+            callingStore  = {callingStore}
+            reminderStore = {reminderStore}
+          />
+          <SidebarController callStore={callStore} />
         </Row>
       </VJSContainer>
     )
@@ -109,9 +155,9 @@ const ToggleIcon = styled(Icon)`
   cursor: pointer;
 `
 
-const Wrapper = styled.div`
+const StudentCardWrapper = styled.div`
   height: 100%;
-  max-height: calc(100vh - 87px);
+  max-height: calc(100vh - 163px);
   margin-left: 10px;
   margin-right: 10px;
   padding: 15px;
@@ -119,6 +165,12 @@ const Wrapper = styled.div`
   border: 1px solid rgb(0,0,0,.25);
   border-radius: 5px;
   overflow: auto;
+`
+
+const Wrapper = styled(Row)`
+  height: calc(100vh - 113px);
+  width: 100%;
+  margin-top: 8px;
 `
 
 export default observer(ParentPage)
