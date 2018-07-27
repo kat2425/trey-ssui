@@ -3,7 +3,6 @@ class LoginController < ApplicationController
   layout 'default'
 
   def index
-    save_previous_url
     redirect_to '/home' if user
   end
 
@@ -29,15 +28,5 @@ class LoginController < ApplicationController
 
   def failed
     render :index, :status => 401
-  end
-
-  def save_previous_url 
-    previous_url = URI(request.referer || '/r').path
-
-    if previous_url.start_with?('/reset')
-      previous_url = '/r'
-    end
-
-    session[:previous_url] = previous_url
   end
 end

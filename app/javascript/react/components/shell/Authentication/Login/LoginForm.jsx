@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
         store.login(values, e, (isSuccess) => {
           if(!isSuccess) return
 
-          window.location.replace(this.props.referer)
+          window.location.replace('/r')
         })
       }
     })
