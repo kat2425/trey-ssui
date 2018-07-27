@@ -7,7 +7,7 @@ import EmailColumn           from './EmailColumn'
 import RelationshipColumn    from './RelationshipColumn'
 import { getUniqueContacts } from './helpers'
 
-function TRow({contact}){
+function TRow({contact, userStore}){
   const {
     contactsWithUniqueEmails,
     contactsWithUniquePhones,
@@ -18,7 +18,7 @@ function TRow({contact}){
     <tr>
       <NameColumn contact={_contact} />
       <RelationshipColumn contact={_contact} />
-      <PhoneColumn contactsWithUniquePhones={contactsWithUniquePhones} />
+      <PhoneColumn contactsWithUniquePhones={contactsWithUniquePhones} userStore={userStore} />
       <EmailColumn contactsWithUniqueEmails={contactsWithUniqueEmails} />
     </tr>
   ) 

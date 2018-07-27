@@ -13,13 +13,16 @@ import CardView             from './CardView'
 import ViewSelector         from './ViewSelector'
 import { Card }             from 'reactstrap'
 import { Row, Col }         from 'antd'
+import renderIf             from 'ui/hoc/renderIf'
 
+const EFilter = renderIf(Filter)
 
 @inject('contactStore')
 @observer
 export default class Contacts extends Component {
   static propTypes = {
     contactStore: PropTypes.object.isRequired,
+    userStore:    PropTypes.object.isRequired,
     student:      PropTypes.shape({
       id: PropTypes.string.isRequired
     }).isRequired
@@ -36,13 +39,13 @@ export default class Contacts extends Component {
   }
 
   render() {
-    const { contactStore } = this.props
+    const { contactStore, userStore } = this.props
 
     return (
       <div>
         <SubmoduleHeader title='Contacts' />
         <Card className='mb-4 px-3 pb-4'>
-          <Filter contactStore={contactStore} />
+          <EFilter contactStore={contactStore} renderIf={!userStore.isParent} />
           <Row
             type      = 'flex'
             justify   = 'space-between'
@@ -57,10 +60,10 @@ export default class Contacts extends Component {
             </Col>
           </Row>
           {contactStore.showTableView && (
-            <TableView contactStore={contactStore} />
+            <TableView contactStore={contactStore} userStore={userStore} />
           )}
           {contactStore.showGridView && (
-            <CardView contactStore={contactStore} />
+            <CardView contactStore={contactStore} userStore={userStore} />
           )}
           {contactStore.isLoading && <LoadingSpinner center />}
           {contactStore.showEmptyContacts && <div className='text-center my-2'>No Contacts Found</div>}

@@ -1,20 +1,24 @@
-import React           from 'react'
-import { observer }    from 'mobx-react'
+import React            from 'react'
+import { observer }     from 'mobx-react'
 
-import ContactActions  from './ContactActions'
-import PhoneNumber     from './PhoneNumber'
-import SSButton        from 'ui/shell/SSButton'
+import ContactActions   from './ContactActions'
+import PhoneNumber      from './PhoneNumber'
+import SSButton         from 'ui/shell/SSButton'
+import renderIf         from 'ui/hoc/renderIf'
 
-import { ButtonGroup } from 'reactstrap'
+import { ButtonGroup }  from 'reactstrap'
 
-const PhoneColumn = ({contactsWithUniquePhones = []}) => (
-  <td> {contactsWithUniquePhones.map(c => <Phone key={c.id} contact={c} />)} </td>
+const EContactActions = renderIf(ContactActions)
+const EButtonGroup = renderIf(ButtonGroup)
+
+const PhoneColumn = ({contactsWithUniquePhones = [], userStore}) => (
+  <td> {contactsWithUniquePhones.map(c => <Phone key={c.id} contact={c} userStore={userStore} />)} </td>
 )
 
-const Phone = observer(({contact}) => (
+const Phone = observer(({contact, userStore}) => (
   <div className='mb-1 d-flex align-items-center'>
-    <ContactActions contact={contact} />
-    <ButtonGroup className='mx-2'>
+    <EContactActions contact={contact} renderIf={!userStore.isParent} />
+    <EButtonGroup className='mx-2' renderIf={!userStore.isParent}>
       <SSButton
         onClick = {contact.initiateCall}
         size      = 'sm'
@@ -31,7 +35,7 @@ const Phone = observer(({contact}) => (
         disabled  = {contact.isTextingDisabled}
         onClick   = {contact.initiateText}
       />
-    </ButtonGroup>
+    </EButtonGroup>
     <PhoneNumber contact={contact} />
   </div>
 ))

@@ -4,10 +4,10 @@ import ContactCard          from './ContactCard'
 import uuid                 from 'uuid'
 import styled               from 'styled-components'
 
-const CardView = ({ contactStore }) => (
+const CardView = ({ contactStore, userStore }) => (
   <CardWrapper>
     {contactStore.groupedContacts.map(c => (
-      <ContactCard key={uuid()} contact={c}/>
+      <ContactCard key={uuid()} contact={c} userStore={userStore} />
     ))}
   </CardWrapper>
 )

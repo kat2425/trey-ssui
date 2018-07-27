@@ -3,6 +3,7 @@ import { observer }          from 'mobx-react'
 import ContactAvatar         from 'ui/shell/ContactAvatar'
 import uuid                  from 'uuid'
 import _                     from 'lodash'
+import renderIf              from 'ui/hoc/renderIf'
 
 import PhoneInfo             from './PhoneInfo'
 import EmailInfo             from './EmailInfo'
@@ -17,6 +18,7 @@ import {
   CardSubtitle
 } from 'reactstrap'
 
+const ECommunicationButtons = renderIf(CommunicationButtons)
 
 const ContactCard = ({contact, ...rest}) => {
   const { contactsWithUniqueEmails, contactsWithUniquePhones } = getUniqueContacts(contact)
@@ -30,16 +32,17 @@ const ContactCard = ({contact, ...rest}) => {
         <ContactAvatar id={contact.refs[0].id} size={95}/>
         <CardTitle className='mt-3 mb-1'>{contact.name}</CardTitle>
         <Relationship contact={contact} />
-        <CommunicationButtons 
+        <ECommunicationButtons 
           contactsWithUniqueEmails = {contactsWithUniqueEmails}
           contactsWithUniquePhones = {contactsWithUniquePhones}
+          renderIf                 = {!rest.userStore.isParent}
         />
       </CardHeader>
       <CardBody className='px-3'>
         <CardItem title='Phone'>
           { _.isEmpty(contactsWithUniquePhones) 
             ? <DefaultPlaceholder icon='phone' />
-            : <PhoneInfo key={uuid()} contacts={contactsWithUniquePhones} />
+            : <PhoneInfo key={uuid()} contacts={contactsWithUniquePhones} userStore={rest.userStore}/>
           }
         </CardItem>
         <CardItem title='Email' className='mb-0'>

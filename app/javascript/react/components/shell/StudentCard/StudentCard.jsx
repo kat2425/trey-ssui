@@ -145,12 +145,11 @@ export default class StudentCard extends Component {
                 location  = {location}
               />
 
-              <EUserMenuItem
+              <UserMenuItem
                 title     = 'Contacts'
                 iconClass = 'icon-users'
                 link      = {`${match.url}/contacts`}
                 location  = {location}
-                renderIf  = {!userStore.isParent}
               />
 
               <EUserMenuItem
@@ -267,7 +266,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() => <Contacts student={student} /> }
+              render = {() => <Contacts student={student} userStore={userStore} /> }
             />
 
             <Route

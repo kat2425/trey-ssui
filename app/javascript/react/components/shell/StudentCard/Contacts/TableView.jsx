@@ -6,12 +6,12 @@ import { inject, observer } from 'mobx-react'
 import THead                from './THead'
 import TRow                 from './TRow'
 
-const TableView = ({ contactStore }) => (
+const TableView = ({ contactStore, userStore }) => (
   <Table>
     <THead headers={['Name', 'Relationship', 'Phone', 'Email']} />
     <tbody>
       {contactStore.groupedContacts.map(c => (
-        <TRow key={uuid()} contact={c} />
+        <TRow key={uuid()} contact={c} userStore={userStore} />
       ))}
     </tbody>
   </Table>
