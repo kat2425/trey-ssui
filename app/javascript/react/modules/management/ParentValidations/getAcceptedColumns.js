@@ -1,6 +1,6 @@
 import React   from 'react'
 import { Tag } from 'antd'
-import Actions from './Actions'
+import Actions from './AcceptedActions'
 
 const getColumns = () => [
   {
@@ -75,7 +75,7 @@ const getColumns = () => [
   {
     title:  'Action',
     key:    'action',
-    render: (text, { validation }) => <Actions validation={validation} />
+    render: (text, { validation }) => <Actions validation={validation}/>
   }
 ]
 

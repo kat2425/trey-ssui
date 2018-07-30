@@ -1,11 +1,11 @@
-import React        from 'react'
-import { observer } from 'mobx-react'
-import SSButton     from 'ui/shell/SSButton'
+import React                  from 'react'
+import { observer }           from 'mobx-react'
+import SSButton               from 'ui/shell/SSButton'
 
-const Actions = ({validation, withLabels = true}) => (
+const AcceptedActions = ({validation, withLabels = true}) => (
   <div className='d-flex align-items-center'>
     <SSButton
-      onClick   = { validation.verify }
+      onClick   = {validation.verify}
       disabled  = {validation.validationStatus === 'verified'}
       loading   = {validation.isVerifying}
       className = 'mr-4'
@@ -29,4 +29,4 @@ const Actions = ({validation, withLabels = true}) => (
   </div>
 )
 
-export default observer(Actions)
+export default observer(AcceptedActions)

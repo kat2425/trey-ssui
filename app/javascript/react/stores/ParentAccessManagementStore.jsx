@@ -11,12 +11,19 @@ import {
 } from 'mobx'
 
 
+export const MODAL = {
+  EDIT:   'edit',
+  INVITE: 'invite',
+  NONE:   false
+}
+
 class ParentAccessManagementStore {
   @setter @observable contacts     = []
   @setter @observable isCreating   = false
   @setter @observable isError      = null
   @setter @observable isFetching   = false
-  @setter @observable showModal    = false
+  @setter @observable isEditing    = false
+  @setter @observable showModal    = MODAL.NONE
 
   constructor() {
     this.initAutoruns()
@@ -65,6 +72,29 @@ class ParentAccessManagementStore {
       this.setIsError(getError(e))
     } finally {
       this.setIsCreating(false)
+    }
+  }
+
+  @action editParent = async(values, clear) => {
+    const params = {
+      first_name: values.firstName,
+      last_name:  values.lastName,
+      email:      values.email,
+      phone:      values.phone,
+      user_type:  'parent'
+    }
+
+    try {
+      this.setIsEditing(true)
+      this.setIsError(false)
+      await xhr.put('/potential_users', params)
+      clear()
+      uiStore.addMessage('User Added')
+      this.setShowModal(MODAL.NONE)
+    } catch(e) {
+      this.setIsError(getError(e))
+    } finally {
+      this.setIsEditing(false)
     }
   }
 

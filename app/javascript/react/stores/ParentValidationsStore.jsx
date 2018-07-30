@@ -1,7 +1,7 @@
 import { setter }           from 'mobx-decorators'
 import xhr                  from 'helpers/XHR'
 
-import ParentValidation     from 'stores/models/ParentValidation'
+import PotentialUser        from 'stores/models/PotentialUser'
 import getError             from 'helpers/ErrorParser'
 import uiStore              from 'stores/UiStore'
 import Pagination           from 'stores/models/Pagination'
@@ -21,21 +21,12 @@ import {
 
 export const only = [
   'id',
-  'user.full_name',
-  'user.username',
-  'user.mobile_number',
-  'user.user_type',
-  'user.district_id',
-  'contact.relationship',
-  'contact.student.id',
-  'contact.student.full_name',
+  'first_name',
+  'last_name',
   'created_at',
   'updated_at',
-  'validation_status',
-  'address_correct',
-  'date_of_birth_correct',
-  'address_question_attempted',
-  'date_of_birth_question_attempted'
+  'email',
+  'phone'
 ].join(',')
 
 
@@ -47,6 +38,11 @@ export const STATUS = {
   SKIPPED:  'skipped'
 }
 
+export const MODE = {
+  INVITED:  'invited',
+  ACCEPTED: 'accepted'
+}
+
 export class ParentValidationStore {
   @setter @observable isLoading                 = false
   @setter @observable isError                   = null
@@ -54,6 +50,7 @@ export class ParentValidationStore {
   @setter @observable selectedParentValidation  = null
   @setter @observable filter                    = ''
   @setter @observable status                    = STATUS.ALL
+  @setter @observable mode                      = MODE.INVITED
   @observable pagination                        = new Pagination(this)
 
   constructor() {
@@ -78,14 +75,6 @@ export class ParentValidationStore {
 
   @computed get skippedValidations(){
     return groupBy(v => v.validationStatus)(this.validations.values()).skipped
-  }
-
-  getFilteredValidations = (validations, filter) => {
-    if(!filter) return validations
-
-    return validations.filter(
-      v => v.user.full_name.toLowerCase().indexOf(filter.toLowerCase()) > -1
-    )
   }
 
   @computed get visibleValidations(){
@@ -114,7 +103,13 @@ export class ParentValidationStore {
   }
 
   @computed get showPagination(){
-    return isEmpty(this.filter) && !this.isLoading && this.validations.size > 0
+    return (
+      isEmpty(this.filter) &&
+      !this.isLoading &&
+      this.pagination.limit > 0 &&
+      this.pagination.page > 0 &&
+      this.validations.size > 0
+    )
   }
 
   @action setPagination = ({total}) => {
@@ -159,7 +154,7 @@ export class ParentValidationStore {
        this.setIsLoading(true)
        this.setIsError(null)
 
-       const { headers, data } = await xhr.get('parent_user_validations', params)
+       const { headers, data } = await xhr.get('/potential_users', params)
 
        this.fetchParentValidationsOk(headers, data)
      } catch (err) {
@@ -178,8 +173,9 @@ export class ParentValidationStore {
    @action createValidation = validation => {
      if(this.validations.has(validation.id)) return
 
-     this.validations.set(validation.id, new ParentValidation(this, validation))
+     this.validations.set(validation.id, new PotentialUser(this, validation))
    }
+
    @action handleContactSearch = async(filter) => {
      this.filter = filter
      try {
@@ -215,6 +211,16 @@ export class ParentValidationStore {
      this.pagination.clear()
      this.setStatus(STATUS[target.value.toUpperCase()])
      this.fetchParentValidations()
+   }
+
+   @action handleModeChange = ({target}) => {
+     this.pagination.clear()
+     this.setMode(MODE[target.value.split(' ')[0].toUpperCase()])
+     this.fetchParentValidations()
+   }
+
+   @action deleteValidation = id => {
+     this.validations.delete(id)
    }
 }
 

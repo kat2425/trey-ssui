@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import { observer }         from 'mobx-react'
-import SSButton             from 'ui/shell/SSButton'
-import styled               from 'styled-components'
-import { AsyncTypeahead }   from 'react-bootstrap-typeahead'
-import { isEmpty }          from 'lodash/fp'
+import React, { Component }   from 'react'
+import { observer }           from 'mobx-react'
+import SSButton               from 'ui/shell/SSButton'
+import styled                 from 'styled-components'
+import parentStore, { MODAL } from 'stores/ParentAccessManagementStore'
+import { AsyncTypeahead }     from 'react-bootstrap-typeahead'
+import { isEmpty }            from 'lodash/fp'
 
 @observer
 class TopBar extends Component {
@@ -24,8 +25,12 @@ class TopBar extends Component {
     this.props.store.handleContactSearch(filter)
   }
 
+  onInviteParent = () => {
+    parentStore.setShowModal(MODAL.INVITE)
+  }
+
   render() {
-    const { store, onAddParent } = this.props
+    const { store } = this.props
 
     return (
       <div className='mb-4 d-flex justify-content-between align-items-center'>
@@ -36,7 +41,7 @@ class TopBar extends Component {
           options                = {[]}
           onSearch               = {this.lookupContact}
           onInputChange          = {this.handleEmpty}
-          placeholder            = 'Find a contact...'
+          placeholder            = 'Find a parent...'
           renderMenu             = {() => null}
         />
         <div>
@@ -44,9 +49,9 @@ class TopBar extends Component {
             iconClass = 'icon icon-plus'
             className = 'mr-4'
             color     = 'primary'
-            onClick   = {onAddParent}
+            onClick   = {this.onInviteParent}
           >
-            Add Parent
+            Invite Parent
           </SSButton>
           <SSButton
             iconClass = 'icon icon-cw'

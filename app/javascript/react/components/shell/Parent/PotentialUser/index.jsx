@@ -1,20 +1,34 @@
-import React           from 'react'
-import ParentForm      from './ParentForm'
-import { Modal }       from 'antd'
-import parentStore     from 'stores/ParentAccessManagementStore'
-import { observer }    from 'mobx-react'
+import React                      from 'react'
+import { Modal }                  from 'antd'
+import parentStore, { MODAL }     from 'stores/ParentAccessManagementStore'
+import renderIf                   from 'render-if'
+import EditParent                 from './EditParent'
+import InviteParent               from './InviteParent'
+import { capitalize }             from 'lodash/fp'
+import { observer }               from 'mobx-react'
 
-const ParentView = () => {
+const ParentModal = () => {
+  const title = capitalize(parentStore.showModal)
+
   return (
     <Modal
       style={cardStyle}
-      visible={parentStore.showModal}
+      visible={parentStore.showModal !== MODAL.NONE}
       onCancel  = {closeModal}
       footer    = {null}
       width     = {600}
-      title     = {<h3 className='text-center'>Add Parent</h3>}
+      title     = {
+        <h3 className='text-center'>
+          {parentStore.showModal ? `${title} Parent` : null}
+        </h3>
+      }
     >
-      <ParentForm store={parentStore} />
+      {renderIf(parentStore.showModal === MODAL.EDIT)(
+        <EditParent store={parentStore}/>
+      )}
+      {renderIf(parentStore.showModal === MODAL.INVITE)(
+        <InviteParent store={parentStore} />
+      )}
     </Modal>
   )
 }
@@ -37,6 +51,6 @@ const cardStyle = {
   }
 }
 
-const closeModal = () => parentStore.setShowModal(false)
+const closeModal = () => parentStore.setShowModal(MODAL.NONE)
 
-export default observer(ParentView)
+export default observer(ParentModal)

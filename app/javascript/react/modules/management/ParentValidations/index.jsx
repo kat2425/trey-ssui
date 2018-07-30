@@ -2,22 +2,18 @@ import React, { Component}  from 'react'
 import { observer, inject } from 'mobx-react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
-import Table                from 'ui/shell/AntdTable'
-import LoadingSpinner       from 'ui/shell/LoadingSpinner'
-import AddParent            from 'ui/shell/Parent/PotentialUser'
-import Paginatron           from 'ui/shell/Paginatron'
+import InvitedParents       from './InvitedParents'
+import ModeButtons          from './ModeButtons'
 
-import parentStore          from 'stores/ParentAccessManagementStore'
+import { MODE }             from 'stores/ParentValidationsStore'
 
 import Wrapper              from './Wrapper'
-import TopBar               from './TopBar'
-import FilterButtons        from './FilterButtons'
-import getColumns           from './getColumns'
 
 import {
   Card,
   CardBody
 }  from 'reactstrap'
+
 
 @inject('parentValidationStore')
 @observer
@@ -30,37 +26,19 @@ export default class ParentValidations extends Component {
     this.props.parentValidationStore.clearData()
   }
 
-  addParent = () => {
-    parentStore.setShowModal(true)
-  }
-
   render(){
     const { parentValidationStore: store } = this.props
-    const { pagination, showPagination } = store
 
     return(
       <Wrapper>
         <ModuleHeader title='Parent Access Management'/>
-        <Card className='mx-2 mb-2'>
-          <CardBody className='p-4'>
-            <FilterButtons store={store} />
-            <TopBar store={store} onAddParent={this.addParent}/>
-            {store.showTable && (
-              <Table
-                className  = 'pb-3'
-                columns = {getColumns()}
-                dataSource = {store.dataSource}
-                pagination = {false}
-              />
-            )}
-            {store.isLoading && <LoadingSpinner center /> }
-            <AddParent />
-            { showPagination && (
-              <Paginatron
-                totalPages  = {pagination.totalPages}
-                currentPage = {pagination.current}
-                onChange    = {pagination.onChange}
-              />
+        <Card className='h-100 mx-2 mb-2'>
+          <CardBody className='h-100 p-4'>
+            <ModeButtons store={store} />
+            {store.mode === MODE.INVITED ? (
+              <InvitedParents store={store} />
+            ) : (
+              <h1>Accepted Parents</h1>
             )}
           </CardBody>
         </Card>
