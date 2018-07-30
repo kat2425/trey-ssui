@@ -66,9 +66,19 @@ class ParentHomePageStore {
 
   @action fetchValidationStatus = async() => {
     if (!_.isEmpty(userStore.user.id)) {
-      const { data } = await xhr.get('users/self', {params: {only: 'unattempted_validations'}})
+      const options = {
+        params: {
+          only: [
+            'id',
+            'unattempted'
+          ].join(','),
+          only_unattempted: true
+        }
+      }
 
-      this.setValidationStatus(data.unattempted_validations)
+      const { data } = await xhr.get('/parent_user_validations', options)
+
+      this.setValidationStatus(!_.isEmpty(data))
     }
   }
 
