@@ -78,7 +78,10 @@ class BroadcastModal extends Component {
             loading={this.broadcastDraft.isSending}
             onClick={() => this.broadcastDraft.sendBroadcast() && this.clearInputs()}
           >
-            Send
+            Send{this.broadcastDraft.contactsCount > 0
+              ? ` to ${this.broadcastDraft.contactsCount} contacts`
+              : ''
+            }
           </SSButton>
           <Alert
             className='mt-2'
