@@ -7,7 +7,6 @@ import BroadcastEntry       from '../BroadcastEntry'
 import BroadcastInfo        from '../BroadcastInfo'
 import BroadcastModal       from '../BroadcastModal'
 
-import SSFab                from 'ui/shell/SSFab'
 import LoadingSpinner       from 'ui/shell/LoadingSpinner'
 
 @inject('uiStore')
@@ -30,7 +29,11 @@ export default class BroadcastSidebar extends Component {
 
     return (
       <Wrapper show={this.props.show}>
-        <Header title='Broadcast Messages' onClose={this.props.onClose}/>
+        <Header
+          title='Broadcast Messages'
+          onClose={this.props.onClose}
+          onNewMessage={this.showModal}
+        />
         <ScrollView>
           {store.descBroadcasts.map((broadcast) => {
             return (
@@ -40,13 +43,6 @@ export default class BroadcastSidebar extends Component {
               />)}
           )}
           {store.isLoading && <LoadingSpinner className='d-flex flex-row justify-content-center' />}
-          <SSFab
-            color='warning'
-            iconStyle='mr-0'
-            onClick={this.showModal}
-          >
-                +
-          </SSFab>
         </ScrollView>
         <BroadcastModal
           store    = {this.props.store}
