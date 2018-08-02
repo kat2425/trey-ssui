@@ -30,6 +30,7 @@ const Section = styled.section`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 `
 const Wrapper = styled.div`
   display: flex;
