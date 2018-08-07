@@ -1,13 +1,17 @@
-import React, { Component}  from 'react'
-import { observer, inject } from 'mobx-react'
+import React, { Component}   from 'react'
+import { observer}           from 'mobx-react'
 
-import ModuleHeader         from 'ui/shell/ModuleHeader'
-import InvitedParents       from './InvitedParents'
-import ModeButtons          from './ModeButtons'
+import ModuleHeader          from 'ui/shell/ModuleHeader'
+import InvitedParents        from './InvitedParents'
+import AcceptedParents       from './AcceptedParents'
+import ModeButtons           from './ModeButtons'
 
-import { MODE }             from 'stores/ParentValidationsStore'
+import potentialUserStore    from 'stores/PotentialUserStore'
+import parentUserStore       from 'stores/ParentUserStore'
+import parentManagementStore,
+{ MODE }                     from 'stores/ParentManagementStore'
 
-import Wrapper              from './Wrapper'
+import Wrapper               from './Wrapper'
 
 import {
   Card,
@@ -15,30 +19,27 @@ import {
 }  from 'reactstrap'
 
 
-@inject('parentValidationStore')
 @observer
 export default class ParentValidations extends Component {
   componentDidMount(){
-    this.props.parentValidationStore.fetchParentValidations()
+    parentManagementStore.fetchCorrectUsers()
   }
 
   componentWillUnmount(){
-    this.props.parentValidationStore.clearData()
+    parentManagementStore.clearData()
   }
 
   render(){
-    const { parentValidationStore: store } = this.props
-
     return(
       <Wrapper>
         <ModuleHeader title='Parent Access Management'/>
-        <Card className='h-100 mx-2 mb-2'>
-          <CardBody className='h-100 p-4'>
-            <ModeButtons store={store} />
-            {store.mode === MODE.INVITED ? (
-              <InvitedParents store={store} />
+        <Card className='mx-2 mb-2'>
+          <CardBody className='p-4'>
+            <ModeButtons store={parentManagementStore} />
+            {parentManagementStore.mode === MODE.INVITED ? (
+              <InvitedParents store={potentialUserStore} />
             ) : (
-              <h1>Accepted Parents</h1>
+              <AcceptedParents store={parentUserStore} />
             )}
           </CardBody>
         </Card>
