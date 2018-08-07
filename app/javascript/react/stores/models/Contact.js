@@ -278,7 +278,7 @@ export default class Contact {
   @action initiateCall = () => {
     callingStore.setShowCallDialog(true)
     callingStore.contact   = this
-    callingStore.studentId = this.studentId
+    callingStore.studentID = this.studentId
   }
 
   @action initiateText = () => {
