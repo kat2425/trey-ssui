@@ -35,7 +35,7 @@ const ContactCard = ({contact, userStore, ...rest}) => {
         <ECommunicationButtons 
           contactsWithUniqueEmails = {contactsWithUniqueEmails}
           contactsWithUniquePhones = {contactsWithUniquePhones}
-          renderIf                 = {userStore.isParent}
+          renderIf                 = {!userStore.isParent}
         />
       </CardHeader>
       <CardBody className='px-3'>
