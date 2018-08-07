@@ -13,7 +13,7 @@ class InvitedTopBar extends Component {
 
     if (isEmpty(filter)) {
       store.setFilter('')
-      store.fetchParentValidations()
+      store.fetchPotentialUsers()
     }
   }
 
@@ -41,7 +41,7 @@ class InvitedTopBar extends Component {
           options                = {[]}
           onSearch               = {this.lookupContact}
           onInputChange          = {this.handleEmpty}
-          placeholder            = 'Find a parent...'
+          placeholder            = 'Find an invitation...'
           renderMenu             = {() => null}
         />
         <div>

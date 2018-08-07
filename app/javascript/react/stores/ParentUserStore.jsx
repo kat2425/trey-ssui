@@ -74,9 +74,9 @@ export class ParentUserStore {
     return (
       isEmpty(this.filter) &&
       !this.isLoading &&
-      this.pagination.limit > 0 &&
-      this.pagination.page > 0 &&
-      this.parentUserss.size > 0
+      this.pagination.pageSize > 0 &&
+      this.pagination.total > this.pagination.pageSize &&
+      this.parentUsers.size > 0
     )
   }
 
@@ -105,6 +105,7 @@ export class ParentUserStore {
 
    @action clearData = () => {
      this.parentUsers.clear()
+     this.expandedRowKeys.clear()
    }
 
    @action fetchParentUsers = async() => {
@@ -173,7 +174,7 @@ export class ParentUserStore {
 
    @action toggleViewValidations = parentUser => {
      this.expandedRowKeys.has(parentUser.id)
-       ? this.expandedRowKeys.clear()
+       ? this.expandedRowKeys.delete(parentUser.id)
        : this.expandedRowKeys.set(parentUser.id, parentUser.id)
    }
 }

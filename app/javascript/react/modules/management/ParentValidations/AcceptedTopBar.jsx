@@ -12,7 +12,8 @@ class AcceptedTopBar extends Component {
 
     if (isEmpty(filter)) {
       store.setFilter('')
-      store.fetchParentValidations()
+      store.clearData()
+      store.fetchParentUsers()
     }
   }
 

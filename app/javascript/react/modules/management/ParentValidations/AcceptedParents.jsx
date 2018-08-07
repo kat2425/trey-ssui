@@ -3,7 +3,6 @@ import { observer }         from 'mobx-react'
 
 import Table                from 'ui/shell/AntdTable'
 import LoadingSpinner       from 'ui/shell/LoadingSpinner'
-import ParentModal          from 'ui/shell/Parent/PotentialUser'
 import Paginatron           from 'ui/shell/Paginatron'
 
 import AcceptedTopBar       from './AcceptedTopBar'
@@ -30,8 +29,7 @@ const AcceptedParents = (props) => {
         />
       )}
       {store.isLoading && <LoadingSpinner center /> }
-      <ParentModal />
-      { showPagination && (
+      {showPagination && (
         <Paginatron
           totalPages  = {pagination.totalPages}
           currentPage = {pagination.current}

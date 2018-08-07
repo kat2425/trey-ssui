@@ -59,10 +59,9 @@ export class PotentialUserStore {
 
   @computed get showPagination(){
     return (
-      isEmpty(this.filter) &&
       !this.isLoading &&
-      this.pagination.limit > 0 &&
-      this.pagination.page > 0 &&
+      this.pagination.pageSize > 0 &&
+      this.pagination.total > this.pagination.pageSize &&
       this.potentialUsers.size > 0
     )
   }
@@ -151,7 +150,7 @@ export class PotentialUserStore {
 
    @action handleContactSearchOk = (data) => {
      this.potentialUsers.clear()
-     data.forEach(this.createValidation)
+     data.forEach(this.createPotentialUser)
    }
 
    @action onPageChange = () => {
