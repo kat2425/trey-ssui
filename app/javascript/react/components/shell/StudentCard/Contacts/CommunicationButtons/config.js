@@ -55,6 +55,9 @@ export const isDisabled = ({contact, contactType, label}) => {
     return contact.stopped
   case CONTACT_TYPE.PHONE + BUTTON_LABEL.TEXT:
     return contact.isFetchingNumCapability || contact.isTextingDisabled
+  case CONTACT_TYPE.EMAIL + BUTTON_LABEL.EMAIL:
+    // contact will be undefined if a user has no email.
+    return !contact
   default:
     return false
   }
