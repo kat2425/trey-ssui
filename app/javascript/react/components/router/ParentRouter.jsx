@@ -31,7 +31,8 @@ const ParentRouter = props => {
     validationStore,
     uiStore,
     contactStore,
-    translationStore
+    translationStore,
+    userStore
   }
 
   return (
