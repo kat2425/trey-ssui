@@ -20,7 +20,7 @@ import {
 
 const ECommunicationButtons = renderIf(CommunicationButtons)
 
-const ContactCard = ({contact, ...rest}) => {
+const ContactCard = ({contact, userStore, ...rest}) => {
   const { contactsWithUniqueEmails, contactsWithUniquePhones } = getUniqueContacts(contact)
 
   return (
@@ -35,14 +35,14 @@ const ContactCard = ({contact, ...rest}) => {
         <ECommunicationButtons 
           contactsWithUniqueEmails = {contactsWithUniqueEmails}
           contactsWithUniquePhones = {contactsWithUniquePhones}
-          renderIf                 = {!rest.userStore.isParent}
+          renderIf                 = {userStore.isParent}
         />
       </CardHeader>
       <CardBody className='px-3'>
         <CardItem title='Phone'>
           { _.isEmpty(contactsWithUniquePhones) 
             ? <DefaultPlaceholder icon='phone' />
-            : <PhoneInfo key={uuid()} contacts={contactsWithUniquePhones} userStore={rest.userStore}/>
+            : <PhoneInfo key={uuid()} contacts={contactsWithUniquePhones} userStore={userStore}/>
           }
         </CardItem>
         <CardItem title='Email' className='mb-0'>
