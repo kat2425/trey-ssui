@@ -106,7 +106,7 @@ export default class Translator {
     if(!this.textToTranslate) return
 
     this.setIsLoading(true)
-    this.setIsError(null)
+    this.setIsError(false)
     progressCallback(true)
 
     try {

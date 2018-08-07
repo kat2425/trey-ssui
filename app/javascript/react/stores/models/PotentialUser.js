@@ -10,7 +10,7 @@ import xhr          from 'helpers/XHR'
 import getError     from 'helpers/ErrorParser'
 
 import uiStore      from 'stores/UiStore'
-import { only }     from 'stores/ParentValidationsStore'
+import { only }     from 'stores/PotentialUserStore'
 
 export default class ParentValidation {
   parentStore                                      = null
@@ -71,7 +71,7 @@ export default class ParentValidation {
       this.setIsEditing(true)
       this.setIsError(false)
 
-      const { data } = await xhr.put(`/parent_user_validations/${this.id}`, {
+      const { data } = await xhr.put(`/potential_users/${this.id}`, {
         params: { only }
       })
 
@@ -97,7 +97,7 @@ export default class ParentValidation {
       this.setIsDeleting(true)
       this.setIsError(false)
 
-      await xhr.delete(`/parent_user_validations/${this.id}`, {
+      await xhr.delete(`/potential_users/${this.id}`, {
         params: { only }
       })
 
@@ -115,6 +115,6 @@ export default class ParentValidation {
       message: `${this.firstName} ${this.lastName} has been deleted`,
       type:    'success'
     })
-    this.parentStore.deleteValidation(this.id)
+    this.parentStore.deletePotentialUser(this.id)
   }
 }

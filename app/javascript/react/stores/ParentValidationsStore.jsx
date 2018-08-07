@@ -152,7 +152,7 @@ export class ParentValidationStore {
        if(this.status !== STATUS.ALL) params.params.status = this.status
 
        this.setIsLoading(true)
-       this.setIsError(null)
+       this.setIsError(false)
 
        const { headers, data } = await xhr.get('/potential_users', params)
 
@@ -188,7 +188,7 @@ export class ParentValidationStore {
 
        if (this.status !== STATUS.ALL) params.params.status = this.status
 
-       this.setIsError(null)
+       this.setIsError(false)
 
        const { data } = await xhr.get('parent_user_validations/search', params)
 

@@ -194,7 +194,7 @@ export default class FlaggedContact {
   }
 
   @action clearErrors = () => {
-    this.setIsError(null)
+    this.setIsError(false)
   }
 
   @action openStudentCard = () => {

@@ -15,7 +15,6 @@ import reminderStore                from 'stores/ReminderStore'
 import translationStore             from 'stores/TranslationStore'
 import contactStore                 from 'stores/ContactStore'
 import flaggedContactStore          from 'stores/FlaggedContactStore'
-import parentValidationStore        from 'stores/ParentValidationsStore'
 
 import { 
   bugsnagClient, 
@@ -53,7 +52,6 @@ const UserRouter = props => {
     translationStore,
     contactStore,
     flaggedContactStore,
-    parentValidationStore
   }
 
   return (

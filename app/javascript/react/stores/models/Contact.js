@@ -272,7 +272,7 @@ export default class Contact {
   }
 
   @action clearErrors = () => {
-    this.setIsError(null)
+    this.setIsError(false)
   }
 
   @action initiateCall = () => {

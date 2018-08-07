@@ -56,7 +56,7 @@ export class VerificationStore {
   @action submitCodes = async(values) => {
     try {
       this.setInProgress(true)
-      this.setIsError(null)
+      this.setIsError(false)
 
       const { mobileCode, emailCode } = values
 
@@ -126,7 +126,7 @@ export class VerificationStore {
   @action submitPassword = async(password) => {
     try {
       this.setInProgress(true)
-      this.setIsError(null)
+      this.setIsError(false)
 
       await xhr.put(`/auth/reset/${this.userId}`,
         {

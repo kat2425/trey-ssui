@@ -6,17 +6,16 @@ import {
 
 import { setter }   from 'mobx-decorators'
 
+
 import xhr          from 'helpers/XHR'
 import fireEvent    from 'helpers/FireEvent'
 import getError     from 'helpers/ErrorParser'
 
 import uiStore      from 'stores/UiStore'
-import { only }     from 'stores/ParentValidationsStore'
+import { only }     from 'stores/ParentUserStore'
 
-export default class ParentValidation {
-  parentStore                                      = null
+export default class Validation {
   id                                               = null
-  @setter @observable user                         = null
   @setter @observable contact                      = null
   @setter @observable student                      = null
   @setter @observable createdAt                    = null
@@ -27,9 +26,9 @@ export default class ParentValidation {
   @setter @observable addressQuestionAttempted     = null
   @setter @observable dateOfBirthQuestionAttempted = null
 
-  @setter @observable isError = false
-  @setter @observable isRejecting = false
-  @setter @observable isVerifying = false
+  @setter @observable isError               = false
+  @setter @observable isRejecting           = false
+  @setter @observable isVerifying           = false
 
   constructor(store, json){
     this.parentStore = store
@@ -55,27 +54,21 @@ export default class ParentValidation {
 
   @action update = ({
     id,
-    user,
     contact,
-    created_at: createdAt,
     updated_at: updatedAt,
-    validation_status: validationStatus,
-    address_correct: addressCorrect,
-    date_of_birth_correct: dateOfBirthCorrect,
+    created_at: createdAt,
     address_question_attempted: addressQuestionAttempted,
-    date_of_birth_question_attempted: dateOfBirthQuestionAttempted
+    date_of_birth_question_attempted: dateOfBirthQuestionAttempted,
+    validation_status: validationStatus
   }) => {
-    this.id                           = id
-    this.user                         = user
-    this.contact                      = contact
-    this.student                      = contact.student
-    this.createdAt                    = createdAt
-    this.updatedAt                    = updatedAt
-    this.validationStatus             = validationStatus
-    this.addressCorrect               = addressCorrect
-    this.dateOfBirthCorrect           = dateOfBirthCorrect
-    this.addressQuestionAttempted     = addressQuestionAttempted
+    this.id               = id
+    this.contact          = contact
+    this.student          = contact.student
+    this.createdAt        = createdAt
+    this.updatedAt        = updatedAt
+    this.validationStatus = validationStatus
     this.dateOfBirthQuestionAttempted = dateOfBirthQuestionAttempted
+    this.addressQuestionAttempted = addressQuestionAttempted
   }
 
   @action verify = async() => {
@@ -96,12 +89,12 @@ export default class ParentValidation {
   }
 
   @action verifyOk = (data) => {
+    this.update(data)
     uiStore.addNotification({
       title:   'Success',
-      message: `${this.user.full_name} has been approved`,
+      message: `${this.student.full_name} has been approved`,
       type:    'success'
     })
-    this.update(data)
   }
 
   @action reject = async() => {
@@ -122,12 +115,12 @@ export default class ParentValidation {
   }
 
   @action rejectOk = (data) => {
+    this.update(data)
     uiStore.addNotification({
       title:   'Success',
-      message: `${this.user.full_name} has been rejected`,
+      message: `${this.student.full_name} has been rejected`,
       type:    'success'
     })
-    this.update(data)
   }
 
   @action openStudentCard = () => {

@@ -78,7 +78,7 @@ export class CallStore {
   @action fetchCallLogs = async() => {
     try {
       this.setIsLoading(true)
-      this.setIsError(null)
+      this.setIsError(false)
 
       const { headers, data } = await xhr.get('/commo/call_log', {
         params: { 

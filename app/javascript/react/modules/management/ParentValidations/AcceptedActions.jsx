@@ -6,7 +6,9 @@ const AcceptedActions = ({validation, withLabels = true}) => (
   <div className='d-flex align-items-center'>
     <SSButton
       onClick   = {validation.verify}
-      disabled  = {validation.validationStatus === 'verified'}
+      disabled  = {validation.validationStatus === 'verified' ||
+                    (!validation.addressQuestionAttempted &&
+                      !validation.dateOfBirthQuestionAttempted)}
       loading   = {validation.isVerifying}
       className = 'mr-4'
       iconClass = 'icon icon-check'

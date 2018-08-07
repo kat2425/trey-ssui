@@ -82,7 +82,7 @@ class PasswordForm extends Component {
             description={store.errorMessage}
             type='error'
             className='mb-4'
-            onClose={() => store.setIsError(null)}
+            onClose={() => store.setIsError(false)}
             closable
           />
         )}

@@ -4,7 +4,7 @@ import {
 }                           from 'antd'
 import uuid                 from 'uuid'
 import { capitalize }       from 'lodash/fp'
-import { MODE }             from 'stores/ParentValidationsStore'
+import { MODE }             from 'stores/ParentManagementStore'
 import { observer }         from 'mobx-react'
 
 @observer

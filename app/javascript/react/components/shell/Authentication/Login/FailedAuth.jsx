@@ -22,7 +22,7 @@ const FailedAuth = () => (
 
 function tryAgain() {
   store.clearFailureAuthCount()
-  store.setIsError(null)
+  store.setIsError(false)
 }
 
 function reset() {
