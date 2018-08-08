@@ -11,11 +11,12 @@ const BroadcastSearch = ({broadcastDraft, onChange, type}) => (
       labelKey               = {recipient => `${getName(recipient)} (${getType(recipient)})`}
       multiple               = {true}
       options                = {broadcastDraft.options.slice()}
-      onSearch               = {(q) => broadcastDraft.searchRecipients(q, type)}
+      onSearch               = {(q) => broadcastDraft.updateQueryAndSearch(q)}
       onChange               = {onChange}
       renderMenuItemChildren = {getName}
       placeholder            = {`Find a ${type}`}
       minLength              = {3}
+      useCache               = {false}
     />
   </div>
 )

@@ -18,11 +18,13 @@ export class BroadcastDraft {
 
   @setter @observable body              = ''
   @setter @observable recipients        = null
+  @setter @observable query             = ''
+  @setter @observable type              = 'group'
   @observable contactsCount             = observable.box(0)
   @setter @observable isSending         = false
   @setter @observable isSearching       = false
   @setter @observable isError           = false
-  @observable options                   = []
+  @setter @observable options           = []
 
   constructor(){
     this.initAutoruns()
@@ -161,19 +163,33 @@ export class BroadcastDraft {
     return this.recipients.map(this.addTypeToRecipient)
   }
 
-  @action searchRecipients = async(query, type) => {
+  @action updateQueryAndSearch = (query) => {
+    this.setQuery(query || '')
+    this.searchRecipients()
+  }
+
+  @action updateTypeAndSearch = (type) => {
+    this.setType(type)
+    this.searchRecipients()
+  }
+
+  @action searchRecipients = async() => {
     try {
       this.setIsSearching(true)
       this.setIsError(false)
+      this.setOptions([])
 
-      const res = await xhr.get(`/${type}s/search`, {
+      if(this.query.length < 4) return
+      
+      const res = await xhr.get(`/${this.type}s/search`, {
         params: {
-          query,
-          only: ['id', 'group_name', 'name', 'course_name'].join(',')
+          query: this.query,
+          only:  ['id', 'group_name', 'name', 'course_name'].join(',')
         }
       })
 
-      this.searchRecipientsOK(res.data)
+
+      this.searchRecipientsOK(res)
     } catch (e) {
       this.setIsError(getError(e))
     } finally {
@@ -182,7 +198,7 @@ export class BroadcastDraft {
   }
 
 
-  @action searchRecipientsOK = (options = []) => {
-    this.options = options
+  @action searchRecipientsOK = ({data = []} = {}) => {
+    this.options = data
   }
 }

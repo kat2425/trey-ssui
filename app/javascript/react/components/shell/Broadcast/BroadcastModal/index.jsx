@@ -30,6 +30,7 @@ class BroadcastModal extends Component {
 
   selectClick = (newType) => {
     this.setState({type: newType})
+    this.broadcastDraft.updateTypeAndSearch(newType)
   }
 
   render(){
