@@ -17,7 +17,7 @@ class RedirectsController < ApplicationController
       "last_name=#{user.last_name}",
       "state=#{user&.district.state}",
       "district_name=#{user&.district.district_name}",
-      "is_teacher=#{user&.is_teacher}",
+      "is_teacher=#{user&.district&.higher_ed ? 'higher_ed' : user&.is_teacher}",
       "has_feedbak=#{user&.district&.has_feedbak}",
       "feedbak_teacher=#{(user&.district&.has_feedbak && user&.is_teacher)}"
     ]
