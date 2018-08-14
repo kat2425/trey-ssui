@@ -188,6 +188,12 @@ const Assessments = [
     dataset: 'vw_psat_nm',
   },
   {
+    module:  'vjs_sat',
+    value:   'sat',
+    label:   'SAT',
+    dataset: 'vw_sat',
+  },
+  {
     module:  'vjs_satp',
     value:   'satp',
     label:   'SATP',

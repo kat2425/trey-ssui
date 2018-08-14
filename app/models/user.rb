@@ -74,6 +74,7 @@ class User < Sequel::Model(:users)
       :isTeacher                => is_teacher?,
       :currentSchoolYear        => CURRENT_SCHOOL_YEAR,
       :has_channel              => has_channel?,
+      :hasLearningLab           => has_learning_lab?,
       :higherEd                 => district&.higher_ed,
       :intercomUserHash         => intercom_user_hash,
       :jasper                   => jasper_user_creds,
@@ -126,6 +127,12 @@ class User < Sequel::Model(:users)
 
   def has_module?(symbol)
     list_modules.include? symbol.to_s
+  end
+
+  def has_learning_lab?
+    district.has_module? :learning_lab
+  rescue
+    false
   end
 
   # Itercom User Hash

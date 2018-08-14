@@ -68,7 +68,7 @@ export default class JCJCBinary extends Component {
   render() {
     return (
       <div>
-        <ModuleHeader title='Binary At Risk'>
+        <ModuleHeader title='Performance Risk'>
           <EVJSICSelect
             id            = 'course_id'
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/cascade_courses/report'

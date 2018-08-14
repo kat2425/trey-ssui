@@ -19,12 +19,7 @@ Bundler.require(*Rails.groups)
 # Set a global constant to reference current school year
 CURRENT_SCHOOL_YEAR = begin
   t = Time.now.to_date
-
-  if t.month >= 8 && t.month <= 12
-    t.year + 1
-  else
-    t.year
-  end
+  ((t >= "#{t.year}-07-31".to_date) && t.month <= 12) ? t.year + 1 : t.year
 end
 
 module SchoolStatus

@@ -10,6 +10,7 @@ import {
 
 
 import StudentSearch from './StudentSearch'
+import userStore     from 'stores/UserStore'
 import fireEvent     from 'helpers/FireEvent'
 import intercomEvent from 'helpers/Intercom'
 import renderIf      from 'ui/hoc/renderIf'
@@ -164,7 +165,8 @@ export default class NavBar extends Component {
                 <DropdownItem>
                   <a target="_blank" href='http://help.schoolstatus.com/'>Help Center</a>
                 </DropdownItem>
-                <LearningCenterItem renderIf={window.SSUser.betaTester} />
+
+                <LearningCenterItem renderIf={userStore.user.hasLearningLab} />
               </DropdownMenu>
             </UncontrolledDropdown>
 

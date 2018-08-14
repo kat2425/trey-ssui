@@ -42,6 +42,7 @@ import OSTP                 from './OSTP'
 import PARCC                from './PARCC'
 import PSAT89               from './PSAT89'
 import PSATNM               from './PSATNM'
+import SAT                  from './SAT'
 import SATP                 from './SATP'
 import STAREarlyLit         from './STAREarlyLit'
 import STARMath             from './STARMath'
@@ -141,6 +142,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/parcc'              component={PARCC}            />
           <Route path='/r/assessment/psat_89'            component={PSAT89}           />
           <Route path='/r/assessment/psat_nm'            component={PSATNM}           />
+          <Route path='/r/assessment/sat'                component={SAT}              />
           <Route path='/r/assessment/scantron'           component={Scantron}         />
           <Route path='/r/assessment/star_early_lit'     component={STAREarlyLit}     />
           <Route path='/r/assessment/star_math'          component={STARMath}         />

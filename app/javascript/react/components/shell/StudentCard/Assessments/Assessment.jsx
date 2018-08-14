@@ -43,6 +43,7 @@ import OSTP             from './OSTP'
 import PARCC            from './PARCC'
 import PSAT89           from './PSAT89'
 import PSATNM           from './PSATNM'
+import SAT              from './SAT'
 import SATP             from './SATP'
 import STAREarlyLit     from './STAREarlyLit'
 import STARMath         from './STARMath'
@@ -164,6 +165,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/psat_nm`}
             render = {() => <PSATNM student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/sat`}
+            render = {() => <SAT student={student}/> }
           />
 
           <Route

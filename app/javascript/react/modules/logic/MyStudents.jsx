@@ -23,7 +23,7 @@ export default class MyStudents extends Component {
 
   constructor(props) {
     super(props)
-    const _currentYear = ((userStore.user.districtCode === '7320' || userStore.user.districtCode === '6711') ? 2019 : 2018).toString()
+    const _currentYear = userStore.user.currentSchoolYear.toString()
 
     this.state = {
       params: {
