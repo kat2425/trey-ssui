@@ -9,19 +9,12 @@ import {
 } from 'reactstrap'
 
 
-<<<<<<< HEAD
-import StudentSearch from './StudentSearch'
-import userStore     from 'stores/UserStore'
-import fireEvent     from 'helpers/FireEvent'
-import intercomEvent from 'helpers/Intercom'
-import renderIf      from 'ui/hoc/renderIf'
-=======
 import StudentSearch      from './StudentSearch'
 import LearningCenterLink from 'ui/shell/LearningCenterLink'
 import fireEvent          from 'helpers/FireEvent'
 import intercomEvent      from 'helpers/Intercom'
+import userStore          from 'stores/UserStore'
 import renderIf           from 'ui/hoc/renderIf'
->>>>>>> f6823467b23bd22eb22cdf23bbcaf44648e34836
 
 const ENav               = renderIf(Nav)
 const LearningCenterItem = renderIf(LearningCenterLink)
