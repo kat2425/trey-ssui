@@ -28,6 +28,6 @@ const Wrapper = styled.div.attrs({
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 `
 const createButtonStyle = ({
-  backgroundColor: '#f0ad4e',
+  backgroundColor: '#ff9800',
   color:           'white',
 })

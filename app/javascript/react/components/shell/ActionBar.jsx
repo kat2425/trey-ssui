@@ -113,19 +113,7 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           </ReactCSSTransitionGroup>
         </NavItem>
         }
-        <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.BROADCAST)}>
-          <span className='icon icon-megaphone mr-2' style={{opacity: '0.6'}}/>
-          <span>Broadcasts</span>
-          <Badge
-            color  = 'success'
-            style  = {actionBarNotification}
-            hidden = {totalPending < 1}
-            pill
-          >
-            {totalPending}
-          </Badge>
-        </NavItem>
-
+        
         <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.REMINDER)}>
           <span className='icon icon-clock mr-2' style={{opacity: '0.6'}}/>
           <span>Reminders</span>
@@ -142,6 +130,19 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
         <NavItem className='ml-4' onClick={() => setSelectedSidebar(SIDEBAR.CALL)}>
           <span className='icon icon-voicemail mr-2' style={{opacity: '0.6'}}/>
           <span>Calls</span>
+        </NavItem>
+
+        <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.BROADCAST)}>
+          <span className='icon icon-megaphone mr-2' style={{opacity: '0.6'}}/>
+          <span>Broadcasts</span>
+          <Badge
+            color  = 'success'
+            style  = {actionBarNotification}
+            hidden = {totalPending < 1}
+            pill
+          >
+            {totalPending}
+          </Badge>
         </NavItem>
 
         <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.SMS)}>
