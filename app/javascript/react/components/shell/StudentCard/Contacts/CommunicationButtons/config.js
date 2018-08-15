@@ -35,12 +35,16 @@ export const getButtonConfig = (contactsWithUniquePhones, contactsWithUniqueEmai
     hasContacts:      contactsWithUniquePhones.length > 1,
     onClick:          (contact) => { contact.initiateText() }
   },{
-    label:            BUTTON_LABEL.EMAIL,
-    size:             'lg',
-    iconClass:        'icon icon-mail',
-    className:        'rounded-circle',
-    color:            'info',
-    style:            {padding: '5px 8px'},
+    label:     BUTTON_LABEL.EMAIL,
+    size:      'lg',
+    iconClass: 'icon icon-mail',
+    className: 'rounded-circle',
+    color:     'info',
+    style:     {
+      padding:         '5px 8px', 
+      backgroundColor: 'rgb(159, 109, 176)', 
+      borderColor:     'rgb(159, 109, 176)'
+    },
     keyForValue:      CONTACT_TYPE.EMAIL,
     iconNameForValue: 'mail',
     contacts:         contactsWithUniqueEmails,

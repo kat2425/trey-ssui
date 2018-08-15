@@ -17,6 +17,7 @@ const Email = inject('userStore')(observer(({userStore, contact}) => (
       className = 'mr-2'
       iconClass = 'icon icon-mail'
       onClick   = {contact.initiateEmail}
+      style     = {{backgroundColor: 'rgb(159, 109, 176)', borderColor: 'rgb(159, 109, 176)'}}
       renderIf  = {!userStore.isParent}
     />
     {contact.email}
