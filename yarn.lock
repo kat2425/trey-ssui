@@ -3408,6 +3408,10 @@ dotenv@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
+download-csv@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/download-csv/-/download-csv-1.1.1.tgz#c0b076f48344f1be47af4005cf32d53283eb88eb"
+
 draft-js-export-html@>=0.6.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-1.2.0.tgz#1cbe2b78e1fed74fc29c7cdcbfd7540468eca209"
