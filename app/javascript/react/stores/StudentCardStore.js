@@ -12,7 +12,6 @@ import getError      from 'helpers/ErrorParser'
 import uiStore       from 'stores/UiStore'
 
 import userStore     from 'stores/UserStore'
-import intercomEvent from 'helpers/Intercom'
 
 export class StudentCardStore {
   @setter @observable isLoading          = false
@@ -91,7 +90,7 @@ export class StudentCardStore {
 
       this.fetchStudentOK(res)
     } catch(e) {
-      this.setisError(getError(e))
+      this.setIsError(getError(e))
     } finally {
       this.setIsLoading(false)
     }
