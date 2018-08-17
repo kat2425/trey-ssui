@@ -22,6 +22,18 @@ class LoginController < ApplicationController
     end
   end
 
+  def persona_change
+    authenticate # a user can't switch personas if they aren't logged in
+
+    if (new_user = User[params['id']])
+      if new_user.username == user.username # ensure that the persona is valid
+        warden.set_user new_user
+      end
+    end
+
+    redirect_to '/home'
+  end
+
   def session_info
     render :json => session.to_json
   end

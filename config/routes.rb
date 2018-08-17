@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'login'                                  => 'login#warden_login'
   get  '/session/logout'                        => 'login#warden_logout'
   get  '/session/info'                          => 'login#session_info'
+  get  '/personas/switch/:id'                   => 'login#persona_change'
 
   # Google OmniAuth
   get '/auth/google_oauth2/callback'            => 'sessions#create'
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
 
   get '/verification/*path'                     => 'verification#index'
   get '/verification'                           => 'verification#index'
-  
+
    # Mobile redirect route
   get '/mobile/verification/:potential_user_id' => 'verification#mobile'
 end
