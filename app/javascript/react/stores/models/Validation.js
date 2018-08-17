@@ -58,17 +58,21 @@ export default class Validation {
     updated_at: updatedAt,
     created_at: createdAt,
     address_question_attempted: addressQuestionAttempted,
+    address_correct: addressCorrect,
     date_of_birth_question_attempted: dateOfBirthQuestionAttempted,
+    date_of_birth_correct: dateOfBirthCorrect,
     validation_status: validationStatus
   }) => {
-    this.id               = id
-    this.contact          = contact
-    this.student          = contact.student
-    this.createdAt        = createdAt
-    this.updatedAt        = updatedAt
-    this.validationStatus = validationStatus
+    this.id                           = id
+    this.contact                      = contact
+    this.student                      = contact.student
+    this.createdAt                    = createdAt
+    this.updatedAt                    = updatedAt
+    this.validationStatus             = validationStatus
     this.dateOfBirthQuestionAttempted = dateOfBirthQuestionAttempted
-    this.addressQuestionAttempted = addressQuestionAttempted
+    this.dateOfBirthCorrect           = dateOfBirthCorrect
+    this.addressQuestionAttempted     = addressQuestionAttempted
+    this.addressCorrect               = addressCorrect
   }
 
   @action verify = async() => {
