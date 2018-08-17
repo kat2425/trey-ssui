@@ -27,7 +27,7 @@ export default class MyStudents extends Component {
 
     this.state = {
       params: {
-        school_year: [_currentYear ]
+        school_year: [ _currentYear ]
       },
       selected: {
         school_year: { selected: true, label: _currentYear , value: _currentYear }

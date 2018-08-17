@@ -9,7 +9,7 @@ const EUserMenuItem    = renderIf(UserMenuItem)
 const EUserMenuSection = renderIf(UserMenuSection)
 
 const UserMenu = () => {
-  const _riskItemLabel    = userStore.user.higherEd ? 'At Risk' : 'At Risk'
+  const _riskItemLabel    = userStore.user.higherEd ? 'Retention Risk' : 'At Risk'
 
   return (
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar pt-0'>
@@ -85,6 +85,7 @@ const UserMenu = () => {
             ((userStore.hasModules('vjs_aa_2017') && userStore.user.isDistrictLevel) ||
               (userStore.hasModules('vjs_aa_sneak_peek')))
           }
+          noRoute
         />
 
         <EUserMenuItem
@@ -125,6 +126,7 @@ const UserMenu = () => {
           iconClass = 'icon-retweet'
           link      = '/r/feedbak'
           renderIf  = {userStore.hasModules('feedbak')}
+          noRoute
         />
 
         <EUserMenuItem
@@ -151,7 +153,7 @@ const UserMenu = () => {
         />
 
         <EUserMenuItem
-          title     = 'Binary At-Risk'
+          title     = 'Performance Risk'
           iconClass = 'icon-light-bulb'
           link      = '/r/jcjc_binary'
           renderIf  = {userStore.hasModules('vjs_jcjc_binary')}

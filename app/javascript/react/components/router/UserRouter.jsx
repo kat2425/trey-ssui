@@ -14,9 +14,15 @@ import smsInboxStore                from 'stores/SMSInboxStore'
 import reminderStore                from 'stores/ReminderStore'
 import translationStore             from 'stores/TranslationStore'
 
+import { 
+  bugsnagClient, 
+  ErrorBoundary 
+} from 'helpers/bugsnag'
+
 const UserRouter = props => {
   // we inject ui related user props serverside and set to window var window.SSUser = props.user
   window.SSUser = props.user
+  bugsnagClient.user = props.user
 
   userStore.setUser(props.user)
   tagStore.fetchSchema()
@@ -37,13 +43,15 @@ const UserRouter = props => {
   const store = {uiStore, userStore, tagStore, translationStore}
 
   return (
-    <BrowserRouter>
-      <MobxProvider {...store}>
-        <LastLocationProvider>
-          <UserMain />
-        </LastLocationProvider>
-      </MobxProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <MobxProvider {...store}>
+          <LastLocationProvider>
+            <UserMain />
+          </LastLocationProvider>
+        </MobxProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 

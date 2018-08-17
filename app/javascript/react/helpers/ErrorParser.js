@@ -1,11 +1,11 @@
-import _ from 'lodash'
+import React             from 'react'
+import _                 from 'lodash'
+import CustomError       from 'ui/shell/CustomError'
+import { bugsnagClient } from 'helpers/bugsnag'
 
 export default function ErrorParser(e){
   console.error(e)
-
-  const error = { title: 'Error', message: e.message}
-
-  if( _.has(e, 'response.data') && isHTML(e.response.data)) return error
+  bugsnagClient.notify(e)
 
   if(_.has(e, 'response.data.message') && _.has(e, 'response.data.errors')) {
     return {
@@ -14,12 +14,31 @@ export default function ErrorParser(e){
     }
   }
 
-  return error
+  return {
+    title:   'Oh No! 😳',
+    message: (
+      <CustomError
+        status     = {e.response.status}
+        endpoint   = {e.request.responseURL.slice(28)}
+        customText = {returnErrorMessage(e.response.status)}
+      />
+    )
+  }
 }
 
-
-function isHTML(str) {
-  const doc = new DOMParser().parseFromString(str, 'text/html')
-
-  return Array.from(doc.body.childNodes).some(node => node.nodeType === 1)
+function returnErrorMessage(stringCode) {
+  switch (stringCode) {
+  case 404:
+    return 'We cannot locate something on the page'
+  case 500:
+    return 'SchoolStatus servers are having trouble processing your request.'
+  case 503:
+    return 'SchoolStatus servers are temporarily unavailable probably \
+    because they are unusually busy. Give us a minute and it should sort itself out.'
+  case 504:
+    return 'SchoolStatus servers are temporarily unavailable probably \
+    because they are unusually busy. Give us a minute and it should sort itself out.'
+  default:
+    return 'We experienced an unknown error.'
+  }
 }

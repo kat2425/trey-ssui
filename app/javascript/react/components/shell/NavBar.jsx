@@ -9,13 +9,16 @@ import {
 } from 'reactstrap'
 
 
-import StudentSearch from './StudentSearch'
-import fireEvent     from 'helpers/FireEvent'
-import intercomEvent from 'helpers/Intercom'
-import renderIf      from 'ui/hoc/renderIf'
+import StudentSearch      from './StudentSearch'
+import LearningCenterLink from 'ui/shell/LearningCenterLink'
+import fireEvent          from 'helpers/FireEvent'
+import intercomEvent      from 'helpers/Intercom'
+import userStore          from 'stores/UserStore'
+import renderIf           from 'ui/hoc/renderIf'
 
-const ENav      = renderIf(Nav)
-const brandLogo = { height: '35px' }
+const ENav               = renderIf(Nav)
+const LearningCenterItem = renderIf(LearningCenterLink)
+const brandLogo          = { height: '35px' }
 
 @withRouter
 @inject('uiStore')
@@ -98,16 +101,7 @@ export default class NavBar extends Component {
   }
 
   render() {
-    const learningCenterLink = () => {
-      return(
-        <DropdownItem>
-          <a target="_blank" href='/redirects/learning_lab'>Learning Lab</a>
-        </DropdownItem>
-      )
-    }
-
     const { uiStore }        = this.props
-    const LearningCenterItem = renderIf(learningCenterLink)
 
     return (
       <Navbar
@@ -164,7 +158,8 @@ export default class NavBar extends Component {
                 <DropdownItem>
                   <a target="_blank" href='http://help.schoolstatus.com/'>Help Center</a>
                 </DropdownItem>
-                <LearningCenterItem renderIf={window.SSUser.betaTester} />
+
+                <LearningCenterItem renderIf={userStore.user.hasLearningLab} />
               </DropdownMenu>
             </UncontrolledDropdown>
 

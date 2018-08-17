@@ -2,6 +2,12 @@ class District < Sequel::Model(:districts)
   one_to_many :users
   one_to_many :schools
 
+  many_to_many :modules,
+    :class      => :SSModule,
+    :join_table => :district_modules,
+    :left_key   => :district_id,
+    :right_key  => :module_id
+
   class << self
     def anytown
       self[:district_code => '9999']
@@ -34,6 +40,14 @@ class District < Sequel::Model(:districts)
     end
   rescue
     []
+  end
+
+  def list_modules
+    modules_dataset.select_map(:symbol)
+  end
+
+  def has_module?(symbol)
+    list_modules.include? symbol.to_s
   end
 
   # Expiration Informatoin                                                      {{{

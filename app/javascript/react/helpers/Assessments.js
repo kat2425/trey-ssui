@@ -11,7 +11,13 @@ const Assessments = [
     module:  'vjs_act_aspire',
     value:   'act_aspire',
     label:   'ACT Aspire',
-    dataset: '',
+    dataset: 'act_aspires',
+  },
+  {
+    module:  'vjs_act_aspire_interim',
+    value:   'act_aspire_interim',
+    label:   'ACT Aspire Interim',
+    dataset: 'act_aspire_interims',
   },
   {
     module:  'vjs_aimsweb',
@@ -110,6 +116,12 @@ const Assessments = [
     dataset: 'ireadys',
   },
   {
+    module:  'vjs_istation',
+    value:   'istation',
+    label:   'iStation',
+    dataset: 'vw_istation',
+  },
+  {
     module:  'vjs_las_links',
     value:   'las_links',
     label:   'LASLinks',
@@ -167,13 +179,19 @@ const Assessments = [
     module:  'vjs_psat',
     value:   'psat_89',
     label:   'PSAT 8/9',
-    dataset: 'vw_psat_89',
+    dataset: 'vw_psat89',
   },
   {
     module:  'vjs_psat',
     value:   'psat_nm',
     label:   'PSAT NM',
     dataset: 'vw_psat_nm',
+  },
+  {
+    module:  'vjs_sat',
+    value:   'sat',
+    label:   'SAT',
+    dataset: 'vw_sat',
   },
   {
     module:  'vjs_satp',

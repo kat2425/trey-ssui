@@ -5,7 +5,7 @@ import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
 
 @observer
-export default class PSATNM extends Component {
+export default class SAT extends Component {
   constructor(props) {
     super(props)
 
@@ -29,10 +29,10 @@ export default class PSATNM extends Component {
     return (
       <div>
         <VJSChart
-          id               = 'sc-psat-nm'
-          reportPath       = '/public/VJS/ss_ui/assessment/psat/psat_nm_student_card'
+          id               = 'sc-sat'
+          reportPath       = '/public/VJS/ss_ui/assessment/sat/student_card'
           scale            = 'container'
-          title            = 'PSAT NM'
+          title            = 'SAT'
           isTable          = {true}
           ignorePagination = {true}
           params           = {{
@@ -49,7 +49,7 @@ export default class PSATNM extends Component {
             setDefault    = {true}
             placeholder   = 'Year'
             width         = {100}
-            params        = {{ dataset: ['vw_psat_nm'], student_id: [student.id] }}
+            params        = {{ dataset: ['vw_sat'], student_id: [student.id] }}
           />
         </VJSChart>
       </div>
