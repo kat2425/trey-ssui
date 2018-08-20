@@ -2,14 +2,19 @@
 
 /* eslint global-require: 0 */
 
-const webpack                        = require('webpack')
-const merge                          = require('webpack-merge')
-const CompressionPlugin              = require('compression-webpack-plugin')
-const sharedConfig                   = require('./shared.js')
-const { BugsnagBuildReporterPlugin } = require('webpack-bugsnag-plugins')
-const { env }                        = require('./configuration.js')
+const webpack           = require('webpack')
+const merge             = require('webpack-merge')
+const CompressionPlugin = require('compression-webpack-plugin')
+const sharedConfig      = require('./shared.js')
+const { env }           = require('./configuration.js')
+const { 
+  BugsnagBuildReporterPlugin,
+  BugsnagSourceMapUploaderPlugin
+} = require('webpack-bugsnag-plugins')
 
 require('dotenv').config()
+
+const apiKey = env.JS_BUGSNAG_API_KEY
 
 module.exports = merge(sharedConfig, {
   output:  { filename: '[name]-[chunkhash].js' },
@@ -31,7 +36,10 @@ module.exports = merge(sharedConfig, {
       }
     }),
     new BugsnagBuildReporterPlugin({
-      apiKey: env.JS_BUGSNAG_API_KEY
+      apiKey: apiKey
+    }),
+    new BugsnagSourceMapUploaderPlugin({
+      apiKey: apiKey
     }),
     new CompressionPlugin({
       asset:     '[path].gz[query]',
