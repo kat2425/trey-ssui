@@ -9,7 +9,7 @@ import _                    from 'lodash'
 
 const StudentSearchItem = ({ student, search }) => {
   const formatResults = (search, value) => {
-    const regexs   = _.forEach(search.split(' '), (v) => RegExp(`(${v})`, 'ig'))
+    const regexs   = _.escapeRegExp(search).split(' ').forEach((v) => RegExp(`(${v})`, 'ig')) 
     let   newValue = value
 
     _.each(regexs, (regex) => {
