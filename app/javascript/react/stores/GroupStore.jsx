@@ -28,8 +28,8 @@ class GroupStore {
   @setter @observable isSearching   = false
   @observable originalGroup         = observable.map()
   @observable selectedGroup         = null
-  
-  // TODO: Ensure that this gets unset so that 
+
+  // TODO: Ensure that this gets unset so that
   // we don't end up with a weird case where the
   // user doesn't see groups somewhere else because
   // they've searched here.
@@ -58,10 +58,10 @@ class GroupStore {
         return g.groupType.toLowerCase() === this.activeTab
       })
     }
-   
+
     return groups
   }
-  
+
   @computed get userGroups() {
     let userGroups = this.groups.values().filter(g => g.groupType === 'user')
 
@@ -119,13 +119,13 @@ class GroupStore {
   @action fetchGroups = async() => {
     const params = {
       only: [
-        'id', 
-        'created_at', 
-        'group_name', 
-        'group_id', 
-        'group_type', 
-        'member_count', 
-        'description', 
+        'id',
+        'created_at',
+        'group_name',
+        'group_id',
+        'group_type',
+        'member_count',
+        'description',
         'child_groups',
         'parent_group'
       ]
@@ -135,7 +135,7 @@ class GroupStore {
       this.setIsLoading(true)
       this.setGroupFilter('')
       const {data:groups} = await xhr.get('/groups', params)
-      
+
       groups.forEach(this.updateGroupFromServer)
     } catch(e){
       this.setIsError(getError(e))
@@ -149,7 +149,7 @@ class GroupStore {
   }
 
   @action getIdsFromNames = (names = []) => {
-    return names.map(name => 
+    return names.map(name =>
       this.groups.values().find(g => g.name === name)
     )
   }
@@ -164,9 +164,9 @@ class GroupStore {
 
   @action handleAddGroup = () => {
     this.addGroup(new Group({isNew: true}, this, {
-      id:          uuid(), 
-      group_type:  null, 
-      group_name:  null, 
+      id:          uuid(),
+      group_type:  null,
+      group_name:  null,
       description: '',
       group_id:    null
     }))
@@ -178,7 +178,7 @@ class GroupStore {
     this.setSearchValue(event.target.value)
 
     if(this.shouldSearch) {
-      _.debounce(this.searchMembers(event.target.value), 300)
+      _.debounce(() => this.searchMembers(event.target.value), 300)
     }
   }
 
