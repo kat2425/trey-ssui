@@ -6,7 +6,10 @@ import { bugsnagClient } from 'helpers/bugsnag'
 export default function ErrorParser(e){
   bugsnagClient.notify(e)
 
-  if(_.hasIn(e, 'response.data.message') && _.hasIn(e, 'response.data.errors')) {
+  if(_.hasIn(e, 'response.data.message') &&
+    _.hasIn(e, 'response.data.errors') &&
+    e.response.status < 500
+  ) {
     return {
       title:   e.response.data.message,
       message: e.response.data.errors
