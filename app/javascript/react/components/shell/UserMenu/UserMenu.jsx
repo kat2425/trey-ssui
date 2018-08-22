@@ -93,11 +93,7 @@ const UserMenu = () => {
           iconClass = 'icon-calculator'
           link      = '/r/accountability/prelim_results'
           badge     = 'NEW (2018)'
-          renderIf  = {
-            !userStore.user.isTeacher &&
-            ((userStore.hasModules('vjs_aa_2017') && userStore.user.isDistrictLevel) ||
-              (userStore.hasModules('vjs_aa_sneak_peek')))
-          }
+          renderIf  = {(!userStore.user.isTeacher && userStore.hasModules('vjs_aa_2017'))}
           noRoute
         />
 
