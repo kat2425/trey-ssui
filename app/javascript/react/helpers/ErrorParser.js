@@ -8,7 +8,7 @@ export default function ErrorParser(e){
 
   if(_.hasIn(e, 'response.data.message') &&
     _.hasIn(e, 'response.data.errors') &&
-    e.response.status < 500
+    _.get(e, 'response.status', 600) < 500
   ) {
     return {
       title:   e.response.data.message,
