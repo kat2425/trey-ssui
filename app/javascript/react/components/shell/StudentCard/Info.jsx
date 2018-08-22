@@ -1,4 +1,5 @@
 import React, { Component }      from 'react'
+import _                         from 'lodash'
 import DateFormat                from 'helpers/DateFormat'
 
 import {
@@ -54,7 +55,7 @@ export default class Info extends Component {
         <CardBody className='text-xs-center mb-0 pb-1'>
           <StudentAvatar id={student.id} size={95} className='card-profile-img mx-auto' />
           <CardTitle>{student.first_name} {student.last_name}</CardTitle>
-          <h6>{ student.school.school_name }</h6>
+          <h6>{ _.get(student, 'school.school_name', 'N/A') }</h6>
 
           <ul className='card-menu mb-2'>
             <li className='card-menu-item text-muted'>
