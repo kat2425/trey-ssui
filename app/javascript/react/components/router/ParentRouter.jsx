@@ -13,6 +13,7 @@ import validationStore                  from 'stores/ValidationStore'
 import translationStore                 from 'stores/TranslationStore'
 import ParentAuthenticator              from 'ui/shell/ParentAuthenticator'
 import ParentPage                       from 'ui/shell/Parent/ParentPage'
+import BrowserMessage                   from 'ui/shell/BrowserMessage'
 
 const ParentRouter = props => {
   window.SSUser = props.user
@@ -53,6 +54,7 @@ const ParentRouter = props => {
             />
           </Switch>
         </LastLocationProvider>
+        <BrowserMessage />
       </MobxProvider>
     </BrowserRouter>
   )
