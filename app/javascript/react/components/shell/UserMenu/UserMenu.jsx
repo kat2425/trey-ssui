@@ -75,11 +75,24 @@ const UserMenu = () => {
         title    = 'Accountability'
         renderIf = {userStore.hasModules('vjs_aa_2017','vjs_lps')}
       >
+        {/* <EUserMenuItem */}
+        {/*   title     = 'Sneak Peek' */}
+        {/*   iconClass = 'icon-calculator' */}
+        {/*   link      = '/r/accountability/sneak_peek' */}
+        {/*   badge     = 'NEW' */}
+        {/*   renderIf  = { */}
+        {/*     !userStore.user.isTeacher && */}
+        {/*     ((userStore.hasModules('vjs_aa_2017') && userStore.user.isDistrictLevel) || */}
+        {/*       (userStore.hasModules('vjs_aa_sneak_peek'))) */}
+        {/*   } */}
+        {/*   noRoute */}
+        {/* /> */}
+
         <EUserMenuItem
-          title     = 'Sneak Peek'
+          title     = 'Prelim Results'
           iconClass = 'icon-calculator'
-          link      = '/r/accountability/sneak_peek'
-          badge     = 'NEW'
+          link      = '/r/accountability/prelim_results'
+          badge     = 'NEW (2018)'
           renderIf  = {
             !userStore.user.isTeacher &&
             ((userStore.hasModules('vjs_aa_2017') && userStore.user.isDistrictLevel) ||
@@ -93,6 +106,7 @@ const UserMenu = () => {
           iconClass = 'icon-eye'
           link      = '/r/accountability/final_results'
           renderIf  = {userStore.hasModules('vjs_aa_2017')}
+          noRoute
         />
 
         <EUserMenuItem
@@ -100,6 +114,7 @@ const UserMenu = () => {
           iconClass = 'icon-ruler'
           link      = '/r/accountability/lps'
           renderIf  = {userStore.hasModules('vjs_lps')}
+          noRoute
         />
       </EUserMenuSection>
 

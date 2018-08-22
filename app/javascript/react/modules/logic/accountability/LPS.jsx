@@ -17,8 +17,8 @@ export default class LPS extends Component {
     const jrsValue = val ? val.value : '~NOTHING~'
 
     this.setState({
-      params:     { ...this.state.params, school_filter: [ jrsValue ] },
-      selected:   { ...this.state.selected, school_filter: val }
+      params:   { ...this.state.params, school_filter: [ jrsValue ] },
+      selected: { ...this.state.selected, school_filter: val }
     })
   }
 
@@ -41,8 +41,8 @@ export default class LPS extends Component {
           <ul>
             <li>These students are projected based on current enrollment and are recalculated daily.</li>
             <li>Students may enter and exit this dataset as enrollment changes.</li>
-            <li>Students in this module may not necessarily be considered LPS students for the 2018 MAAP test.</li>
-            <li>Data is calculated based on students' 2017 MAAP scores, which will be used next year to calculate growth compared to 2018 MAAP scores.</li>
+            <li>Students in this module may not necessarily be considered LPS students for the 2019 MAAP test.</li>
+            <li>Data is calculated based on students' 2018 MAAP scores, which will be used next year to calculate growth compared to 2018 MAAP scores.</li>
           </ul>
         </div>
 
