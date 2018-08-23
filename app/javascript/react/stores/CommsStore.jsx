@@ -156,7 +156,7 @@ export class CommsStore {
     }
   }
 
-  @action fetchCommunicationHistoryOK = (data) => {
+  @action fetchCommunicationHistoryOK = (data = []) => {
     this.clearData()
     data.forEach(this.createCommunication)
   }

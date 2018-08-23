@@ -67,7 +67,7 @@ export class CallingStore {
     try {
       return await xhr.get('/commo/capability_token')
     } catch(e){
-      this.setError(getError(e))
+      this.setIsError(getError(e))
     }
   }
 
@@ -91,7 +91,7 @@ export class CallingStore {
   }
 
   @action
-  initialCallOK = (studentId, data) => {    
+  initialCallOK = (studentId, data) => {
     this.contactName = this.contact.name
     this.studentID   = studentId
     this.phoneNumber = this.contact.phone
@@ -246,7 +246,7 @@ export class CallingStore {
       this.device = Twilio.Device.setup(token, { region: 'us1', debug: true })
     }
     catch (e) {
-      this.setError(getError(e))
+      this.setIsError(getError(e))
     }
 
     this.device.error((error) => {

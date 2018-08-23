@@ -19,6 +19,9 @@ import {
   ErrorBoundary 
 } from 'helpers/bugsnag'
 
+// IE11 polyfill for supporting `element.closest` used in Searchlight
+import 'mdn-polyfills/Element.prototype.closest'
+
 const UserRouter = props => {
   // we inject ui related user props serverside and set to window var window.SSUser = props.user
   window.SSUser = props.user
