@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { observer }         from 'mobx-react'
 import SubmoduleHeader      from 'ui/shell/SubmoduleHeader'
+import userStore            from 'stores/UserStore'
 
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
@@ -10,8 +11,14 @@ export default class Infractions extends Component {
   constructor(props) {
     super(props)
 
+    this._currentYear = userStore.user.currentSchoolYear
     this.state = {
-      params:   {}, selected: {}
+      params: {
+        school_year: [ this._currentYear ]
+      },
+      selected: {
+        school_year: { selected: true, label: this._currentYear , value: this._currentYear }
+      }
     }
   }
 
@@ -71,7 +78,6 @@ export default class Infractions extends Component {
               selectedValue = {this.state.selected.school_year}
               handleChange  = {::this.setYearFilter}
               clearable     = {false}
-              setDefault    = {true}
               placeholder   = 'Year'
               width         = {100}
               params        = {{ dataset: ['infractions'], student_id: [student.id] }}

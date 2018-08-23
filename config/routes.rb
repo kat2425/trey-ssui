@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   get  '/session/info'   => 'login#session_info'
 
   # Legacy Hooks
-  get '/legacy/useradmin' => 'legacy#useradmin'
-  get '/legacy/settings'  => 'legacy#settings'
+  get '/legacy/useradmin'   => 'legacy#useradmin'
+  get '/legacy/settings'    => 'legacy#settings'
+  get '/legacy/voice_admin' => 'legacy#voice_admin'
 
   # Redirects
   get '/redirects/learning_lab' => 'redirects#learning_lab'

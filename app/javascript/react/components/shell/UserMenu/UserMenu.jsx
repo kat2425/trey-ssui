@@ -187,13 +187,21 @@ const UserMenu = () => {
 
       <EUserMenuSection
         title    = 'Management'
-        renderIf = {userStore.hasModules('useradmin')}
+        renderIf = {userStore.hasModules('useradmin') || userStore.hasModules('voice_admin')}
       >
         <EUserMenuItem
           title     = 'User Management'
           iconClass = 'icon-man'
           link      = '/legacy/useradmin'
           renderIf  = {userStore.hasModules('useradmin')}
+          noRoute
+        />
+
+        <EUserMenuItem
+          title     = 'Voice Admin'
+          iconClass = 'icon-sound'
+          link      = '/legacy/voice_admin'
+          renderIf  = {userStore.user.isSpoc}
           noRoute
         />
       </EUserMenuSection>

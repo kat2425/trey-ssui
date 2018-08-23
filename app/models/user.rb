@@ -72,6 +72,7 @@ class User < Sequel::Model(:users)
       :daysUntilExpiration      => district&.days_until_expiration,
       :isDistrictLevel          => is_district_level?,
       :isTeacher                => is_teacher?,
+      :isSpoc                   => is_spoc?,
       :currentSchoolYear        => CURRENT_SCHOOL_YEAR,
       :has_channel              => has_channel?,
       :hasLearningLab           => has_learning_lab?,
@@ -119,6 +120,10 @@ class User < Sequel::Model(:users)
   def is_district_level?
     return false if is_superuser?
     schools.empty?
+  end
+
+  def is_spoc?
+    is_spoc == true
   end
 
   def list_modules
