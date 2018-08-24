@@ -90,7 +90,6 @@ class UserMain extends Component {
     }
 
     uiStore.setSidebarMaxHeight(false)
-    uiStore.toggleSidebar()
   }
 
   showMailer = (e) => {

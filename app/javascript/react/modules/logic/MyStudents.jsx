@@ -1,5 +1,6 @@
 import React, { Component}      from 'react'
 import PropTypes                from 'prop-types'
+import _                        from 'lodash'
 
 import ModuleHeader             from 'ui/shell/ModuleHeader'
 import VJSChart                 from 'ui/vjs/VJSChart'
@@ -156,8 +157,6 @@ export default class MyStudents extends Component {
   }
 
   renderCourseActions = () => {
-    const { selected } = this.state
-
     return (
       <div className='d-flex'>
         {this.renderMassEmail()}
@@ -240,7 +239,7 @@ export default class MyStudents extends Component {
             linkOptions = {{
               events: {
                 click: (ev, link) => {
-                  const studentID = link.parameters._student_id
+                  const studentID = _.get(link,'parameters._student_id','')
 
                   if (studentID) {
                     fireEvent('showStudentCard', { student: studentID })
@@ -260,7 +259,7 @@ export default class MyStudents extends Component {
             linkOptions = {{
               events: {
                 click: (ev, link) => {
-                  const studentID = link.parameters._student_id
+                  const studentID = _.get(link,'parameters._student_id','')
 
                   if (studentID) {
                     fireEvent('showStudentCard', {
