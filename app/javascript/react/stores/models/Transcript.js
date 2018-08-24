@@ -76,8 +76,8 @@ export default class Transcript {
     }
   }
 
-  @action updateFromJSON = ({call_transcripts = []} = {}) => {
-    const ct = getOr('', ['0', 'call_transcript'], call_transcripts)
+  @action updateFromJSON = (transcript) => {
+    const ct = getOr('', ['call_transcripts', '0', 'call_transcript'], transcript)
 
     this.setCallTranscript(ct)
     this.setOriginalTranscript(ct)
