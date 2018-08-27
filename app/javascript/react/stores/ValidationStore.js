@@ -71,7 +71,7 @@ export class ValidationStore {
     }
 
     data
-      .filter((q) => q.unattempted_validations)
+      .filter((q) => q.unattempted)
       .forEach((q) => {
         this.questions.set(q.id, q)
       })
