@@ -112,6 +112,14 @@ export default class Contact {
       .map(f => ({ ...f.toJS, key: f.id }))
   }
 
+  @computed get showContactFlagging() {
+    return (
+      userStore.hasModules('contact_flagging') &&
+      userStore.isBetaTester &&
+      userStore.isSpoc
+    )
+  }
+
   // Actions
   @action updateFromJSON = ({
     id,

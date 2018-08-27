@@ -25,9 +25,11 @@ const flaggedIconStyle = ({flagged}) => {
 }
 
 const Flag = ({contact, placement}) => {
-  const {flagsCount, flagged, id} = contact
+  const {flagsCount, flagged, id, showContactFlagging} = contact
   const tooltipId                 = `id-flag-${id}`
   const colorClass                = flagged ? 'text-danger' : 'text-muted'
+
+  if(!showContactFlagging) return null
 
   return (
     <div className='d-inline-block'>

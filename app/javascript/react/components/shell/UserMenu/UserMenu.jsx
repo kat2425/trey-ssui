@@ -208,13 +208,21 @@ const UserMenu = () => {
           title     = 'Flagged Contacts'
           iconClass = 'icon-remove-user'
           link      = '/r/flagged_contacts'
-          renderIf  = {userStore.isSpoc}
+          renderIf  = {
+            userStore.hasModules('contact_flagging') &&
+            userStore.isBetaTester &&
+            userStore.isSpoc
+          }
         />
         <EUserMenuItem
           title     = 'Parent Access Management'
           iconClass = 'icon-add-user'
           link      = '/r/parent_access_management'
-          renderIf  = {userStore.hasModules('parent_management') && userStore.isBetaTester}
+          renderIf  = {
+            userStore.hasModules('parent_management') &&
+            userStore.isBetaTester &&
+            userStore.isSpoc
+          }
         />
       </EUserMenuSection>
     </div>

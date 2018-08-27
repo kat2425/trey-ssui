@@ -4,7 +4,7 @@ import contactStore            from 'stores/ContactStore'
 import { UncontrolledTooltip } from 'reactstrap'
 
 const FlagNoteIcon = ({contact, className = '', ...rest}) => {
-  if(!contact.hasFlags) return null
+  if(!contact.showContactFlagging || !contact.hasFlags) return null
 
   const tooltipId = `id-info-${contact.id}`
 
