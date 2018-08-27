@@ -38,6 +38,10 @@ export class UserStore {
     return this.user.userType === 'parent'
   }
 
+  @computed get isBetaTester(){
+    return this.user.betaTester
+  }
+
   @computed get hiddenModules() {
     return this.user.hiddenModules
   }
