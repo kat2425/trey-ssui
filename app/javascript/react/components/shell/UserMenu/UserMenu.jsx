@@ -214,7 +214,7 @@ const UserMenu = () => {
           title     = 'Parent Access Management'
           iconClass = 'icon-add-user'
           link      = '/r/parent_access_management'
-          renderIf  = {userStore.isSpoc}
+          renderIf  = {userStore.hasModules('parent_management') && userStore.isBetaTester}
         />
       </EUserMenuSection>
     </div>
