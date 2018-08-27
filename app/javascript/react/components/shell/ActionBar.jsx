@@ -7,6 +7,7 @@ import intercomIcon            from 'images/intercom-icon.svg'
 import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
 import { UPGRADE }             from 'helpers/UserAlerts'
+import renderIf                from 'ui/hoc/renderIf'
 
 import {
   Badge,
@@ -19,6 +20,8 @@ import {
 
 const NavItem = ({style, ...rest}) =>
   <NavItm {...rest} style={{...style, cursor: 'pointer'}}/>
+
+const ENavItem = renderIf(NavItem)
 
 const channelCheck = (caller, item) => {
   const { user } = userStore
@@ -113,7 +116,7 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           </ReactCSSTransitionGroup>
         </NavItem>
         }
-        
+
         <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.REMINDER)}>
           <span className='icon icon-clock mr-2' style={{opacity: '0.6'}}/>
           <span>Reminders</span>
@@ -132,7 +135,11 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           <span>Calls</span>
         </NavItem>
 
-        <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.BROADCAST)}>
+        <ENavItem
+          renderIf={userStore.isBetaTester && userStore.hasModules('broadcast_messaging')}
+          className='ml-4'
+          onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.BROADCAST)}
+        >
           <span className='icon icon-megaphone mr-2' style={{opacity: '0.6'}}/>
           <span>Broadcasts</span>
           <Badge
@@ -143,7 +150,7 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           >
             {totalPending}
           </Badge>
-        </NavItem>
+        </ENavItem>
 
         <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.SMS)}>
           <span className='icon icon-chat mr-2' style={{opacity: '0.6'}}/>
