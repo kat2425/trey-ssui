@@ -1,8 +1,10 @@
 import React               from 'react'
 import { storiesOf }       from '@storybook/react'
 import RenderIf            from '../'
-import {MODULES, POLICIES} from 'helpers/UserConstants'
+import * as MODULES        from 'helpers/UserModules'
+import * as POLICIES       from 'helpers/UserPolicies'
 
+/* eslint-disable-next-line */
 const stories = storiesOf('', module)
 
 stories.add('default', () => 

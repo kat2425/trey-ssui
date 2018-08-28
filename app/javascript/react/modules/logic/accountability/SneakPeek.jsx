@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react'
 import { observer }         from 'mobx-react'
 
@@ -13,6 +14,10 @@ import {
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 import renderIf             from 'ui/hoc/renderIf'
+import { 
+  VJS_AA_2017,
+  VJS_AA_SNEAK_PEEK
+} from 'helpers/UserModules'
 
 const EButtonGroup = renderIf(ButtonGroup)
 
@@ -172,7 +177,9 @@ export default class SneakPeek extends Component {
                 events: {
                   click: (ev, link) => {
                     const testType   = link.parameters._test_type
-                    const detailPath = `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/` + link.parameters._detail_type
+                    /*
+                     * const detailPath = `/public/VJS/ss_ui/accountability/${this.getPathRoot()}/` + link.parameters._detail_type
+                     */
 
                     this.setTestFilter({ value: testType })
                   }
@@ -236,12 +243,11 @@ export default class SneakPeek extends Component {
 
   render() {
     if (!userStore.user.isTeacher &&
-        ((userStore.hasModules('vjs_aa_2017') && userStore.user.isDistrictLevel) ||
-          (userStore.hasModules('vjs_aa_sneak_peek')))) {
+        ((userStore.hasModules(VJS_AA_2017) && userStore.user.isDistrictLevel) ||
+          (userStore.hasModules(VJS_AA_SNEAK_PEEK)))) {
       return this.renderModule()
     } else {
       return this.renderNoAccess()
     }
   }
 }
-

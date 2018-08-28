@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react'
 
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
+import { VJS_AA_2017 }      from 'helpers/UserModules'
 
 import {
   Button, ButtonGroup
@@ -250,11 +252,10 @@ export default class PrelimResults extends Component {
   }
 
   render() {
-    if (!userStore.user.isTeacher && userStore.hasModules('vjs_aa_2017')) {
+    if (!userStore.user.isTeacher && userStore.hasModules(VJS_AA_2017)) {
       return this.renderModule()
     } else {
       return this.renderNoAccess()
     }
   }
 }
-

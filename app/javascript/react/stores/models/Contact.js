@@ -43,18 +43,19 @@ import {
   autorun
 } from 'mobx'
 
-import { setter }   from 'mobx-decorators'
-import _            from 'lodash'
+import { setter }           from 'mobx-decorators'
+import _                    from 'lodash'
 
-import xhr          from 'helpers/XHR'
-import fireEvent    from 'helpers/FireEvent'
-import getError     from 'helpers/ErrorParser'
+import xhr                  from 'helpers/XHR'
+import fireEvent            from 'helpers/FireEvent'
+import getError             from 'helpers/ErrorParser'
 
-import uiStore      from 'stores/UiStore'
-import userStore    from 'stores/UserStore'
-import callingStore from 'stores/CallingStore'
+import uiStore              from 'stores/UiStore'
+import userStore            from 'stores/UserStore'
+import callingStore         from 'stores/CallingStore'
 
-import Flag         from 'stores/models/Flag'
+import Flag                 from 'stores/models/Flag'
+import { CONTACT_FLAGGING } from 'helpers/UserModules'
 
 export default class Contact {
   id                                           = null
@@ -114,7 +115,7 @@ export default class Contact {
 
   @computed get showContactFlagging() {
     return (
-      userStore.hasModules('contact_flagging') &&
+      userStore.hasModules(CONTACT_FLAGGING) &&
       userStore.isBetaTester &&
       userStore.isSpoc
     )

@@ -1,10 +1,11 @@
-import React          from 'react'
-import { observer }   from 'mobx-react'
-import { Radio }      from 'antd'
-import { FILTERS }    from 'stores/ContactStore'
-import userStore      from 'stores/UserStore'
-import uuid           from 'uuid'
-import { capitalize } from 'lodash'
+import React                from 'react'
+import { observer }         from 'mobx-react'
+import { Radio }            from 'antd'
+import { FILTERS }          from 'stores/ContactStore'
+import userStore            from 'stores/UserStore'
+import uuid                 from 'uuid'
+import { capitalize }       from 'lodash'
+import { CONTACT_FLAGGING } from 'helpers/UserModules'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
@@ -41,7 +42,7 @@ const getIcon = filter => {
 
 const filterFlagged = key => {
   const show =
-    userStore.hasModules('contact_flagging') && userStore.isBetaTester
+    userStore.hasModules(CONTACT_FLAGGING) && userStore.isBetaTester
 
   if (show) return true
   else return key !== FILTERS.FLAGGED

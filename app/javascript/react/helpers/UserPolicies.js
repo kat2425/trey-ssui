@@ -1,0 +1,5 @@
+export const HELPDESK                  = 'helpdesk'
+export const MAKE_VOICE_CALL           = 'make_voice_call'
+export const ONLY_USER_CALL_HISTORY    = 'only_user_call_history'
+export const ONLY_USER_CHANNEL_HISTORY = 'only_user_channel_history'
+export const SEND_SMS                  = 'send_sms'

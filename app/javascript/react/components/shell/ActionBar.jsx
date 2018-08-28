@@ -8,6 +8,7 @@ import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
 import { UPGRADE }             from 'helpers/UserAlerts'
 import renderIf                from 'ui/hoc/renderIf'
+import { BROADCAST_MESSAGING } from 'helpers/UserModules'
 
 import {
   Badge,
@@ -136,7 +137,7 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
         </NavItem>
 
         <ENavItem
-          renderIf={userStore.isBetaTester && userStore.hasModules('broadcast_messaging')}
+          renderIf={userStore.isBetaTester && userStore.hasModules(BROADCAST_MESSAGING)}
           className='ml-4'
           onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.BROADCAST)}
         >

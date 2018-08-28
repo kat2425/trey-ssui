@@ -5,15 +5,19 @@ import {
   runInAction
 } from 'mobx'
 
-import xhr           from 'helpers/XHR'
+import xhr         from 'helpers/XHR'
 
-import { setter }    from 'mobx-decorators'
+import { setter }  from 'mobx-decorators'
 
-import Pagination    from 'stores/models/Pagination'
-import _             from 'lodash'
-import moment        from 'moment'
-import getError      from 'helpers/ErrorParser'
-import userStore     from 'stores/UserStore'
+import Pagination  from 'stores/models/Pagination'
+import _           from 'lodash'
+import moment      from 'moment'
+import getError    from 'helpers/ErrorParser'
+import userStore   from 'stores/UserStore'
+import { 
+  USER_GROUP_ADMIN,
+  STUDENT_GROUP_ADMIN
+} from 'helpers/UserModules'
 
 export default class Group {
   id                  = null
@@ -78,9 +82,9 @@ export default class Group {
 
   @computed get isEditable() {
     if (this.groupType === 'user') {
-      return userStore.hasModules('user_group_admin')
+      return userStore.hasModules(USER_GROUP_ADMIN)
     } else {
-      return userStore.hasModules('student_group_admin')
+      return userStore.hasModules(STUDENT_GROUP_ADMIN)
     }
   }
 

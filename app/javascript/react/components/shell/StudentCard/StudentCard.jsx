@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Modal                from 'react-modal'
 import {scrollStyle}        from 'helpers/modal-style'
+import { 
+  DISCIPLINE,
+  VJS_COURSE_ATTENDANCE,
+  VJS_FINANCIALS
+} from 'helpers/UserModules'
 
 import {
   Switch, withRouter, Route, Redirect
@@ -173,7 +178,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-sweden'
                 link      = {`${match.url}/period_attendance`}
                 location  = {location}
-                renderIf  = {userStore.hasModules('vjs_course_attendance')}
+                renderIf  = {userStore.hasModules(VJS_COURSE_ATTENDANCE)}
               />
 
               <EUserMenuItem
@@ -181,7 +186,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-thermometer'
                 link      = {`${match.url}/infractions`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules('discipline'))}
+                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules(DISCIPLINE))}
               />
 
               <EUserMenuItem
@@ -239,7 +244,7 @@ export default class StudentCard extends Component {
             </UserMenuSection>
           </Card>
 
-          <EFinancialAid student={student} renderIf={userStore.hasModules('vjs_financials')} />
+          <EFinancialAid student={student} renderIf={userStore.hasModules(VJS_FINANCIALS)} />
         </Col>
 
         {/* Root Container */}
