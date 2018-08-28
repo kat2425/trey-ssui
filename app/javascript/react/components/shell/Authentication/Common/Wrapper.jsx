@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(-7deg, #6187ad, #557798, #506f8e, #4e6d8c, #3a5877, #192734, #16232f, #192734, #3a5877, #4e6d8c, #506f8e, #557798, #6187ad);
+  background-image: linear-gradient(-7deg,#3a5877,#192734,#16232f,#192734);
   background-size: 400% 400%;
 
   &::before {
@@ -21,8 +21,8 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
     background: url(https://d28h61i1564zn0.cloudfront.net/bg-tile-trans.svg) repeat;
-    background-size: contain;
-    opacity: 0.2;
+    background-size: 650px 650px;
+    opacity: 0.075;
   }
 
   ${ifProp('noNav', `margin-top: -49px;`)}
