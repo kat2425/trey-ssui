@@ -55,7 +55,7 @@ import userStore            from 'stores/UserStore'
 import callingStore         from 'stores/CallingStore'
 
 import Flag                 from 'stores/models/Flag'
-import { CONTACT_FLAGGING } from 'helpers/UserModules'
+
 
 export default class Contact {
   id                                           = null
@@ -114,6 +114,8 @@ export default class Contact {
   }
 
   @computed get showContactFlagging() {
+    const { CONTACT_FLAGGING } = window.SS_MODULES
+
     return (
       userStore.hasModules(CONTACT_FLAGGING) &&
       userStore.isBetaTester &&

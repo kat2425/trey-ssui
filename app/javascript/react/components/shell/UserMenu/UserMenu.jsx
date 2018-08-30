@@ -4,36 +4,36 @@ import UserMenuSection from './UserMenuSection'
 import UserMenuItem    from './UserMenuItem'
 import userStore       from 'stores/UserStore'
 import renderIf        from 'ui/hoc/renderIf'
-import { 
-  ASSESSMENT,
-  ATTENDANCE,
-  AT_RISK,
-  BULLSEYE,
-  CONTACT_FLAGGING,
-  DISCIPLINE,
-  FEEDBAK,
-  MY_STUDENTS,
-  PARENT_MANAGEMENT,
-  REPORTING,
-  STUDENT_GROUPS,
-  STUDENT_GROUP_ADMIN,
-  USERADMIN,
-  USER_GROUP_ADMIN,
-  VJS_AA_2017,
-  VJS_AW_IR,
-  VJS_COURSE_ATTENDANCE,
-  VJS_FINANCIALS,
-  VJS_GROWTH_CUSP,
-  VJS_JCJC_BINARY,
-  VJS_LPS,
-  VJS_TEACHER_ATTENDANCE,
-  VOICE_ADMIN,
-} from 'helpers/UserModules'
-
 const EUserMenuItem    = renderIf(UserMenuItem)
 const EUserMenuSection = renderIf(UserMenuSection)
 
 const UserMenu = () => {
+  const { 
+    ASSESSMENT,
+    ATTENDANCE,
+    AT_RISK,
+    BULLSEYE,
+    CONTACT_FLAGGING,
+    DISCIPLINE,
+    FEEDBAK,
+    MY_STUDENTS,
+    PARENT_MANAGEMENT,
+    REPORTING,
+    STUDENT_GROUPS,
+    STUDENT_GROUP_ADMIN,
+    USERADMIN,
+    USER_GROUP_ADMIN,
+    VJS_AA_2017,
+    VJS_AW_IR,
+    VJS_COURSE_ATTENDANCE,
+    VJS_FINANCIALS,
+    VJS_GROWTH_CUSP,
+    VJS_JCJC_BINARY,
+    VJS_LPS,
+    VJS_TEACHER_ATTENDANCE,
+    VOICE_ADMIN,
+  } = window.SS_MODULES
+
   const _riskItemLabel    = userStore.user.higherEd ? 'Retention Risk' : 'At Risk'
 
 

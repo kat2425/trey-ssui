@@ -14,10 +14,7 @@ import _           from 'lodash'
 import moment      from 'moment'
 import getError    from 'helpers/ErrorParser'
 import userStore   from 'stores/UserStore'
-import { 
-  USER_GROUP_ADMIN,
-  STUDENT_GROUP_ADMIN
-} from 'helpers/UserModules'
+
 
 export default class Group {
   id                  = null
@@ -81,6 +78,8 @@ export default class Group {
   }
 
   @computed get isEditable() {
+    const { USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN } = window.SS_MODULES
+
     if (this.groupType === 'user') {
       return userStore.hasModules(USER_GROUP_ADMIN)
     } else {

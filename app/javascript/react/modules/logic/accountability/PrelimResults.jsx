@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import ModuleHeader         from 'ui/shell/ModuleHeader'
 import VJSChart             from 'ui/vjs/VJSChart'
 import VJSICSelect          from 'ui/vjs/VJSICSelect'
-import { VJS_AA_2017 }      from 'helpers/UserModules'
 
 import {
   Button, ButtonGroup
@@ -13,6 +12,7 @@ import {
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 import renderIf             from 'ui/hoc/renderIf'
+
 
 const EButtonGroup = renderIf(ButtonGroup)
 
@@ -252,6 +252,8 @@ export default class PrelimResults extends Component {
   }
 
   render() {
+    const { VJS_AA_2017 } = window.SS_MODULES
+
     if (!userStore.user.isTeacher && userStore.hasModules(VJS_AA_2017)) {
       return this.renderModule()
     } else {

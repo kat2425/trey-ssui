@@ -14,10 +14,6 @@ import {
 import fireEvent            from 'helpers/FireEvent'
 import userStore            from 'stores/UserStore'
 import renderIf             from 'ui/hoc/renderIf'
-import { 
-  VJS_AA_2017,
-  VJS_AA_SNEAK_PEEK
-} from 'helpers/UserModules'
 
 const EButtonGroup = renderIf(ButtonGroup)
 
@@ -242,6 +238,8 @@ export default class SneakPeek extends Component {
   }
 
   render() {
+    const { VJS_AA_2017, VJS_AA_SNEAK_PEEK } = window.SS_MODULES
+
     if (!userStore.user.isTeacher &&
         ((userStore.hasModules(VJS_AA_2017) && userStore.user.isDistrictLevel) ||
           (userStore.hasModules(VJS_AA_SNEAK_PEEK)))) {

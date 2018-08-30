@@ -32,6 +32,11 @@ import 'mdn-polyfills/Element.prototype.closest'
 const UserRouter = props => {
   // we inject ui related user props serverside and set to window var window.SSUser = props.user
   window.SSUser = props.user
+  window.SS_MODULES = props.user.ssModules.reduce((acc, curr) => {
+    acc[curr.toUpperCase()] = curr
+    return acc
+  }, {})
+
   bugsnagClient.user = props.user
   LRInit()
   LRIdentify(props.user.id, props.user)

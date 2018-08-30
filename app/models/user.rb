@@ -60,6 +60,10 @@ class User < Sequel::Model(:users)
 
   def is_spoc? ; !!is_spoc ; end
 
+  def ss_modules
+    SSModule.select_map(:symbol).sort.uniq
+  end
+
   # UI props
   def ui_props
     self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at, :beta_tester).merge(
@@ -84,7 +88,8 @@ class User < Sequel::Model(:users)
       :modules                  => modules.map(&:symbol),
       :policies                 => policies.map(&:name),
       :schoolFilter             => school_filter,
-      :userType                 => user_type
+      :userType                 => user_type,
+      :ssModules                => ss_modules
     )
   end
 

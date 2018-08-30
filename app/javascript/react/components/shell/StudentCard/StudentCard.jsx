@@ -2,12 +2,6 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Modal                from 'react-modal'
 import {scrollStyle}        from 'helpers/modal-style'
-import { 
-  DISCIPLINE,
-  VJS_COURSE_ATTENDANCE,
-  VJS_FINANCIALS
-} from 'helpers/UserModules'
-
 import {
   Switch, withRouter, Route, Redirect
 } from 'react-router-dom'
@@ -133,6 +127,8 @@ export default class StudentCard extends Component {
       student,
       overview,
     } = store
+
+    const { DISCIPLINE, VJS_COURSE_ATTENDANCE, VJS_FINANCIALS } = window.SS_MODULES
 
     return (
       <Row>

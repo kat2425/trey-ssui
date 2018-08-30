@@ -5,10 +5,10 @@ import { FILTERS }          from 'stores/ContactStore'
 import userStore            from 'stores/UserStore'
 import uuid                 from 'uuid'
 import { capitalize }       from 'lodash'
-import { CONTACT_FLAGGING } from 'helpers/UserModules'
 
-const RadioButton = Radio.Button
-const RadioGroup = Radio.Group
+
+const RadioButton          = Radio.Button
+const RadioGroup           = Radio.Group
 
 function Filter({ contactStore }) {
   return (
@@ -41,6 +41,8 @@ const getIcon = filter => {
 }
 
 const filterFlagged = key => {
+  const { CONTACT_FLAGGING } = window.SS_MODULES
+
   const show =
     userStore.hasModules(CONTACT_FLAGGING) && userStore.isBetaTester
 

@@ -1,15 +1,14 @@
 import React               from 'react'
 import { storiesOf }       from '@storybook/react'
 import RenderIf            from '../'
-import * as MODULES        from 'helpers/UserModules'
-import * as POLICIES       from 'helpers/UserPolicies'
 
 /* eslint-disable-next-line */
 const stories = storiesOf('', module)
+const { ASSESSMENT, HELPDESK, CASE21 } = window.SS_MODULES
 
 stories.add('default', () => 
   <div>
-    <RenderIf renderIf={({userStore}) => userStore.hasModules(MODULES.ASSESSMENT)}>
+    <RenderIf renderIf={({userStore}) => userStore.hasModules(ASSESSMENT)}>
       {
         (show) => show ? <button>Rendered</button> : null
       }
@@ -17,10 +16,9 @@ stories.add('default', () =>
   </div>
 )
 
-const renderIf = ({hasModules, hasPolicies}) => 
-  !hasModules(MODULES.HELPDESK) && 
-  hasModules(MODULES.ASSESSMENT, MODULES.CASE21) && 
-  hasPolicies(POLICIES.ADMIN)
+const renderIf = ({hasModules}) => 
+  !hasModules(HELPDESK) && 
+  hasModules(ASSESSMENT, CASE21) && 
 
 stories.add('multiple', () => 
   <div>

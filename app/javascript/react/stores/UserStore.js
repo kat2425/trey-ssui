@@ -6,10 +6,6 @@ import {
 
 import { some, includes } from 'lodash'
 import {setter}           from 'mobx-decorators'
-import { 
-  USER_GROUP_ADMIN, 
-  STUDENT_GROUP_ADMIN 
-} from 'helpers/UserModules'
 
 export class UserStore {
   @setter @observable user = null
@@ -51,6 +47,8 @@ export class UserStore {
   }
 
   @computed get canCreateGroup() {
+    const { USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN } = window.SS_MODULES
+
     return this.hasModules(USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN)
   }
 

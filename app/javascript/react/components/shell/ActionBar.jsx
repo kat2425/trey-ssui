@@ -8,7 +8,6 @@ import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
 import { UPGRADE }             from 'helpers/UserAlerts'
 import renderIf                from 'ui/hoc/renderIf'
-import { BROADCAST_MESSAGING } from 'helpers/UserModules'
 
 import {
   Badge,
@@ -78,6 +77,7 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
   const { setSelectedSidebar } = uiStore
   const { totalUnread }        = store
   const { totalPending }       = reminderStore
+  const { BROADCAST_MESSAGING } = window.SS_MODULES
 
   if (this.props.parent) {
     return (
