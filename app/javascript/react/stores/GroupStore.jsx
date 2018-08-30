@@ -105,6 +105,7 @@ class GroupStore {
   }
 
   @action setSelectedGroup = (group) => {
+    group.resetGroup()
     this.selectedGroup = group
 
     if(this.selectedGroup.members.size < 1) {

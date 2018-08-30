@@ -33,6 +33,8 @@ export default class Group {
   @observable memberIDs                     = null
   @observable memberCount                   = null
   @observable childGroups                   = null
+  @observable membersToAdd                  = observable.map()
+  @observable membersToRemove               = observable.map()
 
   @setter @observable groupType             = null
   @setter @observable description           = ''
@@ -141,11 +143,25 @@ export default class Group {
           username:    member.username || null
         }
       )
+
+      this.membersToAdd.set(member.id, member.id)
     })
   }
 
   @action removeMember = (member) => {
+    this.membersToRemove.set(member.id, member.id)
     this.members.delete(member.id)
+  }
+
+  @action resetGroup = () => {
+    const { selectedGroup } = this.groupStore
+
+    this.membersToRemove.clear()
+    this.membersToAdd.clear()
+
+    if(this.id !== _.get(selectedGroup, 'id')) {
+      this.setIsEditing(false)
+    }
   }
 
   @action handleTypeOnChange = () => {
@@ -267,11 +283,12 @@ export default class Group {
 
     this.setIsUpdating(true)
     const params = {
-      group_name:  this.groupName,
-      description: this.description, 
-      group_id:    this.parentGroupID ? this.parentGroupID.key : this.parentGroupID,
-      member_id:   this.memberIDList,
-      group_type:  this.groupType
+      group_name:     this.groupName,
+      description:    this.description, 
+      group_id:       this.parentGroupID ? this.parentGroupID.key : this.parentGroupID,
+      add_members:    this.membersToAdd.values().join(','),
+      remove_members: this.membersToRemove.values().join(','),
+      group_type:     this.groupType
     }
 
     try {
