@@ -22,6 +22,10 @@ class District < Sequel::Model(:districts)
     end
   end
 
+  def channel_only?
+    meta&.fetch('channel_only') || false
+  end
+
   def custom_modules
     if meta&.fetch('custom_modules')
       meta['custom_modules']

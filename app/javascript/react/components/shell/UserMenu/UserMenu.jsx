@@ -11,14 +11,19 @@ const EUserMenuSection = renderIf(UserMenuSection)
 const UserMenu = () => {
   const _riskItemLabel    = userStore.user.higherEd ? 'Retention Risk' : 'At Risk'
 
+  console.log(userStore.hasHiddenModule('my_schools'))
+
   return (
     <div className='col-md-2 hidden-xs-down hidden-sm-down bg-faded sidebar pt-0'>
-      <UserMenuSection title='Core Data'>
+      <UserMenuSection title = 'Core Data'>
         <EUserMenuItem
           title     = 'My Schools'
           iconClass = 'icon-blackboard'
           link      = '/r/my_schools'
-          renderIf  = {(!userStore.user.isTeacher && !userStore.user.higherEd)}
+          renderIf  = {
+            (!(userStore.hasHiddenModule('my_schools')) ||
+              (!userStore.user.isTeacher && !userStore.user.higherEd && !userStore.hasHiddenModule('my_schools')))
+          }
         />
 
         <EUserMenuItem
@@ -155,7 +160,10 @@ const UserMenu = () => {
         />
       </EUserMenuSection>
 
-      <UserMenuSection title='Insights'>
+      <EUserMenuSection
+        title    = 'Insights'
+        renderIf  = {!(userStore.hasHiddenModule('at_risk'))}
+      >
         <EUserMenuItem
           title     = {_riskItemLabel}
           iconClass = 'icon-traffic-cone'
@@ -183,11 +191,11 @@ const UserMenu = () => {
           link      = '/r/aimsweb_iready'
           renderIf  = {userStore.hasModules('vjs_aw_ir')}
         />
-      </UserMenuSection>
+      </EUserMenuSection>
 
       <EUserMenuSection
         title    = 'Management'
-        renderIf = {userStore.hasModules('useradmin') || userStore.hasModules('voice_admin')}
+        renderIf = {userStore.hasModules('useradmin') || userStore.hasModules('voice_admin') || userStore.user.isSpoc}
       >
         <EUserMenuItem
           title     = 'User Management'

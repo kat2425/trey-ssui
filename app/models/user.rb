@@ -65,6 +65,7 @@ class User < Sequel::Model(:users)
       :api                      => 'https://api.schoolstatus.com',
       :customModules            => district.custom_modules,
       :hiddenModules            => district.hidden_modules,
+      :channelOnly              => district.channel_only?,
       :districtID               => district_id,
       :districtName             => district&.district_name,
       :districtCode             => district&.district_code,

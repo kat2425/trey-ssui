@@ -50,9 +50,13 @@ const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2
 
 
 const AppContainer = ({ match }) => {
-  const defaultRoute = (userStore.user.isTeacher || userStore.user.higherEd)
-    ? '/r/my_students'
-    : '/r/my_schools'
+  const defaultRoute = do {
+    if (userStore.hasHiddenModule('my_schools')) {
+      '/r/my_students'
+    } else {
+      (userStore.user.isTeacher || userStore.user.higherEd) ? '/r/my_students' : '/r/my_schools'
+    }
+  }
 
   return (
     <HeightRestrictedDiv>

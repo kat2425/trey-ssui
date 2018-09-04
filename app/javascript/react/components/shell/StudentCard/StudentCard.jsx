@@ -162,7 +162,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-calendar'
                 link      = {`${match.url}/attendance`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && !userStore.user.channelOnly}
               />
 
               <EUserMenuItem
@@ -178,7 +178,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-thermometer'
                 link      = {`${match.url}/infractions`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules('discipline'))}
+                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules('discipline')) && !userStore.user.channelOnly}
               />
 
               <EUserMenuItem
@@ -194,7 +194,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-area-graph'
                 link      = {`${match.url}/assessment`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && !userStore.user.channelOnly}
               />
 
               <EUserMenuItem
@@ -202,7 +202,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-check'
                 link      = {`${match.url}/grades`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && !userStore.user.channelOnly}
               />
 
               <UserMenuItem
@@ -227,11 +227,12 @@ export default class StudentCard extends Component {
                 location  = {location}
               />
 
-              <UserMenuItem
+              <EUserMenuItem
                 title     = 'Attachments'
                 iconClass = 'icon-attachment'
                 link      = {`${match.url}/attachments`}
                 location  = {location}
+                renderIf  = {!userStore.user.channelOnly}
               />
             </UserMenuSection>
           </Card>
