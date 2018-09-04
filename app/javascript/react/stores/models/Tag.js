@@ -441,7 +441,7 @@ export default class Tag {
   }
 
   @action clearErrors = () => {
-    this.setIsError(null)
+    this.setIsError(false)
   }
 
   @action setPagination = ({total}) => {

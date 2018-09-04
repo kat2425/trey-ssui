@@ -19,7 +19,8 @@
   ],
   "globals": {
     "process": true,
-    "Twilio": true
+    "Twilio": true,
+    "SS_MODULES": true
   },
   "rules": {
     "eqeqeq": ["error", "smart"],

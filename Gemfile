@@ -62,6 +62,10 @@ gem 'doorkeeper'
 gem 'doorkeeper-sequel', :github => 'nbulaj/doorkeeper-sequel'
 gem 'doorkeeper-jwt'
 
+# Google omniauth
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+
 # Error Tracking
 gem "bugsnag", "~> 6.7"
 

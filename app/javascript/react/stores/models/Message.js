@@ -1,6 +1,6 @@
-import { 
-  observable, 
-  action, 
+import {
+  observable,
+  action,
   computed,
   autorun
 } from 'mobx'
@@ -30,6 +30,7 @@ export default class Message {
   body           = null
   readStatus     = null
   conversationId = null
+  broadcastId    = null
 
   @observable expandedTranslator    = false
   @observable language              = null
@@ -106,7 +107,8 @@ export default class Message {
   }
 
   @computed get bubbleDirection(){
-    return this.isOutbound ? 'media-current-user ml-5' : 'mr-5'
+    return this.isOutbound ?
+      'media-current-user ml-5' : 'mr-5'
   }
 
   @computed get footerDirection(){
@@ -178,7 +180,8 @@ export default class Message {
     read_status:     readStatus,
     media_url:       mediaUrl,
     created_at:      createdAt,
-    conversation_id: conversationId
+    conversation_id: conversationId,
+    broadcast_id:    broadcastId
   }) => {
     this.id             = id
     this.mediaUrl       = mediaUrl
@@ -191,6 +194,7 @@ export default class Message {
     this.meta           = meta
     this.language       = language === LANGUAGE.UNDETERMINED ? LANGUAGE.EN : language
     this.conversationId = conversationId
+    this.broadcastId    = broadcastId
   }
 
   @action clear = () => {

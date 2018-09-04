@@ -11,6 +11,9 @@ import GroupModal                  from './GroupModal'
 import SSButton                    from 'ui/shell/SSButton'
 import LoadingSpinner              from 'ui/shell/LoadingSpinner'
 import AttachmentItem              from './AttachmentItem'
+import renderIf                    from 'ui/hoc/renderIf'
+
+const EUpload = renderIf(Upload)
 
 @observer
 export default class Attachments extends Component {
@@ -30,7 +33,14 @@ export default class Attachments extends Component {
     return (
       <tbody>
         { attachmentStore.orderedAttachments.map(a => {
-          return <AttachmentItem student={this.props.student.id} key={a.id} attachment={a}/>
+          return (
+            <AttachmentItem 
+              student={this.props.student.id} 
+              key={a.id} 
+              attachment={a}
+              userStore={this.props.userStore}
+            />
+          )
         })}
       </tbody>
     )
@@ -40,7 +50,11 @@ export default class Attachments extends Component {
     return (
       <div>
         <SubmoduleHeader title='Attachments'>
-          <Upload customRequest={this.uploadFile} showUploadList={false}>
+          <EUpload 
+            customRequest   = {this.uploadFile} 
+            showUploadList  = {false}
+            renderIf        = {!this.props.userStore.isParent}
+          >
             <SSButton
               className='mr-3'
               iconClass='icon icon-upload-to-cloud mr-2'
@@ -51,7 +65,7 @@ export default class Attachments extends Component {
             >
               Upload
             </SSButton>
-          </Upload>
+          </EUpload>
         </SubmoduleHeader>
 
         <Card>

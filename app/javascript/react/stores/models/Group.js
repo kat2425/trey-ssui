@@ -5,15 +5,16 @@ import {
   runInAction
 } from 'mobx'
 
-import xhr           from 'helpers/XHR'
+import xhr         from 'helpers/XHR'
 
-import { setter }    from 'mobx-decorators'
+import { setter }  from 'mobx-decorators'
 
-import Pagination    from 'stores/models/Pagination'
-import _             from 'lodash'
-import moment        from 'moment'
-import getError      from 'helpers/ErrorParser'
-import userStore     from 'stores/UserStore'
+import Pagination  from 'stores/models/Pagination'
+import _           from 'lodash'
+import moment      from 'moment'
+import getError    from 'helpers/ErrorParser'
+import userStore   from 'stores/UserStore'
+
 
 export default class Group {
   id                  = null
@@ -58,10 +59,11 @@ export default class Group {
     return this.groupStore.selectedGroup === this
   }
 
-  @computed get paginationParams(){
+  @computed get memberParams(){
     return {
       page:  this.pagination.current,
-      limit: this.pagination.pageSize
+      limit: this.pagination.pageSize,
+      only:  ['full_name', 'school.school_name', 'grade', 'id', 'username'].join(',')
     }
   }
 
@@ -78,10 +80,12 @@ export default class Group {
   }
 
   @computed get isEditable() {
+    const { USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN } = window.SS_MODULES
+
     if (this.groupType === 'user') {
-      return userStore.hasModules('user_group_admin')
+      return userStore.hasModules(USER_GROUP_ADMIN)
     } else {
-      return userStore.hasModules('student_group_admin')
+      return userStore.hasModules(STUDENT_GROUP_ADMIN)
     }
   }
 
@@ -100,6 +104,7 @@ export default class Group {
   }
 
   @action setActive = () => {
+    this.pagination.clear()
     this.groupStore.selectedGroup = this
   }
 
@@ -107,20 +112,9 @@ export default class Group {
     if(!this.isNew) {
       try {
         this.setIsFetchingMembers(true)
-        const params = {
-          page:  this.pagination.current,
-          limit: this.pagination.pageSize
-        }
-        const { headers, data } = await xhr.get(`/groups/${this.id}/members`, { params })
+        const response = await xhr.get(`/groups/${this.id}/members`, { params: this.memberParams })
 
-        runInAction(() => {
-          this.members.clear()
-          data.forEach((member) => {
-            if (this.members.has(member.id)) return
-            this.members.set(member.id, member)
-          })
-          this.setPagination(headers)
-        })
+        this.fetchMembersOk(response)
       } catch (e) {
         this.groupStore.setIsError(getError(e))
       } finally {
@@ -129,7 +123,37 @@ export default class Group {
     }
   }
 
-  
+  @action fetchMembersOk = ({data, headers}) => {
+    this.members.clear()
+    this.setPagination(headers)
+    data.forEach(this.updateMembersFromServer)
+  }
+
+  @action loadMoreMembers = async() => {
+    if(!this.isNew && !this.isFetchingMembers) {
+      try {
+        const { data } = await xhr.get(`/groups/${this.id}/members`, { params: this.memberParams })
+
+        this.loadMoreMembersOk(data)
+      } catch (e) {
+        this.groupStore.setIsError(getError(e))
+      } finally {
+        this.setIsFetchingMembers(false)
+      }
+    }
+  }
+
+  @action loadMoreMembersOk = (data) => {
+    this.setIsFetchingMembers(true)
+    this.pagination.setCurrent(this.pagination.current + 1)
+    data.forEach(this.updateMembersFromServer)
+  }
+
+  @action updateMembersFromServer = (member) => {
+    if (this.members.has(member.id)) return
+    this.members.set(member.id, member)
+  }
+
   @action addMembers = (members) => {
     members.forEach((member) => {
       if (this.members.has(member.id)) return

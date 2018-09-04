@@ -8,7 +8,7 @@ import SSButton        from 'ui/shell/SSButton'
 import { Popconfirm }  from 'antd'
 
 
-const AttachmentItem = ({ attachment }) => {
+const AttachmentItem = ({ attachment, userStore }) => {
   if (attachment.isRecording) return null
 
   return (
@@ -32,10 +32,11 @@ const AttachmentItem = ({ attachment }) => {
           labelKey     = 'label'
           valueKey     = 'visibility'
           onSelect     = {changeAttachmentVisibility(attachment)}
-          isModifiable = {attachment.modifiable}
+          isModifiable = {attachment.modifiable && !userStore.isParent}
           options      = {visibilityOptions}
           visibility   = {attachment.visibility}
           attachment   = {attachment}
+          hidden       = {userStore.isParent}
           store        = {attachmentStore}
         />
 
@@ -53,7 +54,7 @@ const AttachmentItem = ({ attachment }) => {
             disabled  = { attachment.isLoading || attachment.isDownloading}
             color     = 'danger'
             style     = {{height: 28}}
-            hidden    = {!attachment.modifiable}
+            hidden    = {!attachment.modifiable || userStore.isParent}
             title     = 'Delete'
           >
           </SSButton>

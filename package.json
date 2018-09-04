@@ -9,6 +9,7 @@
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.2.3",
     "babel-loader": "7.x",
+    "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -45,6 +46,8 @@
     "keycode": "^2.1.9",
     "less-vars-to-js": "^1.2.1",
     "lodash": "^4.17.4",
+    "logrocket": "^0.6.16",
+    "logrocket-react": "^2.0.0",
     "mapbox-gl": "^0.44.0",
     "mdn-polyfills": "^5.10.0",
     "mobx": "^3.2.2",
@@ -59,6 +62,7 @@
     "postcss-smart-import": "^0.7.5",
     "precss": "^2.0.0",
     "prop-types": "^15.5.10",
+    "query-string": "^6.1.0",
     "rails-erb-loader": "^5.0.2",
     "rc-slider": "^8.3.1",
     "react": "^16.3.0",
@@ -68,11 +72,13 @@
     "react-bootstrap-typeahead": "^2.0.0-alpha.3",
     "react-datetime": "^2.10.3",
     "react-dom": "^16.3.0",
+    "react-google-button": "^0.5.3",
     "react-grid-layout": "^0.16.3",
     "react-highlighter": "^0.4.0",
     "react-hot-loader": "^1.3.1",
     "react-icons": "^2.2.5",
     "react-iframe": "^1.1.0",
+    "react-infinite-scroller": "^1.2.0",
     "react-load-script": "^0.0.6",
     "react-mapbox-gl": "^3.4.1",
     "react-markdown": "^2.5.0",
@@ -130,11 +136,13 @@
   },
   "scripts": {
     "start": "bundle && yarn && foreman s",
+    "start:rebuild": "yarn node-sass && yarn start",
     "start:webpack": "./bin/webpack-dev-server --host 127.0.0.1",
     "storybook": "start-storybook -p 3220 -c .storybook",
     "sass": "cd ./resources/bs-4-theme && yarn && gulp && cd ../../",
     "sass-watch": "cd ./resources/bs-4-theme && yarn && gulp watch && cd ../../",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "node-sass": "npm rebuild node-sass --force"
   },
   "lint-staged": {
     "app/javascript/react/**/*.{js,jsx}": [

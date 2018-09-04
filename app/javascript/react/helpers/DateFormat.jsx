@@ -21,6 +21,10 @@ export default class DateFormat {
     return moment(time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMM D, YYYY')
   }
 
+  static longDate(time) {
+    return moment(time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('MMMM D, YYYY')
+  }
+
   static time12Hour(time) {
     return moment(time, 'YYYY-MM-DD hh:mm:ss +ZZ').format('h:mm A')
   }

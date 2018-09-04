@@ -26,8 +26,20 @@ export class UserStore {
     return !!this.user.impersonated
   }
 
+  @computed get isSpoc(){
+    return !!this.user.isSpoc
+  }
+
   @computed get customModules() {
     return this.user.customModules
+  }
+
+  @computed get isParent(){
+    return this.user.userType === 'parent'
+  }
+
+  @computed get isBetaTester(){
+    return this.user.betaTester
   }
 
   @computed get hiddenModules() {
@@ -35,7 +47,9 @@ export class UserStore {
   }
 
   @computed get canCreateGroup() {
-    return this.hasModules('user_group_admin', 'student_group_admin')
+    const { USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN } = window.SS_MODULES
+
+    return this.hasModules(USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN)
   }
 
   @action hasModules = (...modules) => {

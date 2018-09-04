@@ -17,6 +17,7 @@ import MyStudents            from 'modules/logic/MyStudents'
 import MySchools             from 'modules/logic/Dashboard/MySchools'
 import RiskAnalysis          from 'modules/logic/RiskAnalysis'
 import TagBuilder            from 'modules/logic/TagBuilder/'
+import FlaggedContacts       from 'modules/management/FlaggedContacts'
 import Groups                from 'modules/logic/Groups'
 import SeatingChart          from 'ui/shell/SeatingChart'
 
@@ -36,6 +37,9 @@ import FinalResults          from 'modules/logic/accountability/FinalResults'
 import PrelimResults         from 'modules/logic/accountability/PrelimResults'
 import LPS                   from 'modules/logic/accountability/LPS'
 
+//Management
+import ParentValidations     from 'modules/management/ParentValidations'
+
 import SMSController         from 'ui/controllers/SMSController'
 
 import UserSettings          from 'modules/UserSettings'
@@ -48,13 +52,14 @@ const HeightRestrictedDiv = styled.div.attrs({ className: 'col-md-10 offset-md-2
   overflow-y: auto;
 `
 
-
 const AppContainer = ({ match }) => {
   const defaultRoute = do {
     if (userStore.hasHiddenModule('my_schools')) {
       '/r/my_students'
     } else {
-      (userStore.user.isTeacher || userStore.user.higherEd) ? '/r/my_students' : '/r/my_schools'
+      (userStore.user.isTeacher || userStore.user.higherEd)
+        ? '/r/my_students'
+        : '/r/my_schools'
     }
   }
 
@@ -80,6 +85,7 @@ const AppContainer = ({ match }) => {
         <Route path='/r/searchlight' component={TagBuilder} />
 
         <Route path='/r/groups' component={Groups} />
+        <Route path='/r/flagged_contacts' component={FlaggedContacts} />
 
         <Route path='/r/accountability/sneak_peek' component={SneakPeek} />
         <Route path='/r/accountability/prelim_results' component={PrelimResults} />
@@ -98,6 +104,7 @@ const AppContainer = ({ match }) => {
 
         {/* Misc */}
         <Route path='/r/user_settings' component={UserSettings} />
+        <Route path='/r/parent_access_management' component={ParentValidations} />
 
         <Route render={() => {
           return (

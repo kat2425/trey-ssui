@@ -1,11 +1,13 @@
-import React                    from 'react'
-import { Select, Popconfirm }   from 'antd'
-import { observer }             from 'mobx-react'
-import userStore                from 'stores/UserStore'
+import React                  from 'react'
+import { Select, Popconfirm } from 'antd'
+import { observer }           from 'mobx-react'
+import userStore              from 'stores/UserStore'
 
 const Option = Select.Option
 
 const TypeSelector = ({group}) => {
+  const { USER_GROUP_ADMIN, STUDENT_GROUP_ADMIN } = window.SS_MODULES
+
   return (
     <Popconfirm
       onCancel   = {() => group.setUnconfirmedTypeChange(false)}
@@ -24,13 +26,13 @@ const TypeSelector = ({group}) => {
         onChange={group.handleTypeOnChange}
       >
         <Option 
-          disabled={!userStore.hasModules('student_group_admin')} 
+          disabled={!userStore.hasModules(STUDENT_GROUP_ADMIN)} 
           value="student"
         >
           Student
         </Option>
         <Option 
-          disabled={!userStore.hasModules('user_group_admin')} 
+          disabled={!userStore.hasModules(USER_GROUP_ADMIN)} 
           value="user"
         >
           User

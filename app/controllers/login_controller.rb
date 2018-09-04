@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
   skip_before_action :verify_authenticity_token
-  layout 'login'
+  layout 'default'
 
   def index
     redirect_to '/home' if user
@@ -22,11 +22,23 @@ class LoginController < ApplicationController
     end
   end
 
+  def persona_change
+    authenticate # a user can't switch personas if they aren't logged in
+
+    if (new_user = User[params['id']])
+      if new_user.username == user.username # ensure that the persona is valid
+        warden.set_user new_user
+      end
+    end
+
+    redirect_to '/home'
+  end
+
   def session_info
     render :json => session.to_json
   end
 
   def failed
-    redirect_to :login
+    render :index, :status => 401
   end
 end

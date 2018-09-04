@@ -27,7 +27,7 @@ export default class ConversationHeader extends Component {
 
   renderHeader() {
     const {contact}    = this.props
-    const studentId    = contact.student_id
+    const studentId    = contact.student_id || contact.studentId
     const studentName  = contact.student.full_name
     const relationship = contact.relationship
 

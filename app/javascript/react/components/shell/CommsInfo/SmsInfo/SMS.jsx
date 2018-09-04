@@ -5,6 +5,7 @@ import Time                from './Time'
 import styled, {keyframes} from 'styled-components'
 import {ifProp}            from 'styled-tools'
 import withTranslator      from 'ui/hoc/withTranslator'
+import ChatBubbleMMS       from 'ui/shell/SMS/ChatBubble/ChatBubbleMMS'
 
 const Text = styled.span`
   font-size: 14px;
@@ -13,7 +14,7 @@ const Text = styled.span`
 const EText = withTranslator(Text)
 
 @observer
-export default class SMS extends Component { 
+export default class SMS extends Component {
   timeoutId = null
 
   componentDidMount(){
@@ -39,10 +40,10 @@ export default class SMS extends Component {
   }
 
   activeStyle = () => {
-    const activeStyle = {  
+    const activeStyle = {
       boxShadow: '0 0 8px rgba(35, 173, 255, 1)',
       border:    '1px solid white'
-    } 
+    }
 
     return this.props.comm.isActive ? activeStyle : null
   }
@@ -53,26 +54,37 @@ export default class SMS extends Component {
 
   render() {
     const {comm} = this.props
-    const {id, createdAt, isIncoming, preview, isActive} = comm
-    const color = isIncoming ? '#657786' : '#fff' 
+    const {id,
+      createdAt,
+      isIncoming,
+      preview,
+      isActive,
+      isBroadcast,
+      mediaUrl
+    }           = comm
+    const color = isIncoming ? '#657786' : '#fff'
 
     return (
-      <li 
-        id={id} 
-        className={`media ${this.getIncomingClass(isIncoming)}`} 
+      <li
+        id={id}
+        className={`media ${this.getIncomingClass(isIncoming)}`}
       >
         <div className='media-body'>
-          <MediaText 
-            active={isActive} 
-            incoming={isActive && isIncoming} 
-            outgoing={isActive && !isIncoming}
+          <MediaText
+            active          = {isActive}
+            incoming        = {isActive && isIncoming}
+            outgoing        = {isActive && !isIncoming && !isBroadcast}
+            broadcast       = {!isIncoming && isBroadcast}
+            activeBroadcast = {isActive && isBroadcast}
           >
+            { mediaUrl && <ChatBubbleMMS src={mediaUrl} /> }
             <EText
               color           = {color}
               textToTranslate = {preview}
             >
               {preview}
             </EText>
+            <small>{isBroadcast && 'This message was sent to multiple recipients'}</small>
           </MediaText>
           <Time time={createdAt} isIncoming={isIncoming} />
         </div>
@@ -81,9 +93,17 @@ export default class SMS extends Component {
   }
 }
 
+const broadcast = keyframes`
+  0% {
+    background: #FFFA64
+  }
+  100% {
+    background: #FF9800
+  }
+`
 const outgoing = keyframes`
   0% {
-    background: #b1e5ff  
+    background: #b1e5ff
   }
 
   100% {
@@ -102,15 +122,21 @@ const incoming = keyframes`
 `
 
 const MediaText = styled.div.attrs({className: 'media-body-text'})`
+  ${ifProp('broadcast',`
+    background-color: #FF9800 !important;
+    color:            #fff !important;
+  `)}
+  ${ifProp('activeBroadcast',`
+    animation: ${broadcast} 3s ease-out 0.5s !important;`)}
   ${ifProp('active',`
     box-shadow: 0 0 6px rgba(35, 173, 255, 1) !important;
     border:    1px solid white !important;
   `)}
   ${ifProp('incoming', `
-    animation: ${incoming} 3s ease-out 0.5s !important;  
+    animation: ${incoming} 3s ease-out 0.5s !important;
    `)}
 
   ${ifProp('outgoing', `
-    animation: ${outgoing} 3s ease-out 0.5s !important;  
+    animation: ${outgoing} 3s ease-out 0.5s !important;
   `)}
 `
