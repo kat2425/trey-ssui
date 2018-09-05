@@ -12,13 +12,18 @@ class LoginController < ApplicationController
   end
 
   def warden_logout
-    logout
-    cookies.delete 'ss_session'
-
-    if Rails.env == 'production'
-      redirect_to 'https://secure.schoolstatus.com/back_to_core'
+    if session[:impersonated]
+      unimpersonate
     else
-      redirect_to :login
+      logout
+      cookies.delete 'ss_session'
+      cookies.delete 'ss_ui'
+
+      if Rails.env == 'production'
+        redirect_to 'https://secure.schoolstatus.com/back_to_core'
+      else
+        redirect_to :login
+      end
     end
   end
 
@@ -32,6 +37,34 @@ class LoginController < ApplicationController
     end
 
     redirect_to '/home'
+  end
+
+  def impersonate
+    authenticate!
+
+    if user.is_superuser?
+      if (new_user = User[params[:id]])
+        session[:admin_id]     = user.id
+        session[:impersonated] = true
+
+        warden.set_user new_user
+      end
+    end
+
+    redirect_to '/home'
+  end
+
+  def unimpersonate
+    authenticate!
+
+    if (admin_user = User[session[:admin_id]])
+      session.delete(:admin_id)
+      session.delete(:impersonated)
+
+      warden.set_user admin_user
+
+      redirect_to '/logout'
+    end
   end
 
   def session_info

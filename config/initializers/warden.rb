@@ -18,7 +18,7 @@ end
 
 Warden::Strategies.add(:bcrypt) do
   def valid?
-    params['username'] && params['password']
+    !!(params['username'] && params['password'])
   end
 
   def authenticate!

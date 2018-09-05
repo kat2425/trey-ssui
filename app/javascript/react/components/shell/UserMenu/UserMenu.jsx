@@ -45,7 +45,9 @@ const UserMenu = () => {
           link      = '/r/my_schools'
           renderIf  = {
             (!(userStore.hasHiddenModule('my_schools')) ||
-              (!userStore.user.isTeacher && !userStore.user.higherEd && !userStore.hasHiddenModule('my_schools')))
+              (!userStore.user.isTeacher &&
+                !userStore.user.higherEd &&
+                !userStore.hasHiddenModule('my_schools')))
           }
         />
 
@@ -223,14 +225,14 @@ const UserMenu = () => {
         <EUserMenuItem
           title     = 'User Management'
           iconClass = 'icon-man'
-          link      = '/legacy/useradmin'
+          link      = '/cj/users'
           renderIf  = {userStore.hasModules(USERADMIN)}
           noRoute
         />
         <EUserMenuItem
           title     = 'Voice Admin'
           iconClass = 'icon-sound'
-          link      = '/legacy/voice_admin'
+          link      = '/utilities/voice_admin'
           renderIf  = {userStore.user.isSpoc}
           noRoute
         />

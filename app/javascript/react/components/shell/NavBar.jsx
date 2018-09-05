@@ -164,7 +164,7 @@ export default class NavBar extends Component {
             </UncontrolledDropdown>
 
             <NavItem>
-              <NavLink href='/legacy/settings'>Settings</NavLink>
+              <NavLink href='/settings'>Settings</NavLink>
             </NavItem>
 
             <NavItem>

@@ -69,9 +69,9 @@ class User < Sequel::Model(:users)
     self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at, :beta_tester).merge(
       :accessToken              => last_access_token,
       :api                      => 'https://api.schoolstatus.com',
-      :customModules            => district.custom_modules,
-      :hiddenModules            => district.hidden_modules,
-      :channelOnly              => district.channel_only?,
+      :customModules            => district&.custom_modules,
+      :hiddenModules            => district&.hidden_modules,
+      :channelOnly              => district&.channel_only?,
       :districtID               => district_id,
       :districtName             => district&.district_name,
       :districtCode             => district&.district_code,

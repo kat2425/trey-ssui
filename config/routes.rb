@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get  '/session/logout'                        => 'login#warden_logout'
   get  '/session/info'                          => 'login#session_info'
   get  '/personas/switch/:id'                   => 'login#persona_change'
+  post '/impersonate/:id'                       => 'login#impersonate'
+  get '/unimpersonate'                         => 'login#unimpersonate'
 
   # Google OmniAuth
   get '/auth/google_oauth2/callback'            => 'sessions#create'
