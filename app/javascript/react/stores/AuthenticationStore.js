@@ -42,6 +42,8 @@ export class AuthenticationStore {
 
       this.loginOK(res, callback)
     } catch(e){
+      console.error(e)
+
       ++this.authFailureCount
       const title = 'Incorrect email or password'
       const message = 'If you think this is a mistake, please contact your principal or district office.'
@@ -81,8 +83,8 @@ export class AuthenticationStore {
 function getFormData({userName, password}, event){
   const data = new FormData(event.target)
 
-  data.set('username', userName)
-  data.set('password', password)
+  data.append('username', userName)
+  data.append('password', password)
 
   return data
 }
