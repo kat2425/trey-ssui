@@ -56,12 +56,12 @@ export const getButtonConfig = (contactsWithUniquePhones, contactsWithUniqueEmai
 export const isDisabled = ({contact, contactType, label}) => {
   switch(contactType + label){
   case CONTACT_TYPE.PHONE + BUTTON_LABEL.CALL:
-    return contact.stopped
+    return !contact || !contact.phone || contact.stopped
   case CONTACT_TYPE.PHONE + BUTTON_LABEL.TEXT:
-    return contact.isFetchingNumCapability || contact.isTextingDisabled
+    return !contact || !contact.phone || contact.isFetchingNumCapability || contact.isTextingDisabled
   case CONTACT_TYPE.EMAIL + BUTTON_LABEL.EMAIL:
     // contact will be undefined if a user has no email.
-    return !contact
+    return !contact || !contact.email
   default:
     return false
   }
