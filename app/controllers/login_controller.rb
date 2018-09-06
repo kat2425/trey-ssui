@@ -8,6 +8,12 @@ class LoginController < ApplicationController
 
   def warden_login
     authenticate
+
+    unless user.is_superuser?
+      user.district.sync_jasper_org rescue nil
+      user.sync_jasper_account      rescue nil
+    end
+
     redirect_to '/home'
   end
 
@@ -32,6 +38,7 @@ class LoginController < ApplicationController
 
     if (new_user = User[params['id']])
       if new_user.username == user.username # ensure that the persona is valid
+        new_user.sync_jasper_account rescue nil
         warden.set_user new_user
       end
     end

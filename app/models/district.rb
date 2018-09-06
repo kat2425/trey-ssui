@@ -1,4 +1,7 @@
 class District < Sequel::Model(:districts)
+  include JasperSoft
+  include Districts::JasperDistrict
+
   one_to_many :users
   one_to_many :schools
 
