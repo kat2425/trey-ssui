@@ -23,7 +23,7 @@ class GroupStore {
   @setter @observable isError       = false
   @setter @observable isMessage     = false
   @setter @observable isLoading     = false
-  @setter @observable searchResults = null
+  @setter @observable searchResults = []
   @setter @observable searchValue   = null
   @setter @observable isSearching   = false
   @observable originalGroup         = observable.map()
@@ -41,6 +41,7 @@ class GroupStore {
 
   constructor(){
     this.initAutoruns()
+    this.debouncedHandleSearch = _.debounce(this.handleSearchOnChange, 300)
   }
 
   // Computed
@@ -74,7 +75,7 @@ class GroupStore {
 
   @computed get shouldSearch() {
     if(!_.isEmpty(this.searchValue)) {
-      return this.searchValue.length > 3 && !this.isSearching
+      return this.searchValue.length > 2 && !this.isSearching
     } else return false
   }
 
@@ -177,10 +178,9 @@ class GroupStore {
 
   @action handleSearchOnChange = (event) => {
     this.setSearchValue(event.target.value)
+    if(!this.shouldSearch) return
 
-    if(this.shouldSearch) {
-      _.debounce(() => this.searchMembers(event.target.value), 300)
-    }
+    this.searchMembers(this.searchValue)
   }
 
   @action searchMembers = async(searchValue) => {
