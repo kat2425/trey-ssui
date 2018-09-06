@@ -14,6 +14,10 @@ export class UserStore {
     this.user = user
   }
 
+  @computed get username(){
+    return this.user.username
+  }
+
   @computed get modules(){
     return this.user.modules
   }
@@ -28,6 +32,10 @@ export class UserStore {
 
   @computed get isSpoc(){
     return !!this.user.isSpoc
+  }
+
+  @computed get hasLearningLab(){
+    return !!this.user.hasLearningLab
   }
 
   @computed get customModules() {

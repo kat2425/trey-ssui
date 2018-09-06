@@ -4,20 +4,22 @@ import { Route, withRouter }    from 'react-router-dom'
 import { inject, observer }     from 'mobx-react'
 
 import {
-  Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Navbar,
-  NavbarBrand, UncontrolledDropdown
+  Collapse, 
+  Nav, 
+  NavItem, 
+  NavLink, 
+  Navbar,
+  NavbarBrand
 } from 'reactstrap'
 
 
 import StudentSearch      from './StudentSearch'
-import LearningCenterLink from 'ui/shell/LearningCenterLink'
 import fireEvent          from 'helpers/FireEvent'
 import intercomEvent      from 'helpers/Intercom'
 import userStore          from 'stores/UserStore'
 import renderIf           from 'ui/hoc/renderIf'
 
 const ENav               = renderIf(Nav)
-const LearningCenterItem = renderIf(LearningCenterLink)
 const brandLogo          = { height: '35px' }
 
 @withRouter
@@ -143,28 +145,24 @@ export default class NavBar extends Component {
             <NavItem className='mr-3'>
               <StudentSearch style={{width: '300px'}} onChange={this.onStudentChange}/>
             </NavItem>
+            {userStore.hasLearningLab && (
+              <NavItem>
+                <NavLink target="_blank" href='/redirects/learning_lab'>Learning Lab</NavLink>
+              </NavItem>
+            )}
 
             <NavItem>
-              <NavLink style={{color: '#c3c3c3'}}>
-                { window.SSUser.username }
-              </NavLink>
+              <NavLink target="_blank" href='http://help.schoolstatus.com/'>Help</NavLink>
             </NavItem>
-
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Help
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  <a target="_blank" href='http://help.schoolstatus.com/'>Help Center</a>
-                </DropdownItem>
-
-                <LearningCenterItem renderIf={userStore.user.hasLearningLab} />
-              </DropdownMenu>
-            </UncontrolledDropdown>
 
             <NavItem>
               <NavLink href='/settings'>Settings</NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink style={{color: '#c3c3c3'}}>
+                { userStore.username }
+              </NavLink>
             </NavItem>
 
             <NavItem>
