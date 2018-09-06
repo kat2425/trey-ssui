@@ -1,13 +1,19 @@
 import React                from 'react'
+import _                    from 'lodash'
 import { inject, observer } from 'mobx-react'
 import renderIf             from 'ui/hoc/renderIf'
 import SSButton             from 'ui/shell/SSButton'
+import Placeholder          from './Placeholder'
 
 const ESSButton = renderIf(SSButton)
 
-const EmailColumn = ({contactsWithUniqueEmails = []}) => (
-  <td> {contactsWithUniqueEmails.map(c => <Email key={c.id} contact={c} />)} </td>
-)
+const EmailColumn = ({contactsWithUniqueEmails = []}) => {
+  if(_.isEmpty(contactsWithUniqueEmails)) return <td><Placeholder /></td>
+
+  return (
+    <td> {contactsWithUniqueEmails.map(c => <Email key={c.id} contact={c} />)} </td>
+  )
+}
 
 const Email = inject('userStore')(observer(({userStore, contact}) => ( 
   <div className='mb-1'>

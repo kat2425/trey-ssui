@@ -9,6 +9,7 @@ import PhoneInfo             from './PhoneInfo'
 import EmailInfo             from './EmailInfo'
 import CommunicationButtons  from './CommunicationButtons/'
 import { getUniqueContacts } from './helpers'
+import Placeholder           from './Placeholder'
 
 import { 
   Card, 
@@ -76,7 +77,7 @@ const Relationship = ({contact, withIcon}) => (
 const DefaultPlaceholder = ({icon}) => (
   <div className='d-flex align-items-center'>
     <span className={`icon icon-${icon} mr-2`} /> 
-    <span>---</span>
+    <span><Placeholder /></span>
   </div>
 )
 
