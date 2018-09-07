@@ -71,7 +71,7 @@ ADD ./config/nginx/ss_ui.conf /etc/nginx/sites-enabled
 
 # Install NodeJS runtime
 # ---------------------------------------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt-get install -y nodejs
 
 # Start Turbine web service
