@@ -192,7 +192,7 @@ export default class Message {
     this.body           = body
     this.readStatus     = readStatus
     this.meta           = meta
-    this.language       = language === LANGUAGE.UNDETERMINED ? LANGUAGE.EN : language
+    this.language       = determineInitialLanguage(language)
     this.conversationId = conversationId
     this.broadcastId    = broadcastId
   }
@@ -208,5 +208,16 @@ export default class Message {
   @action dispose = () => {
     this.autoErrorDisposer && this.autoErrorDisposer()
     this.autoTranslateDisposer && this.autoTranslateDisposer()
+  }
+}
+
+function determineInitialLanguage(lang) {
+  switch (lang) {
+  case LANGUAGE.UNDETERMINED:
+    return LANGUAGE.EN
+  case 'zh-CN':
+    return 'zh'
+  default:
+    return lang
   }
 }
