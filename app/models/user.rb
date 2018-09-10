@@ -1,5 +1,7 @@
 class User < Sequel::Model(:users)
   include BCrypt
+  include JasperSoft
+  include Users::JasperUser
 
   # Minimal relations
   many_to_one :district
@@ -62,6 +64,14 @@ class User < Sequel::Model(:users)
 
   def ss_modules
     SSModule.select_map(:symbol).sort.uniq
+  end
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  def deleted?
+    !deleted_at.nil?
   end
 
   # UI props
