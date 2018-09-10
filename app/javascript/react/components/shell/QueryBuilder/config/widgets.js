@@ -22,8 +22,8 @@ const widgets = {
     formatValue: (val, fieldDef, wgtDef, isForDisplay) => {
       return isForDisplay ? '"' + val + '"' : JSON.stringify(val)
     },
-    validateValue: (val, fieldDef) => {
-      return val != 'test'
+    validateValue: (val) => {
+      return val !== 'test'
     }
   },
   number: {
@@ -51,11 +51,11 @@ const widgets = {
     valueSrc:    'value',
     factory:     (props) => <MultiSelectWidget {...props} />,
     formatValue: (vals, fieldDef, wgtDef, isForDisplay) => {
+      if(!vals) return
       let valsLabels = vals.map((v) => fieldDef.listValues[v])
 
-      return isForDisplay
-        ? valsLabels.map((v) => '"' + v + '"')
-        : vals.map((v) => JSON.stringify(v))
+      if(isForDisplay && valsLabels) return valsLabels.map((v) => '"' + v + '"')
+      else return vals.map((v) => JSON.stringify(v))
     }
   },
   date: {
