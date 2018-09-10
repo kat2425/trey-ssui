@@ -9,7 +9,7 @@ class LoginController < ApplicationController
   def warden_login
     authenticate
 
-    unless user.is_superuser?
+    if user && !user.is_superuser?
       user.district.sync_jasper_org rescue nil
       user.sync_jasper_account      rescue nil
     end
