@@ -114,13 +114,7 @@ export default class Contact {
   }
 
   @computed get showContactFlagging() {
-    const { CONTACT_FLAGGING } = window.SS_MODULES
-
-    return (
-      userStore.hasModules(CONTACT_FLAGGING) &&
-      userStore.isBetaTester &&
-      userStore.isSpoc
-    )
+    return userStore.isBetaTester
   }
 
   // Actions

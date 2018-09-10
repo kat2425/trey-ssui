@@ -41,12 +41,7 @@ const getIcon = filter => {
 }
 
 const filterFlagged = key => {
-  const { CONTACT_FLAGGING } = window.SS_MODULES
-
-  const show =
-    userStore.hasModules(CONTACT_FLAGGING) && userStore.isBetaTester
-
-  if (show) return true
+  if (userStore.isBetaTester) return true
   else return key !== FILTERS.FLAGGED
 }
 

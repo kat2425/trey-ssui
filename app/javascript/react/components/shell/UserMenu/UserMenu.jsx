@@ -242,8 +242,7 @@ const UserMenu = () => {
           link      = '/r/flagged_contacts'
           renderIf  = {
             userStore.hasModules(CONTACT_FLAGGING) &&
-            userStore.isBetaTester &&
-            userStore.isSpoc
+            userStore.isBetaTester
           }
         />
         <EUserMenuItem
@@ -252,8 +251,7 @@ const UserMenu = () => {
           link      = '/r/parent_access_management'
           renderIf  = {
             userStore.hasModules(PARENT_MANAGEMENT) &&
-            userStore.isBetaTester &&
-            userStore.isSpoc
+            userStore.isBetaTester
           }
         />
       </EUserMenuSection>
