@@ -146,7 +146,7 @@ export default class Contact {
   }) => {
     this.id           = id
     this.studentId    = studentId
-    this.name         = name
+    this.name         = name || 'N/A'
     this.phone        = phone
     this.email        = email
     this.relationship = relationship
