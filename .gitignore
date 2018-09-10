@@ -30,6 +30,8 @@
 /public/packs
 /node_modules
 
+test_build.sh
+
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 .tern-port

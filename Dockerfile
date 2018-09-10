@@ -26,7 +26,8 @@ RUN apt-get update -qq -y && apt-get --assume-yes install \
   libmagickcore-dev \
   libmagickwand-dev \
   imagemagick \
-  gsfonts
+  gsfonts \
+  python
 
 # Install latest Postgres client
 # ---------------------------------------------------------------------------------
@@ -59,6 +60,7 @@ RUN rm -rf /etc/nginx/sites-enabled/*
 # Setup ruby deps
 # ---------------------------------------------------------------------------------
 WORKDIR /tmp/bundler
+RUN mkdir /tmp/bundler/vendor
 ADD Gemfile Gemfile
 ADD Gemfile.lock Gemfile.lock
 ADD vendor vendor
@@ -74,11 +76,30 @@ ADD ./config/nginx/ss_ui.conf /etc/nginx/sites-enabled
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt-get install -y nodejs
 
-# Start Turbine web service
+# Compile assets and start web service
 # ---------------------------------------------------------------------------------
 WORKDIR /ss-ui
 ADD . /ss-ui
+
+# Build args set from env vars
+ARG DB_SERVER
+ARG DB_PORT
+ARG DB_USER
+ARG DB_PASSWD
+ARG DB_SCHEMA
+ARG TURBINE_BASE
+ARG SCRUNCHIE_BASE
+ARG MAPBOX_ACCESS_TOKEN
+ARG JS_BUGSNAG_API_KEY
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+
+RUN npm install -gq yarn
+RUN rake assets:clobber
+RUN NO_DB=1 RAILS_ENV=production rake assets:precompile
+
 RUN ln -s /ss-ui/public/packs/toolkit-entypo-df045999ec854232354efba32186c117.woff2 /ss-ui/public/packs/toolkit-entypo.woff2
 RUN rm -rf /ss-ui/vendor
 RUN ln -s /tmp/bundler/vendor .
+RUN chmod a+x scripts/start_web.sh
 CMD scripts/start_web.sh

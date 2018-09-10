@@ -7,7 +7,7 @@ const merge             = require('webpack-merge')
 const CompressionPlugin = require('compression-webpack-plugin')
 const sharedConfig      = require('./shared.js')
 const { env }           = require('./configuration.js')
-const { 
+const {
   BugsnagBuildReporterPlugin,
   BugsnagSourceMapUploaderPlugin
 } = require('webpack-bugsnag-plugins')
@@ -35,12 +35,16 @@ module.exports = merge(sharedConfig, {
         comments: false
       }
     }),
+
     new BugsnagBuildReporterPlugin({
       apiKey: apiKey
     }),
+
     new BugsnagSourceMapUploaderPlugin({
-      apiKey: apiKey
+      apiKey: apiKey,
+      overwrite: true
     }),
+
     new CompressionPlugin({
       asset:     '[path].gz[query]',
       algorithm: 'gzip',
