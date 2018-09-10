@@ -159,6 +159,15 @@ class User < Sequel::Model(:users)
     false
   end
 
+  def post_login_setup
+    unless is_superuser?
+      district.sync_jasper_org rescue nil
+      sync_jasper_account      rescue nil
+    end
+
+    update(:has_logged_in => true)
+  end
+
   # Itercom User Hash
   def intercom_user_hash
     OpenSSL::HMAC.hexdigest('sha256', 'u3VSD-b4LgBph_p8vDEu7GZbCAoGSLIA_bljrEoZ', id)
