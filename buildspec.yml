@@ -14,7 +14,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building images for 'ss-ui'
-      - docker build --cache-from $REPO_URI:latest --build-arg DB_SERVER=$DB_SERVER --build-arg DB_PORT=$DB_PORT --build-arg DB_USER=$DB_USER --build-arg DB_PASSWD=$DB_PASSWD --build-arg DB_SCHEMA=$DB_SCHEMA --build-arg TURBINE_BASE=$TURBINE_BASE --build-arg SCRUNCHIE_BASE=$SCRUNCHIE_BASE --build-arg MAPBOX_ACCESS_TOKEN=$MAPBOX_ACCESS_TOKEN --build-arg JS_BUGSNAG_API_KEY=$JS_BUGSNAG_API_KEY --build-arg GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID --build-arg GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET --build-args RAILS_MASTER_KEY=$RAILS_MASTER_KEY --build-arg SECRET_KEY_BASE:$SECRET_KEY_BASE -t $REPO_URI:latest .
+      - docker build --cache-from $REPO_URI:latest --build-arg DB_SERVER=$DB_SERVER --build-arg DB_PORT=$DB_PORT --build-arg DB_USER=$DB_USER --build-arg DB_PASSWD=$DB_PASSWD --build-arg DB_SCHEMA=$DB_SCHEMA --build-arg TURBINE_BASE=$TURBINE_BASE --build-arg SCRUNCHIE_BASE=$SCRUNCHIE_BASE --build-arg MAPBOX_ACCESS_TOKEN=$MAPBOX_ACCESS_TOKEN --build-arg JS_BUGSNAG_API_KEY=$JS_BUGSNAG_API_KEY --build-arg GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID --build-arg GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY --build-arg SECRET_KEY_BASE:$SECRET_KEY_BASE -t $REPO_URI:latest .
       - docker tag $REPO_URI:latest $REPO_URI:$IMAGE_TAG
   post_build:
     commands:
