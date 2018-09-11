@@ -57,6 +57,11 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C
 RUN apt-get update -qq -y && apt-get --assume-yes install nginx
 RUN rm -rf /etc/nginx/sites-enabled/*
 
+# Install NodeJS runtime
+# ---------------------------------------------------------------------------------
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get install -y nodejs
+
 # Setup ruby deps
 # ---------------------------------------------------------------------------------
 WORKDIR /tmp/bundler
@@ -71,15 +76,11 @@ RUN bundle install --deployment --jobs 4 --path /var/bundle
 ADD ./config/nginx/nginx.conf /etc/nginx
 ADD ./config/nginx/ss_ui.conf /etc/nginx/sites-enabled
 
-# Install NodeJS runtime
-# ---------------------------------------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
-RUN apt-get install -y nodejs
-
 # Compile assets and start web service
 # ---------------------------------------------------------------------------------
 WORKDIR /ss-ui
 ADD . /ss-ui
+RUN chmod a+x bin/*
 
 # Build args set from env vars
 ARG DB_SERVER
