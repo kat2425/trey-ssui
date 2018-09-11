@@ -5,6 +5,7 @@ import { bugsnagClient } from 'helpers/bugsnag'
 
 export default function ErrorParser(e){
   bugsnagClient.notify(e)
+  if(!e.response || !e.response.status || !e.request.responseURL) return
 
   if(_.hasIn(e, 'response.data.message') &&
     _.hasIn(e, 'response.data.errors') &&
