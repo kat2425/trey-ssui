@@ -7,3 +7,6 @@ log/*
 gems.tags
 node_modules
 node_modules/*
+.env
+.env.test
+test_build.sh

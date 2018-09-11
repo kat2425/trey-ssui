@@ -62,7 +62,7 @@
     "postcss-smart-import": "^0.7.5",
     "precss": "^2.0.0",
     "prop-types": "^15.5.10",
-    "query-string": "^6.1.0",
+    "query-string": "5",
     "rails-erb-loader": "^5.0.2",
     "rc-slider": "^8.3.1",
     "react": "^16.3.0",

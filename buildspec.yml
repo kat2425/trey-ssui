@@ -1,0 +1,26 @@
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - REPO_URI=296807674405.dkr.ecr.us-east-1.amazonaws.com/ss-ui
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - docker pull $REPO_URI:latest || true
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building images for 'ss-ui'
+      - docker build --cache-from $REPO_URI:latest --build-arg DB_SERVER=$DB_SERVER --build-arg DB_PORT=$DB_PORT --build-arg DB_USER=$DB_USER --build-arg DB_PASSWD=$DB_PASSWD --build-arg DB_SCHEMA=$DB_SCHEMA --build-arg TURBINE_BASE=$TURBINE_BASE --build-arg SCRUNCHIE_BASE=$SCRUNCHIE_BASE --build-arg MAPBOX_ACCESS_TOKEN=$MAPBOX_ACCESS_TOKEN --build-arg JS_BUGSNAG_API_KEY=$JS_BUGSNAG_API_KEY --build-arg GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID --build-arg GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET -t $REPO_URI:latest .
+      - docker tag $REPO_URI:latest $REPO_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the 'ss-ui' images...
+      - docker push $REPO_URI:latest
+      - docker push $REPO_URI:$IMAGE_TAG
+      - echo Writing 'ss-ui' image def...
+      - printf '[{"name":"ss-ui","imageUri":"%s"}]' $WEB_REPO_URI:$IMAGE_TAG > ss-ui-image-def.json
+artifacts:
+    files:
+      - ss-ui-image-def.json
