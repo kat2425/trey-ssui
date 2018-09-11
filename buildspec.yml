@@ -20,7 +20,7 @@
       - docker push $REPO_URI:latest
       - docker push $REPO_URI:$IMAGE_TAG
       - echo Writing 'ss-ui' image def...
-      - printf '[{"name":"ss-ui","imageUri":"%s"}]' $WEB_REPO_URI:$IMAGE_TAG > ss-ui-image-def.json
+      - printf '[{"name":"ss-ui","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > ss-ui-image-def.json
 artifacts:
     files:
       - ss-ui-image-def.json
