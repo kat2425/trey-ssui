@@ -53,7 +53,7 @@ RUN mkdir /tmp/bundler
 # Install and configure latest NGINX server
 # ---------------------------------------------------------------------------------
 RUN echo 'deb http://ppa.launchpad.net/nginx/stable/ubuntu trusty main' > /etc/apt/sources.list.d/nginx-stable-trusty.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C
 RUN apt-get update -qq -y && apt-get --assume-yes install nginx
 RUN rm -rf /etc/nginx/sites-enabled/*
 
