@@ -5,6 +5,8 @@ class SessionsController < ApplicationController
     if user = User[:username => user_info[:info][:email]]
       warden.set_user user
 
+      user.post_login_setup
+
       session[:avatar] = user_info[:info][:image]
       redirect_to('/r')
     else
