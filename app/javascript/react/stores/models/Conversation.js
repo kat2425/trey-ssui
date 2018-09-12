@@ -41,6 +41,11 @@ export default class Conversation {
   }
 
   @action
+  remove = (msg) => {
+    this.messages.delete(msg.id)
+  }
+
+  @action
   updateMessage = (msg) => {
     const _msg = this.messages.get(msg.id)
 

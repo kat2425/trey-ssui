@@ -5,6 +5,7 @@ import {
   autorun
 } from 'mobx'
 
+import uuid          from 'uuid'
 import _             from 'lodash'
 import xhr           from 'helpers/XHR'
 import intercomEvent from 'helpers/Intercom'
@@ -61,11 +62,19 @@ export class SMSConversationStore {
       }
     })
   }
+
   @action
   addMessage = (msg) => {
     const conversation = this.conversations.get(msg.conversation_id)
 
     conversation && conversation.add(msg)
+  }
+
+  @action
+  removeMessage = (msg) => {
+    const conversation = this.conversations.get(msg.conversationId)
+
+    conversation && conversation.remove(msg)
   }
 
   @action
@@ -188,8 +197,14 @@ export class SMSConversationStore {
         'Content-Type': 'multipart/form-data'
       })
 
-      this.sendMessageOK(res)
+      if(res.status === 201) {
+        this.sendMessageOK(res)
+        return
+      } 
+
+      throw new Error('Failed with attachment.')
     } catch(e) {
+      this.handleFailedMessage(msg, attachment)
       this.setIsError(getError(e))
     }
   }
@@ -202,8 +217,85 @@ export class SMSConversationStore {
         body:       msg
       })
 
-      this.sendMessageOK(res)
+      if(res.status === 201) {
+        this.sendMessageOK(res)
+        return
+      } 
+
+      throw new Error('Failed without attachment.')
     } catch(e) {
+      this.handleFailedMessage(msg)
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action 
+  handleFailedMessage = (msg, attachment = null) => {
+    const _id = uuid()
+
+    this.addMessage({ 
+      id:              _id, 
+      direction:       'outbound', 
+      conversation_id: uiStore.currentConversation, 
+      body:            msg,
+      status:          'failed',
+      contact:         uiStore.currentContact.id,
+      media_url:       attachment ? URL.createObjectURL(attachment) : null,
+      attachment
+    })
+  }
+
+  @action
+  retryMessage(msg) {
+    if(msg.attachment) {
+      this.retrySendMessageWithAttachment(msg)
+    } else {
+      this.retrySendMessage(msg)
+    }
+  }
+
+  @action
+  retrySendMessage = async(msg) => {
+    try {
+      msg.setStatus('retrying')
+      const res = await xhr.post('/commo/sms/send_message/contact', {
+        contact_id: msg.contact,
+        body:       msg.body
+      })
+
+      if(res.status === 201) {
+        this.removeMessage(msg)
+        this.sendMessageOK(res)
+        return
+      } 
+     
+      throw new Error('Retry failed.')
+    } catch(e) {
+      msg.setStatus('failed')
+      this.setIsError(getError(e))
+    }
+  }
+
+  @action
+  retrySendMessageWithAttachment = async(msg) => {
+    try {
+      const { contact, body, attachment } = msg
+      const data = this.getAttachmentData(body, contact, attachment)
+      
+      msg.setStatus('retrying')
+      const res = await xhr.post('/commo/sms/send_message/contact', data, {
+        'Content-Type': 'multipart/form-data'
+      })
+
+      if(res.status === 201) {
+        this.removeMessage(msg)
+        this.sendMessageOK(res)
+        return
+      } 
+     
+      throw new Error('Retry failed.')
+    } catch(e) {
+      msg.setStatus('failed')
       this.setIsError(getError(e))
     }
   }

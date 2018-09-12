@@ -2,10 +2,13 @@ import React                 from 'react'
 import { observer }          from 'mobx-react'
 import VisibilitySensor      from 'react-visibility-sensor'
 import {UncontrolledTooltip} from 'reactstrap'
+import { Icon }              from 'antd'
 import ChatBubbleMMS         from './ChatBubbleMMS'
 import withCommsTranslator   from 'ui/hoc/withCommsTranslator'
 import styled                from 'styled-components'
 import {ifProp}              from 'styled-tools'
+import smsConversationStore  from 'stores/SMSConversationStore'
+import LoadingSpinner        from 'ui/shell/LoadingSpinner'
 
 const Text = styled.span`
   font-size: 14px;
@@ -38,12 +41,30 @@ const ChatBubble = ({message, setRead, time}) => (
             : null
           }
         </ChatWithBroadcast>
-
+        {message.shouldShowRetry && renderRetry(message)}
         { renderFooter(time, message) }
       </div>
     </VisibilitySensor>
   </li>
 )
+
+const renderRetry = (msg) => {
+  if(msg.isRetrying) {
+    return (
+      <LoadingSpinner padding={0} className='d-flex flex-row justify-content-start my-1' />
+    )
+  }
+
+  return (
+    <div 
+      className='cursor-pointer d-flex align-items-center my-1' 
+      onClick={() => smsConversationStore.retryMessage(msg)}
+    >
+      <Icon style={{ color: 'tomato' }} type='exclamation-circle' theme='outlined' />
+      <p className='text-danger small ml-1 mb-0'>Failed to send. Click to retry.</p>
+    </div>
+  )
+}
 
 const renderFooter = (time, message) => {
   if (time) {
