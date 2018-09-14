@@ -7,7 +7,7 @@ const appID = 'j8uy8j/ss-ui'
 const LRInit = () => LogRocket.init(appID)
 
 const LRIdentify = (id, user) => {
-  LogRocket.identify(id, user)
+  LogRocket.identify(user.username, user)
   updateIntercom(id)
 }
 
