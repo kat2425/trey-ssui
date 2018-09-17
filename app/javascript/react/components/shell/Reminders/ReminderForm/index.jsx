@@ -3,14 +3,22 @@ import Datetime                                     from 'react-datetime'
 import StudentSearch                                from '../../StudentSearch'
 import {Input, InputGroup, InputGroupAddon, Button} from 'reactstrap'
 import Wrapper                                      from './Wrapper'
-import { observer }                                 from 'mobx-react'
+import { inject, observer }                         from 'mobx-react'
 
-const ReminderForm = observer(({reminderStore}) => {
+const ReminderForm = ({reminderStore,studentSearchStore}) => {
   return (
     <Wrapper>
       <div className='reminder-form' style={{ marginBottom: 10 }}>
         <InputGroup className='reminder-student-search-container'>
-          <StudentSearch style={{width: '100%'}} onChange={(e) => reminderStore.selectStudent(e)} dropup />
+          <StudentSearch
+            style={{ width: '100%' }}
+            onChange={students => reminderStore.onChange(students)}
+            isLoading={studentSearchStore.isLoading}
+            options={studentSearchStore.students.slice()}
+            hasSelectedStudent={reminderStore.hasSelectedStudent}
+            lookupStudent={studentSearchStore.lookupStudent}
+            dropup
+          />
         </InputGroup>
         <InputGroup style={{ marginTop: 10 }}>
           <Datetime
@@ -38,6 +46,6 @@ const ReminderForm = observer(({reminderStore}) => {
       </InputGroup>
     </Wrapper>
   )
-})
+}
 
-export default ReminderForm
+export default inject('reminderStore','studentSearchStore')(observer(ReminderForm))
