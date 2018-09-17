@@ -34,7 +34,7 @@ const UserRouter = props => {
     duration: 1.5
   })
 
-  const store = {uiStore, userStore, tagStore, translationStore}
+  const store = {uiStore, userStore, tagStore, translationStore, reminderStore}
 
   return (
     <BrowserRouter>

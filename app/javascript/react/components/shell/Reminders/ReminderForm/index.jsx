@@ -10,7 +10,11 @@ const ReminderForm = observer(({reminderStore}) => {
     <Wrapper>
       <div className='reminder-form' style={{ marginBottom: 10 }}>
         <InputGroup className='reminder-student-search-container'>
-          <StudentSearch style={{width: '100%'}} onChange={(e) => reminderStore.selectStudent(e)} dropup />
+          <StudentSearch
+            style={{ width: '100%' }}
+            onChange={students => reminderStore.onChange(students)}
+            dropup
+          />
         </InputGroup>
         <InputGroup style={{ marginTop: 10 }}>
           <Datetime

@@ -18,14 +18,16 @@ const FILTER = {
 }
 
 export class ReminderStore {
-  @observable reminders               = []
-  @observable reminderText            = undefined
-  @observable selectedFilter          = FILTER.PENDING
+  @observable reminders                        = []
+  @observable reminderText                     = undefined
+  @observable selectedFilter                   = FILTER.PENDING
 
-  @observable @setter selectedStudent = null
-  @observable @setter dateTime        = null
-  @observable @setter isError         = null
-  @observable @setter isLoading       = null
+  @observable @setter selectedStudent          = null
+  @observable @setter students                 = []
+  @observable @setter dateTime                 = null
+  @observable @setter isError                  = null
+  @observable @setter isLoading                = null
+  @observable @setter isTypeAheadLoading       = false
 
   constructor() {
     this.initAutoruns()
@@ -46,6 +48,10 @@ export class ReminderStore {
 
   @computed get totalPending(){
     return _.filter(this.reminders, (e) => { return e.status === 'pending' }).length
+  }
+
+  @computed get hasSelectedStudent() {
+    return !_.isEmpty(this.selectedStudent)
   }
 
   @action initAutoruns = () => {
@@ -93,7 +99,7 @@ export class ReminderStore {
     if (this.isValidInput()) {
       try {
         const res = await xhr.post('/tasks', {
-          student_id:  this.selectedStudent[0].id,
+          student_id:  this.selectedStudent.id,
           user_id:     userStore.user.id,
           type:        'reminder',
           description: reminder,
@@ -182,8 +188,13 @@ export class ReminderStore {
   }
 
   @action
-  selectStudent = (student_id) => {
-    this.setSelectedStudent(student_id)
+  onChange = (students) => {
+    _.isEmpty(students) ? this.selectStudent(null) : this.selectStudent(students[0])
+  }
+
+  @action
+  selectStudent = (student) => {
+    this.setSelectedStudent(student)
   }
 
   @action
@@ -197,6 +208,19 @@ export class ReminderStore {
       return true
     } else {
       return false
+    }
+  }
+
+  @action
+  lookupStudent = async(val) => {
+    if (val.length >= 3) {
+      this.setIsTypeAheadLoading(true)
+      const res = await xhr.get('/typeahead/students', {
+        params: { text_filter: val }
+      })
+
+      this.setStudents(res.data)
+      this.setIsTypeAheadLoading(false)
     }
   }
 }

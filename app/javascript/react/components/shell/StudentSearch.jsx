@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { AsyncTypeahead }   from 'react-bootstrap-typeahead'
 
 import StudentAvatar        from './StudentAvatar'
-
-import xhr                  from '../../helpers/XHR'
+import { inject, observer } from 'mobx-react'
 import _                    from 'lodash'
-
 
 const StudentSearchItem = ({ student, search }) => {
   const formatResults = (search, value) => {
@@ -49,32 +47,19 @@ const renderGrade = (grade) => {
   }
 }
 
+@inject('reminderStore')
+@observer
 export default class StudentSearch extends Component {
   constructor(props) {
     super(props)
+    
+    const { reminderStore } = this.props
 
-    this.lookupStudent = _.debounce(this._lookupStudent, 300, {
+    this.lookupStudent = _.debounce(reminderStore.lookupStudent, 300, {
       leading:  false,
       trailing: true
     })
-
-    this.state = {
-      value:    '',
-      students: []
-    }
-  }
-
-  // TODO: we might not need a store for this component, but AJAX actions should at
-  // least be moved into a top-level controller
-  _lookupStudent(val) {
-    if (val.length >= 3) {
-      xhr.get('/typeahead/students', {
-        params: { text_filter: val }
-      }).then((res) => {
-        this.setState({ students: res.data })
-      })
-    }
-  }
+  } 
 
   // NOTE: we do this because we're guarenteed to only get good results back from
   // the server, so any filtering we do here messes up those result.
@@ -87,19 +72,31 @@ export default class StudentSearch extends Component {
   }
 
   render() {
+    const { style, reminderStore } = this.props
+
     return (
-      <div style={this.props.style} className='student-search-container'>
+      <div style={style} className='student-search-container'>
         <AsyncTypeahead
-          isLoading              = {false}
+          isLoading              = {reminderStore.isTypeAheadLoading}
           dropup                 = {this.props.dropup}
           labelKey               = {student => `${ student.last_name }, ${ student.first_name }`}
           multiple               = {false}
           clearButton            = {true}
           maxHeight              = '435px'
           filterBy               = {::this.filterByCallback}
-          options                = {this.state.students}
-          onSearch               = {::this.lookupStudent}
+          options                = {reminderStore.students.slice()}
+          onSearch               = {this.lookupStudent}
           onChange               = {this.props.onChange}
+          onKeyDown              = {(e) => {
+            if(reminderStore.hasSelectedStudent) {
+              //only allow backspace, delete, home, end, and arrow keys
+              if (e.keyCode !== 8 && 
+                e.keyCode !== 46 &&
+                !(e.keyCode > 34 && e.keyCode < 41)) {
+                e.preventDefault()
+              }
+            }
+          }}
           renderMenuItemChildren = {::this.renderResults}
           placeholder            = 'Find a student...'
           minLength              = {3}
