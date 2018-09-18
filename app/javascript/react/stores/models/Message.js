@@ -31,11 +31,13 @@ export default class Message {
   readStatus     = null
   conversationId = null
   broadcastId    = null
+  attachment     = null
 
   @observable expandedTranslator    = false
   @observable language              = null
   @observable targetLanguage        = LANGUAGE.EN
 
+  @setter @observable status        = null
   @setter @observable meta          = null
   @setter @observable isTranslating = false
   @setter @observable isError       = false
@@ -104,6 +106,14 @@ export default class Message {
 
   @computed get isInbound(){
     return this.direction === 'inbound'
+  }
+
+  @computed get isRetrying(){
+    return this.status === 'retrying'
+  }
+
+  @computed get shouldShowRetry(){
+    return this.status === 'retrying' || this.status === 'failed'
   }
 
   @computed get bubbleDirection(){
@@ -181,7 +191,9 @@ export default class Message {
     media_url:       mediaUrl,
     created_at:      createdAt,
     conversation_id: conversationId,
-    broadcast_id:    broadcastId
+    broadcast_id:    broadcastId,
+    status,
+    attachment
   }) => {
     this.id             = id
     this.mediaUrl       = mediaUrl
@@ -195,6 +207,8 @@ export default class Message {
     this.language       = determineInitialLanguage(language)
     this.conversationId = conversationId
     this.broadcastId    = broadcastId
+    this.status         = status
+    this.attachment     = attachment
   }
 
   @action clear = () => {
