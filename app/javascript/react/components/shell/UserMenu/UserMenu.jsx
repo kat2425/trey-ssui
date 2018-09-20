@@ -220,7 +220,7 @@ const UserMenu = () => {
 
       <EUserMenuSection
         title    = 'Management'
-        renderIf = {userStore.hasModules(USERADMIN, VOICE_ADMIN) || userStore.user.isSpoc}
+        renderIf = {userStore.hasModules(USERADMIN, VOICE_ADMIN, CONTACT_FLAGGING) || userStore.user.isSpoc}
       >
         <EUserMenuItem
           title     = 'User Management'
