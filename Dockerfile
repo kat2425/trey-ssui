@@ -59,7 +59,7 @@ RUN rm -rf /etc/nginx/sites-enabled/*
 
 # Install NodeJS runtime
 # ---------------------------------------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
 RUN apt-get install -y nodejs
 
 # Setup ruby deps
