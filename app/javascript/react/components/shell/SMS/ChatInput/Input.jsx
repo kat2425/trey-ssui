@@ -7,6 +7,7 @@ const Input = styled.div.attrs({className: 'form-control', contentEditable: true
   overflow: auto;
   padding: 7px 10px;
   word-wrap: break-word;
+  position: relative;
 `
 
 export default Input

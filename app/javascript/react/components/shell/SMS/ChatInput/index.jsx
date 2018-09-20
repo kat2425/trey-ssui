@@ -4,6 +4,7 @@ import _                    from 'lodash'
 import Wrapper              from './Wrapper'
 import Footer               from './Footer'
 import Input                from './Input'
+import Placeholder          from './Placeholder'
 import SendButton           from './SendButton'
 import Counter              from './Counter'
 import AttachmentWrapper    from './AttachmentWrapper'
@@ -16,13 +17,15 @@ import { STATE }            from 'stores/models/Translator'
 import userStore            from 'stores/UserStore'
 
 const CHAR_LIMIT = 160
+const DEFAULT_PLACEHOLDER = 'Enter your message here...'
 
 export default class ChatInput extends Component {
   state = {
-    message:       '',
-    attachment:    null,
-    textCounter:   CHAR_LIMIT,
-    isTranslating: false
+    message:         '',
+    attachment:      null,
+    textCounter:     CHAR_LIMIT,
+    isTranslating:   false,
+    showPlaceholder: true
   }
 
   handleChange = (e) => {
@@ -34,8 +37,10 @@ export default class ChatInput extends Component {
   setMessage = (text) => {
     this.setState({ 
       message:     text,
-      textCounter: CHAR_LIMIT - text.length
+      textCounter: CHAR_LIMIT - text.length,
     })
+
+    this.showPlaceholder(!text)
   }
 
   handleKeyPress = (e) => {
@@ -62,6 +67,10 @@ export default class ChatInput extends Component {
 
   clearAttachment = () => {
     this.setState({ attachment: null })
+  }
+
+  showPlaceholder = (showPlaceholder) => {
+    this.setState({showPlaceholder})
   }
 
   sendMessage = (msg) => {
@@ -94,17 +103,22 @@ export default class ChatInput extends Component {
   }
 
   render() {
-    const {textCounter, attachment, isTranslating} = this.state
+    const {textCounter, attachment, isTranslating, showPlaceholder} = this.state
     const isOverLimit   = textCounter < 0
     const disableButton = textCounter === CHAR_LIMIT && !attachment
 
     return (
       <Wrapper>
         <Input 
-          innerRef   = {el => {this.smsInput = el}}
-          onInput    = {this.handleChange}
-          onKeyPress = {this.handleKeyPress}
-        />
+          innerRef                       = {el => {this.smsInput = el}}
+          onInput                        = {this.handleChange}
+          onKeyPress                     = {this.handleKeyPress}
+          onFocus                        = {() => this.showPlaceholder(false)}
+          onBlur                         = {() => this.showPlaceholder(!this.state.messsage)}
+          suppressContentEditableWarning = {true}
+        >
+          {showPlaceholder && <Placeholder>{this.props.placeholder || DEFAULT_PLACEHOLDER}</Placeholder>}
+        </Input>
         <input 
           ref      = {(input) => {this.attachmentInput = input} }
           accept   = 'image/*'

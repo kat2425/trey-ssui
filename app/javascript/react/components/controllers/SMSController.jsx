@@ -1,7 +1,6 @@
 import React, { Component}  from 'react'
 
 import { inject, observer } from 'mobx-react'
-import _                    from 'lodash'
 
 import ChatInput            from 'ui/shell/SMS/ChatInput/'
 import SMS                  from 'ui/shell/SMS/SMS'
@@ -9,6 +8,7 @@ import ConversationHeader   from 'ui/shell/SMS/ConversationHeader'
 import LoadingSpinner       from 'ui/shell/LoadingSpinner'
 
 import VisibilitySensor     from 'react-visibility-sensor'
+import userStore            from 'stores/UserStore'
 
 const conversationStyle = {
   backgroundColor: 'rgb(244,247,249)',
@@ -18,7 +18,7 @@ const conversationStyle = {
   overflow:        'auto',
 }
 
-const fooStyle = secondary => ({
+const fooStyle = () => ({
   backgroundColor: '#ffffff',
   borderTop:       '1px solid rgba(255,255,255,0.75)',
   borderBottom:    '1px solid rgba(0,0,0,0.125)',
@@ -29,7 +29,7 @@ const fooStyle = secondary => ({
   top:             57
 })
 
-const redContainer = (isSecondary) => ({
+const redContainer = () => ({
   backgroundColor: 'rgb(244,247,249)',
   position:        'absolute',
   width:           '100%',
@@ -39,10 +39,10 @@ const redContainer = (isSecondary) => ({
 })
 
 const redStyle = {
-  overflow:        'auto'
+  overflow: 'auto'
 }
 
-const yellowStyle = secondary => ({
+const yellowStyle = () => ({
   position:     'absolute',
   bottom:       50,
   borderBottom: '1px solid rgba(0,0,0,0.25)',
@@ -65,6 +65,15 @@ export default class SMSController extends Component {
   handleChange = (isVisible) => {
     if(!isVisible) return
     this.props.store.loadMore()
+  }
+
+  getPlaceholder = () => {
+    const { uiStore } = this.props
+    const studentName = uiStore.currentContact.student.full_name
+    const relationship = uiStore.currentContact.relationship
+    const relationshipText = relationship ? `'s ${relationship}` : ` Contact`
+
+    return `Send to ${studentName}${relationshipText}`
   }
 
   render() {
@@ -97,7 +106,10 @@ export default class SMSController extends Component {
         </div>
 
         <div style={yellowStyle(isSecondary)}>
-          <ChatInput contact={uiStore.currentContact} />
+          <ChatInput 
+            placeholder = {!userStore.user.higherEd && this.getPlaceholder()}
+            contact     = {uiStore.currentContact} 
+          />
         </div>
       </div>
     )
