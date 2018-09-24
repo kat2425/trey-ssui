@@ -161,8 +161,12 @@ class User < Sequel::Model(:users)
 
   def post_login_setup
     unless is_superuser?
-      district.sync_jasper_org rescue nil
-      sync_jasper_account      rescue nil
+      begin
+        district.sync_jasper_org
+        sync_jasper_account
+      rescue => e
+        Bugsnag.notify(e)
+      end
     end
 
     update(:has_logged_in => true)
