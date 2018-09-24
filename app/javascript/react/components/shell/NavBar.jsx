@@ -89,7 +89,7 @@ class RouteMonitor extends Component {
 }
 
 @withRouter
-@inject('uiStore')
+@inject('uiStore','studentSearchStore')
 @observer
 export default class NavBar extends Component {
   constructor(props) {
@@ -103,7 +103,7 @@ export default class NavBar extends Component {
   }
 
   render() {
-    const { uiStore }        = this.props
+    const { uiStore, studentSearchStore }        = this.props
 
     return (
       <Navbar
@@ -143,7 +143,15 @@ export default class NavBar extends Component {
 
           <Nav className='navbar-nav ml-auto'>
             <NavItem className='mr-3'>
-              <StudentSearch style={{width: '300px'}} onChange={this.onStudentChange}/>
+              <StudentSearch 
+                style={{width: '300px'}} 
+                isLoading={studentSearchStore.isLoading}
+                options={studentSearchStore.students.slice()}
+                hasSelectedStudent={false}
+                lookupStudent={studentSearchStore.lookupStudent} 
+                onChange={this.onStudentChange}
+                
+              />
             </NavItem>
             {userStore.hasLearningLab && (
               <NavItem>

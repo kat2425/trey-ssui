@@ -15,6 +15,7 @@ import reminderStore                from 'stores/ReminderStore'
 import translationStore             from 'stores/TranslationStore'
 import contactStore                 from 'stores/ContactStore'
 import flaggedContactStore          from 'stores/FlaggedContactStore'
+import studentSearchStore           from 'stores/StudentSearchStore'
 
 import {
   bugsnagClient,
@@ -64,6 +65,8 @@ const UserRouter = props => {
     translationStore,
     contactStore,
     flaggedContactStore,
+    reminderStore,
+    studentSearchStore
   }
 
   return (
