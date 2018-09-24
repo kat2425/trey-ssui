@@ -25,6 +25,6 @@ test:
 
 production:
   <<: *default
-  host: <%= ENV['DB_SERVER'] || 'schoolstatus-pg-vpc-aurora.ciwswt54yuhj.us-east-1.rds.amazonaws.com' %>
+  host: <%= ENV['DB_SERVER'] || 'schoolstatus-pg-vpc-aurora-cluster.cluster-ciwswt54yuhj.us-east-1.rds.amazonaws.com' %>
   port: <%= ENV['DB_PORT'] || 5432 %>
   database: <%= ENV['DB_SCHEMA'] || 'schoolstatus' %>
