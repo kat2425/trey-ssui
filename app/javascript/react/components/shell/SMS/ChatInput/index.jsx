@@ -114,7 +114,7 @@ export default class ChatInput extends Component {
           onInput                        = {this.handleChange}
           onKeyPress                     = {this.handleKeyPress}
           onFocus                        = {() => this.showPlaceholder(false)}
-          onBlur                         = {() => this.showPlaceholder(!this.state.messsage)}
+          onBlur                         = {() => this.showPlaceholder(!this.state.message)}
           suppressContentEditableWarning = {true}
         >
           {showPlaceholder && <Placeholder>{this.props.placeholder || DEFAULT_PLACEHOLDER}</Placeholder>}
