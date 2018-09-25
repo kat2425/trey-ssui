@@ -157,7 +157,7 @@ export default class FlaggedContact {
       this.setIsUnFlagging(true)
       this.setIsError(false)
 
-      const { data } = await xhr.delete(`/contacts/${this.id}/flag`)
+      const { data } = await xhr.delete(`/contacts/${this.id}/flag/all`)
 
       this.unFlagNumberOK(data, showSuccessMessage)
     } catch (e) {

@@ -185,25 +185,6 @@ export default class Contact {
     this.parentStore.toggleFlagFormModal()
   }
 
-  @action unFlagNumber = async() => {
-    try {
-      this.setIsUnFlagging(true)
-      this.setIsError(false)
-
-      await xhr.delete(`/contacts/${this.id}/unFlag`)
-
-      this.unFlagNumberOK()
-    } catch (e) {
-      this.setIsError(getError(e))
-    } finally {
-      this.setIsUnFlagging(false)
-    }
-  }
-
-  @action unFlagNumberOK = () => {
-    uiStore.addMessage(`Contact unflagged successfully`)
-  }
-
   @action fetchNumberCapability = async() => {
     try {
       if(!this.phone) { return }
