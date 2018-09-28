@@ -16,22 +16,22 @@ const faveIconStyle = (primary) => {
   return {
     fontSize:      18,
     verticalAlign: 'middle',
-    opacity:       primary ? '0.7' : '0.25',
+    color:         primary ? 'goldenrod' : '#A8ADB0',
     lineHeight:    '1px'
   }
 }
 
 const Star = ({contact}) => {
   const {primary, id, updateContactPrimary} = contact
-  const _icon = primary ? 'icon-star' : 'icon-star-outlined'
   const tooltipId = `id-fav-${id}`
+  const className = `icon icon-star cursor-pointer`
 
   return (
     <React.Fragment>
       <span
         id        = {tooltipId}
         onClick   = {() => updateContactPrimary()}
-        className = {`text-muted icon ${_icon} cursor-pointer`}
+        className = {className}
         style     = {faveIconStyle(primary)}
       />
       <UncontrolledTooltip

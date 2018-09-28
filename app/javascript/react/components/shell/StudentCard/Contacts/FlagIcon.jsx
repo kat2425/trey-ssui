@@ -14,7 +14,7 @@ const FlagIcon = ({contact, className, placement = 'top'}) => (
 )
 
 const flaggedIconStyle = ({flagged}) => {
-  const minOpacity = 0.15
+  const minOpacity = 0.5
   const maxOpacity = 0.8
 
   return {
