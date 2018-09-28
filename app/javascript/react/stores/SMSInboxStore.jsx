@@ -67,7 +67,8 @@ export class SMSInboxStore {
             'broker.contact.id',
             'broker.contact.student.full_name',
             'broker.contact.student_id',
-            'broker.contact.relationship'
+            'broker.contact.relationship',
+            'broker.contact.flags_count'
           ].join(',')
         }
       })
