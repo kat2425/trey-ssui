@@ -19,7 +19,8 @@ class RedirectsController < ApplicationController
       "district_name=#{user&.district.district_name}",
       "is_teacher=#{user&.district&.higher_ed ? 'higher_ed' : user&.is_teacher}",
       "has_feedbak=#{user&.district&.has_feedbak}",
-      "feedbak_teacher=#{(user&.district&.has_feedbak && user&.is_teacher)}"
+      "feedbak_teacher=#{(user&.district&.has_feedbak && user&.is_teacher)}",
+      "is_spoc=#{user.is_spoc?}"
     ]
 
     redirect_to "https://schoolstatus.learnupon.com/sqsso?#{params.join('&')}"
