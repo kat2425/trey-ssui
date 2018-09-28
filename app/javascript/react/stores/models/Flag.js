@@ -40,6 +40,7 @@ export default class Flag {
       createdDate: this.createdDate,
       updatedDate: this.updatedDate,
       deletedDate: this.deletedDate,
+      userId:      this.userId,
       note:        this.note
     }
   }

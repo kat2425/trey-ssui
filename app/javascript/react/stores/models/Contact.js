@@ -117,6 +117,14 @@ export default class Contact {
     return userStore.isBetaTester
   }
 
+  @computed get canUnflag(){
+    return (
+      !this.isUnFlagging &&
+      this.flags.length &&
+      _.some(this.flags, { userId: userStore.user.id })
+    )
+  }
+
   // Actions
   @action updateFromJSON = ({
     id,
@@ -156,6 +164,7 @@ export default class Contact {
 
     this.flagsCount   = flagsCount
     this.flagged      = flagged
+
     this.flags        = flags.map(this.createFlag)
   }
 
@@ -277,5 +286,25 @@ export default class Contact {
       id:   this.id,
       name: this.name
     })
+  }
+
+  @action unFlagNumber = async() => {
+    try {
+      this.setIsUnFlagging(true)
+      this.setIsError(false)
+
+      const { data } = await xhr.delete(`/contacts/${this.id}/flag`)
+
+      this.unFlagNumberOK(data)
+    } catch (e) {
+      this.setIsError(getError(e))
+    } finally {
+      this.setIsUnFlagging(false)
+    }
+  }
+
+  @action unFlagNumberOK = (contact) => {
+    this.updateFromJSON(contact)
+    uiStore.addMessage(`Contact unflagged successfully`)
   }
 }

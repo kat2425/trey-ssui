@@ -11,6 +11,10 @@ $ant-select-dropdown-max-height: 500px !important;
   display: none !important;
 }
 
+.ant-popover {
+  z-index: 9999 !important;
+}
+
 .ant-switch-checked {
   background-color: $brand-primary;
 }

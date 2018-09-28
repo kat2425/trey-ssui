@@ -188,6 +188,11 @@ export class ContactStore {
     this.setFilter(FILTERS.ALL)
     this.setSelectedView(VIEWS.GRID)
   }
+
+  @action handleOnFlagClick = (contact) => {
+    this.setSelectedContact(contact)
+    this.toggleFlagFormModal()
+  }
 }
 
 export default new ContactStore()

@@ -8338,6 +8338,9 @@ img.zoom-img {
 .ant-popover-arrow {
   display: none !important; }
 
+.ant-popover {
+  z-index: 9999 !important; }
+
 .ant-switch-checked {
   background-color: #3f9fcf; }
 
@@ -8378,6 +8381,11 @@ img.zoom-img {
     vertical-align: middle;
     top: 0;
     text-align: left; }
+
+.ant-form-explain, .ant-form-extra {
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 0 !important; }
 
 .mapboxgl-popup-close-button {
   right: 5px;

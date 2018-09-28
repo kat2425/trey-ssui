@@ -2,13 +2,12 @@ import React                          from 'react'
 import { observer }                   from 'mobx-react'
 import { UncontrolledTooltip }        from 'reactstrap'
 import { Icon, Badge }                from 'antd'
-import contactStore                   from 'stores/ContactStore'
 
-const FlagIcon = ({contact, className, placement = 'top'}) => (
+const FlagIcon = ({contact, className, placement = 'top', ...rest}) => (
   <span className={className}>
     {contact.isFlagging 
       ? <Icon type='loading'/> 
-      : <Flag contact={contact} placement={placement}/>
+      : <Flag contact={contact} placement={placement} {...rest}/>
     }
   </span>
 )
@@ -24,7 +23,7 @@ const flaggedIconStyle = ({flagged}) => {
   }
 }
 
-const Flag = ({contact, placement}) => {
+const Flag = observer(({contact, placement, ...rest}) => {
   const {flagsCount, flagged, id, showContactFlagging} = contact
   const tooltipId                 = `id-flag-${id}`
   const colorClass                = flagged ? 'text-danger' : 'text-muted'
@@ -32,14 +31,13 @@ const Flag = ({contact, placement}) => {
   if(!showContactFlagging) return null
 
   return (
-    <div className='d-inline-block'>
+    <div className='d-inline-block'{...rest} >
       <Badge 
         count     = {flagsCount}
         title     = 'Flag count'
       >
         <span
           id        = {tooltipId}
-          onClick   = {handleOnFlagClick(contact)}
           className = {`icon icon-flag cursor-pointer ${colorClass}`}
           style     = {flaggedIconStyle(contact)}
         />
@@ -52,11 +50,6 @@ const Flag = ({contact, placement}) => {
       </UncontrolledTooltip>
     </div>
   )
-}
-
-const handleOnFlagClick = (contact) => () => {
-  contactStore.setSelectedContact(contact)
-  contactStore.toggleFlagFormModal()
-}
+})
 
 export default observer(FlagIcon)
