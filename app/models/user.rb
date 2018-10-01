@@ -162,9 +162,13 @@ class User < Sequel::Model(:users)
   def post_login_setup
     unless is_superuser?
       begin
-        district.sync_jasper_org
+        tries ||= 3
+        district.sync_jasper_org rescue nil
         sync_jasper_account
       rescue => e
+        puts "!!! JASPER_LOGIN ERROR - #{id} / #{username} !!!"
+        sleep 0.5
+        retry unless (tries -= 1).zero?
         Bugsnag.notify(e)
       end
     end
