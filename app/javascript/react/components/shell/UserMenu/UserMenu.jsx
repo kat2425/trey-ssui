@@ -118,19 +118,20 @@ const UserMenu = () => {
         {/*   noRoute */}
         {/* /> */}
 
-        <EUserMenuItem
-          title     = 'Prelim Results'
-          iconClass = 'icon-calculator'
-          link      = '/r/accountability/prelim_results'
-          badge     = 'NEW (2018)'
-          renderIf  = {(!userStore.user.isTeacher && userStore.hasModules(VJS_AA_2017))}
-          noRoute
-        />
+        {/* <EUserMenuItem */}
+        {/*   title     = 'Prelim Results' */}
+        {/*   iconClass = 'icon-calculator' */}
+        {/*   link      = '/r/accountability/prelim_results' */}
+        {/*   badge     = 'NEW (2018)' */}
+        {/*   renderIf  = {(!userStore.user.isTeacher && userStore.hasModules(VJS_AA_2017))} */}
+        {/*   noRoute */}
+        {/* /> */}
 
         <EUserMenuItem
-          title     = 'Final Results'
+          title     = 'Current Results'
           iconClass = 'icon-eye'
           link      = '/r/accountability/final_results'
+          badge     = 'UPDATED'
           renderIf  = {userStore.hasModules(VJS_AA_2017)}
           noRoute
         />
