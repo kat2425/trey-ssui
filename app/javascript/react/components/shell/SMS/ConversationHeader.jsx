@@ -46,7 +46,7 @@ export default class ConversationHeader extends Component {
           studentName  = {studentName} 
         />
         {this.renderFlagged(flagCount)}
-        <span className='text-muted m-0'>{ contact.phone }</span>
+        <span className='text-muted text-danger m-0'>{ contact.phone }</span>
       </div>
     )
   }
