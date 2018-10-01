@@ -132,7 +132,7 @@ const UserMenu = () => {
           iconClass = 'icon-eye'
           link      = '/r/accountability/final_results'
           badge     = 'UPDATED'
-          renderIf  = {userStore.hasModules(VJS_AA_2017)}
+          renderIf  = {(!userStore.user.isTeacher && userStore.hasModules(VJS_AA_2017))}
           noRoute
         />
 
