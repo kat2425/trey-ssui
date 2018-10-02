@@ -2,6 +2,7 @@ import React, {Component}   from 'react'
 import Select               from 'react-select'
 import xhr                  from 'helpers/XHR'
 import { observer }         from 'mobx-react'
+import _                    from 'lodash'
 
 @observer
 export default class MemberSearchInput extends Component {
@@ -12,6 +13,11 @@ export default class MemberSearchInput extends Component {
       data:  null,
       value: null
     }
+
+    this.debouncedError = _.debounce(e => this.props.store.setIsError(e), 1000, {
+      leading:  false,
+      trailing: true
+    })
   }
 
   onChange = (value) => {
@@ -36,10 +42,10 @@ export default class MemberSearchInput extends Component {
     if(value.length > 3) {
       try{
         const {data} = await xhr.get('typeahead/students', {params})
-      
+
         return {options: data}
       } catch(error) {
-        this.props.store.setIsError({title: 'Error', message: 'There was an error searching for students!'})
+        this.debouncedError({title: 'Error', message: 'There was an error searching for students!'})
       }
     }
   }
@@ -63,12 +69,12 @@ export default class MemberSearchInput extends Component {
 
         return {options: data}
       } catch(error) {
-        this.props.store.setIsError({title: 'Error', message: 'There was an error searching for users!'})
-      } 
+        this.debouncedError({title: 'Error', message: 'There was an error searching for users!'})
+      }
     }
   }
 
-  renderSearchItem = (d) => {  
+  renderSearchItem = (d) => {
     return (
       <p>{`${d.first_name} ${d.last_name}`}</p>
     )
@@ -86,8 +92,8 @@ export default class MemberSearchInput extends Component {
         filterOptions    = {false}
         className        = 'mt-4'
         onChange         = {this.handleSelect}
-        value            = {this.state.value} 
-        onInputChange    = {this.onChange} 
+        value            = {this.state.value}
+        onInputChange    = {this.onChange}
         valueKey         = 'id'
         optionRenderer   = {this.renderSearchItem}
         labelKey         = {'first_name'}
