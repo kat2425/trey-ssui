@@ -131,9 +131,9 @@ export class ContactStore {
       const response = await xhr.get(`/students/${id}/contacts`, {
         params: {
           only: [
-            'id', 'student_id', 'name', 'phone', 'email', 'primary',
-            'relationship', 'resides_with', 'checkout', 'emergency', 'no_contact',
-            'stopped', 'student.full_name', 'avatar_url', 'flagged', 'flags_count', 'flags'
+            'id', 'student_id', 'name', 'phone', 'email', 'primary', 'relationship',
+            'resides_with', 'checkout', 'emergency', 'no_contact', 'stopped', 
+            'student.full_name', 'avatar_url', 'flagged', 'flags_count', 'flags', 'user_flagged'
           ].join(',')
         }
       })

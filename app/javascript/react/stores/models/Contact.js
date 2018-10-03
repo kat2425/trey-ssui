@@ -12,6 +12,7 @@
     emergency:    null,
     no_contact:   null,
     primary:      true,
+    user_flagged: true,
     stopped:      false,
     student:      { full_name: 'John Brown' },
     flagged:      true,
@@ -74,6 +75,7 @@ export default class Contact {
   @setter @observable noContact                = null
   @setter @observable numberType               = null
   @setter @observable avatarUrl                = null
+  @setter @observable userFlagged              = false
 
   @setter @observable flagsCount               = 0
   @setter @observable flags                    = []
@@ -118,11 +120,7 @@ export default class Contact {
   }
 
   @computed get canUnflag(){
-    return (
-      !this.isUnFlagging &&
-      this.flags.length &&
-      _.some(this.flags, { userId: userStore.user.id })
-    )
+    return !this.isUnFlagging && this.userFlagged
   }
 
   // Actions
@@ -144,7 +142,8 @@ export default class Contact {
     flags_count: flagsCount,
     note = '',
     flags = [],
-    avatarUrl: avatarUrl
+    avatarUrl: avatarUrl,
+    user_flagged: userFlagged
   }) => {
     this.id           = id
     this.studentId    = studentId
@@ -161,6 +160,7 @@ export default class Contact {
     this.student      = student
     this.note         = note
     this.avatarUrl    = avatarUrl
+    this.userFlagged  = userFlagged
 
     this.flagsCount   = flagsCount
     this.flagged      = flagged
