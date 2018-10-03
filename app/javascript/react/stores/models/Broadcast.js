@@ -63,7 +63,7 @@ export default class Broadcast {
     if(this.nameArray.length === 3) {
       return `${this.nameArray[0]}, ${this.nameArray[1]}, and ${this.nameArray[2]}`
     }
-    return 'Pending Broadcast...'
+    return 'Unknown Contacts'
   }
 
   @computed get isSelected(){
@@ -75,7 +75,7 @@ export default class Broadcast {
 
     if(!_.isEmpty(recipientsByType.group)) {
       if(recipientsByType.group.length === 1){
-        this.nameArray.push(_.get(recipientsByType, 'group[0].group.group_name', ''))
+        this.nameArray.push(_.get(recipientsByType, 'group[0].group.group_name', 'Unknown Group'))
       } else {
         this.nameArray.push(`${recipientsByType.group.length} groups`)
       }
@@ -83,7 +83,7 @@ export default class Broadcast {
 
     if(!_.isEmpty(recipientsByType.course)) {
       if(recipientsByType.course.length === 1) {
-        this.nameArray.push(_.get(recipientsByType, 'course[0].course.course_name', ''))
+        this.nameArray.push(_.get(recipientsByType, 'course[0].course.course_name', 'Unknown Course'))
       } else {
         this.nameArray.push(`${recipientsByType.course.length} courses`)
       }

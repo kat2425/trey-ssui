@@ -3,6 +3,7 @@ import styled       from 'styled-components'
 import { observer } from 'mobx-react'
 import PropTypes    from 'prop-types'
 import {switchProp} from 'styled-tools'
+import _            from 'lodash'
 
 RecipientList.propTypes = {
   broadcast: PropTypes.object.isRequired
@@ -30,11 +31,11 @@ function RecipientList({ broadcast }){
 const getName = (recipient) => {
   switch (recipient.type) {
   case 'group':
-    return recipient.group.group_name
+    return _.get(recipient.group, 'group_name', 'Unknown Group')
   case 'course':
-    return recipient.course.course_name
+    return _.get(recipient.course, 'course_name', 'Unknown Course')
   default:
-    return recipient.contact.name
+    return _.get(recipient.contact, 'name', 'Unknown Contact')
   }
 }
 
