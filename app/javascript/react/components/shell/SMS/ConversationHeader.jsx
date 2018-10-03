@@ -34,6 +34,7 @@ export default class ConversationHeader extends Component {
     const studentName  = contact.student.full_name
     const relationship = contact.relationship
     const flagCount    = contact.flagsCount ? contact.flagsCount : flagsCount
+    const phoneClasses = `text-muted ${flagCount ? 'text-danger' : ''} m-0` 
 
     return (
       <div key={ contact.id } className='text-right'>
@@ -46,7 +47,7 @@ export default class ConversationHeader extends Component {
           studentName  = {studentName} 
         />
         {this.renderFlagged(flagCount)}
-        <span className='text-muted text-danger m-0'>{ contact.phone }</span>
+        <span className={phoneClasses}>{ contact.phone }</span>
       </div>
     )
   }
