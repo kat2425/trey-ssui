@@ -1,6 +1,7 @@
 import React        from 'react'
 import { observer } from 'mobx-react'
 import Table        from 'ui/shell/AntdTable'
+import styled       from 'styled-components'
 
 
 const FlagNotes = ({contact}) => {
@@ -10,9 +11,7 @@ const FlagNotes = ({contact}) => {
       key:    'note',
       width:  '50%',
       render: ({ id, note }) => (
-        <div key={id} style={{ wordBreak: 'normal' }}>
-          {note}
-        </div>
+        <Note key={id}> {note} </Note>
       )
     },
     {
@@ -36,5 +35,11 @@ const FlagNotes = ({contact}) => {
     />
   )
 }
+
+const Note = styled.div`
+  word-break: normal;
+  max-height: 200px;
+  overflow: auto;
+`
 
 export default observer(FlagNotes)
