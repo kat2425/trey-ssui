@@ -11,7 +11,10 @@ const ContactActions = ({contact}) => (
     <FlagDropdown contact={contact}>
       <FlagIcon contact={contact} className='ml-2'/>
     </FlagDropdown>
-    <FlagNoteIcon contact={contact} className={`${contact.flagged ? 'ml-3' : 'ml-2'}`}/>
+    <FlagNoteIcon 
+      contact   = {contact}
+      className = {`ml-2 ${contact.flagged ? 'mr-3' : ''}`}
+    />
   </div>
 )
 

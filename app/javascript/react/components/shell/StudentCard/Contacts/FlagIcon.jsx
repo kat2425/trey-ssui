@@ -1,7 +1,7 @@
-import React                          from 'react'
-import { observer }                   from 'mobx-react'
-import { UncontrolledTooltip }        from 'reactstrap'
-import { Icon, Badge }                from 'antd'
+import React                   from 'react'
+import { observer }            from 'mobx-react'
+import { UncontrolledTooltip } from 'reactstrap'
+import { Icon }                from 'antd'
 
 const FlagIcon = ({contact, className, placement = 'top', ...rest}) => (
   <span className={className}>
@@ -24,24 +24,19 @@ const flaggedIconStyle = ({flagged}) => {
 }
 
 const Flag = observer(({contact, placement, ...rest}) => {
-  const {flagsCount, flagged, id, showContactFlagging} = contact
-  const tooltipId                 = `id-flag-${id}`
-  const colorClass                = flagged ? 'text-danger' : 'text-muted'
+  const {flagged, id, showContactFlagging} = contact
+  const tooltipId                          = `id-flag-${id}`
+  const colorClass                         = flagged ? 'text-danger' : 'text-muted'
 
   if(!showContactFlagging) return null
 
   return (
     <div className='d-inline-block'{...rest} >
-      <Badge 
-        count     = {flagsCount}
-        title     = 'Flag count'
-      >
-        <span
-          id        = {tooltipId}
-          className = {`icon icon-flag cursor-pointer ${colorClass}`}
-          style     = {flaggedIconStyle(contact)}
-        />
-      </Badge>
+      <span
+        id        = {tooltipId}
+        className = {`icon icon-flag cursor-pointer ${colorClass}`}
+        style     = {flaggedIconStyle(contact)}
+      />
       <UncontrolledTooltip
         placement = {placement}
         target    = {tooltipId}
