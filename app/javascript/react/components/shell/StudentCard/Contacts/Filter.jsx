@@ -32,9 +32,19 @@ function Filter({ contactStore }) {
 const getIcon = filter => {
   switch (filter) {
   case FILTERS.FLAGGED:
-    return <span className='icon icon-flag text-danger'/>
+    return (
+      <span 
+        className = 'icon icon-flag text-danger'
+        style     = {{fontSize: 15}}
+      />
+    )
   case FILTERS.PRIMARY:
-    return <span className='icon icon-star' style={{color: 'goldenrod'}}/>
+    return (
+      <span 
+        className = 'icon icon-star'
+        style     = {{color: 'goldenrod', fontSize: 16}}
+      />
+    )
   default:
     return null
   }

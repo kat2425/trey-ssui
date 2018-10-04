@@ -43,7 +43,14 @@ const ContactCard = ({contact, userStore, ...rest}) => {
         <CardItem title='Phone'>
           { _.isEmpty(contactsWithUniquePhones) 
             ? <DefaultPlaceholder icon='phone' />
-            : <PhoneInfo key={uuid()} contacts={contactsWithUniquePhones} userStore={userStore}/>
+            : (
+              <PhoneInfo 
+                onCard 
+                key       = {uuid()}
+                contacts  = {contactsWithUniquePhones}
+                userStore = {userStore}
+              />
+            )
           }
         </CardItem>
         <CardItem title='Email' className='mb-0'>

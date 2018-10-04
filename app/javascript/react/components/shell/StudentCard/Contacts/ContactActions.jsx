@@ -5,15 +5,18 @@ import FlagIcon     from './FlagIcon'
 import FlagNoteIcon from './FlagNoteIcon'
 import FlagDropdown from './FlagDropdown'
 
-const ContactActions = ({contact}) => (
-  <div className = 'd-inline-flex justify-content-end align-items-center'>
+const ContactActions = ({contact, ...rest}) => (
+  <div 
+    className = 'd-inline-flex justify-content-end align-items-center' 
+    {...rest}
+  >
     <FavIcon contact={contact} />    
     <FlagDropdown contact={contact}>
       <FlagIcon contact={contact} className='ml-2'/>
     </FlagDropdown>
     <FlagNoteIcon 
       contact   = {contact}
-      className = {`ml-2 ${contact.flagged ? 'mr-3' : ''}`}
+      className = 'ml-2 mr-3'
     />
   </div>
 )

@@ -14,10 +14,9 @@ const FaveIcon = ({contact, className}) => (
 
 const faveIconStyle = (primary) => {
   return {
-    fontSize:      18,
+    fontSize:      20,
     verticalAlign: 'middle',
-    color:         primary ? 'goldenrod' : '#A8ADB0',
-    lineHeight:    '1px'
+    color:         primary ? 'goldenrod' : '#A8ADB0'
   }
 }
 

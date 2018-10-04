@@ -4,23 +4,25 @@ import { MdEventNote }         from 'react-icons/lib/md'
 import contactStore            from 'stores/ContactStore'
 import { UncontrolledTooltip } from 'reactstrap'
 import { Badge }               from 'antd'
+import styled                  from 'styled-components'
+import { ifProp }              from 'styled-tools'
 
 const FlagNoteIcon = ({contact, className = '', ...rest}) => {
-  if(!contact.showContactFlagging || !contact.hasFlags) return null
+  if(!contact.showContactFlagging) return null
 
   const tooltipId = `id-info-${contact.id}`
 
   return (
     <div 
       className = {`cursor-pointer ${className}`}
-      onClick   = {() => handleOnInfoClick(contact)}
+      onClick   = {handleOnInfoClick(contact)}
       {...rest}
     >
       <Badge 
         count = {contact.flagsCount}
         title = 'Flag count'
       >
-        <MdEventNote id={tooltipId} size={18}/>
+        <NoteIcon disabled={!contact.hasFlags} id={tooltipId} size={18}/>
       </Badge>
       <UncontrolledTooltip
         placement = 'top'
@@ -32,9 +34,21 @@ const FlagNoteIcon = ({contact, className = '', ...rest}) => {
   )
 }
 
-const handleOnInfoClick = (contact) => {
+const handleOnInfoClick = (contact) => e => {
+  if(!contact.hasFlags) {
+    e.preventDefault()
+    return
+  }
+
   contactStore.setSelectedContact(contact)
   contactStore.toggleFlagNotesModal()
 }
+
+const NoteIcon = styled(MdEventNote)`
+  ${ifProp('disabled', `
+    opacity: 0.55;
+    cursor: not-allowed;
+  `)}  
+`
 
 export default observer(FlagNoteIcon)
