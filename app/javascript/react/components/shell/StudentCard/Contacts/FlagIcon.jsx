@@ -46,7 +46,7 @@ const Flag = observer(({contact, placement, ...rest}) => {
         placement = {placement}
         target    = {tooltipId}
       >
-        <p>Report number as inactive.</p>
+        <p>This number has been flagged as inactive. You may still attempt to contact the number</p>
       </UncontrolledTooltip>
     </div>
   )
