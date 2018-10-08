@@ -35,20 +35,21 @@ export default class CallHistory extends Component {
     })
   }
 
+  setYearFilter(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, school_year: [ jrsValue ] },
+      selected: { ...this.state.selected, school_year: val }
+    })
+  }
+
   contactTypes = () => {
     return [
       { value: 'Call',  label: 'Call'  },
       { value: 'Text',  label: 'Text'  },
       { value: 'Email', label: 'Email' }
     ]
-  }
-
-  getHistoryPath = () => {
-    if (userStore.user.hasChannel) {
-      return '/public/VJS/ss_ui/channel/full_history'
-    } else {
-      return '/public/VJS/ss_ui/channel/call_history'
-    }
   }
 
   render() {
@@ -80,6 +81,17 @@ export default class CallHistory extends Component {
               placeholder = 'Engagement Method'
             />
           </div>
+
+          <VJSICSelect
+            id            = 'commo_years'
+            inputPath     = '/public/VJS/ss_ui/shared/input_controls/commo_years'
+            selectedValue = {this.state.selected.school_year}
+            handleChange  = {::this.setYearFilter}
+            placeholder   = 'Year'
+            setDefault    = {true}
+            clearable     = {false}
+            width         = {150}
+          />
         </ModuleHeader>
 
         <div className='row'>
@@ -89,6 +101,7 @@ export default class CallHistory extends Component {
             title       = 'Student Detail'
             className   = 'col-md-12'
             isTable     = {true}
+            requiredParams = {['school_year']}
             params      = {this.state.params}
             linkOptions = {{
               events: {

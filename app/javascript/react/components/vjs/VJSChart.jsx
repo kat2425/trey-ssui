@@ -8,16 +8,18 @@ import {
 
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import EmptyMessage   from 'ui/shell/EmptyMessage'
+import _              from 'lodash'
 
 const chartContainer = { margin: '5px' }
 
 export default class VJSChart extends Component {
   static defaultProps = {
-    isTable:      false,
-    noExport:     false,
-    emptyIcon:    'info-with-circle',
-    emptyTitle:   'No Data',
-    emptyMessage: ''
+    isTable:        false,
+    noExport:       false,
+    requiredParams: [],
+    emptyIcon:      'info-with-circle',
+    emptyTitle:     'No Data',
+    emptyMessage:   ''
   }
 
   constructor(props) {
@@ -84,58 +86,66 @@ export default class VJSChart extends Component {
     })
   }
 
+  // Using the 'requiredParams' prop, we can set dependent params on the report
+  // and not render unless these are provided
+  hasRequiredParams(requiredParams, reportParams) {
+    return _.every(requiredParams, pr => _.includes(_.keys(reportParams), pr))
+  }
+
   // Call our VJSClient (shared via window variable) and fire a report render that will
   // render to our newly created DOM element when finished on VJS server
   renderChart(reportPath, reportParams) {
-    this.report = window.vjsClient.report({
-      // Fixed VJS properties
-      container:      `#${this.reportID}`,
-      resource:       reportPath,
-      loadingOverlay: false,
-      autoresize:     true,
-      scrollToTop:    false,
-      scale:          'container',
+    if (this.hasRequiredParams(this.props.requiredParams, reportParams)) {
+      this.report = window.vjsClient.report({
+        // Fixed VJS properties
+        container:      `#${this.reportID}`,
+        resource:       reportPath,
+        loadingOverlay: false,
+        autoresize:     true,
+        scrollToTop:    false,
+        scale:          'container',
 
-      // Props open to override via our React component
-      linkOptions:      this.mergeLinkOptions((this.props.linkOptions || {})),
-      ignorePagination: (this.props.ignorePagination || false),
-      params:           (reportParams || {}),
+        // Props open to override via our React component
+        linkOptions:      this.mergeLinkOptions((this.props.linkOptions || {})),
+        ignorePagination: (this.props.ignorePagination || false),
+        params:           (reportParams || {}),
 
-      // TODO: fixme with a spread ... operator
-      events: Object.assign((this.props.events || this.correctVJSTable()), {
-        changeTotalPages: (total) => {
-          if (this._isMounted) {
-            this.setState({
-              totalPages: total
-            })
-          }
-        },
+        // TODO: fixme with a spread ... operator
+        events: Object.assign((this.props.events || this.correctVJSTable()), {
+          changeTotalPages: (total) => {
+            if (this._isMounted) {
+              this.setState({
+                totalPages: total
+              })
+            }
+          },
 
-        reportCompleted: () => {
-          // TODO: can we use an await here to check if component is mounted, if not,
-          // wait until it is, and then complete the function?
+          reportCompleted: () => {
+            // TODO: can we use an await here to check if component is mounted, if not,
+            // wait until it is, and then complete the function?
 
-          // Hide our loading indicator on a successful render
-          if (this._isMounted) {
-            this.setState({ resourceLoaded: true })
+            // Hide our loading indicator on a successful render
+            if (this._isMounted) {
+              this.setState({ resourceLoaded: true })
 
-            // Show empty message if table has no data
-            if (!this.report.data().components.length &&
-                !(this.report.data().totalPages === undefined) &&
-                this.props.isTable) {
-              this.setState({ emptyReport: true })
+              // Show empty message if table has no data
+              if (!this.report.data().components.length &&
+                  !(this.report.data().totalPages === undefined) &&
+                  this.props.isTable) {
+                this.setState({ emptyReport: true })
+              }
             }
           }
-        }
-      }),
+        }),
 
-      success: () => {
-        // XXX: this is triggered when report is successfully running, but potentially
-        // not yet finished. Should we do anything here?
-      },
+        success: () => {
+          // XXX: this is triggered when report is successfully running, but potentially
+          // not yet finished. Should we do anything here?
+        },
 
-      error: ::this.handleError
-    })
+        error: ::this.handleError
+      })
+    }
   }
 
   handleError(err) {
@@ -386,6 +396,7 @@ export default class VJSChart extends Component {
 
                 <ButtonDropdown isOpen={this.state.exportOpen} toggle={::this.toggleExport}>
                   { this.renderExportLoader() }
+
                   <DropdownToggle
                     style = {{padding: 0, width: 44, height: 36}}
                     size  = 'sm'

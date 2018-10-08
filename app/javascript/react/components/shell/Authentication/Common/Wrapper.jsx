@@ -20,9 +20,9 @@ const Wrapper = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    background: url(https://d28h61i1564zn0.cloudfront.net/bg-tile-trans.svg) repeat;
-    background-size: 650px 650px;
-    opacity: 0.075;
+    background: url(https://d28h61i1564zn0.cloudfront.net/ss-login-tile-october.svg) repeat;
+    background-size: 450px 450px;
+    opacity: 0.25;
   }
 
   ${ifProp('noNav', `margin-top: -49px;`)}
