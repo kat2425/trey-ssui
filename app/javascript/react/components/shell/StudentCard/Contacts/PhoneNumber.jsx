@@ -35,11 +35,11 @@ const iconStyle = stopped => ({
 
 const tooltip = ({stopped, flagged}) => {
   if(stopped) {
-    return 'This number has requested no communication via SchoolStatus'
+    return 'This number has requested no communication via SchoolStatus.'
   } 
 
   if(flagged) { 
-    return 'This number has been flagged as inactive.'
+    return 'This number has been flagged as inactive. You may still attempt to contact the number.'
   }
 }
 
