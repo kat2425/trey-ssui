@@ -28,6 +28,7 @@ import DRA              from './DRA'
 import DRAWordAnalysis  from './DRAWordAnalysis'
 import Eduphoria        from './Eduphoria'
 import ELSEZTT          from './ELSEZTT'
+import ELPA21           from './ELPA21'
 import ELSEZAA          from './ELSEZAA'
 import ESGI             from './ESGI'
 import LASLinks         from './LASLinks'
@@ -150,6 +151,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/eduphoria`}
             render = {() => <Eduphoria student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/elpa21`}
+            render = {() => <ELPA21 student={student}/> }
           />
 
           <Route

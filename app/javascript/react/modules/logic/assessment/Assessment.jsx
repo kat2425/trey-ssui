@@ -26,6 +26,7 @@ import DRAWordAnalysis      from './DRAWordAnalysis'
 import DMACSTAAR            from './DMACSTAAR'
 import DMACLocal            from './DMACLocal'
 import Eduphoria            from './Eduphoria'
+import ELPA21               from './ELPA21'
 import ELSEZTT              from './ELSEZTT'
 import ELSEZAA              from './ELSEZAA'
 import ESGI                 from './ESGI'
@@ -126,6 +127,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/dmac_staar'         component={DMACSTAAR}        />
           <Route path='/r/assessment/dmac_local'         component={DMACLocal}        />
           <Route path='/r/assessment/eduphoria'          component={Eduphoria}        />
+          <Route path='/r/assessment/elpa21'             component={ELPA21}           />
           <Route path='/r/assessment/els_eztt'           component={ELSEZTT}          />
           <Route path='/r/assessment/els_ezaa'           component={ELSEZAA}          />
           <Route path='/r/assessment/esgi'               component={ESGI}             />

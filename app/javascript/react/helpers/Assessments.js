@@ -92,6 +92,12 @@ const Assessments = [
     dataset: 'eduphorias',
   },
   {
+    module:  'vjs_elpa21',
+    value:   'elpa21',
+    label:   'ELPA21',
+    dataset: 'vw_elpa21',
+  },
+  {
     module:  'vjs_els',
     value:   'els_eztt',
     label:   'ELS EZ TestTracker',
