@@ -16,6 +16,7 @@ import ACTAspireInterim     from './ACTAspireInterim'
 import AIMSWeb              from './AIMSWeb'
 import Amplify              from './Amplify'
 import ATI                  from './ATI'
+import AP                   from './AP'
 import AccelReader          from './AccelReader'
 import Case21               from './Case21'
 import CogAT                from './CogAT'
@@ -117,6 +118,7 @@ class Assessments extends Component {
           <Route path='/r/assessment/act_aspire_interim' component={ACTAspireInterim} />
           <Route path='/r/assessment/aimsweb'            component={AIMSWeb}          />
           <Route path='/r/assessment/amplify'            component={Amplify}          />
+          <Route path='/r/assessment/ap'                 component={AP}               />
           <Route path='/r/assessment/ati'                component={ATI}              />
           <Route path='/r/assessment/case21'             component={Case21}           />
           <Route path='/r/assessment/cogat'              component={CogAT}            />

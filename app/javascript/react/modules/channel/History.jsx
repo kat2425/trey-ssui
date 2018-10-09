@@ -96,14 +96,14 @@ export default class CallHistory extends Component {
 
         <div className='row'>
           <VJSChart
-            id          = 'call-history'
-            reportPath  = '/public/VJS/ss_ui/channel/full_history'
-            title       = 'Student Detail'
-            className   = 'col-md-12'
-            isTable     = {true}
+            id             = 'call-history'
+            reportPath     = '/public/VJS/ss_ui/channel/full_history'
+            title          = 'Student Detail'
+            className      = 'col-md-12'
+            isTable        = {true}
             requiredParams = {['school_year']}
-            params      = {this.state.params}
-            linkOptions = {{
+            params         = {this.state.params}
+            linkOptions    = {{
               events: {
                 click: (ev, link) => {
                   const studentID = link.parameters._student_id

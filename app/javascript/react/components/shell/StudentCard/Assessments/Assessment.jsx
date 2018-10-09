@@ -17,6 +17,7 @@ import ACTAspireInterim from './ACTAspireInterim'
 import AIMSWeb          from './AIMSWeb'
 import Amplify          from './Amplify'
 import ATI              from './ATI'
+import AP               from './AP'
 import AccelReader      from './AccelReader'
 import Case21           from './Case21'
 import CogAT            from './CogAT'
@@ -326,6 +327,11 @@ class Assessments extends Component {
           <Route
             path   = {`${match.url}/istation`}
             render = {() => <IStation student={student}/> }
+          />
+
+          <Route
+            path   = {`${match.url}/ap`}
+            render = {() => <AP student={student}/> }
           />
 
           <Route render={() => {

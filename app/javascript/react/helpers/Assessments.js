@@ -32,6 +32,12 @@ const Assessments = [
     dataset: 'dibels_next',
   },
   {
+    module:  'vjs_ap',
+    value:   'ap',
+    label:   'Advanced Placement (AP)',
+    dataset: 'aps',
+  },
+  {
     module:  'vjs_ati',
     value:   'ati',
     label:   'ATI',
