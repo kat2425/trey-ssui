@@ -46,6 +46,13 @@ module JasperSoft
 
   def jasper_do(action, uri, payload=nil)
     jasper_client.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    jasper_client.send(action.to_sym, *([jasper_url + uri, jasper_payload(payload), auth_header].compact))
+    action = action.to_sym
+
+    case action
+    when :get
+      jasper_client.send(action, *([jasper_url + uri, nil, nil, auth_header]))
+    else
+      jasper_client.send(action, *([jasper_url + uri, jasper_payload(payload), auth_header].compact))
+    end
   end
 end

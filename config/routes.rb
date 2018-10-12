@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 
   root 'login#index'
 
+  # status checks
+  get 'status'    => 'status#index'
+  get 'status/db' => 'status#db'
+
   # Sessions/Auth
   get  'login'                                  => 'login#index'
   post 'login'                                  => 'login#warden_login'

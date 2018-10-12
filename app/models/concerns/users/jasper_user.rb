@@ -29,11 +29,19 @@ module Users
 
     # }}}
 
+    def jasper_user
+      _response = jasper_do :get, jasper_uri[:organizations] + "/#{district_id.gsub(/\-/, '')}/users/#{id}"
+      Hash.from_xml(_response.body)
+    end
+
     private
     # API Helpers
     # -----------------------------------------------------------------------------
     def jasper_user?
-      jasper_do :get, jasper_uri[:organizations] + "/#{district_id.gsub(/\-/, '')}/users/#{id}" rescue false
+      _response       = jasper_do :get, jasper_uri[:organizations] + "/#{district_id.gsub(/\-/, '')}/users/#{id}"
+      _response.code == '200'
+    rescue
+      false
     end
 
     def jasper_username ; username.gsub('+', '__')   ; end
