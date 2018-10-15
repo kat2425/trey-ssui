@@ -1,19 +1,32 @@
 class StatusController < ApplicationController
   def index
-    light_check
+    health = light_check
+    render :json => health
   end
 
   def db
-    params[:key] == 'monkeynutninjafoo' ? deep_check : light_check
+    health = params[:key] == 'monkeynutninjafoo' ? deep_check : light_check
+
+    health.values.each do |hv|
+      if hv != 'OK'
+        return bad_status
+      end
+    end
+
+    render :json => health
   end
 
   private
+  def bad_status
+    render :json => { :status => 'UNHEALTHY' }, :status => 500
+  end
+
   def light_check
-    render :json => { :status => 'OK' }
+    { :status => 'OK' }
   end
 
   def deep_check
-    render :json => {
+    {
       :db_check         => db_check,
       :jasper_user_sync => jasper_user_sync,
       :jasper_user_info => jasper_user_info,
