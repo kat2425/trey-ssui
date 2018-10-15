@@ -116,7 +116,7 @@ export default class Contact {
   }
 
   @computed get showContactFlagging() {
-    return userStore.isBetaTester
+    return true
   }
 
   @computed get canUnflag(){
