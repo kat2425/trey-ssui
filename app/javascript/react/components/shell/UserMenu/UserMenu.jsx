@@ -128,11 +128,27 @@ const UserMenu = () => {
         {/* /> */}
 
         <EUserMenuItem
+          title     = 'Sneak Peek'
+          iconClass = 'icon-eye'
+          link      = '/r/accountability/sneak_peek'
+          renderIf  = {(
+            !userStore.user.isTeacher &&
+              userStore.hasModules(VJS_AA_2017) &&
+              userStore.user.isDemoUser
+          )}
+          noRoute
+        />
+
+        <EUserMenuItem
           title     = 'Current Results'
           iconClass = 'icon-eye'
           link      = '/r/accountability/final_results'
           badge     = 'UPDATED'
-          renderIf  = {(!userStore.user.isTeacher && userStore.hasModules(VJS_AA_2017))}
+          renderIf  = {(
+            !userStore.user.isTeacher &&
+              userStore.hasModules(VJS_AA_2017) &&
+              !userStore.user.isDemoUser
+          )}
           noRoute
         />
 

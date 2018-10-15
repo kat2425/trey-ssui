@@ -22,7 +22,7 @@ export default class SneakPeek extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { params: {}, selected: {}, pgBtn: 1, stBtn: 1 }
+    this.state = { params: {}, selected: {}, pgBtn: 2, stBtn: 1 }
   }
 
   setTestFilter(val) {
@@ -165,7 +165,7 @@ export default class SneakPeek extends Component {
           <div className='col-md-4'>
             <VJSChart
               id          = 'aa-prof-totals'
-              reportPath  = '/public/VJS/ss_ui/accountability/sneak_peek/prof_table'
+              reportPath  = {`/public/VJS/ss_ui/accountability/${this.getPathRoot()}/prof_table`}
               title       = 'Proficiency'
               className   = 'col-md-12 p-0 m-0'
               params      = {this.state.params}

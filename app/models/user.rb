@@ -90,6 +90,7 @@ class User < Sequel::Model(:users)
       :isDistrictLevel          => is_district_level?,
       :isTeacher                => is_teacher?,
       :isSpoc                   => is_spoc?,
+      :isDemoUser               => demo_user?,
       :currentSchoolYear        => CURRENT_SCHOOL_YEAR,
       :has_channel              => has_channel?,
       :hasLearningLab           => has_learning_lab?,
@@ -143,6 +144,12 @@ class User < Sequel::Model(:users)
 
   def is_spoc?
     is_spoc == true
+  end
+
+  def demo_user?
+    district == District.anytown
+  rescue
+    false
   end
 
   def list_modules
