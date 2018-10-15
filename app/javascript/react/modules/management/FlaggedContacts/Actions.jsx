@@ -18,9 +18,9 @@ const Actions = ({contact, store}) => (
       </SSButton>
     </Badge>
     <Popconfirm
-      title      = 'Are you sure want to unflag this contact?'
+      title      = 'Are you sure want to remove the flag?'
       onConfirm  = {contact.unFlagNumber}
-      okText     = 'Unflag'
+      okText     = 'Remove'
       cancelText = 'Cancel'
     >
       <SSButton
@@ -30,7 +30,7 @@ const Actions = ({contact, store}) => (
         size      = 'sm'
         loading   = {contact.isUnFlagging}
       >
-        Unflag
+        Remove Flag
       </SSButton>
     </Popconfirm>
   </div>

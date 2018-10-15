@@ -30,7 +30,7 @@ const getMenuConfig = (contact) => {
       disabled: false
     },
     {
-      label:    'Unflag Number',
+      label:    'Remove Flag',
       key:      uuid(),
       onClick:  () => contact.unFlagNumber(),
       disabled: !contact.canUnflag

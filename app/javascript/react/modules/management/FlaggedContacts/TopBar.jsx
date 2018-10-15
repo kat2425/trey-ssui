@@ -21,15 +21,16 @@ const TopBar = ({store}) => (
 const UnFlagAllButton = observer(({store}) => (
   <div className='d-inline-flex align-items-center'>
     <Popconfirm
-      title='Are you sure want to unflag selected contacts?'
-       onConfirm={store.handleOnUnflagSelectedContacts}
-       okText='Unflag'
-       cancelText='Cancel'>
+      title      = 'Are you sure want to remove all selected flags?'
+      onConfirm  = {store.handleOnUnflagSelectedContacts}
+      okText     = 'Remove'
+      cancelText = 'Cancel'
+    >
       <SSButton
         color    = 'primary'
         disabled = {!store.hasSelected}
       >
-        Unflag All Selected {getSelectedCount(store)}
+        Remove All Selected Flags {getSelectedCount(store)}
       </SSButton>
     </Popconfirm>
   </div>
