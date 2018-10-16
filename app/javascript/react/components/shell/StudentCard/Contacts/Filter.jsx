@@ -1,14 +1,13 @@
-import React                from 'react'
-import { observer }         from 'mobx-react'
-import { Radio }            from 'antd'
-import { FILTERS }          from 'stores/ContactStore'
-import userStore            from 'stores/UserStore'
-import uuid                 from 'uuid'
-import { capitalize }       from 'lodash'
+import React          from 'react'
+import { observer }   from 'mobx-react'
+import { Radio }      from 'antd'
+import { FILTERS }    from 'stores/ContactStore'
+import uuid           from 'uuid'
+import { capitalize } from 'lodash'
 
 
-const RadioButton          = Radio.Button
-const RadioGroup           = Radio.Group
+const RadioButton = Radio.Button
+const RadioGroup  = Radio.Group
 
 function Filter({ contactStore }) {
   return (
@@ -18,7 +17,6 @@ function Filter({ contactStore }) {
         defaultValue = {FILTERS.ALL}
       >
         {Object.values(FILTERS)
-          .filter(filterFlagged)
           .map(f => (
             <RadioButton key={uuid()} value={f}>
               {getIcon(f)} {capitalize(f)}
@@ -48,11 +46,6 @@ const getIcon = filter => {
   default:
     return null
   }
-}
-
-const filterFlagged = key => {
-  if (userStore.isBetaTester) return true
-  else return key !== FILTERS.FLAGGED
 }
 
 export default observer(Filter)

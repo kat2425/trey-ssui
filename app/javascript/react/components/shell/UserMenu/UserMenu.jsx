@@ -257,10 +257,7 @@ const UserMenu = () => {
           title     = 'Flagged Contacts'
           iconClass = 'icon-remove-user'
           link      = '/r/flagged_contacts'
-          renderIf  = {
-            userStore.hasModules(CONTACT_FLAGGING) &&
-            userStore.isBetaTester
-          }
+          renderIf  = { userStore.hasModules(CONTACT_FLAGGING) }
         />
         <EUserMenuItem
           title     = 'Parent Access Management'
