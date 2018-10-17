@@ -19,4 +19,8 @@ const IntercomEvent = (event, metadata) => {
   window.Intercom && window.Intercom('trackEvent', event, metadata)
 }
 
+export const updateIntercom = () => {
+  window.Intercom && window.Intercom('update')
+}
+
 export default IntercomEvent

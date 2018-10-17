@@ -13,11 +13,11 @@ import {
 } from 'reactstrap'
 
 
-import StudentSearch      from './StudentSearch'
-import fireEvent          from 'helpers/FireEvent'
-import intercomEvent      from 'helpers/Intercom'
-import userStore          from 'stores/UserStore'
-import renderIf           from 'ui/hoc/renderIf'
+import StudentSearch                    from './StudentSearch'
+import fireEvent                        from 'helpers/FireEvent'
+import userStore                        from 'stores/UserStore'
+import renderIf                         from 'ui/hoc/renderIf'
+import intercomEvent,{ updateIntercom } from 'helpers/Intercom'
 
 const ENav               = renderIf(Nav)
 const brandLogo          = { height: '35px' }
@@ -46,6 +46,7 @@ class RouteMonitor extends Component {
       const data = this.untangleRoute(path)
 
       intercomEvent(data.event, data.params)
+      updateIntercom()
     }
   }
 
