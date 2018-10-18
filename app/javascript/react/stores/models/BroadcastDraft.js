@@ -191,7 +191,10 @@ export class BroadcastDraft {
             'course_name',
             'relationship',
             'student.first_name',
-            'student.last_name'
+            'student.last_name',
+            'class_period',
+            'term',
+            'school_year'
           ].join(',')
         }
       })

@@ -30,15 +30,21 @@ const SAsyncTypeahead = styled(AsyncTypeahead)`
 
 const getName = ( recipient ) => {
   if(recipient.name){
-    const Contact = `${recipient.name || recipient.relationship}`
-    const FirstName = recipient.student.first_name
-    const LastName = recipient.student.last_name
-    const Student = `${FirstName} ${LastName}`
-    const Relation = `${recipient.relationship || 'Contact'}`
+    const contact = `${recipient.name || recipient.relationship}`
+    const firstName = recipient.student.first_name
+    const lastName = recipient.student.last_name
+    const student = `${firstName} ${lastName}`
+    const relation = `${recipient.relationship || 'Contact'}`
 
-    return `${Contact} (${Student}'s ${Relation})`
+    return `${contact} (${student}'s ${relation})`
   }
-  return recipient.group_name || recipient.course_name
+  if(recipient.course_name) {
+    const period = recipient.class_period ? `Period ${recipient.class_period}` : ''
+    const term   = recipient.term ? ` - ${recipient.term}` : ''
+
+    return `${recipient.course_name} ${period} ${term}`
+  }
+  return recipient.group_name
 }
 
 const getType = ( recipient ) => {
