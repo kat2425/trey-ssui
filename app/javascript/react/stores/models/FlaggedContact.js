@@ -168,7 +168,7 @@ export default class FlaggedContact {
   }
 
   @action unFlagNumberOK = (contact, showSuccessMessage = true) => {
-    showSuccessMessage && uiStore.addMessage(`Contact unflagged successfully`)
+    showSuccessMessage && uiStore.addMessage(`flag removed successfully`)
     this.parentStore.delete(contact.id)
   }
 

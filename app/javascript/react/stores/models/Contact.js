@@ -305,6 +305,6 @@ export default class Contact {
 
   @action unFlagNumberOK = (contact) => {
     this.updateFromJSON(contact)
-    uiStore.addMessage(`Contact unflagged successfully`)
+    uiStore.addMessage(`flag removed successfully`)
   }
 }
