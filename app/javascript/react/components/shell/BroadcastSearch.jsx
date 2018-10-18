@@ -8,7 +8,7 @@ const BroadcastSearch = ({broadcastDraft, onChange, type}) => (
     <SAsyncTypeahead
       dropup
       isLoading              = {broadcastDraft.isSearching}
-      labelKey               = {recipient => `${getName(recipient)} (${getType(recipient)})`}
+      labelKey               = {recipient => `${getName(recipient)} ${getType(recipient)}`}
       multiple               = {true}
       options                = {broadcastDraft.options.slice()}
       onSearch               = {(q) => broadcastDraft.updateQueryAndSearch(q)}
@@ -29,13 +29,22 @@ const SAsyncTypeahead = styled(AsyncTypeahead)`
 `
 
 const getName = ( recipient ) => {
-  return recipient.name || recipient.group_name || recipient.course_name
+  if(recipient.name){
+    const Contact = `${recipient.name || recipient.relationship}`
+    const FirstName = recipient.student.first_name
+    const LastName = recipient.student.last_name
+    const Student = `${FirstName} ${LastName}`
+    const Relation = `${recipient.relationship || 'Contact'}`
+
+    return `${Contact} (${Student}'s ${Relation})`
+  }
+  return recipient.group_name || recipient.course_name
 }
 
 const getType = ( recipient ) => {
-  if(recipient.name) return 'contact'
-  if(recipient.group_name) return 'group'
-  if(recipient.course_name) return 'course'
+  if(recipient.name) return ''
+  if(recipient.group_name) return '(group)'
+  if(recipient.course_name) return '(course)'
 }
 
 export default observer(BroadcastSearch)

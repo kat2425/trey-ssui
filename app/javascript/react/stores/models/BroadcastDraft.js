@@ -180,11 +180,19 @@ export class BroadcastDraft {
       this.setOptions([])
 
       if(this.query.length < 4) return
-      
+
       const res = await xhr.get(`/${this.type}s/search`, {
         params: {
           query: this.query,
-          only:  ['id', 'group_name', 'name', 'course_name'].join(',')
+          only:  [
+            'id',
+            'group_name',
+            'name',
+            'course_name',
+            'relationship',
+            'student.first_name',
+            'student.last_name'
+          ].join(',')
         }
       })
 
