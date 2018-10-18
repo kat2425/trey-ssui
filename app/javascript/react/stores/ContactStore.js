@@ -5,12 +5,13 @@ import {
   autorun
 } from 'mobx'
 
-import { setter } from 'mobx-decorators'
-import xhr        from 'helpers/XHR'
-import getError   from 'helpers/ErrorParser'
-import uiStore    from 'stores/UiStore'
-import _          from 'lodash'
-import Contact    from 'stores/models/Contact'
+import { setter }  from 'mobx-decorators'
+import xhr         from 'helpers/XHR'
+import getError    from 'helpers/ErrorParser'
+import uiStore     from 'stores/UiStore'
+import _           from 'lodash'
+import { orderBy } from 'lodash/fp'
+import Contact     from 'stores/models/Contact'
 
 export const VIEWS = {
   TABLE: 'TABLE',
@@ -52,9 +53,11 @@ export class ContactStore {
   }
 
   @computed get groupedContacts() {
-    let contacts = this.getFilteredContactsByProp(this.contacts.values(), this.filter)
-
-    contacts = this.getFilteredContacts(contacts, this.searchFilter)
+    const contacts = _.flow([
+      this.getFilteredContactsByProp(this.filter),
+      this.getFilteredContacts(this.searchFilter),
+      orderBy(c => c.primary, ['desc'])
+    ])(this.contacts.values())
 
     return this.getGroupedContacts(contacts)
   }
@@ -67,7 +70,7 @@ export class ContactStore {
     return !this.isLoading && !this.hasContacts
   }
 
-  getFilteredContactsByProp = (contacts, filter) => {
+  getFilteredContactsByProp = filter => contacts => {
     switch(filter){
     case FILTERS.ALL:
       return contacts
@@ -80,7 +83,7 @@ export class ContactStore {
     }
   }
 
-  getFilteredContacts = (contacts, filter) => {
+  getFilteredContacts = filter => contacts => {
     if(!filter) return contacts
     return contacts
       .filter( t => t.name .toLowerCase().indexOf(filter.toLowerCase()) > -1)
