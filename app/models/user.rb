@@ -2,6 +2,7 @@ class User < Sequel::Model(:users)
   include BCrypt
   include JasperSoft
   include Users::JasperUser
+  include Users::TrackableUser
 
   # Minimal relations
   many_to_one :district

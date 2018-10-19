@@ -29,8 +29,10 @@ Warden::Strategies.add(:bcrypt) do
     # end
 
     if User.bcrypt_authenticate(user, params[:password])
+      user.log_login_success rescue nil
       success!(user)
     else
+      user.log_login_failure rescue nil
       fail!
     end
   end

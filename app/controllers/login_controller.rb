@@ -20,6 +20,7 @@ class LoginController < ApplicationController
     if session[:impersonated]
       unimpersonate
     else
+      user.log_logout rescue nil
       logout
       cookies.delete 'ss_session'
       cookies.delete 'ss_ui'
