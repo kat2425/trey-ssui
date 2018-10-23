@@ -39,8 +39,6 @@ export default class ChatInput extends Component {
       message:     text,
       textCounter: CHAR_LIMIT - text.length,
     })
-
-    this.showPlaceholder(!text)
   }
 
   handleKeyPress = (e) => {
