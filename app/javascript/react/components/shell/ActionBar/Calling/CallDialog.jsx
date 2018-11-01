@@ -71,12 +71,7 @@ const CallDialog = observer(({ callingStore }) => {
 function handleWebCall(store){
   if(!hasWebRTC(store)) return
 
-  const { 
-    contact, 
-    studentID 
-  } = store
-
-  store.initiateCall(contact, studentID)
+  store.initiateCall(store.studentID)
 }
 
 function hasWebRTC(store) {

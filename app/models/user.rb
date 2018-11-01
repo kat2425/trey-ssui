@@ -1,5 +1,8 @@
 class User < Sequel::Model(:users)
   include BCrypt
+  include JasperSoft
+  include Users::JasperUser
+  include Users::TrackableUser
 
   # Minimal relations
   many_to_one :district
@@ -58,27 +61,48 @@ class User < Sequel::Model(:users)
 
   def is_teacher? ; !!is_teacher ; end
 
+  def is_spoc? ; !!is_spoc ; end
+
+  def ss_modules
+    SSModule.select_map(:symbol).sort.uniq
+  end
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  def deleted?
+    !deleted_at.nil?
+  end
+
   # UI props
   def ui_props
-    self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at).merge(
+    self.to_hash.slice(:id, :username, :first_name, :last_name, :created_at, :beta_tester).merge(
       :accessToken              => last_access_token,
       :api                      => 'https://api.schoolstatus.com',
-      :customModules            => district.custom_modules,
-      :hiddenModules            => district.hidden_modules,
+      :customModules            => district&.custom_modules,
+      :hiddenModules            => district&.hidden_modules,
+      :channelOnly              => district&.channel_only?,
       :districtID               => district_id,
       :districtName             => district&.district_name,
+      :districtCode             => district&.district_code,
       :districtExpirationStatus => district&.expiration_status,
       :daysUntilExpiration      => district&.days_until_expiration,
       :isDistrictLevel          => is_district_level?,
       :isTeacher                => is_teacher?,
+      :isSpoc                   => is_spoc?,
+      :isDemoUser               => demo_user?,
       :currentSchoolYear        => CURRENT_SCHOOL_YEAR,
       :has_channel              => has_channel?,
+      :hasLearningLab           => has_learning_lab?,
       :higherEd                 => district&.higher_ed,
       :intercomUserHash         => intercom_user_hash,
       :jasper                   => jasper_user_creds,
       :modules                  => modules.map(&:symbol),
       :policies                 => policies.map(&:name),
-      :schoolFilter             => school_filter
+      :schoolFilter             => school_filter,
+      :userType                 => user_type,
+      :ssModules                => ss_modules
     )
   end
 
@@ -119,12 +143,45 @@ class User < Sequel::Model(:users)
     schools.empty?
   end
 
+  def is_spoc?
+    is_spoc == true
+  end
+
+  def demo_user?
+    district == District.anytown
+  rescue
+    false
+  end
+
   def list_modules
     modules_dataset.select_map(:symbol)
   end
 
   def has_module?(symbol)
     list_modules.include? symbol.to_s
+  end
+
+  def has_learning_lab?
+    district.has_module? :learning_lab
+  rescue
+    false
+  end
+
+  def post_login_setup
+    unless is_superuser?
+      begin
+        tries ||= 3
+        district.sync_jasper_org rescue nil
+        sync_jasper_account
+      rescue => e
+        puts "!!! JASPER_LOGIN ERROR - #{id} / #{username} !!!"
+        sleep 0.5
+        retry unless (tries -= 1).zero?
+        Bugsnag.notify(e)
+      end
+    end
+
+    update(:has_logged_in => true)
   end
 
   # Itercom User Hash

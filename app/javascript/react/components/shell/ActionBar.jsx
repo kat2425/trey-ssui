@@ -7,6 +7,7 @@ import intercomIcon            from 'images/intercom-icon.svg'
 import { SIDEBAR }             from 'stores/UiStore'
 import userStore               from 'stores/UserStore'
 import { UPGRADE }             from 'helpers/UserAlerts'
+import renderIf                from 'ui/hoc/renderIf'
 
 import {
   Badge,
@@ -19,6 +20,8 @@ import {
 
 const NavItem = ({style, ...rest}) =>
   <NavItm {...rest} style={{...style, cursor: 'pointer'}}/>
+
+const ENavItem = renderIf(NavItem)
 
 const channelCheck = (caller, item) => {
   const { user } = userStore
@@ -74,6 +77,28 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
   const { setSelectedSidebar } = uiStore
   const { totalUnread }        = store
   const { totalPending }       = reminderStore
+  const { BROADCAST_MESSAGING } = window.SS_MODULES
+
+  if (this.props.parent) {
+    return (
+      <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
+        <Nav className='d-flex flex-row justify-content-end p-3' navbar>
+          <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.SMS)}>
+            <span className='icon icon-chat mr-2' style={{opacity: '0.6'}}/>
+            <span>Messages</span>
+            <Badge
+              color  = 'danger'
+              style  = {actionBarNotification}
+              hidden = {totalUnread < 1}
+              pill
+            >
+              {totalUnread}
+            </Badge>
+          </NavItem>
+        </Nav>
+      </Navbar>
+    )
+  }
 
   return (
     <Navbar style={getActionBarStyle(callingStore)} fixed='bottom' className='nav'>
@@ -110,6 +135,23 @@ function ActionBar({callingStore, uiStore, reminderStore, store}) {
           <span className='icon icon-voicemail mr-2' style={{opacity: '0.6'}}/>
           <span>Calls</span>
         </NavItem>
+
+        <ENavItem
+          renderIf={userStore.isBetaTester && userStore.hasModules(BROADCAST_MESSAGING)}
+          className='ml-4'
+          onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.BROADCAST)}
+        >
+          <span className='icon icon-megaphone mr-2' style={{opacity: '0.6'}}/>
+          <span>Broadcasts</span>
+          <Badge
+            color  = 'success'
+            style  = {actionBarNotification}
+            hidden = {totalPending < 1}
+            pill
+          >
+            {totalPending}
+          </Badge>
+        </ENavItem>
 
         <NavItem className='ml-4' onClick={() => channelCheck(setSelectedSidebar, SIDEBAR.SMS)}>
           <span className='icon icon-chat mr-2' style={{opacity: '0.6'}}/>

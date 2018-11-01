@@ -12,13 +12,14 @@ import {
   QUERY_XHR as qxhr
 } from  'helpers/XHR'
 
-import { setter } from 'mobx-decorators'
-import _          from 'lodash'
-import Tag        from 'stores/models/Tag'
-import Pagination from 'stores/models/Pagination'
-import uiStore    from 'stores/UiStore'
-import config     from 'ui/shell/QueryBuilder/config/'
-import getError   from 'helpers/ErrorParser'
+import { setter }       from 'mobx-decorators'
+import _                from 'lodash'
+import Tag              from 'stores/models/Tag'
+import Pagination       from 'stores/models/Pagination'
+import uiStore          from 'stores/UiStore'
+import config           from 'ui/shell/QueryBuilder/config/'
+import getError         from 'helpers/ErrorParser'
+import { downloadFile } from 'download-csv'
 
 export class TagStore {
   @setter @observable isFetchingSchema = false
@@ -114,15 +115,7 @@ export class TagStore {
   }
 
   @action downloadCSV = (name, csv) => {
-    const csvContent = `data:text/csv;charset=utf-8,${csv}`
-    const targetURI = encodeURI(csvContent)
-
-    const link = document.createElement('a')
-
-    link.setAttribute('href', targetURI)
-    link.setAttribute('download', `${name}.csv`)
-    document.body.appendChild(link)
-    link.click()
+    downloadFile(csv, `${name}.csv`)
   }
 
   @action fetchSchema = async() => {

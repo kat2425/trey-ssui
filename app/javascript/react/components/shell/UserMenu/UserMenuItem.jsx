@@ -13,17 +13,18 @@ const activeItem = {
   backgroundColor: '#f7fcff',
 }
 
-const renderNormal = ({link, title, iconClass, ...rest}) => (
+const renderNormal = ({link, title, iconClass, badge, ...rest}) => (
   <NavLink
     className   = 'pr-4 pl-4 p-1'
     href        = {link}
   >
     <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />
     {title}
+    { badge ? <span className={`ml-2 badge badge-success`}>{ badge }</span> : '' }
   </NavLink>
 )
 
-const renderRouterLink = ({link, title, iconClass, ...rest}) => (
+const renderRouterLink = ({link, title, iconClass, badge, ...rest}) => (
   <NavLink
     tag         = {RRNavLink}
     activeStyle = {activeItem}
@@ -33,6 +34,7 @@ const renderRouterLink = ({link, title, iconClass, ...rest}) => (
   >
     <span className={`text-muted mr-3 icon ${iconClass}`} style={navIcon} />
     {title}
+    { badge ? <span className={`ml-2 badge badge-success`}>{ badge }</span> : '' }
   </NavLink>
 )
 

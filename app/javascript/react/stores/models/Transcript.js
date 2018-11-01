@@ -62,10 +62,10 @@ export default class Transcript {
       this.setIsFetchingTranscript(true)
       this.setIsError(false)
 
-      const params = { 
+      const params = {
         show_transcript: true,
         only:            ['call_transcripts.call_transcript'].join(',')
-      } 
+      }
       const { data } = await xhr.get(`/commo/call_log/${id}`, {params})
 
       this.updateFromJSON(data)
@@ -76,8 +76,8 @@ export default class Transcript {
     }
   }
 
-  @action updateFromJSON = ({call_transcripts}) => {
-    const ct = getOr('', ['0', 'call_transcript'], call_transcripts)
+  @action updateFromJSON = (transcript) => {
+    const ct = getOr('', ['call_transcripts', '0', 'call_transcript'], transcript)
 
     this.setCallTranscript(ct)
     this.setOriginalTranscript(ct)

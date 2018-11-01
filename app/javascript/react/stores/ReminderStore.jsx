@@ -19,11 +19,10 @@ const FILTER = {
 
 export class ReminderStore {
   @observable reminders                        = []
-  @observable reminderText                     = undefined
+  @observable reminderText                     = ''
   @observable selectedFilter                   = FILTER.PENDING
 
   @observable @setter selectedStudent          = null
-  @observable @setter students                 = []
   @observable @setter dateTime                 = null
   @observable @setter isError                  = null
   @observable @setter isLoading                = null

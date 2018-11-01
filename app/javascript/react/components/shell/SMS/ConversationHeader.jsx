@@ -3,11 +3,11 @@
 // Add Contact object as a prop
 // Make stateless component
 
-import React, { Component} from 'react'
-import PropTypes           from 'prop-types'
-import { observer }        from 'mobx-react'
-import { Col }             from 'reactstrap'
-import ContactLink         from 'ui/shell/ContactLink'
+import React, { Component, Fragment } from 'react'
+import PropTypes                      from 'prop-types'
+import { observer }                   from 'mobx-react'
+import { Col, UncontrolledTooltip }   from 'reactstrap'
+import ContactLink                    from 'ui/shell/ContactLink'
 
 const headerStyle = {
   position: 'absolute',
@@ -26,10 +26,15 @@ export default class ConversationHeader extends Component {
   }
 
   renderHeader() {
-    const {contact}    = this.props
-    const studentId    = contact.student_id
+    const {
+      contact, 
+      contact: { flags_count : flagsCount }
+    } = this.props
+    const studentId    = contact.student_id || contact.studentId
     const studentName  = contact.student.full_name
     const relationship = contact.relationship
+    const flagCount    = contact.flagsCount ? contact.flagsCount : flagsCount
+    const phoneClasses = `text-muted ${flagCount ? 'text-danger' : ''} m-0` 
 
     return (
       <div key={ contact.id } className='text-right'>
@@ -41,8 +46,24 @@ export default class ConversationHeader extends Component {
           relationship = {relationship} 
           studentName  = {studentName} 
         />
-        <span className='text-muted m-0'>{ contact.phone }</span>
+        {this.renderFlagged(flagCount)}
+        <span className={phoneClasses}>{ contact.phone }</span>
       </div>
+    )
+  }
+
+  renderFlagged = (flagCount) => {
+    if(!flagCount) return null
+
+    return (
+      <Fragment>
+        <UncontrolledTooltip
+          target = {'flag'}
+        >
+          This number has been flagged {flagCount} times(s)
+        </UncontrolledTooltip>
+        <span id='flag' className ='icon icon-flag text-danger mr-1' />
+      </Fragment>
     )
   }
 

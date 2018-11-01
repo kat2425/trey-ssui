@@ -4,7 +4,7 @@ import getError from 'helpers/ErrorParser'
 import uiStore  from 'stores/UiStore'
 import {setter} from 'mobx-decorators'
 
-import { 
+import {
   observable,
   action,
   computed,
@@ -25,7 +25,7 @@ export class SMSInboxStore {
   get totalUnread() {
     return _.reduce(this.inbox, (sum, m) => sum + m.total_unread, 0)
   }
-  
+
   // Actions
   @action
   initAutoruns = () => {
@@ -68,6 +68,7 @@ export class SMSInboxStore {
             'broker.contact.student.full_name',
             'broker.contact.student_id',
             'broker.contact.relationship',
+            'broker.contact.flags_count'
           ].join(',')
         }
       })

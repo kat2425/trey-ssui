@@ -1,5 +1,4 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React     from 'react'
 
 const ModuleHeader = ({title, children}) => {
   return (
@@ -16,9 +15,5 @@ const ModuleHeader = ({title, children}) => {
     </div>
   )
 }
-
-ModuleHeader.defaultProps = {}
-
-ModuleHeader.propTypes = {}
 
 export default ModuleHeader

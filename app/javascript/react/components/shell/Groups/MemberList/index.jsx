@@ -6,15 +6,14 @@ import { List }       from 'antd'
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import MemberItem     from './MemberItem'
 
-
-const MemberList = ({group, store, paginate = true}) => {
+const MemberList = ({ group, store, paginate = true }) => {
   const { members, pagination } = group
   const { shouldSearch, searchResults } = store
 
   return (
     <div>
       <GList
-        locale     = {{emptyText: 'No members yet'}}
+        locale     = {{ emptyText: 'No members yet' }}
         itemLayout = 'horizontal'
         loading    = {loading(group, store)}
         dataSource = {shouldSearch ? searchResults : members.values().reverse()}
@@ -22,7 +21,7 @@ const MemberList = ({group, store, paginate = true}) => {
       />
       <div className='mt-4'>
         {(paginate && pagination.totalPages > 1) &&
-          <Paginatron 
+          <Paginatron
             totalPages  = {pagination.totalPages}
             currentPage = {pagination.current}
             onChange    = {pagination.onChange}

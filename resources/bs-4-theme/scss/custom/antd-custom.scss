@@ -11,6 +11,10 @@ $ant-select-dropdown-max-height: 500px !important;
   display: none !important;
 }
 
+.ant-popover {
+  z-index: 9999 !important;
+}
+
 .ant-switch-checked {
   background-color: $brand-primary;
 }
@@ -73,4 +77,10 @@ $ant-select-dropdown-max-height: 500px !important;
     top: 0;
     text-align: left;
   }
+}
+
+.ant-form-explain, .ant-form-extra {
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 0 !important;
 }

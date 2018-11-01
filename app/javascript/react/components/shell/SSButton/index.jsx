@@ -11,17 +11,24 @@ const SSButton = ({
   disabled,
   tooltip,
   placement = 'top',
-  iconStyle = {marginRight: '4px'},
+  iconStyle = { marginRight: '4px' },
   ...props
 }) => {
   const _id = id || `button-${uuid()}`
+  const _iconStyle = props.children ? iconStyle : { marginRight: 0 }
 
   return (
-    <span>
+    <React.Fragment>
       <Button {...props} disabled={disabled || loading} id={_id}>
-        {loading 
-          ? <Icon style={iconStyle} type="loading" />
-          : <span style={{ ...iconStyle, color: 'inherit' }} className={iconClass} /> }
+        {loading ? (
+          <Icon style={iconStyle} type="loading" />
+        ) : iconClass
+          ?  <span
+            style={{ ..._iconStyle, color: 'inherit' }}
+            className={iconClass}
+          />
+          : null
+        }
         {props.children}
       </Button>
 
@@ -30,7 +37,7 @@ const SSButton = ({
           {tooltip}
         </UncontrolledTooltip>
       )}
-    </span>
+    </React.Fragment>
   )
 }
 

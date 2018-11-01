@@ -4,25 +4,30 @@ import { Route, withRouter }    from 'react-router-dom'
 import { inject, observer }     from 'mobx-react'
 
 import {
-  Collapse, Navbar,  NavbarToggler, NavbarBrand,
-  Nav,      NavItem, NavLink, Badge,
-  Form, Input
+  Collapse, 
+  Nav, 
+  NavItem, 
+  NavLink, 
+  Navbar,
+  NavbarBrand
 } from 'reactstrap'
 
 
-import StudentSearch from './StudentSearch'
-import fireEvent     from 'helpers/FireEvent'
-import intercomEvent from 'helpers/Intercom'
-import renderIf      from 'ui/hoc/renderIf'
+import StudentSearch                    from './StudentSearch'
+import fireEvent                        from 'helpers/FireEvent'
+import userStore                        from 'stores/UserStore'
+import renderIf                         from 'ui/hoc/renderIf'
+import intercomEvent,{ updateIntercom } from 'helpers/Intercom'
 
-const ENav      = renderIf(Nav)
-const brandLogo = { height: '35px' }
+const ENav               = renderIf(Nav)
+const brandLogo          = { height: '35px' }
 
 @withRouter
 @inject('uiStore')
 class RouteMonitor extends Component {
   componentDidMount() {
     const { uiStore, status, location } = this.props
+
     uiStore.isReportingInUse            = status
 
     this.trackEvent(location.pathname)
@@ -30,6 +35,7 @@ class RouteMonitor extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { uiStore, status, location } = nextProps
+
     uiStore.isReportingInUse            = status
 
     this.trackEvent(location.pathname)
@@ -38,12 +44,14 @@ class RouteMonitor extends Component {
   trackEvent(path) {
     if (path !== '/r') {
       const data = this.untangleRoute(path)
+
       intercomEvent(data.event, data.params)
+      updateIntercom()
     }
   }
 
   untangleRoute(path) {
-    if (!!path.match(/\/students\//)) {
+    if (path.match(/\/students\//)) {
       return this.studentCardEvent(path)
     } else {
       return this.moduleEvent(path)
@@ -82,7 +90,7 @@ class RouteMonitor extends Component {
 }
 
 @withRouter
-@inject('uiStore')
+@inject('uiStore','studentSearchStore')
 @observer
 export default class NavBar extends Component {
   constructor(props) {
@@ -96,7 +104,7 @@ export default class NavBar extends Component {
   }
 
   render() {
-    const { uiStore } = this.props
+    const { uiStore, studentSearchStore }        = this.props
 
     return (
       <Navbar
@@ -104,7 +112,10 @@ export default class NavBar extends Component {
         className = 'navbar-toggleable-sm navbar-inverse bg-navbar app-navbar'
       >
         <NavbarBrand tag={RRNavLink} className='pt-0' to='/r'>
-          <img src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg' style={brandLogo}/>
+          <img
+            src='https://secure.schoolstatus.com/images/navbar-logo-schoolstatus-circle.svg'
+            style={brandLogo}
+          />
         </NavbarBrand>
 
         <Collapse isOpen={this.state.isOpen} navbar>
@@ -133,25 +144,38 @@ export default class NavBar extends Component {
 
           <Nav className='navbar-nav ml-auto'>
             <NavItem className='mr-3'>
-              <StudentSearch style={{width: '300px'}} onChange={this.onStudentChange}/>
+              <StudentSearch 
+                style={{width: '300px'}} 
+                isLoading={studentSearchStore.isLoading}
+                options={studentSearchStore.students.slice()}
+                hasSelectedStudent={false}
+                lookupStudent={studentSearchStore.lookupStudent} 
+                onChange={this.onStudentChange}
+                
+              />
             </NavItem>
-
-            <NavItem>
-              <NavLink style={{color: '#c3c3c3'}}>
-                { window.SSUser.username }
-              </NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink href='/legacy/settings'>Settings</NavLink>
-            </NavItem>
+            {userStore.hasLearningLab && (
+              <NavItem>
+                <NavLink target="_blank" href='/redirects/learning_lab'>Learning Lab</NavLink>
+              </NavItem>
+            )}
 
             <NavItem>
               <NavLink target="_blank" href='http://help.schoolstatus.com/'>Help</NavLink>
             </NavItem>
 
             <NavItem>
-              <NavLink href='/logout'>Logout</NavLink>
+              <NavLink href='/settings'>Settings</NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink style={{color: '#c3c3c3'}}>
+                { userStore.username }
+              </NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink href='/session/logout'>Logout</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

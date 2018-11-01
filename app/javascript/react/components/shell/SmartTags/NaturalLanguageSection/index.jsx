@@ -2,7 +2,7 @@ import React          from 'react'
 import {observer}     from 'mobx-react'
 import renderIf       from 'render-if'
 import _              from 'lodash'
-import renderHTML     from 'react-render-html'
+import renderHTML     from 'react-html-parser'
 
 import LoadingSpinner from 'ui/shell/LoadingSpinner'
 import Panel          from 'ui/shell/Panel'

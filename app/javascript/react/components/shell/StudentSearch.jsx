@@ -7,7 +7,7 @@ import _                    from 'lodash'
 
 const StudentSearchItem = ({ student, search }) => {
   const formatResults = (search, value) => {
-    const regexs   = _.forEach(search.split(' '), (v) => RegExp(`(${v})`, 'ig'))
+    const regexs   = _.escapeRegExp(search).split(' ').forEach((v) => RegExp(`(${v})`, 'ig')) 
     let   newValue = value
 
     _.each(regexs, (regex) => {
@@ -53,9 +53,9 @@ export default class StudentSearch extends Component {
   constructor(props) {
     super(props)
     
-    const { reminderStore } = this.props
+    const { lookupStudent } = this.props
 
-    this.lookupStudent = _.debounce(reminderStore.lookupStudent, 300, {
+    this.lookupStudent = _.debounce(lookupStudent, 300, {
       leading:  false,
       trailing: true
     })
@@ -72,23 +72,23 @@ export default class StudentSearch extends Component {
   }
 
   render() {
-    const { style, reminderStore } = this.props
+    const { style, isLoading, options, hasSelectedStudent } = this.props
 
     return (
       <div style={style} className='student-search-container'>
         <AsyncTypeahead
-          isLoading              = {reminderStore.isTypeAheadLoading}
+          isLoading              = {isLoading}
           dropup                 = {this.props.dropup}
           labelKey               = {student => `${ student.last_name }, ${ student.first_name }`}
           multiple               = {false}
           clearButton            = {true}
           maxHeight              = '435px'
           filterBy               = {::this.filterByCallback}
-          options                = {reminderStore.students.slice()}
+          options                = {options}
           onSearch               = {this.lookupStudent}
           onChange               = {this.props.onChange}
           onKeyDown              = {(e) => {
-            if(reminderStore.hasSelectedStudent) {
+            if(hasSelectedStudent) {
               //only allow backspace, delete, home, end, and arrow keys
               if (e.keyCode !== 8 && 
                 e.keyCode !== 46 &&

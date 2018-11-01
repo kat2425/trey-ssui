@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
+import { withRouter }     from 'react-router-dom'
 
 import studentCardStore   from 'stores/StudentCardStore'
 import uiStore            from 'stores/UiStore'
 import StudentCard        from 'ui/shell/StudentCard/StudentCard'
 
+@withRouter
 export default class StudentCardController extends Component {
   componentDidMount(){
     uiStore.setIsStudentCardOpen(true)
@@ -27,6 +29,6 @@ export default class StudentCardController extends Component {
   }
 
   render() {
-    return <StudentCard store={studentCardStore} />
+    return <StudentCard store={studentCardStore} embedded={this.props.embedded}/>
   }
 }

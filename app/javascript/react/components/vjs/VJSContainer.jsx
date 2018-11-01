@@ -1,5 +1,6 @@
-import React     from 'react'
-import PropTypes from 'prop-types'
+import React             from 'react'
+import _                 from 'lodash'
+import { bugsnagClient } from 'helpers/bugsnag'
 
 export default class VJSContainer extends React.Component {
   constructor(props) {
@@ -9,16 +10,25 @@ export default class VJSContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.setVJSClient()
+    if(_.hasIn(window, 'visualize')) {
+      this.setVJSClient()
+    } else {
+      bugsnagClient.notify(new Error('Visualize JS BROKE'))
+    }
   }
 
   setVJSClient() {
     window.visualize.config({
       server: 'https://jasper.schoolstatus.com/jasperserver-pro',
-      auth: {
+      auth:   {
         name:         window.SSUser.id,
         password:     window.SSUser.jasper.token,
         organization: window.SSUser.jasper.org,
+        /*
+         * name:         'adf387de-51f6-4b57-9250-1b4b9b120b59' || window.SSUser.id,
+         * password:     'fa7f22fb1159197e890a360467543d69' || window.SSUser.jasper.token,
+         * organization: '5126918ae9c77f9384000053' || window.SSUser.jasper.org,
+         */
       }
     })
 

@@ -30,6 +30,8 @@
 /public/packs
 /node_modules
 
+test_build.sh
+
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 .tern-port
@@ -40,5 +42,8 @@ config/secrets.yml.key
 
 # Ignore Desktop Service Store
 *.DS_Store
+
+# Ignore package lock since we are using yarn
+.package_lock.json
 
 /.idea

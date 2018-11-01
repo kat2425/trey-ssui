@@ -35,7 +35,7 @@ export default class GrowthCusp extends Component {
   render() {
     return (
       <div>
-        <ModuleHeader title='Growth Cusp'>
+        <ModuleHeader title='Growth Cusp (2017)'>
           <VJSICSelect
             id            = 'user_schools'
             inputPath     = '/public/VJS/ss_ui/shared/input_controls/user_schools'

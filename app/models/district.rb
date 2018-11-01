@@ -1,6 +1,15 @@
 class District < Sequel::Model(:districts)
+  include JasperSoft
+  include Districts::JasperDistrict
+
   one_to_many :users
   one_to_many :schools
+
+  many_to_many :modules,
+    :class      => :SSModule,
+    :join_table => :district_modules,
+    :left_key   => :district_id,
+    :right_key  => :module_id
 
   class << self
     def anytown
@@ -14,6 +23,10 @@ class District < Sequel::Model(:districts)
     else
       has_channel
     end
+  end
+
+  def channel_only?
+    meta&.fetch('channel_only') || false
   end
 
   def custom_modules
@@ -34,6 +47,14 @@ class District < Sequel::Model(:districts)
     end
   rescue
     []
+  end
+
+  def list_modules
+    modules_dataset.select_map(:symbol)
+  end
+
+  def has_module?(symbol)
+    list_modules.include? symbol.to_s
   end
 
   # Expiration Informatoin                                                      {{{

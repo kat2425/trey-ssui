@@ -3,8 +3,10 @@ import PropTypes            from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import callStore            from 'stores/CallStore'
 import reminderStore        from 'stores/ReminderStore'
+import broadcastStore       from 'stores/BroadcastStore'
 import Sidebar              from 'ui/shell/SMS/Sidebar'
 import {CallSidebar}        from 'ui/shell/Call'
+import {BroadcastSidebar}   from 'ui/shell/Broadcast'
 import ReminderSidebar      from 'ui/shell/Reminders/ReminderSidebar'
 import { SIDEBAR }          from 'stores/UiStore'
 
@@ -17,10 +19,11 @@ export default class SidebarController extends Component {
   }
 
   renderSidebar = () => {
-    const { 
-      setSelectedSidebar, 
-      selectedSidebar, 
+    const {
+      setSelectedSidebar,
+      selectedSidebar,
       handleReminderSidebar,
+      handleBroadcastSidebar,
       handleCallSidebar } = this.props.uiStore
 
     switch ( selectedSidebar ) {
@@ -30,7 +33,7 @@ export default class SidebarController extends Component {
       )
     case SIDEBAR.CALL:
       handleCallSidebar()
-      return ( 
+      return (
         <CallSidebar
           store   = {callStore}
           show
@@ -42,6 +45,15 @@ export default class SidebarController extends Component {
       return (
         <ReminderSidebar
           store   = {reminderStore}
+          show
+          onClose = {() => setSelectedSidebar(null)}
+        />
+      )
+    case SIDEBAR.BROADCAST:
+      handleBroadcastSidebar()
+      return(
+        <BroadcastSidebar
+          store   = {broadcastStore}
           show
           onClose = {() => setSelectedSidebar(null)}
         />

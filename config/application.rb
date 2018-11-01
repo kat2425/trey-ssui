@@ -19,18 +19,26 @@ Bundler.require(*Rails.groups)
 # Set a global constant to reference current school year
 CURRENT_SCHOOL_YEAR = begin
   t = Time.now.to_date
-
-  if t.month >= 7 && t.month <= 12
-    t.year + 1
-  else
-    t.year
-  end
+  ((t >= "#{t.year}-07-31".to_date) && t.month <= 12) ? t.year + 1 : t.year
 end
 
 module SchoolStatus
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+
+    # JasperSoft Configuration                                                  {{{
+    # -----------------------------------------------------------------------------
+    config.x.jasper.root      = ENV['JASPER_URI'] || 'http://skagos.local:8080/jasperserver-pro'
+    config.x.jasper.user_key  = '87fe4f01bd121f1363b1d6e530a67f76'
+    config.x.jasper.admin     = 'ss-admin'
+    config.x.jasper.password  = 'outtatime'
+    config.x.jasper.admin_ui  = '/flow.html?_flowId=homeFlow&theme=ss_admin'
+    config.x.jasper.adhoc     = '/flow.html?_flowId=adhocFlow&mode=browse&theme=default'
+    config.x.jasper.dashboard = '/dashboard/designer.html?theme=default'
+    config.x.jasper.viewer    = '/flow.html?_flowId=searchFlow&mode=search&filterId=resourceTypeFilter&filterOption=resourceTypeFilter-reports&searchText=&theme=default'
+
+    # }}}
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

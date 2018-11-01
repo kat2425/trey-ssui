@@ -18,19 +18,21 @@ end
 
 Warden::Strategies.add(:bcrypt) do
   def valid?
-    params['username'] && params['password']
+    !!(params['username'] && params['password'])
   end
 
   def authenticate!
-    return fail! if (user = User[:username => params[:username]&.downcase]).nil?
+    return fail! if (user = User[:username => params[:username]&.downcase, :deleted_at => nil]).nil?
 
     # if (user&.district.district_code != '9999') && !(user&.district.higher_ed)
     #   return fail!
     # end
 
     if User.bcrypt_authenticate(user, params[:password])
+      user.log_login_success rescue nil
       success!(user)
     else
+      user.log_login_failure rescue nil
       fail!
     end
   end

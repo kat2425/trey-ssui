@@ -2,9 +2,13 @@ import React                 from 'react'
 import { observer }          from 'mobx-react'
 import VisibilitySensor      from 'react-visibility-sensor'
 import {UncontrolledTooltip} from 'reactstrap'
+import { Icon }              from 'antd'
 import ChatBubbleMMS         from './ChatBubbleMMS'
 import withCommsTranslator   from 'ui/hoc/withCommsTranslator'
 import styled                from 'styled-components'
+import {ifProp}              from 'styled-tools'
+import smsConversationStore  from 'stores/SMSConversationStore'
+import LoadingSpinner        from 'ui/shell/LoadingSpinner'
 
 const Text = styled.span`
   font-size: 14px;
@@ -12,11 +16,18 @@ const Text = styled.span`
 `
 const EText = withCommsTranslator(Text)
 
+const ChatWithBroadcast = styled.div.attrs({ className: 'media-body-text'})`
+  ${ifProp('isBroadcast', `
+    background-color: #FF9800 !important;
+    color:            #fff !important;
+  `)}
+`
+
 const ChatBubble = ({message, setRead, time}) => (
   <li className={`media ${message.bubbleDirection} mb-2`}>
     <VisibilitySensor onChange={onChange(message, setRead)}>
       <div className='media-body'>
-        <div className='media-body-text'>
+        <ChatWithBroadcast isBroadcast={message.broadcastId}>
           { message.mediaUrl && <ChatBubbleMMS src={message.mediaUrl}/> }
           <EText
             color     = {message.isOutbound ? '#fff' : '#657786'}
@@ -25,13 +36,35 @@ const ChatBubble = ({message, setRead, time}) => (
           >
             { message.body }
           </EText>
-        </div>
-
+          { message.broadcastId
+            ? <small>This message was sent to multiple recipients.</small>
+            : null
+          }
+        </ChatWithBroadcast>
+        {message.shouldShowRetry && renderRetry(message)}
         { renderFooter(time, message) }
       </div>
     </VisibilitySensor>
   </li>
 )
+
+const renderRetry = (msg) => {
+  if(msg.isRetrying) {
+    return (
+      <LoadingSpinner padding={0} className='d-flex flex-row justify-content-start my-1' />
+    )
+  }
+
+  return (
+    <div 
+      className='cursor-pointer d-flex align-items-center my-1' 
+      onClick={() => smsConversationStore.retryMessage(msg)}
+    >
+      <Icon style={{ color: 'tomato' }} type='exclamation-circle' theme='outlined' />
+      <p className='text-danger small ml-1 mb-0'>Failed to send. Click to retry.</p>
+    </div>
+  )
+}
 
 const renderFooter = (time, message) => {
   if (time) {

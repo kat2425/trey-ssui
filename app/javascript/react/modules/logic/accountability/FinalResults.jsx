@@ -18,7 +18,7 @@ export default class FinalResults extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { params: {}, selected: {}, pgBtn: 1, stBtn: 1 }
+    this.state = { params: {}, selected: {}, pgBtn: 1, stBtn: 1, tdBtn: 1 }
   }
 
   setTestFilter(val) {
@@ -39,23 +39,58 @@ export default class FinalResults extends Component {
     })
   }
 
+  setSchoolYear(val) {
+    const jrsValue = val ? val.value : '~NOTHING~'
+
+    this.setState({
+      params:   { ...this.state.params, school_year: [ jrsValue ] },
+      selected: { ...this.state.selected, school_year: val }
+    })
+  }
+
+  getReportPath = (reportPath) => {
+    const _schoolYear = this.state.selected.school_year || { value: '2018' }
+
+    if (_schoolYear.value === '2018') {
+      return reportPath.replace(/final/, 'final/2018')
+    } else {
+      return reportPath
+    }
+  }
+
   getTotalsPath = () => {
     if (this.state.selected.school_filter) {
-      return '/public/VJS/ss_ui/accountability/final/school_totals'
+      return this.getReportPath('/public/VJS/ss_ui/accountability/final/school_totals')
     } else {
-      return '/public/VJS/ss_ui/accountability/final/district_totals'
+      return this.getReportPath('/public/VJS/ss_ui/accountability/final/district_totals')
     }
   }
 
   getDetailPath = () => {
     if (this.state.stBtn === 1) {
       if (this.state.pgBtn === 1) {
-        return '/public/VJS/ss_ui/accountability/final/prof_detail'
+        return this.getReportPath('/public/VJS/ss_ui/accountability/final/prof_detail')
       } else {
-        return '/public/VJS/ss_ui/accountability/final/growth_detail'
+        return this.getReportPath('/public/VJS/ss_ui/accountability/final/growth_detail')
       }
     } else {
-      return '/public/VJS/ss_ui/accountability/final/teacher_stats'
+      if (this.state.tdBtn === 1) {
+        return this.getReportPath('/public/VJS/ss_ui/accountability/final/teacher_stats')
+      } else {
+        return this.getReportPath('/public/VJS/ss_ui/accountability/final/teacher_students')
+      }
+    }
+  }
+
+  getDetailTitle = () => {
+    if (this.state.stBtn === 1) {
+      if (this.state.pgBtn === 1) {
+        return 'Proficiency Detail'
+      } else {
+        return 'Growth Detail'
+      }
+    } else {
+      return 'Teacher Detail'
     }
   }
 
@@ -67,10 +102,32 @@ export default class FinalResults extends Component {
     this.setState({ stBtn: val })
   }
 
+  setTDButton = (val) => {
+    this.setState({ tdBtn: val })
+  }
+
+  renderBanner = () => {
+    const _schoolYear = this.state.selected.school_year || { value: "2018" }
+
+    if (_schoolYear.value === '2018') {
+      return (
+        <div>
+          <div className='alert alert-warning'>
+            <ul>
+              <li>
+                <span className='icon icon-info-with-circle mr-2'/>
+                The results displayed are the current data from MDE recently released in Sharepoint pending state board approval. If approved, these results will become Final, if changes are made, we will update them accordingly.</li>
+            </ul>
+          </div>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
-        <ModuleHeader title='Final Results'>
+        <ModuleHeader title='Current Results'>
           <VJSICSelect
             id            = 'test_filter'
             inputPath     = '/public/VJS/ss_ui/accountability/final/test_filter'
@@ -90,7 +147,19 @@ export default class FinalResults extends Component {
             clearable     = {userStore.user.isDistrictLevel}
             width         = {250}
           />
+
+          <VJSICSelect
+            id            = 'aa_school_years'
+            inputPath     = '/public/VJS/ss_ui/accountability/final/aa_school_years'
+            selectedValue = {this.state.selected.school_year}
+            handleChange  = {::this.setSchoolYear}
+            placeholder   = 'Year'
+            setDefault    = {true}
+            width         = {150}
+          />
         </ModuleHeader>
+
+        { this.renderBanner() }
 
         <div className='row p-0 m-0'>
           <div className='col-md-4 p-0 m-0'>
@@ -117,7 +186,7 @@ export default class FinalResults extends Component {
           <div className='col-md-8 pr-0'>
             <VJSChart
               id          = 'aa-prof-breakdown'
-              reportPath  = '/public/VJS/ss_ui/accountability/final/prof_graph'
+              reportPath  = {this.getReportPath('/public/VJS/ss_ui/accountability/final/prof_graph')}
               title       = 'Proficiency Breakdown'
               className   = 'col-md-12 p-0 m-0'
               params      = {this.state.params}
@@ -136,7 +205,7 @@ export default class FinalResults extends Component {
 
             <VJSChart
               id          = 'aa-grown-breakdown'
-              reportPath  = '/public/VJS/ss_ui/accountability/final/growth_graph'
+              reportPath  = {this.getReportPath('/public/VJS/ss_ui/accountability/final/growth_graph')}
               title       = 'Growth Breakdown'
               className   = 'col-md-12 p-0 m-0'
               params      = {this.state.params}
@@ -159,7 +228,7 @@ export default class FinalResults extends Component {
           <VJSChart
             id          = 'aa-student-detail'
             reportPath  = {this.getDetailPath()}
-            title       = 'Student Detail'
+            title       = {this.getDetailTitle()}
             className   = 'col-md-12'
             isTable     = {true}
             params      = {this.state.params}
@@ -190,6 +259,21 @@ export default class FinalResults extends Component {
                 Teacher View
               </Button>
             </ButtonGroup>
+
+            <EButtonGroup renderIf={ this.state.stBtn !== 1}>
+              <Button
+                onClick = {() => this.setTDButton(1)}
+                active  = {this.state.tdBtn === 1}
+              >
+                Teachers
+              </Button>
+              <Button
+                onClick = {() => this.setTDButton(2)}
+                active  = {this.state.tdBtn === 2}
+              >
+                Teachers + Students
+              </Button>
+            </EButtonGroup>
 
             {/* prof/growth toggle */}
             <EButtonGroup renderIf={ this.state.stBtn === 1}>

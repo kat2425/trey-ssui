@@ -26,7 +26,7 @@
 }
 */
 
-import { 
+import {
   observable,
   action,
   computed,
@@ -50,8 +50,10 @@ export default class Communication {
   user         = null
   direction    = null
   voicemailUrl = null
+  mediaUrl     = null
   _transcript  = new Transcript()
   relationship = null
+  broadcastId  = null
 
   @setter @observable length        = 0
   @setter @observable preview       = null
@@ -124,7 +126,7 @@ export default class Communication {
   @computed get studentName(){
     return this.contact.student.full_name
   }
-  
+
   @computed get transcript(){
     return this._transcript.transcript
   }
@@ -135,6 +137,10 @@ export default class Communication {
 
   @computed get originalTranscript(){
     return this._transcript.originalTranscript
+  }
+
+  @computed get isBroadcast(){
+    return !!this.broadcastId
   }
 
   // Autoruns
@@ -164,7 +170,7 @@ export default class Communication {
       ()        => this.isActive && this.isCall,
       (isFetch) => isFetch && this._transcript.fetchCallTranscript(this.id),
       true
-    ) 
+    )
   }
 
   @action autoFetchVoicemail = () => {
@@ -172,7 +178,7 @@ export default class Communication {
       ()        => this.isActive && this.isVoicemail,
       (isFetch) => isFetch && this.fetchVoicemail(),
       true
-    ) 
+    )
   }
 
   @action autoFetchEmail = () => {
@@ -180,7 +186,7 @@ export default class Communication {
       ()        => this.isEmail,
       (isFetch) => isFetch && this.fetchEmail(),
       true
-    ) 
+    )
   }
 
   @action autoFetchSms = () => {
@@ -188,7 +194,7 @@ export default class Communication {
       ()        => this.isActive && this.isSms,
       (isFetch) => isFetch && this.fetchSms(),
       true
-    ) 
+    )
   }
 
   @action autoFetchCallNotes = () => {
@@ -219,8 +225,10 @@ export default class Communication {
 
   @action update = ({
     id,
+    broadcast_id:  broadcastId,
     created_at:    createdAt,
     call_status:   callStatus,
+    media_url:     mediaUrl,
     voicemail_url: voicemailUrl,
     contact,
     user,
@@ -230,8 +238,10 @@ export default class Communication {
     type
   }) => {
     this.id           = id
+    this.broadcastId  = broadcastId
     this.createdAt    = createdAt
     this.contact      = contact
+    this.mediaUrl     = mediaUrl
     this.user         = user
     this.length       = length ? length.length : 0
     this.preview      = voicemailUrl ? voicemailUrl : preview
@@ -261,10 +271,10 @@ export default class Communication {
       this.setIsLoading(true)
       this.setIsError(false)
 
-      const { data } = await xhr.get(`/commo/email_log/${id}`, { 
-        params: { 
+      const { data } = await xhr.get(`/commo/email_log/${id}`, {
+        params: {
           only: ['body','subject'].join(',')
-        } 
+        }
       })
 
       this.email = data
@@ -280,10 +290,10 @@ export default class Communication {
       this.setIsLoading(true)
       this.setIsError(false)
 
-      const { data } = await xhr.get(`/commo/sms_log/${id}`, { 
-        params: { 
+      const { data } = await xhr.get(`/commo/sms_log/${id}`, {
+        params: {
           only: ['body'].join(',')
-        } 
+        }
       })
 
       this.sms = data
@@ -299,8 +309,8 @@ export default class Communication {
       this.setIsLoading(true)
       this.setIsError(false)
 
-      return await xhr.get(`/commo/call_log/${id}`, { 
-        params: params      
+      return await xhr.get(`/commo/call_log/${id}`, {
+        params: params
       })
     } catch (err) {
       this.setIsError(err)
@@ -324,11 +334,10 @@ export default class Communication {
       })
     } catch(err){
       this.setIsError(err)
-    }   
+    }
   }
 
   @action dispose = () => {
     this._transcript.dispose()
   }
 }
-

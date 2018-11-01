@@ -1,6 +1,6 @@
-import { 
-  observable, 
-  action, 
+import {
+  observable,
+  action,
   computed,
   autorun
 } from 'mobx'
@@ -30,11 +30,14 @@ export default class Message {
   body           = null
   readStatus     = null
   conversationId = null
+  broadcastId    = null
+  attachment     = null
 
   @observable expandedTranslator    = false
   @observable language              = null
   @observable targetLanguage        = LANGUAGE.EN
 
+  @setter @observable status        = null
   @setter @observable meta          = null
   @setter @observable isTranslating = false
   @setter @observable isError       = false
@@ -105,8 +108,17 @@ export default class Message {
     return this.direction === 'inbound'
   }
 
+  @computed get isRetrying(){
+    return this.status === 'retrying'
+  }
+
+  @computed get shouldShowRetry(){
+    return this.status === 'retrying' || this.status === 'failed'
+  }
+
   @computed get bubbleDirection(){
-    return this.isOutbound ? 'media-current-user ml-5' : 'mr-5'
+    return this.isOutbound ?
+      'media-current-user ml-5' : 'mr-5'
   }
 
   @computed get footerDirection(){
@@ -178,7 +190,10 @@ export default class Message {
     read_status:     readStatus,
     media_url:       mediaUrl,
     created_at:      createdAt,
-    conversation_id: conversationId
+    conversation_id: conversationId,
+    broadcast_id:    broadcastId,
+    status,
+    attachment
   }) => {
     this.id             = id
     this.mediaUrl       = mediaUrl
@@ -189,8 +204,11 @@ export default class Message {
     this.body           = body
     this.readStatus     = readStatus
     this.meta           = meta
-    this.language       = language === LANGUAGE.UNDETERMINED ? LANGUAGE.EN : language
+    this.language       = determineInitialLanguage(language)
     this.conversationId = conversationId
+    this.broadcastId    = broadcastId
+    this.status         = status
+    this.attachment     = attachment
   }
 
   @action clear = () => {
@@ -204,5 +222,16 @@ export default class Message {
   @action dispose = () => {
     this.autoErrorDisposer && this.autoErrorDisposer()
     this.autoTranslateDisposer && this.autoTranslateDisposer()
+  }
+}
+
+function determineInitialLanguage(lang) {
+  switch (lang) {
+  case LANGUAGE.UNDETERMINED:
+    return LANGUAGE.EN
+  case 'zh-CN':
+    return 'zh'
+  default:
+    return lang
   }
 }

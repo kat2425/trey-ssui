@@ -11,7 +11,13 @@ const Assessments = [
     module:  'vjs_act_aspire',
     value:   'act_aspire',
     label:   'ACT Aspire',
-    dataset: '',
+    dataset: 'act_aspires',
+  },
+  {
+    module:  'vjs_act_aspire_interim',
+    value:   'act_aspire_interim',
+    label:   'ACT Aspire Interim',
+    dataset: 'act_aspire_interims',
   },
   {
     module:  'vjs_aimsweb',
@@ -24,6 +30,12 @@ const Assessments = [
     value:   'amplify',
     label:   'DIBELS Next',
     dataset: 'dibels_next',
+  },
+  {
+    module:  'vjs_ap',
+    value:   'ap',
+    label:   'Advanced Placement (AP)',
+    dataset: 'aps',
   },
   {
     module:  'vjs_ati',
@@ -86,6 +98,12 @@ const Assessments = [
     dataset: 'eduphorias',
   },
   {
+    module:  'vjs_elpa21',
+    value:   'elpa21',
+    label:   'ELPA21',
+    dataset: 'vw_elpa21',
+  },
+  {
     module:  'vjs_els',
     value:   'els_eztt',
     label:   'ELS EZ TestTracker',
@@ -108,6 +126,12 @@ const Assessments = [
     value:   'iready',
     label:   'iReady',
     dataset: 'ireadys',
+  },
+  {
+    module:  'vjs_istation',
+    value:   'istation',
+    label:   'iStation',
+    dataset: 'vw_istation',
   },
   {
     module:  'vjs_las_links',
@@ -167,13 +191,19 @@ const Assessments = [
     module:  'vjs_psat',
     value:   'psat_89',
     label:   'PSAT 8/9',
-    dataset: 'vw_psat_89',
+    dataset: 'vw_psat89',
   },
   {
     module:  'vjs_psat',
     value:   'psat_nm',
     label:   'PSAT NM',
     dataset: 'vw_psat_nm',
+  },
+  {
+    module:  'vjs_sat',
+    value:   'sat',
+    label:   'SAT',
+    dataset: 'vw_sat',
   },
   {
     module:  'vjs_satp',

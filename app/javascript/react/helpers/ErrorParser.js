@@ -1,25 +1,59 @@
-import _ from 'lodash'
+import React             from 'react'
+import _                 from 'lodash'
+import CustomError       from 'ui/shell/CustomError'
+import { bugsnagClient } from 'helpers/bugsnag'
 
 export default function ErrorParser(e){
-  console.error(e)
+  bugsnagClient.notify(e)
+  if(!e.response || !e.response.status || !e.request.responseURL) return
 
-  const error = { title: 'Error', message: e.message}
-
-  if( _.has(e, 'response.data') && isHTML(e.response.data)) return error
-
-  if(_.has(e, 'response.data.message') && _.has(e, 'response.data.errors')) {
+  if(_.hasIn(e, 'response.data.message') &&
+    _.hasIn(e, 'response.data.errors') &&
+    _.get(e, 'response.status', 600) < 500
+  ) {
     return {
       title:   e.response.data.message,
       message: e.response.data.errors
     }
   }
 
-  return error
+  return {
+    title:   'Oh No! 😳',
+    message: <CustomError {...getCustomErrorProps(e)}/>
+  }
 }
 
+function returnErrorMessage(stringCode) {
+  switch (stringCode) {
+  case 404:
+    return 'We cannot locate something on the page'
+  case 500:
+    return 'SchoolStatus servers are having trouble processing your request.'
+  case 503:
+    return 'SchoolStatus servers are temporarily unavailable probably \
+    because they are unusually busy. Give us a minute and it should sort itself out.'
+  case 504:
+    return 'SchoolStatus servers are temporarily unavailable probably \
+    because they are unusually busy. Give us a minute and it should sort itself out.'
+  default:
+    return 'We experienced an unknown error.'
+  }
+}
 
-function isHTML(str) {
-  const doc = new DOMParser().parseFromString(str, 'text/html')
+const getCustomErrorProps = (e) => {
+  const status = _.get(e, 'response.status', 'NA')
+  const endpoint = _.hasIn(e, 'request.responseURL') ? getPathname(e.request.responseURL) : 'NA'
+  const customText = returnErrorMessage(status)
 
-  return Array.from(doc.body.childNodes).some(node => node.nodeType === 1)
+  return {
+    status,
+    endpoint,
+    customText
+  }
+}
+
+const getPathname = (url) => {
+  if(!url) return 'NA'
+
+  return new URL(url).pathname
 }

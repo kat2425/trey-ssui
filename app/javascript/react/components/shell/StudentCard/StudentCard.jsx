@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Modal                from 'react-modal'
 import {scrollStyle}        from 'helpers/modal-style'
-
 import {
   Switch, withRouter, Route, Redirect
 } from 'react-router-dom'
@@ -21,7 +20,7 @@ import Assessment       from './Assessment'
 import Assessments      from './Assessments/Assessment'
 import Infractions      from './Infractions'
 import FinancialAid     from './FinancialAid'
-import Contacts         from './Contacts'
+import Contacts         from './Contacts/'
 import Attachments      from './Attachments/'
 import Grades           from './Grades'
 import CourseAttendance from './CourseAttendance'
@@ -31,8 +30,6 @@ import Engagement       from './CommsHistory/'
 import SurveyMonkey     from './SurveyMonkey'
 
 import Notes            from '../Notes'
-
-import callingStore     from 'stores/CallingStore'
 
 import renderIf         from 'ui/hoc/renderIf'
 import userStore        from 'stores/UserStore'
@@ -64,10 +61,10 @@ const cardStyle = {
   }
 }
 
-const CloseBtn = ({handlePrint, handleClose}) => (
+const CloseBtn = ({embedded, handlePrint, handleClose}) => (
   <div className='float-right h4 p-1 pr-0 mb-2 mt-3' style={{cursor: 'pointer'}}>
     <span className='icon icon-print mr-2' onClick={handlePrint} />
-    <span className='icon icon-cross' onClick={handleClose} />
+    {!embedded ? <span className='icon icon-cross' onClick={handleClose} /> : ''}
   </div>
 )
 
@@ -96,10 +93,14 @@ export default class StudentCard extends Component {
   }
 
   render() {
-    const { store } = this.props
+    const { store, embedded } = this.props
     const { student } = store
 
-    return (
+    const content = embedded ? (
+      <div>
+        {student ? this.renderCard() : this.renderLoader()}
+      </div>
+    ) : (
       <Modal
         style={cardStyle}
         isOpen
@@ -109,6 +110,8 @@ export default class StudentCard extends Component {
         {student ? this.renderCard() : this.renderLoader()}
       </Modal>
     )
+
+    return content
   }
 
   renderLoader = () => {
@@ -123,8 +126,9 @@ export default class StudentCard extends Component {
     const {
       student,
       overview,
-      groupedContacts: contacts,
     } = store
+
+    const { DISCIPLINE, VJS_COURSE_ATTENDANCE, VJS_FINANCIALS } = window.SS_MODULES
 
     return (
       <Row>
@@ -162,7 +166,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-calendar'
                 link      = {`${match.url}/attendance`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && !userStore.user.channelOnly}
               />
 
               <EUserMenuItem
@@ -170,7 +174,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-sweden'
                 link      = {`${match.url}/period_attendance`}
                 location  = {location}
-                renderIf  = {userStore.hasModules('vjs_course_attendance')}
+                renderIf  = {userStore.hasModules(VJS_COURSE_ATTENDANCE)}
               />
 
               <EUserMenuItem
@@ -178,7 +182,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-thermometer'
                 link      = {`${match.url}/infractions`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules('discipline'))}
+                renderIf  = {!(userStore.user.higherEd) && (userStore.hasModules(DISCIPLINE)) && !userStore.user.channelOnly}
               />
 
               <EUserMenuItem
@@ -194,7 +198,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-area-graph'
                 link      = {`${match.url}/assessment`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && !userStore.user.channelOnly}
               />
 
               <EUserMenuItem
@@ -202,7 +206,7 @@ export default class StudentCard extends Component {
                 iconClass = 'icon-check'
                 link      = {`${match.url}/grades`}
                 location  = {location}
-                renderIf  = {!(userStore.user.higherEd)}
+                renderIf  = {!(userStore.user.higherEd) && !userStore.user.channelOnly}
               />
 
               <UserMenuItem
@@ -227,21 +231,26 @@ export default class StudentCard extends Component {
                 location  = {location}
               />
 
-              <UserMenuItem
+              <EUserMenuItem
                 title     = 'Attachments'
                 iconClass = 'icon-attachment'
                 link      = {`${match.url}/attachments`}
                 location  = {location}
+                renderIf  = {!userStore.user.channelOnly}
               />
             </UserMenuSection>
           </Card>
 
-          <EFinancialAid student={student} renderIf={userStore.hasModules('vjs_financials')} />
+          <EFinancialAid student={student} renderIf={userStore.hasModules(VJS_FINANCIALS)} />
         </Col>
 
         {/* Root Container */}
         <Col xl='10' lg='9' md='9' sm='9'>
-          <CloseBtn handlePrint={this.printCard} handleClose={this.closeCard} />
+          <CloseBtn
+            embedded={this.props.embedded}
+            handlePrint={this.printCard}
+            handleClose={this.closeCard}
+          />
 
           <Switch location={location}>
             <Redirect exact from={`${match.url}`} to={`${match.url}/overview`} />
@@ -259,15 +268,7 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/contacts`}
-              render = {() =>
-                <Contacts
-                  store             = {callingStore}
-                  student           = {student}
-                  contacts          = {contacts}
-                  handleContactFave = {::this.props.store.toggleContactPrimary}
-                  handleSendEmail   = {::this.props.store.triggerNativeMailTo}
-                />
-              }
+              render = {() => <Contacts student={student} userStore={userStore} /> }
             />
 
             <Route
@@ -322,12 +323,18 @@ export default class StudentCard extends Component {
 
             <Route
               path   = {`${match.url}/notes`}
-              render = {() => <Notes student={student} noteStore={this.props.noteStore}/> }
+              render = {() =>
+                <Notes
+                  student={student}
+                  noteStore={this.props.noteStore}
+                  userStore={userStore}
+                />
+              }
             />
 
             <Route
               path   = {`${match.url}/attachments`}
-              render = {() => <Attachments student={student} /> }
+              render = {() => <Attachments student={student} userStore={userStore} /> }
             />
 
             <Route render={() => <div>404</div>} />

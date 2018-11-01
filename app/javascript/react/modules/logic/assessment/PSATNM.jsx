@@ -33,7 +33,7 @@ export default class PSATNM extends Component {
                   if (studentID) {
                     fireEvent('showStudentCard', {
                       student: studentID,
-                      path:    'assessment/psatnm'
+                      path:    'assessment/psat_nm'
                     })
                   }
                 }

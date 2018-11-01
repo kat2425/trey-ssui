@@ -16,6 +16,7 @@
     "react"
   ],
   "plugins": [
+    ["add-react-displayname"],
     ["import", { "libraryName": "antd", "style": true }],
     "lodash",
     ["styled-components", {

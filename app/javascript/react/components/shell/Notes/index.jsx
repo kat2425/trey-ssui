@@ -39,7 +39,7 @@ export default class Notes extends Component {
     if(selectedNote) {
       return (
         <Wrapper>
-          <ActionBar store={noteStore} note={selectedNote} />
+          <ActionBar store={noteStore} note={selectedNote} userStore={this.props.userStore} />
           {this.renderNote(selectedNote)}
         </Wrapper>
       )
@@ -58,7 +58,7 @@ export default class Notes extends Component {
           md={6} 
           lg={5}
         >
-          <SideNav noteStore={noteStore} />
+          <SideNav noteStore={noteStore} userStore={this.props.userStore} />
         </Col>
         <Col 
           style={{
