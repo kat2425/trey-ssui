@@ -11,10 +11,12 @@ ContentWrapper.propTypes = {
 
 
 function ContentWrapper({children, size = 'sm'}){
+  const randomSeed = Math.floor(Math.random() * 99999) + 10000
+
   return (
     <Section>
       <div className='d-flex justify-content-center'>
-        <img className='mb-4' src='https://secure.schoolstatus.com/images/ss-logo.svg?1478188768' />
+        <img className='mb-4' src={`https://secure.schoolstatus.com/images/ss-logo.svg?${randomSeed}`} />
       </div>
       <Wrapper size={size}>
         {children}
