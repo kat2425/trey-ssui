@@ -3,6 +3,7 @@ import PropTypes           from 'prop-types'
 import { observer }        from 'mobx-react'
 
 import { Media }           from 'reactstrap'
+import _                   from 'lodash'
 import InboxItem           from './InboxItem'
 
 @observer
@@ -24,16 +25,16 @@ export default class Inbox extends Component {
     return (
       <InboxItem
         onClick      = {this.handleSelect(msg)}
-        relationship = {msg.broker.contact.relationship}
+        relationship = {_.get(msg.broker.contact, 'relationship', '')}
         key          = {msg.id}
         totalUnread  = {msg.total_unread}
         direction    = {msg.direction}
-        name         = {msg.broker.contact.name}
+        name         = {_.get(msg.broker.contact, 'name', '')}
         time         = {msg.created_at}
         message      = {msg.body}
         media        = {msg.media_url}
-        studentId    = {msg.broker.contact.student_id}
-        studentName  = {msg.broker.contact.student.full_name}
+        studentId    = {_.get(msg.broker.contact, 'student_id','')}
+        studentName  = {_.get(msg.broker.contact, 'student.full_name', '')}
       />
     )
   }
