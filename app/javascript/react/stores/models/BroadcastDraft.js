@@ -11,6 +11,7 @@ import uiStore        from 'stores/UiStore'
 import broadcastStore from 'stores/BroadcastStore'
 import xhr            from 'helpers/XHR'
 import _              from 'lodash'
+import intercomEvent  from 'helpers/Intercom'
 
 export class BroadcastDraft {
   static TOO_MANY = 100
@@ -127,6 +128,7 @@ export class BroadcastDraft {
     } catch (err) {
       this.setIsError(getError(err))
     } finally {
+      intercomEvent('sent-broadcast-message')
       this.setIsSending(false)
     }
   }
